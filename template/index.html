@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<link rel="stylesheet" href="/css/allinone.min.css">
+
+	<meta charset="utf-8">
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>手把手用VPS搭建SS+bbr实现科学上网 | 幽默的白帽子的博客 </title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
+
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io/template/">
+
+	
+	<meta property="article:published_time" content="2019-11-30T16:11:47+08:00"> 
+	<meta property="article:author" content="John Doe">
+	<meta property="article:published_first" content="Hexo, /2019/11/30/hello-world/">
+	
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+
+            <li>
+                <a href="/" title="主页">主页</a>
+            </li>
+
+            <li>
+                <a href="/study" title="技术篇">技术篇</a>
+            </li>
+
+            <li>
+                <a href="/life" title="生活篇">生活篇</a>
+            </li>
+
+            <li>
+                <a href="/fun" title="轻松时刻">轻松时刻</a>
+            </li>
+
+            <li>
+                <a href="/about" title="about">about</a>
+            </li>
+
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+
+    <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+        <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+    </a>
+
+    <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+        <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+    </a>
+
+    <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+        <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+    </a>
+
+    <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+        <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+    </a>
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
+            <h1 class="post-full-title">Hello World</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>  首先先声明一下，本文不带有任何商业性质，单纯地是想方便海内外学生党使用Google、YouTube、Wikipedia等工具来查阅资料，作为一个Google和Wikipedia的重度使用者，有时候离开了这两样东西真的就没办法生活，所以做一个这方面的教程是非常有必要的。</p>
+                    <p>  如果你对访问外网的频率和带宽要求不高，用一般的免费vpn或者一些在线代理就足够了，市面上这些vpn哪个好用，哪个免费相信你们比我更清楚。如果要经常看YouTube高清视频或者连外服打游戏的小伙伴呢，这些免费但又不稳定的vpn自然就不能满足你们的需要了，所以拥有一个自己专属的服务器来实现科学上网成了一个必需品。</p>
+                    <h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p><img alt="Shadowsocks基本原理" title="基本原理示意图" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png"></p>
+                    <p>  简单介绍一下ss的基本原理，其实ss就是隧道通信的一种。就是说从中国大陆直接访问Google、Facebook等黑名单网站是会被防火墙检测到并直接中断我们与这些服务器的连接的，这时候ss横空出世，把我们将要发送给Google、Facebook服务器的请求经过本地(sslocal)加密，再将它们封装一下，与我们后面要部署的服务器达成通信协议。</p>
+                    <p>  具体来讲，当服务器(ssserver)端收到来自sslocal的数据之后，先解密，再将解密过后的数据发送给Google、Facebook服务器。当这些服务器把数据传回给ssserver过后，ssserver会将这些数据加密并打包发送给sslocal，sslocal拿到数据之后再进行解密，最后以网页的形式呈现出来。</p>
+                    <p>  但据说最近ss已经能够被防火墙识别出来其特征，安全性存在一些漏洞。如果有空了还可以再做一期v2ray的教程，其安全性和稳定性都要比ss要高。</p>
+                    <h2 id="部署VPS"><a href="#部署VPS" class="headerlink" title="部署VPS"></a>部署VPS</h2><p>  第一步需要部署我们的云服务器，这里先推荐一下<a href="https://cloud.google.com" target="_blank" rel="noopener">谷歌云</a>，可以免费试用一年的时间，并且还比较稳定，但需要你绑定信用卡，有点麻烦。。。<br>  这里我们演示的是一些主流服务商提供的VPS，话不多说，先推荐一波：<br>  <a href="https://bandwagonhost.com" target="_blank" rel="noopener">搬瓦工</a><br>  <a href="https://www.vultr.com" target="_blank" rel="noopener">vultr</a><br>  <a href="https://www.hostwinds.com" target="_blank" rel="noopener">hostwind</a><br>  <a href="https://www.time4vps.com" target="_blank" rel="noopener">time4vps</a><br>  有的可能在国内被墙掉了，访问不了的只能自己想办法了。</p>
+                    <p>  这里以vultr为例，先进入官网。<br><img alt="vultr官网" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png"><br>  如果你是新用户，则需要先注册一下，这里点击“Sign up”。<br>  点击之后，用你的邮箱作为用户名，然后自己创建一个密码。<br><img alt="vultr注册界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png"><br>  注册完以后登录即可。<br><img alt="vultr登录界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png"><br>  进入如下页面之后，选择“Product”，再点击右边的加号部署服务器。<br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png"><br>  这里我们选择纽约的节点(因为最便宜)，然后系统选择Ubuntu 18.04，服务器配置根据自己的需求来选择。选完以后，点击下方的“Deploy Now”。付完款以后，将会出现如下的界面。<br><img alt="成功部署" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png"></p>
+                    <h2 id="Shadowsocks服务器端配置"><a href="#Shadowsocks服务器端配置" class="headerlink" title="Shadowsocks服务器端配置"></a>Shadowsocks服务器端配置</h2>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <a href="/tags/data_structure" rel="tag"># 科学上网   </a>
+                    <a href="/tags/bst" rel="tag"># Linux</a>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <nav id="gobottom" class="pagination">
+                        <a class="prev-post" title="使用Pyenv 管理PY的版本" href="/pyenv-usage/" style="color: #C0C0C0">
+                            ← 使用Pyenv 管理PY的版本
+                        </a>
+                        <span class="prev-next-post">
+
+                        </span>
+                        <a class="next-post" title="一键开启macOS HiDPI" href="/one-key-hidpi/" style="color: #C0C0C0">
+                            一键开启macOS HiDPI →
+                        </a>
+                    </nav>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <!-- 来必力City版安装代码 -->
+                    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
+                        <script type="text/javascript">
+                            (function(d, s) {
+                                var j, e = d.getElementsByTagName(s)[0];
+
+                                if (typeof LivereTower === 'function') { return; }
+
+                                j = d.createElement(s);
+                                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                                j.async = true;
+
+                                e.parentNode.insertBefore(j, e);
+                            })(document, 'script');
+                        </script>
+                        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+                    </div>
+                    <!-- City版安装代码已完成 -->
+                </div>
+            </section>
+        </article>
+    </div>
+
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            <article class="read-next-card" style="background-image: url(https://mightyeagler.github.io/static/icons&images/main.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hexo-theme-casper/">Hexo-Theme-Casper</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/study">  MORE  → </a>
+                </footer>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://mightyeagler.github.io/static/icons&images/main.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories/sets/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories//">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://mightyeagler.github.io/static/icons&images/main.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">cnn</a>
+                    <a href="/tag/mnist" style="font-size: 16px;">mnist</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Github:
+        </strong>
+        <a href="https://github.com/infinityglow"; style="text-align: center">
+            github.com/infinitiglow
+        </a>
+    </p>
+</footer>
+
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="Hexo">
+
+                <img src="/static/icons&images/profile.jpg" alt="Hexo icon">
+
+            <span>Hexo</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Hello World</div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+<script>searchFunc("/")</script>
+
+</body>
+</html>
