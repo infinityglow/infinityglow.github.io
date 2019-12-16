@@ -39,7 +39,7 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	color: #000000;
+	color: #ccc;
 	text-align: right;
 	font-size: 0.75em;
 	padding: 5px 10px 0;
@@ -61,7 +61,7 @@
 }
 
 .gutter pre {
-	color: #000000;
+	color: #999;
 	margin-bottom: 0;
 	padding: 1.2em 0 1.2em 1.4em;
 	font-size: .9em
@@ -70,8 +70,8 @@
 pre {
 	margin-bottom: 1em;
 	background: #f8f8f8;
-	color: #000000;
-	line-height: 1.00;
+	color: #525252;
+	line-height: 1.45;
 	overflow: auto;
 }
 pre .function .keyword,
