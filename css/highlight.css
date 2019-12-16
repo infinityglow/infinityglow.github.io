@@ -9,7 +9,7 @@
 	overflow-x: auto;
 	background-color: #f8f8f8;
 	padding: 0.4em 0 0;
-	line-height: 1.1em;
+	line-height: 1em;
 	border-radius: 2px;
 	position: relative;
 }
@@ -26,11 +26,11 @@
 }
 .highlight .code pre {
 	padding: 1.2em 1.4em;
-	line-height: 1.5em;
+	line-height: 1em;
 	margin: 0;
 }
 .highlight .code .line {
-	min-height: 1.5em;
+	min-height: 1em;
 }
 .highlight.html .code:before,
 .highlight.js .code:before,
@@ -68,10 +68,10 @@
 }
 
 pre {
-	margin-bottom: 1.2em;
+	margin-bottom: 1em;
 	background: #f8f8f8;
-	color: #525252;
-	line-height: 1.45;
+	color: #000000;
+	line-height: 1.00;
 	overflow: auto;
 }
 pre .function .keyword,
