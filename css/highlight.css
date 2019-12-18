@@ -69,9 +69,9 @@
 
 pre {
 	margin-bottom: 1.2em;
-	background: #f8f8f8;
-	color: #525252;
-	line-height: 1.45;
+	background: #000000;
+	color: #FFFFFF;
+	line-height: 1.00;
 	overflow: auto;
 }
 pre .function .keyword,
