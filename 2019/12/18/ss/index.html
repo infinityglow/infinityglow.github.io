@@ -135,10 +135,11 @@
                     <p>  这里我们选择纽约的节点(因为最便宜)，然后系统选择Ubuntu 18.04，服务器配置根据自己的需求来选择。选完以后，点击下方的“Deploy Now”。付完款以后，将会出现如下的界面。<br><img alt="成功部署" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png"></p>
                     <h2 id="Shadowsocks服务器端配置"><a href="#Shadowsocks服务器端配置" class="headerlink" title="Shadowsocks服务器端配置"></a>Shadowsocks服务器端配置</h2><p>  成功部署好VPS后就要开始服务器端的配置了。首先我们进入到服务器的信息页面(如下图所示)，我们需要记住这里的IP地址以及ssh远程登录时的密码。<br><img alt="服务器信息" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png"></p>
                     <p>  拿到IP地址以后可以先打开终端ping一下以确保服务器是否可用。我这里以Ubuntu系统作为演示，通信一切正常。<br><img alt="ping" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png"></p>
-                    <p>  下一步就要用ssh命令远程登录我们的服务器了。Mac用户和Linux用户直接在终端使用ssh命令即可；Windows用户呢就要稍微麻烦一点，得先在网上下载PuTTY，然后再远程登录。</p>
+                    <p>  下一步就要用ssh命令远程登录我们的服务器了。Mac用户和Linux用户直接在终端使用ssh命令即可，Windows用户呢就要稍微麻烦一点，得先在网上下载PuTTY，然后再远程登录。</p>
                     <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssh root@45.77.108.240</span></pre></td></tr></table></figure>
 
-                    <p>  按下回车后会叫你输入密码，也就是前面服务器信息里的密码。登录成功后就会出现下面的界面。<br><img alt="登录成功" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png"></p>
+                    <p>  按下回车后会叫你输入密码，也就是前面服务器信息里的密码。登录成功后就会出现下面的界面。</p>
+                    <p><img alt="登录成功" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png"></p>
                     <p>  成功登录后，为了确保兼容性，需要更新一下软件包。</p>
                     <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ sudo apt upgrade -y</span></pre></td></tr></table></figure>
 
@@ -168,8 +169,10 @@
                     <p>  进入后选择左边的proxy，Protocol选择Socks5，Sever选择127.0.0.1，Port为1080。<br><img alt="Proxy" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png"></p>
                     <p>  保存退出后，就能访问Google啦～</p>
                     <p>  但这样有一个问题，所有的流量都走了代理服务器，而平时我们访问一些国内的网站是不需要走代理的，并且用代理服务器来访问国内的网站会非常的慢。可不可以实现自动分流呢？哈哈，SwitchyOmega给我们了这样一个“贴心”的服务：auto switch</p>
-                    <p>  选择左边的auto switch，再选择“Add a rule list”<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png"></p>
-                    <p>  在”Rule list rules”选择”proxy，Rule List Format”选择”AutoProxy”<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png"></p>
+                    <p>  选择左边的auto switch，再选择“Add a rule list”</p>
+                    <p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png"></p>
+                    <p>  在”Rule list rules”选择”proxy，Rule List Format”选择”AutoProxy”</p>
+                    <p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png"></p>
                     <p>  我们可以自定义规则，哪些网址走代理，哪些直接访问。但这样一个一个输入实在太麻烦，我们直接从GitHub上搜索gfwlist即可。</p>
                     <p>  选择第一项<br><img alt="github gfwlist" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png"></p>
                     <p>  进入后点击gfwlist.txt，复制URL到SwitchyOmega中的Rule List URL，再点击Download Profile Now<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png"></p>
@@ -191,7 +194,7 @@
                     <p>  如果显示以下内容表示已经开启</p>
                     <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ tcp_bbr                20480  25</span></pre></td></tr></table></figure>
 
-                    <p>  开启了bbr加速以后表示网速快的飞起，以我家的100M带宽为例，看YouTube 4k视频一点都不卡顿，网速也是相当给力的。<br><img alt="YouTube" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png"></p>
+                    <p>  开启了bbr加速以后网速快的飞起，以我家的100M带宽为例，看YouTube 4k视频一点都不卡顿，网速也是相当给力的。<br><img alt="YouTube" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png"></p>
 
                     <br>
                     <br>
