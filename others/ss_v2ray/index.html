@@ -154,13 +154,21 @@
 
                     <p>  进入到vim界面之后，按i进入插入模式，然后按照下面的模板将服务器的配置信息写好(只需将端口号和密码改成自己想要的即可)，最后按”Esc“+“:wq”保存并退出</p>
                     <p><code>{
+                        <br>
                         &quot;server&quot;:&quot;0.0.0.0&quot;,
+                        <br>
                         &quot;server_port&quot;: &quot;YOUR_PORT&quot;,
+                        <br>
                         &quot;local_address&quot;:&quot;127.0.0.1&quot;,
+                        <br>
                         &quot;local_port&quot;:&quot;1080&quot;,
+                        <br>
                         &quot;password&quot;:&quot;YOUR_PASSWD&quot;,
+                        <br>
                         &quot;timeout&quot;:&quot;500&quot;,
+                        <br>
                         &quot;method&quot;:&quot;aes-256-cfb&quot;
+                        <br>
                         }</code></p>
                     <p>  配置文件写好以后就要启动我们的server了，在这里我们需要从配置文件中读取相应参数，因此ssserver命令需要加入-c参数。</p>
                     <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json</span></pre></td></tr></table></figure>
