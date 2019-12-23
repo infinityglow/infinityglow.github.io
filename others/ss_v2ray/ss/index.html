@@ -1,61 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
-
-
-
-
 <head>
-	
-	
+
 	<link rel="stylesheet" href="/css/allinone.min.css">
 
-	
-
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/css/allinone.min.css">
 
-	<title>手把手教你用VPS搭建SS+bbr实现科学上网 | Hexo</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-	<meta name="HandheldFriendly" content="True">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-	<meta name="generator" content="hexo">
-	<meta name="author" content="John Doe">
-	<meta name="description" content>
+    <title>手把手教你用VPS搭建SS+bbr实现科学上网 | 幽默的白帽子的博客 </title>
 
-	
-	<meta name="keywords" content>
-	
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
 
-	
-	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
-	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
-	
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
 
-	
-	<meta name="theme-color" content="#3c484e">
-	<meta name="msapplication-TileColor" content="#3c484e">
-	
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
 
-	
-
-	
-	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
-	
-
-	<meta property="og:site_name" content="Hexo">
-	<meta property="og:type" content="article">
-	<meta property="og:title" content="手把手教你用VPS搭建SS+bbr实现科学上网 | Hexo">
-	<meta property="og:description" content>
-	<meta property="og:url" content="https://infinityglow.github.io/others/ss_v2ray/ss/">
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io/template/">
 
 	
-	<meta property="article:published_time" content="2019-12-22T01:12:79+08:00"> 
-	<meta property="article:author" content="John Doe">
-	<meta property="article:published_first" content="Hexo, /others/ss_v2ray/ss/">
-	
+	<meta property="article:author" content="Hongzhi Fu">
+
 </head>
 <body class="post-template">
 	<div class="site-wrapper">
@@ -70,22 +49,27 @@
 <nav class="site-nav"> 
     <div class="site-nav-left">
         <ul class="nav">
+
             <li>
-                
-                <a href="/" title="Home">HOME</a>
-                
+                <a href="/" title="主页">主页</a>
             </li>
-            
-            
+
             <li>
-                <a href="/about" title="ABOUT">ABOUT</a>
+                <a href="/study" title="技术篇">技术篇</a>
             </li>
-            
+
             <li>
-                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+                <a href="/life" title="生活篇">生活篇</a>
             </li>
-            
-            
+
+            <li>
+                <a href="/fun" title="轻松时刻">轻松时刻</a>
+            </li>
+
+            <li>
+                <a href="/about" title="about">about</a>
+            </li>
+
         </ul> 
     </div>
     
@@ -99,26 +83,21 @@
          
         
 <div class="social-links">
-    
-    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+
+    <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+        <img src="/static/icons&images/github.jpg" width="20" height="20"/>
     </a>
-    
-    
-    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+
+    <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+        <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
     </a>
-    
-    
-    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
+
+    <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+        <img src="/static/icons&images/youtube.png" width="20" height="20"/>
     </a>
-    
-    
-    
-    
-    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
+
+    <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+        <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
     </a>
     
     
@@ -132,15 +111,6 @@
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
         <header class="post-full-header">
-            <section class="post-full-meta">
-                <time class="post-full-meta-date" datetime="2019-12-21T17:10:21.795Z" itemprop="datePublished">
-                    2019-12-22
-                </time>
-                
-                <span class="date-divider">/</span>
-                
-                
-            </section>
             <h1 class="post-full-title">手把手教你用VPS搭建SS+bbr实现科学上网</h1>
         </header>
         <article class="post-full no-image">
@@ -148,112 +118,135 @@
             <section class="post-full-content">
                 <div id="lightgallery" class="markdown-body">
                     <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>  首先先声明一下，本文不带有任何商业性质，单纯地是想方便海内外学生党使用Google、YouTube、Wikipedia等工具来查阅资料，作为一个Google和Wikipedia的重度使用者，有时候离开了这两样东西真的就没办法生活，所以做一个这方面的教程是非常有必要的。</p>
-<p>  如果你对访问外网的频率和带宽要求不高，用一般的免费vpn或者一些在线代理就足够了，市面上这些vpn哪个好用，哪个免费相信你们比我更清楚。如果要经常看YouTube高清视频或者连外服打游戏的小伙伴呢，这些免费但又不稳定的vpn自然就不能满足你们的需要了，所以得拥有一个自己专属的服务器来实现科学上网。</p>
-<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p><img alt="Shadowsocks基本原理" title="基本原理示意图" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png"></p>
-<p>  简单介绍一下ss的基本原理，其实ss就是隧道通信的一种，就是说从中国大陆直接访问Google、Facebook等黑名单网站是会被防火墙检测到并直接中断我们与这些服务器的连接的。这时候ss横空出世，作为一个中间者把我们将要发送给Google、Facebook服务器的请求经过本地(sslocal)加密，再将它们封装一下，与我们后面要部署的服务器达成通信协议。</p>
-<p>  当服务器(ssserver)端收到来自sslocal的数据之后，先解密，再将解密过后的数据发送给Google、Facebook服务器。当这些服务器把数据传回给ssserver过后，ssserver会将这些数据加密并打包发送给sslocal，sslocal拿到数据之后再进行解密，最后以网页的形式呈现出来。整个过程中，由于数据是进行加密的，所以防火墙是不知道我们在访问Google等外网的。</p>
-<p>  但据说最近ss已经能够被防火墙识别出来其特征，安全性存在一些漏洞，如果有空了可以再做一期v2ray的教程，其安全性和稳定性都要比ss要高。</p>
-<h2 id="部署VPS"><a href="#部署VPS" class="headerlink" title="部署VPS"></a>部署VPS</h2><p>  第一步需要部署我们的云服务器，这里先推荐一下<a href="https://cloud.google.com" target="_blank" rel="noopener">谷歌云</a>，可以免费试用一年的时间，并且还比较稳定，但有点麻烦的是需要你绑定信用卡，而且还必须是美国的。。。</p>
-<p>  这里我们演示的是一些主流服务商提供的VPS，话不多说，先推荐一波：</p>
-<p>  <a href="https://bandwagonhost.com" target="_blank" rel="noopener">搬瓦工</a><br>  <a href="https://www.vultr.com" target="_blank" rel="noopener">vultr</a><br>  <a href="https://www.hostwinds.com" target="_blank" rel="noopener">hostwind</a><br>  <a href="https://www.time4vps.com" target="_blank" rel="noopener">time4vps</a></p>
-<p>  有的可能在国内被墙掉了，访问不了的只能自己想办法了。</p>
-<p>  这里以vultr为例，先进入官网。</p>
-<p><img alt="vultr官网" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png"><br>  如果你是新用户，则需要先注册一下，这里点击“Sign up”。<br>  点击之后，用你的邮箱作为用户名，然后自己创建一个密码。</p>
-<p><img alt="vultr注册界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png"><br>  注册完以后登录即可。</p>
-<p><img alt="vultr登录界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png"><br>  进入如下页面之后，选择“Product”，再点击右边的加号部署服务器。</p>
-<p><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png"></p>
-<p>  这里我们选择纽约的节点(因为最便宜)，然后系统选择Ubuntu 18.04，服务器配置根据自己的需求来选择。选完以后，点击下方的“Deploy Now”。付完款以后，将会出现如下的界面。<br><img alt="成功部署" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png"></p>
-<h2 id="Shadowsocks服务器端配置"><a href="#Shadowsocks服务器端配置" class="headerlink" title="Shadowsocks服务器端配置"></a>Shadowsocks服务器端配置</h2><p>  成功部署好VPS后就要开始服务器端的配置了。首先我们进入到服务器的信息页面(如下图所示)，我们需要记住这里的IP地址以及ssh远程登录时的密码。<br><img alt="服务器信息" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png"></p>
-<p>  拿到IP地址以后可以先打开终端ping一下以确保服务器是否可用。我这里以Ubuntu系统作为演示，通信一切正常。<br><img alt="ping" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png"></p>
-<p>  下一步就要用ssh命令远程登录我们的服务器了。Mac用户和Linux用户直接在终端使用ssh命令即可，Windows用户呢就要稍微麻烦一点，得先在网上下载PuTTY，然后再远程登录。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssh root@45.77.108.240</span></pre></td></tr></table></figure>
+                    <p>  如果你对访问外网的频率和带宽要求不高，用一般的免费vpn或者一些在线代理就足够了，市面上这些vpn哪个好用，哪个免费相信你们比我更清楚。如果要经常看YouTube高清视频或者连外服打游戏的小伙伴呢，这些免费但又不稳定的vpn自然就不能满足你们的需要了，所以得拥有一个自己专属的服务器来实现科学上网。</p>
+                    <h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p><img alt="Shadowsocks基本原理" title="基本原理示意图" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png"></p>
+                    <p>  简单介绍一下ss的基本原理，其实ss就是隧道通信的一种，就是说从中国大陆直接访问Google、Facebook等黑名单网站是会被防火墙检测到并直接中断我们与这些服务器的连接的。这时候ss横空出世，作为一个中间者把我们将要发送给Google、Facebook服务器的请求经过本地(sslocal)加密，再将它们封装一下，与我们后面要部署的服务器达成通信协议。</p>
+                    <p>  当服务器(ssserver)端收到来自sslocal的数据之后，先解密，再将解密过后的数据发送给Google、Facebook服务器。当这些服务器把数据传回给ssserver过后，ssserver会将这些数据加密并打包发送给sslocal，sslocal拿到数据之后再进行解密，最后以网页的形式呈现出来。整个过程中，由于数据是进行加密的，所以防火墙是不知道我们在访问Google等外网的。</p>
+                    <p>  但据说最近ss已经能够被防火墙识别出来其特征，安全性存在一些漏洞，如果有空了可以再做一期v2ray的教程，其安全性和稳定性都要比ss要高。</p>
+                    <h2 id="部署VPS"><a href="#部署VPS" class="headerlink" title="部署VPS"></a>部署VPS</h2><p>  第一步需要部署我们的云服务器，这里先推荐一下<a href="https://cloud.google.com" target="_blank" rel="noopener">谷歌云</a>，可以免费试用一年的时间，并且还比较稳定，但有点麻烦的是需要你绑定信用卡，而且还必须是美国的。。。</p>
+                    <p>  这里我们演示的是一些主流服务商提供的VPS，话不多说，先推荐一波：</p>
+                    <p>  <a href="https://bandwagonhost.com" target="_blank" rel="noopener">搬瓦工</a><br>  <a href="https://www.vultr.com" target="_blank" rel="noopener">vultr</a><br>  <a href="https://www.hostwinds.com" target="_blank" rel="noopener">hostwind</a><br>  <a href="https://www.time4vps.com" target="_blank" rel="noopener">time4vps</a></p>
+                    <p>  有的可能在国内被墙掉了，访问不了的只能自己想办法了。</p>
+                    <p>  这里以vultr为例，先进入官网。</p>
+                    <p><img alt="vultr官网" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png"><br>  如果你是新用户，则需要先注册一下，这里点击“Sign up”。<br>  点击之后，用你的邮箱作为用户名，然后自己创建一个密码。</p>
+                    <p><img alt="vultr注册界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png"><br>  注册完以后登录即可。</p>
+                    <p><img alt="vultr登录界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png"><br>  进入如下页面之后，选择“Product”，再点击右边的加号部署服务器。</p>
+                    <p><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png"></p>
+                    <p>  这里我们选择纽约的节点(因为最便宜)，然后系统选择Ubuntu 18.04，服务器配置根据自己的需求来选择。选完以后，点击下方的“Deploy Now”。付完款以后，将会出现如下的界面。<br><img alt="成功部署" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png"></p>
+                    <h2 id="Shadowsocks服务器端配置"><a href="#Shadowsocks服务器端配置" class="headerlink" title="Shadowsocks服务器端配置"></a>Shadowsocks服务器端配置</h2><p>  成功部署好VPS后就要开始服务器端的配置了。首先我们进入到服务器的信息页面(如下图所示)，我们需要记住这里的IP地址以及ssh远程登录时的密码。<br><img alt="服务器信息" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png"></p>
+                    <p>  拿到IP地址以后可以先打开终端ping一下以确保服务器是否可用。我这里以Ubuntu系统作为演示，通信一切正常。<br><img alt="ping" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png"></p>
+                    <p>  下一步就要用ssh命令远程登录我们的服务器了。Mac用户和Linux用户直接在终端使用ssh命令即可，Windows用户呢就要稍微麻烦一点，得先在网上下载PuTTY，然后再远程登录。</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssh root@45.77.108.240</span></pre></td></tr></table></figure>
 
-<p>  按下回车后会叫你输入密码，也就是前面服务器信息里的密码。登录成功后就会出现下面的界面。</p>
-<p><img alt="登录成功" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png"></p>
-<p>  成功登录后，为了确保兼容性，需要更新一下软件包。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ sudo apt upgrade -y</span></pre></td></tr></table></figure>
+                    <p>  按下回车后会叫你输入密码，也就是前面服务器信息里的密码。登录成功后就会出现下面的界面。</p>
+                    <p><img alt="登录成功" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png"></p>
+                    <p>  成功登录后，为了确保兼容性，需要更新一下软件包。</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ sudo apt upgrade -y</span></pre></td></tr></table></figure>
 
-<p>  安装python和pip</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sudo apt install python</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ sudo apt install python-pip</span></pre></td></tr></table></figure>
+                    <p>  安装python和pip</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sudo apt install python</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ sudo apt install python-pip</span></pre></td></tr></table></figure>
 
-<p>  安装shadowsocks</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ pip install shadowsocks</span></pre></td></tr></table></figure>
+                    <p>  安装shadowsocks</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ pip install shadowsocks</span></pre></td></tr></table></figure>
 
-<p>  在/etc/目录下创建shadowsocks.json配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ vim /etc/shadowsocks.json</span></pre></td></tr></table></figure>
+                    <p>  在/etc/目录下创建shadowsocks.json配置文件</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ vim /etc/shadowsocks.json</span></pre></td></tr></table></figure>
 
-<p>  进入到vim界面之后，按i进入插入模式，然后按照下面的模板将服务器的配置信息写好(只需将端口号和密码改成自己想要的即可)，最后按”Esc“+“:wq”保存并退出</p>
-<p><code>{
-    &quot;server&quot;:&quot;0.0.0.0&quot;,
-    &quot;server_port&quot;: &quot;YOUR_PORT&quot;,
-    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:&quot;1080&quot;,
-    &quot;password&quot;:&quot;YOUR_PASSWD&quot;,
-    &quot;timeout&quot;:&quot;500&quot;,
-    &quot;method&quot;:&quot;aes-256-cfb&quot;
-}</code></p>
-<p>  配置文件写好以后就要启动我们的server了，在这里我们需要从配置文件中读取相应参数，因此ssserver命令需要加入-c参数。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json</span></pre></td></tr></table></figure>
+                    <p>  进入到vim界面之后，按i进入插入模式，然后按照下面的模板将服务器的配置信息写好(只需将端口号和密码改成自己想要的即可)，最后按”Esc“+“:wq”保存并退出</p>
+                    <p><code>{
+                        <br>
+                        &quot;server&quot;:&quot;0.0.0.0&quot;,
+                        <br>
+                        &quot;server_port&quot;: &quot;YOUR_PORT&quot;,
+                        <br>
+                        &quot;local_address&quot;:&quot;127.0.0.1&quot;,
+                        <br>
+                        &quot;local_port&quot;:&quot;1080&quot;,
+                        <br>
+                        &quot;password&quot;:&quot;YOUR_PASSWD&quot;,
+                        <br>
+                        &quot;timeout&quot;:&quot;500&quot;,
+                        <br>
+                        &quot;method&quot;:&quot;aes-256-cfb&quot;
+                        <br>
+                        }</code></p>
+                    <p>  配置文件写好以后就要启动我们的server了，在这里我们需要从配置文件中读取相应参数，因此ssserver命令需要加入-c参数。</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json</span></pre></td></tr></table></figure>
 
-<p>  不出意外的话，第一次启动应该会报出“AttributeError: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup”这样的错，这篇<a href="https://blog.csdn.net/St_Louis/article/details/103171781" target="_blank" rel="noopener">博客</a>给出了完美的解决方案，只需要修改一个文件中的两行数据就行，这里我就不一一演示了。</p>
-<p>  如果想要在后台运行，只需要在最后加入“-d start”即可。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json -d start</span></pre></td></tr></table></figure>
+                    <p>  不出意外的话，第一次启动应该会报出“AttributeError: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup”这样的错，这篇<a href="https://blog.csdn.net/St_Louis/article/details/103171781" target="_blank" rel="noopener">博客</a>给出了完美的解决方案，只需要修改一个文件中的两行数据就行，这里我就不一一演示了。</p>
+                    <p>  如果想要在后台运行，只需要在最后加入“-d start”即可。</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json -d start</span></pre></td></tr></table></figure>
 
-<h2 id="Shadowsocks客户端配置"><a href="#Shadowsocks客户端配置" class="headerlink" title="Shadowsocks客户端配置"></a>Shadowsocks客户端配置</h2><p>  客户端比服务器端就要好配置多啦，三大主流操作系统都支持<a href="https://github.com/shadowsocks/shadowsocks-gui" target="_blank" rel="noopener">图形化界面</a>，Linux甚至支持还命令行的客户端。这里以Linux的GUI为例，只需要把服务器端的IP地址、端口号、密码、加密方式按照你服务器端配置的方式填写正确即可，剩下的本地地址、本地端口、协议类型就按照下面的方式填写就行了。</p>
-<p><img alt="客户端配置" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s26.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s26.png"></p>
-<h2 id="浏览器配置"><a href="#浏览器配置" class="headerlink" title="浏览器配置"></a>浏览器配置</h2><p>  虽然我们的服务器端和客户端都已经配置好了，但要在浏览器里实现外网的访问还需要几个简单的步骤。</p>
-<p>  首先需要在<a href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" target="_blank" rel="noopener">chrome网上应用店</a>下载一个叫做SwitchyOmega的插件。下载完成后在你的浏览器右上方会有一个小圆圈，点击后选择Option。<br><img alt="插件" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s15.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s15.png"></p>
-<p>  进入后选择左边的proxy，Protocol选择Socks5，Sever选择127.0.0.1，Port为1080。<br><img alt="Proxy" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png"></p>
-<p>  保存退出后，就能访问Google啦～</p>
-<p>  但这样有一个问题，所有的流量都走了代理服务器，而平时我们访问一些国内的网站是不需要走代理的，并且用代理服务器来访问国内的网站会非常的慢。可不可以实现自动分流呢？哈哈，SwitchyOmega给我们了这样一个“贴心”的服务：auto switch</p>
-<p>  选择左边的auto switch，再选择“Add a rule list”</p>
-<p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png"></p>
-<p>  在”Rule list rules”选择”proxy，Rule List Format”选择”AutoProxy”</p>
-<p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png"></p>
-<p>  我们可以自定义规则，哪些网址走代理，哪些直接访问。但这样一个一个输入实在太麻烦，我们直接从GitHub上搜索gfwlist即可。</p>
-<p>  选择第一项<br><img alt="github gfwlist" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png"></p>
-<p>  进入后点击gfwlist.txt，复制URL到SwitchyOmega中的Rule List URL，再点击Download Profile Now<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png"></p>
-<p>  更改应用后，你会发现下方的Rule List Text出现了各种网址，这说明已经添加成功了。<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s23.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s23.png"></p>
-<p>  这样当我们把SwitchyOmega的模式选择成auto switch后就能实现智能分流啦。</p>
-<h2 id="bbr加速"><a href="#bbr加速" class="headerlink" title="bbr加速"></a>bbr加速</h2><p>  最后，为了让我们的网速飞起来，看YouTube视频不会卡顿，需要借助一个叫做bbr加速的东西。操作非常简单，只需要几个步骤就好。这里需要再次登录我们的VPS，在VPS里进行操作。</p>
-<p>  修改系统变量并保存</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=fq"</span> &gt;&gt; /etc/sysctl.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ sysctl -p</span></pre></td></tr></table></figure>
+                    <h2 id="Shadowsocks客户端配置"><a href="#Shadowsocks客户端配置" class="headerlink" title="Shadowsocks客户端配置"></a>Shadowsocks客户端配置</h2><p>  客户端比服务器端就要好配置多啦，三大主流操作系统都支持<a href="https://github.com/shadowsocks/shadowsocks-gui" target="_blank" rel="noopener">图形化界面</a>，Linux甚至支持还命令行的客户端。这里以Linux的GUI为例，只需要把服务器端的IP地址、端口号、密码、加密方式按照你服务器端配置的方式填写正确即可，剩下的本地地址、本地端口、协议类型就按照下面的方式填写就行了。</p>
+                    <p><img alt="客户端配置" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s26.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s26.png"></p>
+                    <h2 id="浏览器配置"><a href="#浏览器配置" class="headerlink" title="浏览器配置"></a>浏览器配置</h2><p>  虽然我们的服务器端和客户端都已经配置好了，但要在浏览器里实现外网的访问还需要几个简单的步骤。</p>
+                    <p>  首先需要在<a href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" target="_blank" rel="noopener">chrome网上应用店</a>下载一个叫做SwitchyOmega的插件。下载完成后在你的浏览器右上方会有一个小圆圈，点击后选择Option。<br><img alt="插件" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s15.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s15.png"></p>
+                    <p>  进入后选择左边的proxy，Protocol选择Socks5，Sever选择127.0.0.1，Port为1080。<br><img alt="Proxy" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png"></p>
+                    <p>  保存退出后，就能访问Google啦～</p>
+                    <p>  但这样有一个问题，所有的流量都走了代理服务器，而平时我们访问一些国内的网站是不需要走代理的，并且用代理服务器来访问国内的网站会非常的慢。可不可以实现自动分流呢？哈哈，SwitchyOmega给我们了这样一个“贴心”的服务：auto switch</p>
+                    <p>  选择左边的auto switch，再选择“Add a rule list”</p>
+                    <p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png"></p>
+                    <p>  在”Rule list rules”选择”proxy，Rule List Format”选择”AutoProxy”</p>
+                    <p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png"></p>
+                    <p>  我们可以自定义规则，哪些网址走代理，哪些直接访问。但这样一个一个输入实在太麻烦，我们直接从GitHub上搜索gfwlist即可。</p>
+                    <p>  选择第一项<br><img alt="github gfwlist" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png"></p>
+                    <p>  进入后点击gfwlist.txt，复制URL到SwitchyOmega中的Rule List URL，再点击Download Profile Now<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png"></p>
+                    <p>  更改应用后，你会发现下方的Rule List Text出现了各种网址，这说明已经添加成功了。<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s23.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s23.png"></p>
+                    <p>  这样当我们把SwitchyOmega的模式选择成auto switch后就能实现智能分流啦。</p>
+                    <h2 id="bbr加速"><a href="#bbr加速" class="headerlink" title="bbr加速"></a>bbr加速</h2><p>  最后，为了让我们的网速飞起来，看YouTube视频不会卡顿，需要借助一个叫做bbr加速的东西。操作非常简单，只需要几个步骤就好。这里需要再次登录我们的VPS，在VPS里进行操作。</p>
+                    <p>  修改系统变量并保存</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=fq"</span> &gt;&gt; /etc/sysctl.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ sysctl -p</span></pre></td></tr></table></figure>
 
-<p>  查看是否开启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sysctl net.ipv4.tcp_available_congestion_control</span></pre></td></tr></table></figure>
+                    <p>  查看是否开启</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sysctl net.ipv4.tcp_available_congestion_control</span></pre></td></tr></table></figure>
 
-<p>  如果显示如下内容表示已经开启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ net.ipv4.tcp_available_congestion_control = reno cubic bbr</span></pre></td></tr></table></figure>
+                    <p>  如果显示如下内容表示已经开启</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ net.ipv4.tcp_available_congestion_control = reno cubic bbr</span></pre></td></tr></table></figure>
 
-<p>  查看BBR是否启动</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ lsmod | grep bbr</span></pre></td></tr></table></figure>
+                    <p>  查看BBR是否启动</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ lsmod | grep bbr</span></pre></td></tr></table></figure>
 
-<p>  如果显示以下内容表示已经开启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ tcp_bbr                20480  25</span></pre></td></tr></table></figure>
+                    <p>  如果显示以下内容表示已经开启</p>
+                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ tcp_bbr                20480  25</span></pre></td></tr></table></figure>
 
-<p>  开启了bbr加速以后网速快的飞起，以我家的100M带宽为例，看YouTube 4k视频一点都不卡顿，网速也是相当给力的。<br><img alt="YouTube" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png"></p>
+                    <p>  开启了bbr加速以后网速快的飞起，以我家的100M带宽为例，看YouTube 4k视频一点都不卡顿，网速也是相当给力的。<br><img alt="YouTube" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png"></p>
 
+                    <br>
+                    <br>
+                    <br>
+
+                    <a href="/tags/data_structure" rel="tag"># 科学上网   </a>
+                    <br>
+                    <a href="/tags/bst" rel="tag"># Linux</a>
+
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <!-- 来必力City版安装代码 -->
+                    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
+                        <script type="text/javascript">
+                            (function(d, s) {
+                                var j, e = d.getElementsByTagName(s)[0];
+
+                                if (typeof LivereTower === 'function') { return; }
+
+                                j = d.createElement(s);
+                                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                                j.async = true;
+
+                                e.parentNode.insertBefore(j, e);
+                            })(document, 'script');
+                        </script>
+                        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+                    </div>
+                    <!-- City版安装代码已完成 -->
                 </div>
             </section>
         </article>
     </div>
 
-    
-    <div style="height: 4vw;width: 100%"></div>
-    <nav id="gobottom" class="pagination">
-        
-        <a class="prev-post" title="算法与复杂度" href="/study/algorithm/overview/algo-ov/">
-            ← 算法与复杂度
-        </a>
-        
-        <span class="prev-next-post">•</span>
-        
-    </nav>
-
-    
-    <div class="inner">
-        <div id="comment"></div>
-    </div>
     
 </main>
 
@@ -271,79 +264,110 @@
         </a>
     </div>
     <div class="toc-main">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本原理"><span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署VPS"><span class="toc-text">部署VPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shadowsocks服务器端配置"><span class="toc-text">Shadowsocks服务器端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shadowsocks客户端配置"><span class="toc-text">Shadowsocks客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器配置"><span class="toc-text">浏览器配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bbr加速"><span class="toc-text">bbr加速</span></a></li></ol>
     </div>
 </div>
 
 
 
 	</div>
-	
+
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            
-            
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/main.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/others/ss_v2ray">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                        </li>
 
-<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
-  <header class="read-next-card-header">
-    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
-    <h3 class="read-next-card-header-title">Recent Posts</h3>
-  </header>
-  <div class="read-next-divider">
-    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-    </svg>
-  </div>
-  <div class="read-next-card-content">
-    <ul>
-      
-      
-      
-      <li>
-        <a href="/study/algorithm/overview/algo-ov/">算法与复杂度</a>
-      </li>
-      
-      
-      
-      <li>
-        <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
-      </li>
-      
-      
-    </ul>
-  </div>
-  <footer class="read-next-card-footer">
-    <a href="/archives">  MORE  → </a>
-  </footer>
-</article>
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
 
-            
-            
-            
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
 
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/study">  MORE  → </a>
+                </footer>
+            </article>
 
-            
-            
-            
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/main.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories/sets/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/categories//">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
 
-            
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/main.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
+                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
+                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
+                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
+                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
+                </div>
+            </article>
         </div>
     </div>
 </aside>
 
-	
+
 
 
 
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-        
-        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
-        
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -352,20 +376,25 @@
 
 
 <footer class="site-footer outer">
-	<div class="site-footer-content inner">
-		<section class="copyright">
-			<a href="/" title="Hexo">Hexo</a>
-			&copy; 2019
-		</section>
-		<nav class="site-footer-nav">
-			
-            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
-            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
-        </nav>
-    </div>
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Github:
+        </strong>
+        <a href="https://github.com/infinityglow"; style="text-align: center">
+            github.com/infinitiglow
+        </a>
+    </p>
 </footer>
-	
+
 
 
 <script>
@@ -388,14 +417,14 @@
 <div class="floating-header">
 	<div class="floating-header-logo">
         <a href="/" title="Hexo">
-			
-                <img src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo icon">
-			
-            <span>Hexo</span>
+
+                <img src="/static/icons&images/profile.jpg" alt="Hexo icon">
+
+            <span>手把手教你用VPS搭建SS+bbr实现科学上网</span>
         </a>
     </div>
-    <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">手把手教你用VPS搭建SS+bbr实现科学上网</div>
+    <span class="floating-header-divider"></span>
+    <div class="floating-header-title"></div>
     <progress class="progress" value="0">
         <div class="progress-container">
             <span class="progress-bar"></span>
@@ -403,16 +432,9 @@
     </progress>
 </div>
 
-
-
-
-
 <script src="/js/mix/post-lazy-local.min.js"></script>
 
 <script>;(function() {var bLazy = new Blazy()})();</script>
-
-
-
 
 <script src="/js/lightgallery.min.js"></script>
 <link rel="stylesheet" href="/css/lightgallery.min.css">
@@ -422,35 +444,7 @@
     });
 </script>
 
-
-
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-    new Valine({
-        el: '#comment' ,
-        verify: false,
-        notify: false,
-        appId: 'aBRltWkLKGNezPSGs1TBA0GE-gzGzoHsz',
-        appKey: 'Tg0cJFUAcAbzFVaO5hwaRXsx',
-        placeholder: '你是魔鬼吧，都不留言！',
-        pageSize: 10,
-        avatar: 'mm',
-        visitor: true,
-    });
-</script>
-
-
-
-
-
-
 <script>searchFunc("/")</script>
-
-
-
-
 
 </body>
 </html>
