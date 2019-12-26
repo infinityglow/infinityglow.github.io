@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en">
 
 <head>
 
@@ -11,8 +11,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link href="/css/default.css" rel="stylesheet">
-    <link href="/css/github.css" rel="stylesheet">
+
 
     <title>手把手教你用VPS搭建SS+bbr实现科学上网 | 幽默的白帽子的博客 </title>
 
@@ -120,106 +119,146 @@
             
             <section class="post-full-content">
                 <div id="lightgallery" class="markdown-body">
-                    <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>  首先先声明一下，本文不带有任何商业性质，单纯地是想方便海内外学生党使用Google、YouTube、Wikipedia等工具来查阅资料，作为一个Google和Wikipedia的重度使用者，有时候离开了这两样东西真的就没办法生活，所以做一个这方面的教程是非常有必要的。</p>
-                    <p>  如果你对访问外网的频率和带宽要求不高，用一般的免费vpn或者一些在线代理就足够了，市面上这些vpn哪个好用，哪个免费相信你们比我更清楚。如果要经常看YouTube高清视频或者连外服打游戏的小伙伴呢，这些免费但又不稳定的vpn自然就不能满足你们的需要了，所以得拥有一个自己专属的服务器来实现科学上网。</p>
-                    <h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p><img alt="Shadowsocks基本原理" title="基本原理示意图" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png"></p>
-                    <p>  简单介绍一下ss的基本原理，其实ss就是隧道通信的一种，就是说从中国大陆直接访问Google、Facebook等黑名单网站是会被防火墙检测到并直接中断我们与这些服务器的连接的。这时候ss横空出世，作为一个中间者把我们将要发送给Google、Facebook服务器的请求经过本地(sslocal)加密，再将它们封装一下，与我们后面要部署的服务器达成通信协议。</p>
-                    <p>  当服务器(ssserver)端收到来自sslocal的数据之后，先解密，再将解密过后的数据发送给Google、Facebook服务器。当这些服务器把数据传回给ssserver过后，ssserver会将这些数据加密并打包发送给sslocal，sslocal拿到数据之后再进行解密，最后以网页的形式呈现出来。整个过程中，由于数据是进行加密的，所以防火墙是不知道我们在访问Google等外网的。</p>
-                    <p>  但据说最近ss已经能够被防火墙识别出来其特征，安全性存在一些漏洞，如果有空了可以再做一期v2ray的教程，其安全性和稳定性都要比ss要高。</p>
-                    <h2 id="部署VPS"><a href="#部署VPS" class="headerlink" title="部署VPS"></a>部署VPS</h2><p>  第一步需要部署我们的云服务器，这里先推荐一下<a href="https://cloud.google.com" target="_blank" rel="noopener">谷歌云</a>，可以免费试用一年的时间，并且还比较稳定，但有点麻烦的是需要你绑定信用卡，而且还必须是美国的。。。</p>
-                    <p>  这里我们演示的是一些主流服务商提供的VPS，话不多说，先推荐一波：</p>
-                    <p>  <a href="https://bandwagonhost.com" target="_blank" rel="noopener">搬瓦工</a><br>  <a href="https://www.vultr.com" target="_blank" rel="noopener">vultr</a><br>  <a href="https://www.hostwinds.com" target="_blank" rel="noopener">hostwind</a><br>  <a href="https://www.time4vps.com" target="_blank" rel="noopener">time4vps</a></p>
-                    <p>  有的可能在国内被墙掉了，访问不了的只能自己想办法了。</p>
-                    <p>  这里以vultr为例，先进入官网。</p>
-                    <p><img alt="vultr官网" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png"><br>  如果你是新用户，则需要先注册一下，这里点击“Sign up”。<br>  点击之后，用你的邮箱作为用户名，然后自己创建一个密码。</p>
-                    <p><img alt="vultr注册界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png"><br>  注册完以后登录即可。</p>
-                    <p><img alt="vultr登录界面" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png"><br>  进入如下页面之后，选择“Product”，再点击右边的加号部署服务器。</p>
-                    <p><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png"><br><img alt="部署服务器" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png"></p>
-                    <p>  这里我们选择纽约的节点(因为最便宜)，然后系统选择Ubuntu 18.04，服务器配置根据自己的需求来选择。选完以后，点击下方的“Deploy Now”。付完款以后，将会出现如下的界面。<br><img alt="成功部署" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png"></p>
-                    <h2 id="Shadowsocks服务器端配置"><a href="#Shadowsocks服务器端配置" class="headerlink" title="Shadowsocks服务器端配置"></a>Shadowsocks服务器端配置</h2><p>  成功部署好VPS后就要开始服务器端的配置了。首先我们进入到服务器的信息页面(如下图所示)，我们需要记住这里的IP地址以及ssh远程登录时的密码。<br><img alt="服务器信息" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png"></p>
-                    <p>  拿到IP地址以后可以先打开终端ping一下以确保服务器是否可用。我这里以Ubuntu系统作为演示，通信一切正常。<br><img alt="ping" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png"></p>
-                    <p>  下一步就要用ssh命令远程登录我们的服务器了。Mac用户和Linux用户直接在终端使用ssh命令即可，Windows用户呢就要稍微麻烦一点，得先在网上下载PuTTY，然后再远程登录。</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssh root@45.77.108.240</span></pre></td></tr></table></figure>
+                    <h2 id="_1">写在前面</h2>
+                    <p>首先先声明一下，本文不带有任何商业性质，单纯地是想方便海内外学生党使用Google、YouTube、Wikipedia等工具来查阅资料，作为一个Google和Wikipedia的重度使用者，有时候离开了这两样东西真的就没办法生活，所以做一个这方面的教程是非常有必要的。</p>
+                    <p>如果你对访问外网的频率和带宽要求不高，用一般的免费vpn或者一些在线代理就足够了，市面上这些vpn哪个好用，哪个免费相信你们比我更清楚。如果要经常看YouTube高清视频或者连外服打游戏的小伙伴呢，这些免费但又不稳定的vpn自然就不能满足你们的需要了，所以得拥有一个自己专属的服务器来实现科学上网。</p>
+                    <h2 id="_2">基本原理</h2>
+                    <p><img alt="Shadowsocks基本原理" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/principle.png" title="基本原理示意图" /></p>
+                    <p>简单介绍一下ss的基本原理，其实ss就是隧道通信的一种，就是说从中国大陆直接访问Google、Facebook等黑名单网站是会被防火墙检测到并直接中断我们与这些服务器的连接的。这时候ss横空出世，作为一个中间者把我们将要发送给Google、Facebook服务器的请求经过本地(sslocal)加密，再将它们封装一下，与我们后面要部署的服务器达成通信协议。</p>
+                    <p>当服务器(ssserver)端收到来自sslocal的数据之后，先解密，再将解密过后的数据发送给Google、Facebook服务器。当这些服务器把数据传回给ssserver过后，ssserver会将这些数据加密并打包发送给sslocal，sslocal拿到数据之后再进行解密，最后以网页的形式呈现出来。整个过程中，由于数据是进行加密的，所以防火墙是不知道我们在访问Google等外网的。</p>
+                    <p>但据说最近ss已经能够被防火墙识别出来其特征，安全性存在一些漏洞，如果有空了可以再做一期v2ray的教程，其安全性和稳定性都要比ss要高。</p>
+                    <h2 id="vps">部署VPS</h2>
+                    <p>第一步需要部署我们的云服务器，这里先推荐一下<a href="https://cloud.google.com">谷歌云</a>，可以免费试用一年的时间，并且还比较稳定，但有点麻烦的是需要你绑定信用卡，而且还必须是美国的。。。</p>
+                    <p>这里我们演示的是一些主流服务商提供的VPS，话不多说，先推荐一波：</p>
+                    <p><a href="https://bandwagonhost.com">搬瓦工</a>
+                        <a href="https://www.vultr.com">vultr</a>
+                        <a href="https://www.hostwinds.com">hostwind</a>
+                        <a href="https://www.time4vps.com">time4vps</a></p>
+                    <p>有的可能在国内被墙掉了，访问不了的只能自己想办法了。</p>
+                    <p>这里以vultr为例，先进入官网。</p>
+                    <p><img alt="vultr官网" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s1.png" />
+                        如果你是新用户，则需要先注册一下，这里点击“Sign up”。
+                        点击之后，用你的邮箱作为用户名，然后自己创建一个密码。</p>
+                    <p><img alt="vultr注册界面" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s2.png" />
+                        注册完以后登录即可。</p>
+                    <p><img alt="vultr登录界面" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s3.png" />
+                        进入如下页面之后，选择“Product”，再点击右边的加号部署服务器。</p>
+                    <p><img alt="部署服务器" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s4.png" />
+                        <img alt="部署服务器" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s5.png" />
+                        <img alt="部署服务器" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s6.png" /></p>
+                    <p>这里我们选择纽约的节点(因为最便宜)，然后系统选择Ubuntu 18.04，服务器配置根据自己的需求来选择。选完以后，点击下方的“Deploy Now”。付完款以后，将会出现如下的界面。
+                        <img alt="成功部署" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s7.png" /></p>
+                    <h2 id="shadowsocks">Shadowsocks服务器端配置</h2>
+                    <p>成功部署好VPS后就要开始服务器端的配置了。首先我们进入到服务器的信息页面(如下图所示)，我们需要记住这里的IP地址以及ssh远程登录时的密码。
+                        <img alt="服务器信息" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s10.png" /></p>
+                    <p>拿到IP地址以后可以先打开终端ping一下以确保服务器是否可用。我这里以Ubuntu系统作为演示，通信一切正常。
+                        <img alt="ping" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s9.png" /></p>
+                    <p>下一步就要用ssh命令远程登录我们的服务器了。Mac用户和Linux用户直接在终端使用ssh命令即可，Windows用户呢就要稍微麻烦一点，得先在网上下载PuTTY，然后再远程登录。</p>
+                    <div class="codehilite"><pre><span></span>$ ssh root@45.77.108.240
+</pre></div>
 
-                    <p>  按下回车后会叫你输入密码，也就是前面服务器信息里的密码。登录成功后就会出现下面的界面。</p>
-                    <p><img alt="登录成功" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png"></p>
-                    <p>  成功登录后，为了确保兼容性，需要更新一下软件包。</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ sudo apt upgrade -y</span></pre></td></tr></table></figure>
 
-                    <p>  安装python和pip</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sudo apt install python</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ sudo apt install python-pip</span></pre></td></tr></table></figure>
+                    <p>按下回车后会叫你输入密码，也就是前面服务器信息里的密码。登录成功后就会出现下面的界面。</p>
+                    <p><img alt="登录成功" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s12.png" /></p>
+                    <p>成功登录后，为了确保兼容性，需要更新一下软件包。</p>
+                    <div class="codehilite"><pre><span></span>$ sudo apt update
+$ sudo apt upgrade -y
+</pre></div>
 
-                    <p>  安装shadowsocks</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ pip install shadowsocks</span></pre></td></tr></table></figure>
 
-                    <p>  在/etc/目录下创建shadowsocks.json配置文件</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ vim /etc/shadowsocks.json</span></pre></td></tr></table></figure>
+                    <p>安装python和pip</p>
+                    <div class="codehilite"><pre><span></span>$ sudo apt install python
+$ sudo apt install python-pip
+</pre></div>
 
-                    <p>  进入到vim界面之后，按i进入插入模式，然后按照下面的模板将服务器的配置信息写好(只需将端口号和密码改成自己想要的即可)，最后按”Esc“+“:wq”保存并退出</p>
+
+                    <p>安装shadowsocks</p>
+                    <div class="codehilite"><pre><span></span>$ pip install shadowsocks
+</pre></div>
+
+
+                    <p>在/etc/目录下创建shadowsocks.json配置文件</p>
+                    <div class="codehilite"><pre><span></span>$ vim /etc/shadowsocks.json
+</pre></div>
+
+
+                    <p>进入到vim界面之后，按i进入插入模式，然后按照下面的模板将服务器的配置信息写好(只需将端口号和密码改成自己想要的即可)，最后按”Esc“+“:wq”保存并退出</p>
                     <p><code>{
-                        <br>
-                        &quot;server&quot;:&quot;0.0.0.0&quot;,
-                        <br>
-                        &quot;server_port&quot;: &quot;YOUR_PORT&quot;,
-                        <br>
-                        &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-                        <br>
-                        &quot;local_port&quot;:&quot;1080&quot;,
-                        <br>
-                        &quot;password&quot;:&quot;YOUR_PASSWD&quot;,
-                        <br>
-                        &quot;timeout&quot;:&quot;500&quot;,
-                        <br>
-                        &quot;method&quot;:&quot;aes-256-cfb&quot;
-                        <br>
+                        "server":"0.0.0.0",
+                        "server_port": "YOUR_PORT",
+                        "local_address":"127.0.0.1",
+                        "local_port":"1080",
+                        "password":"YOUR_PASSWD",
+                        "timeout":"500",
+                        "method":"aes-256-cfb"
                         }</code></p>
-                    <p>  配置文件写好以后就要启动我们的server了，在这里我们需要从配置文件中读取相应参数，因此ssserver命令需要加入-c参数。</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json</span></pre></td></tr></table></figure>
+                    <p>配置文件写好以后就要启动我们的server了，在这里我们需要从配置文件中读取相应参数，因此ssserver命令需要加入-c参数。</p>
+                    <div class="codehilite"><pre><span></span>$ ssserver -c /etc/shadowsocks.json
+</pre></div>
 
-                    <p>  不出意外的话，第一次启动应该会报出“AttributeError: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup”这样的错，这篇<a href="https://blog.csdn.net/St_Louis/article/details/103171781" target="_blank" rel="noopener">博客</a>给出了完美的解决方案，只需要修改一个文件中的两行数据就行，这里我就不一一演示了。</p>
-                    <p>  如果想要在后台运行，只需要在最后加入“-d start”即可。</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ ssserver -c /etc/shadowsocks.json -d start</span></pre></td></tr></table></figure>
 
-                    <h2 id="Shadowsocks客户端配置"><a href="#Shadowsocks客户端配置" class="headerlink" title="Shadowsocks客户端配置"></a>Shadowsocks客户端配置</h2><p>  客户端比服务器端就要好配置多啦，三大主流操作系统都支持<a href="https://github.com/shadowsocks/shadowsocks-gui" target="_blank" rel="noopener">图形化界面</a>，Linux甚至支持还命令行的客户端。这里以Linux的GUI为例，只需要把服务器端的IP地址、端口号、密码、加密方式按照你服务器端配置的方式填写正确即可，剩下的本地地址、本地端口、协议类型就按照下面的方式填写就行了。</p>
-                    <p><img alt="客户端配置" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s26.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s26.png"></p>
-                    <h2 id="浏览器配置"><a href="#浏览器配置" class="headerlink" title="浏览器配置"></a>浏览器配置</h2><p>  虽然我们的服务器端和客户端都已经配置好了，但要在浏览器里实现外网的访问还需要几个简单的步骤。</p>
-                    <p>  首先需要在<a href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN" target="_blank" rel="noopener">chrome网上应用店</a>下载一个叫做SwitchyOmega的插件。下载完成后在你的浏览器右上方会有一个小圆圈，点击后选择Option。<br><img alt="插件" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s15.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s15.png"></p>
-                    <p>  进入后选择左边的proxy，Protocol选择Socks5，Sever选择127.0.0.1，Port为1080。<br><img alt="Proxy" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png"></p>
-                    <p>  保存退出后，就能访问Google啦～</p>
-                    <p>  但这样有一个问题，所有的流量都走了代理服务器，而平时我们访问一些国内的网站是不需要走代理的，并且用代理服务器来访问国内的网站会非常的慢。可不可以实现自动分流呢？哈哈，SwitchyOmega给我们了这样一个“贴心”的服务：auto switch</p>
-                    <p>  选择左边的auto switch，再选择“Add a rule list”</p>
-                    <p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png"></p>
-                    <p>  在”Rule list rules”选择”proxy，Rule List Format”选择”AutoProxy”</p>
-                    <p><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png"></p>
-                    <p>  我们可以自定义规则，哪些网址走代理，哪些直接访问。但这样一个一个输入实在太麻烦，我们直接从GitHub上搜索gfwlist即可。</p>
-                    <p>  选择第一项<br><img alt="github gfwlist" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png"></p>
-                    <p>  进入后点击gfwlist.txt，复制URL到SwitchyOmega中的Rule List URL，再点击Download Profile Now<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png"></p>
-                    <p>  更改应用后，你会发现下方的Rule List Text出现了各种网址，这说明已经添加成功了。<br><img alt="auto switch" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s23.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s23.png"></p>
-                    <p>  这样当我们把SwitchyOmega的模式选择成auto switch后就能实现智能分流啦。</p>
-                    <h2 id="bbr加速"><a href="#bbr加速" class="headerlink" title="bbr加速"></a>bbr加速</h2><p>  最后，为了让我们的网速飞起来，看YouTube视频不会卡顿，需要借助一个叫做bbr加速的东西。操作非常简单，只需要几个步骤就好。这里需要再次登录我们的VPS，在VPS里进行操作。</p>
-                    <p>  修改系统变量并保存</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=fq"</span> &gt;&gt; /etc/sysctl.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ sysctl -p</span></pre></td></tr></table></figure>
+                    <p>不出意外的话，第一次启动应该会报出“AttributeError: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup”这样的错，这篇<a href="https://blog.csdn.net/St_Louis/article/details/103171781">博客</a>给出了完美的解决方案，只需要修改一个文件中的两行数据就行，这里我就不一一演示了。</p>
+                    <p>如果想要在后台运行，只需要在最后加入“-d start”即可。</p>
+                    <div class="codehilite"><pre><span></span>$ ssserver -c /etc/shadowsocks.json -d start
+</pre></div>
 
-                    <p>  查看是否开启</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ sysctl net.ipv4.tcp_available_congestion_control</span></pre></td></tr></table></figure>
 
-                    <p>  如果显示如下内容表示已经开启</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ net.ipv4.tcp_available_congestion_control = reno cubic bbr</span></pre></td></tr></table></figure>
+                    <h2 id="shadowsocks_1">Shadowsocks客户端配置</h2>
+                    <p>客户端比服务器端就要好配置多啦，三大主流操作系统都支持<a href="https://github.com/shadowsocks/shadowsocks-gui">图形化界面</a>，Linux甚至支持还命令行的客户端。这里以Linux的GUI为例，只需要把服务器端的IP地址、端口号、密码、加密方式按照你服务器端配置的方式填写正确即可，剩下的本地地址、本地端口、协议类型就按照下面的方式填写就行了。</p>
+                    <p><img alt="客户端配置" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s26.png" /></p>
+                    <h2 id="_3">浏览器配置</h2>
+                    <p>虽然我们的服务器端和客户端都已经配置好了，但要在浏览器里实现外网的访问还需要几个简单的步骤。</p>
+                    <p>首先需要在<a href="https://chrome.google.com/webstore/category/extensions?hl=zh-CN">chrome网上应用店</a>下载一个叫做SwitchyOmega的插件。下载完成后在你的浏览器右上方会有一个小圆圈，点击后选择Option。
+                        <img alt="插件" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s15.png" /></p>
+                    <p>进入后选择左边的proxy，Protocol选择Socks5，Sever选择127.0.0.1，Port为1080。
+                        <img alt="Proxy" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s16.png" /></p>
+                    <p>保存退出后，就能访问Google啦～</p>
+                    <p>但这样有一个问题，所有的流量都走了代理服务器，而平时我们访问一些国内的网站是不需要走代理的，并且用代理服务器来访问国内的网站会非常的慢。可不可以实现自动分流呢？哈哈，SwitchyOmega给我们了这样一个“贴心”的服务：auto switch</p>
+                    <p>选择左边的auto switch，再选择“Add a rule list”</p>
+                    <p><img alt="auto switch" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s17.png" /></p>
+                    <p>在"Rule list rules"选择"proxy，Rule List Format"选择"AutoProxy"</p>
+                    <p><img alt="auto switch" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s21.png" /></p>
+                    <p>我们可以自定义规则，哪些网址走代理，哪些直接访问。但这样一个一个输入实在太麻烦，我们直接从GitHub上搜索gfwlist即可。</p>
+                    <p>选择第一项
+                        <img alt="github gfwlist" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s18.png" /></p>
+                    <p>进入后点击gfwlist.txt，复制URL到SwitchyOmega中的Rule List URL，再点击Download Profile Now
+                        <img alt="auto switch" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s19.png" /></p>
+                    <p>更改应用后，你会发现下方的Rule List Text出现了各种网址，这说明已经添加成功了。
+                        <img alt="auto switch" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s23.png" /></p>
+                    <p>这样当我们把SwitchyOmega的模式选择成auto switch后就能实现智能分流啦。</p>
+                    <h2 id="bbr">bbr加速</h2>
+                    <p>最后，为了让我们的网速飞起来，看YouTube视频不会卡顿，需要借助一个叫做bbr加速的东西。操作非常简单，只需要几个步骤就好。这里需要再次登录我们的VPS，在VPS里进行操作。</p>
+                    <p>修改系统变量并保存</p>
+                    <div class="codehilite"><pre><span></span>$ <span class="nb">echo</span> <span class="s2">&quot;net.core.default_qdisc=fq&quot;</span> &gt;&gt; /etc/sysctl.conf
+$ <span class="nb">echo</span> <span class="s2">&quot;net.ipv4.tcp_congestion_control=bbr&quot;</span> &gt;&gt; /etc/sysctl.conf
+$ sysctl -p
+</pre></div>
 
-                    <p>  查看BBR是否启动</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ lsmod | grep bbr</span></pre></td></tr></table></figure>
 
-                    <p>  如果显示以下内容表示已经开启</p>
-                    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ tcp_bbr                20480  25</span></pre></td></tr></table></figure>
+                    <p>查看是否开启</p>
+                    <div class="codehilite"><pre><span></span>$ sysctl net.ipv4.tcp_available_congestion_control
+</pre></div>
 
-                    <p>  开启了bbr加速以后网速快的飞起，以我家的100M带宽为例，看YouTube 4k视频一点都不卡顿，网速也是相当给力的。<br><img alt="YouTube" class="post-img b-lazy" href="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png" data-src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png"></p>
-                    <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+                    <p>如果显示如下内容表示已经开启</p>
+                    <div class="codehilite"><pre><span></span>$ net.ipv4.tcp_available_congestion_control <span class="o">=</span> reno cubic bbr
+</pre></div>
 
-<span class="c1"># this is a test</span>
-</pre>
+
+                    <p>查看BBR是否启动</p>
+                    <div class="codehilite"><pre><span></span>$ lsmod <span class="p">|</span> grep bbr
+</pre></div>
+
+
+                    <p>如果显示以下内容表示已经开启</p>
+                    <div class="codehilite"><pre><span></span>$ tcp_bbr                <span class="m">20480</span>  <span class="m">25</span>
+</pre></div>
+
+
+                    <p>开启了bbr加速以后网速快的飞起，以我家的100M带宽为例，看YouTube 4k视频一点都不卡顿，网速也是相当给力的。
+                        <img alt="YouTube" src="https://infinityglow.github.io/others/ss_v2ray/screenshot_ss/s25.png" /></p>
+
+
                     <br>
                     <br>
                     <br>
