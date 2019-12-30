@@ -124,97 +124,97 @@
                     <p>如果说程序员是用代码编织这个世界的一群人，那么<strong>数据结构</strong>（<strong>data structure</strong>）就是编织所用到的各种工具了，它将计算机中各种各样的数据组织在一起。而我们的算法就是利用这些现有的工具将它们拼接成风格、功能各不相同的程序了。简单来说：算法 + 数据结构 = 程序。这一节就让我们来了解一些基本的数据结构吧。</p>
                     <h2 id="_2">数组与链表</h2>
                     <p>我们从最简单的一维数据结构开始。数组大家应该都不陌生，它是将一组相同数据类型的数据存储在一起的数据结构。</p>
-                    <p><img alt="数组" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/array0.png" /></p>
+                    <p><img alt="数组" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array0.png" /></p>
                     <p>这里我们分析一下最基本的三大操作：查找、插入和删除。</p>
                     <p>拿上面的图为例，因为数组中每一个<strong>元素</strong>（<strong>element</strong>）都有自己的一个下标，称为<strong>索引</strong>（<strong>index</strong>），它们被存储在计算机的RAM中，所以查找的速度非常快。一般查找的时间不随数组长度而增加。</p>
                     <p>插入和删除就要稍微麻烦一些。因为数组占用的是计算机内存的连续地址空间，所以在插入一个新元素时，所有在它后面的元素都要向后移动一个单位，为新元素“腾出”位置。同理，为了保持数组的完整性，删除一个元素后，所有在它后面的元素也要向前移动一个单位，以此来“填充”空位。</p>
                     <p>以这里的数组为例，如果我们要删除 <code>index = 5</code> 的元素，那么在它后面的 <code>15</code>，<code>34</code> 和 <code>80</code> 都要向前移动一个单位，如下图中所示。</p>
-                    <p><img alt="数组" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/array1.png" /></p>
+                    <p><img alt="数组" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array1.png" /></p>
                     <p>让我们用Python代码来实现一下。</p>
-                    <div class="codehilite"><pre><span></span># 查找
-<span class="nv">def</span> <span class="nv">search</span><span class="ss">(</span><span class="nv">array</span>, <span class="nv">element</span><span class="ss">)</span>:
-    <span class="nv">length</span> <span class="o">=</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">array</span><span class="ss">)</span>
-    <span class="k">for</span> <span class="nv">i</span> <span class="nv">in</span> <span class="nv">range</span><span class="ss">(</span><span class="nv">length</span><span class="ss">)</span>:
-        <span class="k">if</span> <span class="nv">array</span>[<span class="nv">i</span>] <span class="o">==</span> <span class="nv">element</span>:
-            <span class="k">return</span> <span class="nv">i</span>
+                    <div class="highlight"><pre><span></span><span class="c1"># 查找</span>
+<span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">element</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
-# 插入
-<span class="nv">def</span> <span class="nv">insert</span><span class="ss">(</span><span class="nv">array</span>, <span class="nv">idx</span>, <span class="nv">element</span><span class="ss">)</span>:
-    <span class="nv">new_array</span> <span class="o">=</span> <span class="nv">array</span>.<span class="nv">copy</span><span class="ss">()</span> <span class="o">+</span> [<span class="nv">None</span>]  # 复制原数组到一个新数组
-    <span class="nv">length</span> <span class="o">=</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">new_array</span><span class="ss">)</span><span class="c1">; i = length - 1</span>
-    # 所有<span class="nv">idx</span>之后的元素向右移动一个单位
-    <span class="k">while</span> <span class="nv">i</span> <span class="o">&gt;</span> <span class="nv">idx</span>:
-        <span class="nv">new_array</span>[<span class="nv">i</span>] <span class="o">=</span> <span class="nv">new_array</span>[<span class="nv">i</span><span class="o">-</span><span class="mi">1</span>]
-        <span class="nv">i</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="nv">new_array</span>[<span class="nv">idx</span>] <span class="o">=</span> <span class="nv">element</span>
-    <span class="k">return</span> <span class="nv">new_array</span>
+<span class="c1"># 插入</span>
+<span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+    <span class="n">new_array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span>  <span class="c1"># 复制原数组到一个新数组</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_array</span><span class="p">);</span> <span class="n">i</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="c1"># 所有idx之后的元素向右移动一个单位</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
+        <span class="n">new_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_array</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">new_array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
+    <span class="k">return</span> <span class="n">new_array</span>
 
-# 删除
-<span class="nv">def</span> <span class="nv">remove</span><span class="ss">(</span><span class="nv">array</span>, <span class="nv">element</span><span class="ss">)</span>:
-    <span class="nv">length</span> <span class="o">=</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">array</span><span class="ss">)</span>
-    <span class="nv">idx</span> <span class="o">=</span> <span class="nv">search</span><span class="ss">(</span><span class="nv">array</span>, <span class="nv">element</span><span class="ss">)</span>  # 找到对应索引
-    <span class="k">if</span> <span class="nv">idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>:
-        # 如果查找成功，所有在<span class="nv">idx</span>之前的元素向左移动一个单位
-        <span class="k">while</span> <span class="nv">idx</span> <span class="o">&lt;</span> <span class="nv">length</span> <span class="o">-</span> <span class="mi">1</span>:
-            <span class="nv">array</span>[<span class="nv">idx</span>] <span class="o">=</span> <span class="nv">array</span>[<span class="nv">idx</span><span class="o">+</span><span class="mi">1</span>]
-            <span class="nv">idx</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="nv">array</span> <span class="o">=</span> <span class="nv">array</span>[: <span class="o">-</span><span class="mi">1</span>]
-    <span class="k">return</span> <span class="nv">array</span>
+<span class="c1"># 删除</span>
+<span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">search</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>  <span class="c1"># 找到对应索引</span>
+    <span class="k">if</span> <span class="n">idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># 如果查找成功，所有在idx之前的元素向左移动一个单位</span>
+        <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">array</span>
 </pre></div>
 
 
                     <p>再来说一说链表。与数组采取的顺序存储方式不同，链表中所有的元素的存储地址都是分散的，也就是说，它是靠一条链条（指针）把这些元素联系在一起的。所以我们把链表中每一个存储单元称为一个<strong>节点</strong>（<strong>node</strong>），在每个节点里有两个域：一个用来存储数据，一个是指针指向下一个节点，像这样：</p>
-                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/linked-list0.png" /></p>
+                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list0.png" /></p>
                     <p>在Python中我们用一个类来表示：</p>
-                    <div class="codehilite"><pre><span></span><span class="nv">class</span> <span class="nv">Node</span><span class="ss">(</span><span class="nv">object</span><span class="ss">)</span>:
-    <span class="nv">def</span> <span class="nv">__init__</span> <span class="ss">(</span><span class="nv">self</span>, <span class="nv">value</span>, <span class="k">next</span><span class="ss">)</span>:
-        <span class="nv">self</span>.<span class="nv">value</span> <span class="o">=</span> <span class="nv">value</span>
-        <span class="nv">self</span>.<span class="k">next</span> <span class="o">=</span> <span class="nv">None</span>
+                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
 </pre></div>
 
 
                     <p>如果将它们串联在一起，将会是这样：</p>
-                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/linked-list1.png" /></p>
+                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list1.png" /></p>
                     <p>其中的<code>header</code>指的是头结点，它一般记录第一个节点的地址和链表的长度，我们在查找的时候就是从头结点开始的，代码如下：</p>
-                    <div class="codehilite"><pre><span></span><span class="nv">class</span> <span class="nv">Linked_List</span><span class="ss">(</span><span class="nv">object</span><span class="ss">)</span>:
-    <span class="nv">def</span> <span class="nv">__init__</span> <span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-        <span class="nv">self</span>.<span class="nv">length</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="nv">self</span>.<span class="nv">header</span> <span class="o">=</span> <span class="nv">None</span>
-    <span class="nv">def</span> <span class="nv">search</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">value</span><span class="ss">)</span>:
-        <span class="nv">p</span> <span class="o">=</span> <span class="nv">self</span>.<span class="nv">header</span>  # 获取第一个节点
-        <span class="k">while</span> <span class="nv">p</span> <span class="o">!=</span> <span class="nv">None</span>:
-            <span class="k">if</span> <span class="nv">p</span>.<span class="nv">value</span> <span class="o">==</span> <span class="nv">value</span>:
-                <span class="k">return</span> <span class="nv">p</span>
-            <span class="nv">p</span> <span class="o">=</span> <span class="nv">p</span>.<span class="k">next</span>
-        <span class="k">return</span> <span class="nv">None</span>
+                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Linked_List</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>  <span class="c1"># 获取第一个节点</span>
+        <span class="k">while</span> <span class="n">p</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">p</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="bp">None</span>
 </pre></div>
 
 
                     <p>和数组相比，链表的插入和删除就非常的简单，只需要改变一下指针即可。下面还是以插入元素<code>61</code>为例：</p>
                     <p>首先需要新建一个节点p</p>
-                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/linked-list2.png" /></p>
+                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list2.png" /></p>
                     <p>然后，p的指针指向头结点所指的节点</p>
-                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/linked-list3.png" /></p>
+                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list3.png" /></p>
                     <p>最后，改变头结点的指针，使其指向p，同时更新链表的长度length。</p>
-                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/linked-list4.png" /></p>
+                    <p><img alt="链表" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list4.png" /></p>
                     <p>插入和删除的Python实现：</p>
-                    <div class="codehilite"><pre><span></span><span class="nv">class</span> <span class="nv">Linked_List</span><span class="ss">(</span><span class="nv">object</span><span class="ss">)</span>:
-    <span class="nv">def</span> <span class="nv">__init__</span> <span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-        <span class="nv">self</span>.<span class="nv">length</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="nv">self</span>.<span class="nv">header</span> <span class="o">=</span> <span class="nv">None</span>
-    <span class="nv">def</span> <span class="nv">insert</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">value</span><span class="ss">)</span>:
-        # 新建一个节点
-        <span class="nv">p</span> <span class="o">=</span> <span class="nv">Node</span><span class="ss">(</span><span class="nv">value</span><span class="ss">)</span>
-        <span class="nv">p</span>.<span class="k">next</span> <span class="o">=</span> <span class="nv">self</span>.<span class="nv">header</span>
-        <span class="nv">self</span>.<span class="nv">header</span> <span class="o">=</span> <span class="nv">p</span>
-        <span class="nv">self</span>.<span class="nv">length</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="nv">def</span> <span class="nv">remove</span><span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-        <span class="nv">p</span> <span class="o">=</span> <span class="nv">self</span>.<span class="nv">header</span>  # 获取第一个节点
-        <span class="k">if</span> <span class="nv">p</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">None</span>:
-            <span class="nv">self</span>.<span class="nv">header</span> <span class="o">=</span> <span class="nv">p</span>.<span class="k">next</span>
-            <span class="nv">self</span>.<span class="nv">length</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="nv">del</span> <span class="nv">p</span>  # <span class="nv">delete</span> <span class="nv">node</span> <span class="nv">p</span>
+                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Linked_List</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># 新建一个节点</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>  <span class="c1"># 获取第一个节点</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">del</span> <span class="n">p</span>  <span class="c1"># delete node p</span>
 </pre></div>
 
 
@@ -222,25 +222,25 @@
                     <p><strong>抽象数据类型</strong>（<strong>Abstract Data Type</strong>, 简称<strong>ADT</strong>）是数据结构中非常重要的一个部分。用最简单的理解方式就是：不仅限于编程语言中已经实现的一些数据类型，例如 Python 中 List，Set，Tuple，Dictionary 等等。我们可以进一步的定义出属于我们自己数据结构，比如说增删只能在一侧进行，具有层状、环状的结构等等。那就让我们来看看几个最为常见的例子吧～</p>
                     <h3 id="_3">栈</h3>
                     <p><strong>栈</strong>（<strong>Stack</strong>）就是前面提到的只能在一侧进行元素的增加和删除的数据结构，这种过程分别称为<strong>入栈</strong>(<strong>push</strong>)和<strong>出栈</strong>(<strong>pop</strong>)。生活中最简单的类比就是叠盘子，新洗好的盘子总是放在最上面，而拿走的时候总是从最上面一个拿走。这种后进先出（last in, first out）的方式就体现了这种思想。</p>
-                    <p><img alt="栈" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/stack.jpeg" /></p>
+                    <p><img alt="栈" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpeg" /></p>
                     <h3 id="_4">队列</h3>
                     <p>和栈相反，<strong>队列</strong>（<strong>Queue</strong>）是遵循<strong>先进先出</strong>（<strong>first in, first out</strong>）的方式实现元素的增减，其过程分别叫做<strong>入队</strong>（<strong>enqueue</strong>）和<strong>出队</strong>（<strong>dequeue</strong>）。生活中的例子就是去超市收银台排队的时候，排到队伍后面的人要先等前面的人都结完账了自己才能结账，所以这就是先进先出啦。</p>
-                    <p><img alt="队列" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/queue.png" /></p>
+                    <p><img alt="队列" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/queue.png" /></p>
                     <p>因为和前面的数组和链表有相似性，所以这里就不再用Python代码做演示了，你可以去我的<a href="">GitHub</a>主页查看本节的完整代码。</p>
                     <h3 id="_5">树</h3>
                     <p>与前面的数据结构不同，<strong>树</strong>（<strong>Tree</strong>）是典型的层状数据结构。直观上来看，它就像倒挂着的一颗树，每一个节点连接着多个子节点。这里为了方便，我们只讨论<strong>二叉树</strong>（<strong>Binary Tree</strong>），也就是每一个节点最多只有两个子节点的情况。</p>
-                    <p><img alt="树" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/tree0.png" /></p>
+                    <p><img alt="树" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree0.png" /></p>
                     <p>下面来简单介绍一下二叉树的性质。和所有树状结构一样，二叉树在非空的情况下一定有一个<strong>根节点</strong>（<strong>root node</strong>），如图中的节点26。它的两个子节点我们分别把它们叫做该节点的<strong>左孩子</strong>（<strong>left child</strong>）和<strong>右孩子</strong>（<strong>right child</strong>），而对于那些没有孩子的节点，我们把它称做<strong>叶子节点</strong>（<strong>leaf node</strong>）。前面只是针对节点的讨论，而对于树本身，我们要了解的是满二叉树和完全二叉树。</p>
                     <p>满二叉树是指每一个节点孩子的个数只能为0或2，如下图所示，左边是一颗满二叉树，但右边由于节点48只有一个孩子，所以就不是满二叉树。</p>
-                    <p><img alt="树" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/tree1.png" /></p>
+                    <p><img alt="树" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png" /></p>
                     <p>再来看完全二叉树，它的性质是除了最后一层的节点没有排满以外，其他层的节点均已排满，并且最后一层节点都是从左往右依次排列。下图的两个例子分别代表了完全二叉树和非完全二叉树。后面的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/">堆</a></p>
-                    <p><img alt="树" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/tree2.png" /></p>
+                    <p><img alt="树" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png" /></p>
                     <p>在Python中我们可以用一个类来表示树的节点：</p>
-                    <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">Node</span>(<span class="n">object</span>):
-    <span class="n">def</span> <span class="n">__init__</span> (<span class="k">self</span>, <span class="nb">value</span>):
-        <span class="k">self</span>.<span class="nb">value</span> = <span class="nb">value</span>
-        <span class="k">self</span>.<span class="n">left</span> = <span class="n">None</span>  <span class="c1"># 左孩子</span>
-        <span class="k">self</span>.<span class="n">right</span> = <span class="n">None</span>  <span class="c1"># 右孩子</span>
+                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 左孩子</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 右孩子</span>
 </pre></div>
 
 
@@ -248,11 +248,11 @@
                     <p><strong>图</strong>（<strong>Graph</strong>）是 ADT 中用到的最多的结构，生活中的方方面面都会用到图。例如，高德地图就是把所有城市，所有道路通通抽象成了图这种数据结构来帮助我们导航的。哈哈，厉害吧！那我们就首先来了解一下图的基本结构。</p>
                     <p>图也是由一个一个的<strong>节点</strong>（<strong>vertex</strong>）组成的。但与树不同的是，图的节点之间相连的叫做<strong>边</strong>（<strong>edge</strong>），所以我们用 G = <V, E> 来表示一张图，其中的 V 表示由 vertex 构成的集合，而 E 则表示由 edge 构成的集合。</p>
                     <p>图的分类一般有好几种，如果一个节点到另一个节点是双向的我们把它叫做<strong>无向图</strong>（<strong>undirected graph</strong>），如果是单向的就叫<strong>有向图</strong>（<strong>undirected graph</strong>），下图中就分别代表了无向图和有向图。</p>
-                    <p><img alt="图" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/graph0.png" /></p>
+                    <p><img alt="图" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph0.png" /></p>
                     <p>假如从一个节点到另一个节点是要付出“代价”的，那么我们就可以在每一条边上把这种“代价”体现出来，称之为<strong>权重</strong>（<strong>weight</strong>），而构成这样的图当然就叫做<strong>有权图</strong>（<strong>weighted graph</strong>）了。</p>
-                    <p><img alt="图" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/graph1.png" /></p>
+                    <p><img alt="图" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph1.png" /></p>
                     <p>我们可以用两种方式来表示一张图，一种叫做<strong>邻接矩阵</strong>（<strong>adjacency matrix</strong>）和<strong>邻接表</strong>（<strong>adjacency list</strong>），后面的内容会详细讨论，先上图。</p>
-                    <p><img alt="图" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/graph2.png" /></p>
+                    <p><img alt="图" src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph2.png" /></p>
                     <p>这样我们就完成所有基本数据结构的学习了，是不是对它们有了清晰的认识呢？</p>
                     <p><a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Basic%20Knowledge/Data%20Structure">本节全部代码</a></p>
                         <br>
