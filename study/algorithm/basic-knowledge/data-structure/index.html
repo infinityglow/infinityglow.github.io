@@ -220,7 +220,7 @@
                     <p>下面来简单介绍一下二叉树的性质。和所有树状结构一样，二叉树在非空的情况下一定有一个<strong>根节点</strong>（<strong>root node</strong>），如图中的节点26。它的两个子节点我们分别把它们叫做该节点的<strong>左孩子</strong>（<strong>left child</strong>）和<strong>右孩子</strong>（<strong>right child</strong>），而对于那些没有孩子的节点，我们把它称做<strong>叶子节点</strong>（<strong>leaf node</strong>）。前面只是针对节点的讨论，而对于树本身，我们要了解的是满二叉树和完全二叉树。</p>
                     <p>满二叉树是指每一个节点孩子的个数只能为0或2，如下图所示，左边是一颗满二叉树，但右边由于节点48只有一个孩子，所以就不是满二叉树。</p>
                     <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png"></p>
-                    <p>再来看完全二叉树，它的性质是除了最后一层的节点没有排满以外，其他层的节点均已排满，并且最后一层节点都是从左往右依次排列。下图的两个例子分别代表了完全二叉树和非完全二叉树。后面的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/">堆</a></p>
+                    <p>再来看完全二叉树，它的性质是除了最后一层的节点没有排满以外，其他层的节点均已排满，并且最后一层节点都是从左往右依次排列。下图的两个例子分别代表了完全二叉树和非完全二叉树。后面的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/">堆</a>就会用到这种性质。</p>
                     <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png"></p>
                     <p>在Python中我们可以用一个类来表示树的节点：</p>
                     <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -246,14 +246,14 @@
 
                         <nav id="gobottom" class="pagination">
 
-                            <a class="prev-post" title="什么是算法" href="/study/algorithm/overview/" style="color: #C0C0C0">
+                            <a class="prev-post" title="什么是算法" href="/study/algorithm/introduction/" style="color: #C0C0C0">
                                 ← 1.1 什么是算法
                             </a>
 
                             <span class="prev-next-post">
 
                             </span>
-                            <a class="next-post" title="算法的问题类型" href="/study/algorithm/basic-knowledge/data-structure/" style="color: #C0C0C0">
+                            <a class="next-post" title="算法的问题类型" href="/study/algorithm/basic-knowledge/problem-types/" style="color: #C0C0C0">
                                 2.2 算法的问题类型 →
                             </a>
                         </nav>
@@ -830,7 +830,7 @@
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="/study/algorithm/introduction/" title="什么是算法 - 算法与复杂度">
+        <a href="/study/algorithm/introduction/" title="基本数据结构 - 算法与复杂度">
 
             <img src="/static/icons&images/profile.jpg" alt="profile">
 
