@@ -152,13 +152,13 @@
                     <p>如果用伪代码来表示的话就是这样的：</p>
                     <p><img alt="伪代码" src="https://infinityglow.github.io/study/algorithm/introduction/images/Euclid.png" /></p>
                     <p>最后，让我们用Python来实现这个函数吧。</p>
-                    <div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">gcd</span><span class="ss">(</span><span class="nv">m</span>, <span class="nv">n</span><span class="ss">)</span>:
-    <span class="k">while</span> <span class="nv">n</span> <span class="o">!=</span> <span class="mi">0</span>:
-        <span class="nv">r</span> <span class="o">=</span> <span class="nv">m</span>
-        <span class="nv">m</span> <span class="o">=</span> <span class="nv">n</span>
-        <span class="nv">n</span> <span class="o">=</span> <span class="nv">r</span> <span class="o">%</span> <span class="nv">n</span>
-        <span class="nv">gcd</span><span class="ss">(</span><span class="nv">m</span>, <span class="nv">n</span><span class="ss">)</span>
-    <span class="k">return</span> <span class="nv">m</span>
+                    <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gcd</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">m</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">r</span> <span class="o">%</span> <span class="n">n</span>
+        <span class="n">gcd</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span>
 </pre></div>
 
 
