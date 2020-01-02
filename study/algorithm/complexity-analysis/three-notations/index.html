@@ -124,7 +124,7 @@
             <article class="post-full no-image">
 
                 <section class="post-full-content">
-                    <div id="lightgallery" class="markdown-body">
+
                         <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>前面我们讲到了求最大公约数的算法：欧几里得算法。我们先举一个具体的实例：24 和 16 的公约数。根据其公式 <code>gcd(m, n) = gcd(n, m mod n)</code>，我们可以得到：<code>gcd(24, 16) = gcd(16, 8) = gcd(8, 0)</code>，所以最大公约数是 8。除了这种方法以外，我们还可以从 16 开始一个一个地递减，如果存在两数都能够被整除，那么这个数就是最大公约数。写成代码的形式就是：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gcd</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># 选较小者</span>
@@ -151,7 +151,7 @@
                             </li>
                         </ul>
                         <p>从情况 3 我们可以观察出，两个函数的复杂度都由前面的部分决定（3n 和 7n），这间接地说明了前面的部分占据了主要的地位，于是我们可以把一些常见的复杂度排个序，并用一张图展示出来。</p>
-                        <p><img alt="comparison" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/comparison.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/comparison.png"></p>
+                        <p><img alt="comparison" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/comparison.png"></p>
                         <p>从左上到右下，其大小排列依次是：O(2<sup>n</sup>) &gt; O(n<sup>3</sup>) &gt; O(n<sup>2</sup>) &gt; O(nlog n) &gt; O(n) &gt; O(log n) &gt; O(1)</p>
 
                         <br>
@@ -194,7 +194,7 @@
                             <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
                         </div>
                         <!-- City版安装代码已完成 -->
-                    </div>
+
                 </section>
             </article>
         </div>
