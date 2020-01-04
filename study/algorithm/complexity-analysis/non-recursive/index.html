@@ -140,7 +140,7 @@
                         <p>我们用一个<code>for</code>循环遍历整个数组，如果找到了<code>element</code>就返回相应的索引值，否则返回 -1。判断这一条件是否成立的语句显然是 <code>if array[i] == element</code>，并且它是被执行的最多的语句，我们将这种执行次数最多，耗时最长的操作叫做<strong>基本操作</strong>（<strong>basic operation</strong>）。一般这种操作出现在最内层的循环，或者出现<a href="https://infinityglow/study/algorithm/complexity-analysis/recursive/" target="_blank" rel="noopener">递归</a>的地方。</p>
                         <p>然后，我们来分析一下最好和最坏情况的时间复杂度。首先，最好的情况是循环的第一个元素就是我们要找的，比如我们要从数组 [3, 1, 2, 5, 4] 中找元素 3，那么时间复杂度显然就为 O(1)；最坏的情况是最后一个元素才是我们要找的或者查找失败，比如像这样的数组 [1, 2, 4, 5, 3] 需要执行 5 次基本操作。一般的情况，如果数组的长度为 n，则需要 n - 1 次，所以复杂度为 O(n)。</p>
                         <p>最后我们来说一说平均复杂度，如果我们考虑了所有的情况，即查找的元素 <code>element</code> 在数组 <code>array</code> 的每一个位置都会出现，且出现的概率是相等的，那么我们可以通过这样一个式子来计算：</p>
-                        <p><img alt="公式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula0.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula0.png"></p>
+                        <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula0.png"></p>
                         <p>其中分子项为每一种情况需要查找的次数，最后得到的复杂度也为 O(n)，表明了在一般情况下该算法的时间复杂度也为线性复杂度。</p>
                         <h2 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h2><p>让我们再来看一个例子，相信学过线性代数的小伙伴对矩阵的乘法应该不陌生，假设有两个矩阵 A (m × n) 和 B (n × p)，最后得到的矩阵 C (m × p) 中每一项都是 A 中每一行的 n 个元素和 B中每一列的 n 个元素乘积之和。下面是一个动图的演示（摘自<a href="https://www.youtube.com/watch?v=XkY2DOUCWMU" target="_blank" rel="noopener">3Blue1Brown</a>里的视频）：</p>
                         <p><img alt="矩阵乘法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/matmul.gif" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/matmul.gif"></p>
@@ -156,7 +156,7 @@
 </pre></div>
                         <p>这里为了计算方便，两个矩阵都采用了方阵的形式。很显然，这里的基本操作是 <code>C[i][j] + A[i][k] ∗ B[k][j]</code>。准确地来说，由于在计算机里做乘法比做加法所耗费的时间要大，所以 <code>A[i][k] ∗ B[k][j]</code> 才是我们的基本操作。</p>
                         <p>分析完了基本操作，下面就来计算复杂度了。因为不管什么样的矩阵，它们执行的基本操作都是一样的，所以就不存在最好，最坏和平均情况的讨论了。于是根据循环我们可以得到：</p>
-                        <p><img alt="公式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula1.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula1.png"></p>
+                        <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula1.png"></p>
                         <p>其复杂度为 O(n<sup>3</sup>)。是不是很简单呢？类似的例子还有很多，但它们方法都是一样的。</p>
 
                         <br>
