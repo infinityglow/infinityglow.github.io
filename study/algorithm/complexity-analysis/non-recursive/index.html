@@ -154,7 +154,7 @@
                 <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">C</span>
 </pre></div>
-                        <p>这里为了计算方便，两个矩阵都采用了方阵的形式。很显然，这里的基本操作是 <code>C[i][j] + A[i][k] ∗ B[k][j]</code>。准确地来说，由于在计算机里做乘法比做加法所耗费的时间要大，所以 <code>A[i][k] ∗ B[k][j]</code> 才是我们的基本操作。</p>
+                        <p>这里为了计算方便，两个矩阵都采用了方阵的形式。很显然，这里的基本操作是 <code>C[i][j] + A[i][k] ∗ B[k][j]</code>。准确地来说，由于在计算机里做乘法比做加法所耗费的时间要多，所以 <code>A[i][k] ∗ B[k][j]</code> 才是我们的基本操作。</p>
                         <p>分析完了基本操作，下面就来计算复杂度了。因为不管什么样的矩阵，它们执行的基本操作都是一样的，所以就不存在最好，最坏和平均情况的讨论了。于是根据循环我们可以得到：</p>
                         <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula1.png"></p>
                         <p>其复杂度为 O(n<sup>3</sup>)。是不是很简单呢？类似的例子还有很多，但它们方法都是一样的。</p>
