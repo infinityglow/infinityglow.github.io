@@ -135,11 +135,11 @@
     <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
                         <p>如果用一个数学关系式是来表达是这样子的：</p>
-                        <p><img alt="关系式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation0.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation0.png"></p>
+                        <p><img alt="关系式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation0.png"></p>
                         <p>我们观察可以得到这样的规律：问题的规模 n 在经过一次乘法运算 n × F(n - 1) 后变为了 n - 1，并且每经过一次乘法运算，问题的规模都减少了 1，所以要求这个算法的复杂度，我们可以推出如下的关系式：</p>
-                        <p><img alt="关系式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation1.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation1.png"></p>
+                        <p><img alt="关系式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation1.png"></p>
                         <p>其中“+ 1”代表问题的规模每减少 1 就执行了一次乘法运算。这样的关系式叫作<strong>递归关系式</strong>（<strong>recurrence relation</strong>），要解出这个关系式，我们需要一步一步地推导，具体来讲就是先将 n - 1 代入式子中得到一个新的递归关系式，再将它代入到原式子中就可以得到 t(n) = t(n - 2) + 2，如此往复，直到出现递归出口。</p>
-                        <p><img alt="推导" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation0.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation0.png"></p>
+                        <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation0.png"></p>
                         <p>于是我们得出计算阶乘的时间复杂度为 O(n)。</p>
                         <h2 id="汉诺塔"><a href="#汉诺塔" class="headerlink" title="汉诺塔"></a>汉诺塔</h2><p>汉诺塔大家肯定都玩过，规则也很简单：有 A, B, C 三根柱子，上面穿有从大到小排列的圆盘，现在你需要借助 B 柱把 A 柱上的圆盘挪到 C 柱上，一次只能挪一个，但大的圆盘不能放在小的圆盘之上。</p>
                         <p> <img alt="演示" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/demo.gif"></p>
@@ -159,9 +159,9 @@
                         </ul>
                         <p><img alt="状态3" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state3.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state3.png"></p>
                         <p>那么怎样来写递归关系式呢？我们看到，要解决 n 阶汉诺塔的问题，我们先要解决两个 n - 1 阶同样的问题，外加一个单次移动。所以我们的递归关系式应该这样写：</p>
-                        <p><img alt="关系式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation2.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation2.png"></p>
+                        <p><img alt="关系式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation2.png"></p>
                         <p>我们还是采用回代的方式解出这个关系式：</p>
-                        <p><img alt="推导" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation1.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation1.png"></p>
+                        <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation1.png"></p>
                         <p>复杂度为 O(2<sup>n</sup>)，最后我们用代码来实现一下吧。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hanoi</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
