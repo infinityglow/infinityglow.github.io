@@ -13,6 +13,15 @@
 	<link rel="stylesheet" href="/css/allinone.min.css">
 
 	
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-XXXXXXXXXX-1');
+	</script>
+	
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -129,7 +138,7 @@
             <h1 class="site-title">
                 Archives
             </h1>
-            <h2 class="site-description">Total: 7</h2>
+            <h2 class="site-description">Total: 8</h2>
         </div>
         
         
@@ -424,6 +433,12 @@
       
       
       <li>
+        <a href="/study/algorithm/complexity-analysis/recursive/">复杂度分析（递归）</a>
+      </li>
+      
+      
+      
+      <li>
         <a href="/study/algorithm/complexity-analysis/non-recursive/">复杂度分析（非递归）</a>
       </li>
       
@@ -434,10 +449,6 @@
       </li>
       
       
-      
-      <li>
-        <a href="/study/algorithm/basic-knowledge/problem-types/">算法的问题类型</a>
-      </li>
       
       
       
@@ -534,6 +545,22 @@
 
 
 
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
+</script>
 
 </body>
 </html>

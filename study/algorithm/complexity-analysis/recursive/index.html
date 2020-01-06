@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>复杂度分析（非递归）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>复杂度分析（递归）- 算法与复杂度 | 幽默的白帽子的博客 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -119,47 +119,70 @@
     <main id="site-main" class="site-main outer" role="main">
         <div class="inner">
             <header class="post-full-header">
-                <h1 class="post-full-title">复杂度分析（非递归）</h1>
+                <h1 class="post-full-title">复杂度分析（递归）</h1>
             </header>
             <article class="post-full no-image">
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="最好，最坏和平均情况"><a href="#最好，最坏和平均情况" class="headerlink" title="最好，最坏和平均情况"></a>最好，最坏和平均情况</h2><p>一个算法的好坏并不是一成不变的，它会在不同的情况下有着不同的表现。先来看看一个生活中的场景，假设买彩票中奖的概率是1 / 10,000，那么在最好，最坏和平均的情况下需要买几注彩票才能够中奖呢？显然，如果你的运气够好，第一注你就直接中了，这是最好的情况；相反，如果你的手气够差，你买的彩票永远都中不了奖，这是最坏的情况；平均来讲，你需要买最少10,000注才能够中奖，其实就是这里的数学期望。</p>
-                        <p><img alt="彩票" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/lottery.jpg" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/lottery.jpg"></p>
-                        <p>这里的类比并不是想说明算法跟概率学有任何的关系，只是想告诉大家，算法的复杂度确实是有“运气”的成分，它取决于一个（类）问题的<strong>实例</strong>（<strong>instance</strong>）。这里的实例可以这样来理解：如果排序是我们要解决的问题，也就是对任意无序数组的有序化，那么一个实例就是一个具体的数组，比如 [3, 1, 2, 5, 4] 或 [1, 2, 3, 4, 5]。</p>
-                        <p>我们可以看到，后者的数组已经有序了，不需要再额外执行任何操作。对于有些排序算法来讲就可以利用这一点性质，减少执行的次数，让算法更有“远见”。像这样能使一个算法执行次数最少的情况我们把它称作<strong>最好情况</strong>（<strong>best case</strong>）。相反，使一个算法执行次数最多的情况叫做<strong>最坏情况</strong>（<strong>worst case</strong>）。最后剩下的<strong>平均情况</strong>（<strong>average case</strong>）指的是通常状态下算法的复杂度，它并不是等于（最好情况 + 最坏情况）/ 2 这么简单，而是要把所有的 instance 考虑在内，计算复杂度，然后再求一个平均值，后面的例子会详细讨论这个问题。</p>
-                        <h2 id="顺序查找"><a href="#顺序查找" class="headerlink" title="顺序查找"></a>顺序查找</h2><p>如果我们要查找数组里的某个元素，我们可以通过顺序查找的方式进行，也就是从左往右依次查找。代码如下：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">element</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">i</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+                        <h2 id="什么是递归"><a href="#什么是递归" class="headerlink" title="什么是递归"></a>什么是递归</h2><p>前面我们对一些算法的复杂度进行了分析，但这些都是基于循环和迭代的，这一节我们会针对递归的算法进行复杂度分析。首先要需要知道什么是递归，<strong>递归</strong>（<strong>recursion</strong>）是函数调用自身的一个过程。举个例子，假设你是一个英语水平有限的人，你在读一段英文材料中遇到了某个生词，你需要查字典去了解这个单词的意思，但是字典只提供了英英字典，意味着你找到的单词下方的释义也有可能是你不认识的单词，于是你又继续查找那些单词的意思，而那些单词的释义有可能又出现你不认识的单词，你又继续查找直到你能够全部看懂为止。这样一个过程我们可以把它看做递归，因为查字典这个动作在不停地调用自身。</p>
+                        <p><img alt="字典" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/dictionary.jpg" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/dictionary.jpg"></p>
+                        <p>试想如果你的英语水平很糟糕，你可能查了很久的字典还是没有弄明白这个生词是什么意思，甚至出现单词 A 用到了单词 B 做释义，单词 B 用到了单词 A 做释义这种情况，即无限循环。那么一次递归结束的条件是什么呢？显然，如果一个单词的释义你全都能看懂，当前递归就结束了，这种条件叫作<strong>初始条件</strong>（<strong>initial condition</strong>），也叫作递归的出口。</p>
+                        <h2 id="阶乘的计算"><a href="#阶乘的计算" class="headerlink" title="阶乘的计算"></a>阶乘的计算</h2><p>阶乘的计算大家应该都不陌生，一个数的阶乘 n ! = n × (n-1) × (n-2) × … × 2 × 1，所以我们自然而然想到的计算方法是从 1 到 n 把它们乘起来，但只要我们稍微观察一下便可以得到 n ! = n × ( n - 1) ! 这样的关系式。这个关系式也不是一直递归下去的，同样需要一个出口，根据定义，0 的阶乘等于 1，所以当 n = 0 时递归停止。我们可以用几行代码轻松地实现它：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
-                        <p>我们用一个<code>for</code>循环遍历整个数组，如果找到了<code>element</code>就返回相应的索引值，否则返回 -1。判断这一条件是否成立的语句显然是 <code>if array[i] == element</code>，并且它是被执行的最多的语句，我们将这种执行次数最多，耗时最长的操作叫做<strong>基本操作</strong>（<strong>basic operation</strong>）。一般这种操作出现在最内层的循环，或者出现<a href="https://infinityglow/study/algorithm/complexity-analysis/recursive/" target="_blank" rel="noopener">递归</a>的地方。</p>
-                        <p>然后，我们来分析一下最好和最坏情况的时间复杂度。首先，最好的情况是循环的第一个元素就是我们要找的，比如我们要从数组 [3, 1, 2, 5, 4] 中找元素 3，那么时间复杂度显然就为 O(1)；最坏的情况是最后一个元素才是我们要找的或者查找失败，比如像这样的数组 [1, 2, 4, 5, 3] 需要执行 5 次基本操作。一般的情况，如果数组的长度为 n，则需要 n - 1 次，所以复杂度为 O(n)。</p>
-                        <p>最后我们来说一说平均复杂度，如果我们考虑了所有的情况，即查找的元素 <code>element</code> 在数组 <code>array</code> 的每一个位置都会出现，且出现的概率是相等的，那么我们可以通过这样一个式子来计算：</p>
-                        <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula0.png"></p>
-                        <p>其中分子项为每一种情况需要查找的次数，最后得到的复杂度也为 O(n)，表明了在一般情况下该算法的时间复杂度也为线性复杂度。</p>
-                        <h2 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h2><p>让我们再来看一个例子，相信学过线性代数的小伙伴对矩阵的乘法应该不陌生，假设有两个矩阵 A (m × n) 和 B (n × p)，最后得到的矩阵 C (m × p) 中每一项都是 A 中每一行的 n 个元素和 B中每一列的 n 个元素乘积之和。下面是一个动图的演示（摘自<a href="https://www.youtube.com/watch?v=XkY2DOUCWMU" target="_blank" rel="noopener">3Blue1Brown</a>里的视频）：</p>
-                        <p><img alt="矩阵乘法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/matmul.gif" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/matmul.gif"></p>
-                        <p>如果写成 Python 的代码就是这样子的：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-    <span class="n">C</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-                <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">C</span>
+                        <p>如果用一个数学关系式是来表达是这样子的：</p>
+                        <p><img alt="关系式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation0.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation0.png"></p>
+                        <p>我们观察可以得到这样的规律：问题的规模 n 在经过一次乘法运算 n × F(n - 1) 后变为了 n - 1，并且每经过一次乘法运算，问题的规模都减少了 1，所以要求这个算法的复杂度，我们可以推出如下的关系式：</p>
+                        <p><img alt="关系式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation1.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation1.png"></p>
+                        <p>其中“+ 1”代表问题的规模每减少 1 就执行了一次乘法运算。这样的关系式叫作<strong>递归关系式</strong>（<strong>recurrence relation</strong>），要解出这个关系式，我们需要一步一步地推导，具体来讲就是先将 n - 1 代入式子中得到一个新的递归关系式，再将它代入到原式子中就可以得到 t(n) = t(n - 2) + 2，如此往复，直到出现递归出口。</p>
+                        <p><img alt="推导" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation0.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation0.png"></p>
+                        <p>于是我们得出计算阶乘的时间复杂度为 O(n)。</p>
+                        <h2 id="汉诺塔"><a href="#汉诺塔" class="headerlink" title="汉诺塔"></a>汉诺塔</h2><p>汉诺塔大家肯定都玩过，规则也很简单：有 A, B, C 三根柱子，上面穿有从大到小排列的圆盘，现在你需要借助 B 柱把 A 柱上的圆盘挪到 C 柱上，一次只能挪一个，但大的圆盘不能放在小的圆盘之上。</p>
+                        <p> <img alt="演示" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/demo.gif"></p>
+                        <p>那么它跟递归有什么关系呢？如果你是一个细心观察的人，你就会发现，要想把 n 个圆盘从 A 柱挪到 C 柱上，你首先要通过某种方法把 n - 1 个柱子从 A 挪到 B 柱上，给 A 柱上最大的圆盘“腾个位置”出来，然后把最大的圆盘移到 C 柱上，最后在通过某种方法把 B 柱上 n - 1 个圆盘挪到 C 柱上。至于怎么移动这 n - 1 个柱子，我们可以再用某种方法移动 n - 2 个柱子，给第二大的圆盘“腾位置”，再将 n - 2 个柱子移动到相应的柱子上。这样我们便可以一直递归下去，直到只有一个圆盘，也就是这里的递归出口了。</p>
+                        <p>我们用几张图来直观地理解一下，假设这里有 4 个圆盘，我们可以分为三个步骤：</p>
+                        <p> <img alt="状态0" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state0.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state0.png"></p>
+                        <ul>
+                            <li>步骤一：将 3 个圆盘从 A 柱移动到 B 柱</li>
+                        </ul>
+                        <p><img alt="状态1" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state1.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state1.png"></p>
+                        <ul>
+                            <li>步骤二：将 A 柱剩下的圆盘移动到 C 柱</li>
+                        </ul>
+                        <p><img alt="状态2" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state2.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state2.png"></p>
+                        <ul>
+                            <li>步骤三：将 3 个圆盘从 B 柱移动到 C 柱</li>
+                        </ul>
+                        <p><img alt="状态3" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state3.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state3.png"></p>
+                        <p>那么怎样来写递归关系式呢？我们看到，要解决 n 阶汉诺塔的问题，我们先要解决两个 n - 1 阶同样的问题，外加一个单次移动。所以我们的递归关系式应该这样写：</p>
+                        <p><img alt="关系式" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation2.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation2.png"></p>
+                        <p>我们还是采用回代的方式解出这个关系式：</p>
+                        <p><img alt="推导" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation1.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation1.png"></p>
+                        <p>复杂度为 O(2<sup>n</sup>)，最后我们用代码来实现一下吧。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hanoi</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{} -&gt; {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+        <span class="k">return</span>
+    <span class="n">hanoi</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># c 柱为枢纽，将 a 柱中 n - 1 个圆盘移到 b 柱上</span>
+    <span class="n">hanoi</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 将待移动的圆盘数设为 1</span>
+    <span class="n">hanoi</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># a 柱为枢纽，将 b 柱中 n - 1 个圆盘移到 c 柱上</span>
 </pre></div>
-                        <p>这里为了计算方便，两个矩阵都采用了方阵的形式。很显然，这里的基本操作是 <code>C[i][j] + A[i][k] ∗ B[k][j]</code>。准确地来说，由于在计算机里做乘法比做加法所耗费的时间要多，所以 <code>A[i][k] ∗ B[k][j]</code> 才是我们的基本操作。</p>
-                        <p>分析完了基本操作，下面就来计算复杂度了。因为不管什么样的矩阵，它们执行的基本操作都是一样的，所以就不存在最好，最坏和平均情况的讨论了。于是根据循环我们可以得到：</p>
-                        <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula1.png"></p>
-                        <p>其复杂度为 O(n<sup>3</sup>)。是不是很简单呢？类似的例子还有很多，但它们方法都是一样的。</p>
+                        <p>让我们试试 <code>n = 3</code> 时输出的结果：</p>
+                        <div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">c</span>
+<span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span>
+<span class="n">c</span> <span class="o">-&gt;</span> <span class="n">b</span>
+<span class="n">a</span> <span class="o">-&gt;</span> <span class="n">c</span>
+<span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">b</span> <span class="o">-&gt;</span> <span class="n">c</span>
+<span class="n">a</span> <span class="o">-&gt;</span> <span class="n">c</span>
+</pre></div>
+                        <p>类似的例子还有很多，但它们的方法都是一样的。</p>
                         <br>
-                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Complexity%20Analysis/Non-recursive" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Complexity%20Analysis/Recursive" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
                         <br>
                         <br>
@@ -167,15 +190,15 @@
 
                         <nav id="gobottom" class="pagination">
 
-                            <a class="prev-post" title="三种表示方法：O, Ω, Θ" href="/study/algorithm/complexity-analysis/three-notations/" style="color: #C0C0C0">
-                                ← 3.1 三种表示方法：O, Ω, Θ
+                            <a class="prev-post" title="3.2 复杂度分析（非递归）" href="/study/algorithm/complexity-analysis/non-recursive/" style="color: #C0C0C0">
+                                ← 3.2 复杂度分析（非递归）
                             </a>
 
                             <span class="prev-next-post">
 
                             </span>
-                            <a class="next-post" title=" 3.3 复杂度分析（递归）" href="/study/algorithm/complexity-analysis/recursive/" style="color: #C0C0C0">
-                                3.3 复杂度分析（递归） →
+                            <a class="next-post" title=" 4.1 冒泡排序与选择排序" href="/study/algorithm/brute-force/bubble-selection-sort/" style="color: #C0C0C0">
+                                4.1 冒泡排序与选择排序 →
                             </a>
                         </nav>
 
@@ -751,11 +774,11 @@
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="/study/algorithm/complexity-analysis/non-recursive/" title="复杂度分析（非递归）- 算法与复杂度">
+        <a href="/study/algorithm/complexity-analysis/recursive/" title="复杂度分析（递归）- 算法与复杂度">
 
             <img src="/static/icons&images/profile.jpg" alt="profile">
 
-            <span>复杂度分析（非递归） - 算法与复杂度</span>
+            <span>复杂度分析（递归） - 算法与复杂度</span>
         </a>
     </div>
     <span class="floating-header-divider"></span>

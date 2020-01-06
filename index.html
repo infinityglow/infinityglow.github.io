@@ -1,418 +1,639 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
+
+ 
+
+
+
+
+
+
 <head>
+	
+	
+	<link rel="stylesheet" href="/css/allinone.min.css">
 
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-XXXXXXXXXX-1');
+	</script>
+	
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>幽默的白帽子的博客 </title>
+	<title>Hexo | </title>
 
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="generator" content="hexo">
-    <meta name="author" content="Hongzhi, 鸿志">
-    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
-          从这个网站中你可以学习各种算法知识，机器学习系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="John Doe">
+	<meta name="description" content>
 
-    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
-    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+	
+	<meta name="keywords" content="hexo, casper, ghost, theme">
+	
 
-    <meta name="theme-color" content="#3c484e">
-    <meta name="msapplication-TileColor" content="#3c484e">
+	
+	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	
 
-    <meta property="og:site_name" content="Hexo">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Hexo | ">
-    <meta property="og:description" content>
-    <meta property="og:url" content="https://infinityglow.github.io">
-    <script src="../public/sw.js"></script>
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
 
+	
 
+	
+	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
+	
+
+	<meta property="og:site_name" content="Hexo">
+	<meta property="og:type" content="blog">
+	<meta property="og:title" content="Hexo | ">
+	<meta property="og:description" content>
+	<meta property="og:url" content="https://infinityglow.github.io/index.html">
+
+	
 </head>
 <body class="home-template">
-<div class="site-wrapper">
+	<div class="site-wrapper">
+		
 
 
-    <header class="site-header outer " style="background-image: url(https://infinityglow.github.io/static/icons&images/main.jpg)">
-        <div class="inner">
 
 
-            <div class="site-header-content">
-
-                <h1 class="site-title">
-                    Stay Hungry, Stay Foolish
-                </h1>
-                <h2 class="site-description">求知若饥，虚心若愚</h2>
-            </div>
-
-            <nav class="site-nav">
-                <div class="site-nav-left">
-                    <ul class="nav">
-                        <li>
-                            <a href="/" title="主页">主页</a>
-                        </li>
-
-                        <li>
-                            <a href="/study" title="技术篇">技术篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/life" title="生活篇">生活篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
-                        </li>
-
-                        <li>
-                            <a href="/about" title="about">about</a>
-                        </li>
-
-                    </ul>
-                </div>
-
-                <div class="search-button">
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-                </div>
-
-                <div class="site-nav-right">
-
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-
-
-                    <div class="social-links">
-
-                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
-                        </a>
-
-
-                    </div>
-                </div>
-            </nav>
-
+<header class="site-header outer " style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
+    <div class="inner">
+        
+        
+        <div class="site-header-content">
+            
+            <h1 class="site-title">
+                Hexo
+            </h1>
+            <h2 class="site-description">做一个特立独行的少数派</h2>
         </div>
-    </header>
-
-
-    <main id="site-main" class="site-main outer" role="main">
-        <div class="inner">
-            <div class="post-feed">
-
-                <article class="post-card post ">
-
-                    <a class="post-card-image-link" title="Hexo-Theme-Casper" href="/hexo-theme-casper/2018/hexo-theme-casper/">
-                        <div class="post-card-image b-lazy" data-src="https://i.loli.net/2017/11/26/5a19c04890c51.jpg"></div>
-                    </a>
-
-                    <div class="post-card-content">
-                        <a class="post-card-content-link" title="Hexo-Theme-Casper" href="/hexo-theme-casper/2018/hexo-theme-casper/">
-                            <header class="post-card-header">
-							<span class="post-card-tags">
-
-
-								guide
-								|
-
-								<time datetime="2018-12-03T11:42:54.000Z">
-									2018-12-03
-								</time>
-							</span>
-                                <h2 class="post-card-title">Hexo-Theme-Casper</h2>
-                            </header>
-                            <div class="post-card-excerpt">
-                                <p>
-
-
-
-
-
-
-                                    A new Ghost’s Casper theme port to Hexo.
-                                    DEMO here
-                                    My Blog zhih.me
-                                    This is a sim
-                                    ...
-                                </p>
-                            </div>
-                        </a>
-                        <footer class="post-card-meta">
-                            <div class="author-list">
-                                <div class="author-list-item">
-                                    <div class="author-name-tooltip">Hongzhi</div>
-
-                                    <a href="/about" class="static-avatar">
-                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
-                                    </a>
-
-                                </div>
-                            </div>
-                        </footer>
-                    </div>
-                </article>
-                <article class="post-card post ">
-
-                    <a class="post-card-image-link" title="算法与复杂度" href="/study/algorithm/overview/">
-                        <div class="post-card-image b-lazy" data-src="https://infinityglow.github.io/static/icons&images/R&B_tree.png"></div>
-                    </a>
-
-                    <div class="post-card-content">
-                        <a class="post-card-content-link" title="算法与复杂度" href="/study/algorithm/overview/">
-                            <header class="post-card-header">
-							<span class="post-card-tags">
-								系列 |
-								<time datetime="2019-12-01T23:25:14.000Z">
-									2019-12-01
-								</time>
-							</span>
-                                <h2 class="post-card-title">算法与复杂度</h2>
-                            </header>
-                            <div class="post-card-excerpt">
-                                <p>
-
-                                    《Annabel Lee》Edgar Allan Poe (1809-1849）
-                                    It was many and many a year ago,In a kingdom by the sea,Tha
-                                    ...
-
-                                </p>
-                            </div>
-                        </a>
-                        <footer class="post-card-meta">
-                            <div class="author-list">
-                                <div class="author-list-item">
-                                    <div class="author-name-tooltip">Hongzhi</div>
-
-                                    <a href="/about" class="static-avatar">
-                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
-                                    </a>
-
-                                </div>
-                            </div>
-
-                        </footer>
-                    </div>
-                </article>
-
-                <article class="post-card post ">
-
-                    <a class="post-card-image-link" title="Linux基础" href="/study/linux/">
-                        <div class="post-card-image b-lazy" data-src="https://infinityglow.github.io/static/icons&images/ubuntu.png"></div>
-                    </a>
-
-                    <div class="post-card-content">
-                        <a class="post-card-content-link" title="Linux基础" href="/study/linux/">
-                            <header class="post-card-header">
-							<span class="post-card-tags">
-                                系列 |
-								<time datetime="2019-12-02T15:24:54.000Z">
-									2019-12-02
-								</time>
-							</span>
-                                <h2 class="post-card-title">Linux基础</h2>
-                            </header>
-                            <div class="post-card-excerpt">
-                                <p>
-
-
-
-
-                                    알아야 할 사전지식
-
-                                    GithibPages기본적으로 gitHubPages를 생성 알아야 깃헙 블로그를 제작할 수 있습니다.
-
-                                    HTML, CSS, JavascriptHTML 과 CS
-                                    ...
-                                </p>
-                            </div>
-                        </a>
-                        <footer class="post-card-meta">
-                            <div class="author-list">
-                                <div class="author-list-item">
-                                    <div class="author-name-tooltip">Hongzhi</div>
-
-                                    <a href="/about" class="static-avatar">
-                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
-                                    </a>
-
-                                </div>
-                            </div>
-                        </footer>
-                    </div>
-                </article>
-
-                <article class="post-card post ">
-
-                    <a class="post-card-image-link" title="机器学习" href="/study/ml/">
-                        <div class="post-card-image b-lazy" data-src="https://infinityglow.github.io/static/icons&images/neuron.png"></div>
-                    </a>
-
-                    <div class="post-card-content">
-                        <a class="post-card-content-link" title="机器学习" href="/study/ml/">
-                            <header class="post-card-header">
-							<span class="post-card-tags">
-                                系列 |
-								<time datetime="2019-12-02T16:41:00.000Z">
-									2019-12-02
-								</time>
-							</span>
-                                <h2 class="post-card-title">机器学习</h2>
-                            </header>
-                            <div class="post-card-excerpt">
-                                <p>
-                                    这是本人移植自 Ghost’s Casper theme 的一个 Hexo 主题。
-                                    项目地址 https://github.com/xzhih/hexo-theme-casper
-                                    DEMO https
-                                    ...
-                                </p>
-                            </div>
-                        </a>
-                        <footer class="post-card-meta">
-                            <div class="author-list">
-                                <div class="author-list-item">
-                                    <div class="author-name-tooltip">Hongzhi</div>
-
-                                    <a href="/about" class="static-avatar">
-                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
-                                    </a>
-
-                                </div>
-                            </div>
-                        </footer>
-                    </div>
-                </article>
-
-
-
-            </div>
-        </div>
-
-
-
-        <nav class="pagination">
-
-        </nav>
-
-
-    </main>
-
-
+        
+        
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                <a href="/" title="Home">HOME</a>
+                
+            </li>
+            
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
+    </a>
+    
+    
+    
+    
+    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
+    </a>
+    
+    
 </div>
+    </div>
+</nav>
+        
+    </div>
+</header>
 
+
+<main id="site-main" class="site-main outer" role="main">
+	<div class="inner">
+		<div class="post-feed">
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="复杂度分析（递归）" href="/study/algorithm/complexity-analysis/recursive/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-04T10:56:16.847Z" itemprop="datePublished">
+									2020-01-04
+								</time>
+							</span>
+							<h2 class="post-card-title">复杂度分析（递归）</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								什么是递归前面我们对一些算法的复杂度进行了分析，但这些都是基于循环和迭代的，这一节我们会针对递归的算法进行复杂度分析。首先要需要知道什么是递归，递归（recursion）是函数调用自身的一个过程。举个例子，假设你是一个英语水平有限的人，你在读一段英文材料中遇到了某个生词，你需要查字典去了解这个单词的意思，但是字典只提供了英英字典，意味着你找到的单词下方的释义也有可能是你不认识的单词，于是你又继续查找那些单词的意思，而那些单词的释义有可能又出现你不认识的单词，你又继续查找直到你
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							4
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="复杂度分析（非递归）" href="/study/algorithm/complexity-analysis/non-recursive/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-03T06:58:41.006Z" itemprop="datePublished">
+									2020-01-03
+								</time>
+							</span>
+							<h2 class="post-card-title">复杂度分析（非递归）</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								最好，最坏和平均情况一个算法的好坏并不是一成不变的，它会在不同的情况下有着不同的表现。先来看看一个生活中的场景，假设买彩票中奖的概率是1 / 10,000，那么在最好，最坏和平均的情况下需要买几注彩票才能够中奖呢？显然，如果你的运气够好，第一注你就直接中了，这是最好的情况；相反，如果你的手气够差，你买的彩票永远都中不了奖，这是最坏的情况；平均来讲，你需要买最少10,000注才能够中奖，其实就是这里的数学期望。
+
+这里的类比并不是想说明算法跟概率学有任何的关系，只是想告诉大家，
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							4
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="三种表示方法：O, Ω, Θ" href="/study/algorithm/complexity-analysis/three-notations/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-01T09:08:09.066Z" itemprop="datePublished">
+									2020-01-01
+								</time>
+							</span>
+							<h2 class="post-card-title">三种表示方法：O, Ω, Θ</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								引入前面我们讲到了求最大公约数的算法：欧几里得算法。我们先举一个具体的实例：24 和 16 的公约数。根据其公式 gcd(m, n) = gcd(n, m mod n)，我们可以得到：gcd(24, 16) = gcd(16, 8) = gcd(8, 0)，所以最大公约数是 8。除了这种方法以外，我们还可以从 16 开始一个一个地递减，如果存在两数都能够被整除，那么这个数就是最大公约数。写成代码的形式就是：
+def gcd(m, n):
+    r = min(m, n)  
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							4
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="算法的问题类型" href="/study/algorithm/basic-knowledge/problem-types/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2019-12-31T09:13:57.398Z" itemprop="datePublished">
+									2019-12-31
+								</time>
+							</span>
+							<h2 class="post-card-title">算法的问题类型</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								概述前面讲到了很多关于数据结构的概念，后面的内容就要用这些数据结构和算法来解决具体的问题了。那么首先我们是不是要对这些问题归一个类呢？废话不多说，直接先列举出来，主要分为五大类：
+
+排序问题
+搜索问题
+图的问题
+几何问题
+组合问题
+
+排序问题排序问题是计算机科学里最基础，也是最重要的问题，很多情况下直接决定了你设计的程序的效率，因为大部分的程序都会用到排序。在实际生活中排序也是用处多多。一个最简单的例子就是国外大学的招生办将申请者的 GPA 全部导入到 Excel 中，然后将
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							2
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="基本数据结构" href="/study/algorithm/basic-knowledge/data-structure/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2019-12-30T14:31:09.387Z" itemprop="datePublished">
+									2019-12-30
+								</time>
+							</span>
+							<h2 class="post-card-title">基本数据结构</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								概念如果说程序员是用代码编织这个世界的一群人，那么数据结构（data structure）就是编织所用到的各种工具了，它将计算机中各种各样的数据组织在一起。而我们的算法就是利用这些现有的工具将它们拼接成风格、功能各不相同的程序了。简单来说：算法 + 数据结构 = 程序。这一节就让我们来了解一些基本的数据结构吧。
+数组与链表我们从最简单的一维数据结构开始。数组大家应该都不陌生，它是将一组相同数据类型的数据存储在一起的数据结构。
+
+这里我们分析一下最基本的三大操作：查找、插入和删
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							9
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="算法与复杂度" href="/study/algorithm/overview/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2019-12-27T09:54:18.336Z" itemprop="datePublished">
+									2019-12-27
+								</time>
+							</span>
+							<h2 class="post-card-title">算法与复杂度</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								前言这个系列的博文会逐个介绍计算机科学里面最基础、也是最重要的一部分内容：算法(algorithm)。提到它，这可能是你最擅长的部分，亦或是你学生生涯的噩梦。不管怎么样，对于学计算机的小伙伴来讲，它始终是不可回避的一个话题。不论是学生时代的你还是已经踏上了工作的岗位，算法都会一直陪伴着你。
+为什么要做这个系列呢？因为网上对于这一块的内容实在是太多，甚至是太杂，而很少有把算法的知识体系整合起来形成一个系列的教学博客。于是乎想尽自己的微薄之力，让更多的人能够更好地理解算法，在未来
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							4
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="手把手教你用VPS搭建SS+bbr实现科学上网" href="/others/ss_v2ray/ss/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2019-12-27T09:38:49.679Z" itemprop="datePublished">
+									2019-12-27
+								</time>
+							</span>
+							<h2 class="post-card-title">手把手教你用VPS搭建SS+bbr实现科学上网</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								写在前面  首先先声明一下，本文不带有任何商业性质，单纯地是想方便海内外学生党使用Google、YouTube、Wikipedia等工具来查阅资料，作为一个Google和Wikipedia的重度使用者，有时候离开了这两样东西真的就没办法生活，所以做一个这方面的教程是非常有必要的。
+  如果你对访问外网的频率和带宽要求不高，用一般的免费vpn或者一些在线代理就足够了，市面上这些vpn哪个好用，哪个免费相信你们比我更清楚。如果要经常看YouTube高清视频或者连外服打游戏的小伙伴
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							8
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="什么是算法" href="/study/algorithm/introduction/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2019-12-27T09:35:25.224Z" itemprop="datePublished">
+									2019-12-27
+								</time>
+							</span>
+							<h2 class="post-card-title">什么是算法</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								概念什么是算法？英文维基百科给出了这样的定义：“An algorithm is a finite sequence of well-defined, computer-implementable instructions, typically to solve a class of problems or to perform a computation.”翻译过来的意思就是一系列有限的、清晰定义的、可实现的计算机指令，并用以解决一类问题或进行计算。
+是不是被这么官方的定义搞
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							3
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+		</div>
+	</div>
+
+	
+	
+	<nav class="pagination">
+		
+	</nav>
+	
+	
+</main>
+
+
+	</div>
+	
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+            
+            
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">最近更新</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul>
-                        <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
-                        </li>
+<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
+    <h3 class="read-next-card-header-title">Recent Posts</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/complexity-analysis/recursive/">复杂度分析（递归）</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/complexity-analysis/non-recursive/">复杂度分析（非递归）</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/complexity-analysis/three-notations/">三种表示方法：O, Ω, Θ</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
-                        </li>
+            
+            
+            
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
-                        </li>
 
-                    </ul>
-                </div>
-                <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
-                </footer>
-            </article>
+            
+            
+            
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">分类</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul class="category-list">
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/series/">系列</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/tutorial/">教程</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/life/">生活</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
-                </div>
-            </article>
+            
         </div>
     </div>
 </aside>
 
+	
+
+
+
+
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-
-        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
-
+        
+        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
+        
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -421,37 +642,30 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            Email:
-        </strong>
-        heartbeats1216@gmail.com
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-    <a href="https://github.com/infinityglow"; style="text-align: center">
-        github.com/infinityglow
-    </a>
-    </p>
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Hexo">Hexo</a>
+			&copy; 2020
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
+            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
+        </nav>
+    </div>
 </footer>
-
-
-
+	
 
 
 <script>
     if(window.navigator && navigator.serviceWorker) {
         navigator.serviceWorker.getRegistrations()
-            .then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
-            });
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
     }
 </script>
 
@@ -475,6 +689,22 @@
 
 
 
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
+</script>
 
 </body>
 </html>
