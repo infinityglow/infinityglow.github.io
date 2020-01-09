@@ -137,7 +137,7 @@
             <span class="k">return</span> <span class="n">i</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 </pre></div>
-                        <p>我们用一个<code>for</code>循环遍历整个数组，如果找到了<code>element</code>就返回相应的索引值，否则返回 -1。判断这一条件是否成立的语句显然是 <code>if array[i] == element</code>，并且它是被执行的最多的语句，我们将这种执行次数最多，耗时最长的操作叫做<strong>基本操作</strong>（<strong>basic operation</strong>）。一般这种操作出现在最内层的循环，或者出现<a href="https://infinityglow/study/algorithm/complexity-analysis/recursive/" target="_blank" rel="noopener">递归</a>的地方。</p>
+                        <p>我们用一个<code>for</code>循环遍历整个数组，如果找到了<code>element</code>就返回相应的索引值，否则返回 -1。判断这一条件是否成立的语句显然是 <code>if array[i] == element</code>，并且它是被执行的最多的语句，我们将这种执行次数最多，耗时最长的操作叫做<strong>基本操作</strong>（<strong>basic operation</strong>）。一般这种操作出现在最内层的循环，或者出现<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/" target="_blank" rel="noopener">递归</a>的地方。</p>
                         <p>然后，我们来分析一下最好和最坏情况的时间复杂度。首先，最好的情况是循环的第一个元素就是我们要找的，比如我们要从数组 [3, 1, 2, 5, 4] 中找元素 3，那么时间复杂度显然就为 O(1)；最坏的情况是最后一个元素才是我们要找的或者查找失败，比如像这样的数组 [1, 2, 4, 5, 3] 需要执行 5 次基本操作。一般的情况，如果数组的长度为 n，则需要 n - 1 次，所以复杂度为 O(n)。</p>
                         <p>最后我们来说一说平均复杂度，如果我们考虑了所有的情况，即查找的元素 <code>element</code> 在数组 <code>array</code> 的每一个位置都会出现，且出现的概率是相等的，那么我们可以通过这样一个式子来计算：</p>
                         <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula0.png"></p>
