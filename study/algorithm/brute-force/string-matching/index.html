@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>冒泡排序与选择排序 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>字符串匹配（BF） - 算法与复杂度 | 幽默的白帽子的博客 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -119,53 +119,34 @@
     <main id="site-main" class="site-main outer" role="main">
         <div class="inner">
             <header class="post-full-header">
-                <h1 class="post-full-title">冒泡排序与选择排序</h1>
+                <h1 class="post-full-title">字符串匹配（BF）</h1>
             </header>
             <article class="post-full no-image">
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="暴力求解"><a href="#暴力求解" class="headerlink" title="暴力求解"></a>暴力求解</h2><p>从这一章开始，我们就要正式地进入具体的算法问题了。别忘了，我们没有按照类别将这些算法问题分类（排序，搜索等），而是按照不同的解决方法来划分的。在我们还没有了解那些高(ling)深(ren)莫(tou)测(teng)的算法之前，我们先来学习一种最简单、最直接的解决方式：<strong>暴力求解</strong>（<strong>brute-force</strong>）。</p>
-                        <p><img alt="step" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/step.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/step.jpg"></p>
-                        <p>所谓的暴力求解就是指：根据问题具体的描述直接写出相应的算法，从而忽略我们观察和分析问题的过程。举两个例子，前面提到的扔鸡蛋的问题，假如你从第一层开始一层一层地试，直到试出在哪一层鸡蛋刚好会碎，这种方法就是最简单，最直接的方法，也是你一开始就能够想到的方法。另一个例子就是假设让你猜一个 1-100 之间的整数，每次猜完之后会告诉你大了还是小了，你可能会想到从 1 开始一个一个递增地往上猜，但这样显然是最笨的方法，聪明的你肯定会从两个数的中间开始猜，像这样的方法我们在<a href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/">后面</a>还会再次提及。</p>
-                        <p>从两个简单的例子我们似乎可以提前得出结论：暴力求解的效率一定不会很高，但我们可以很方便的 coding。所以，对于一些规模很小的问题我们可以采用这种方式，但对于规模较大的问题，我们计算机的 CPU 可能就吃不消了。</p>
-                        <p><img alt="sick" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg"></p>
-                        <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>下面我们就从两种最简单的排序算法开始介绍。首先是<strong>冒泡排序</strong>（<strong>bubble sort</strong>），当你一听到这个名字的时候，你就可能认为它跟冒泡泡有一定关系，事实上的确如此，我们可以先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）直观地感受一下：</p>
-                        <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif"></p>
-                        <p>可以看到的是，每次循环，左边总有一些大的数会向右“浮动”到相应的位置，如果把它旋转 90 度，这些数就好像在“冒泡”了。实际上，冒泡排序是基于数组中相邻两个元素的比较，如果乱序就交换位置，一直重复这个过程直到数组有序。因为在每次循环中，那些较大的数总是要跟较小的数做交换，所以在直观上就好像这些较大的数在往右“浮动”了。</p>
-                        <p>冒泡排序的实现非常简单，几行代码就能够搞定：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">array</span>
+                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>前面我们学习了两种低效的排序算法，这次我们来看看一个关于搜索的问题：<strong>字符串匹配</strong>（<strong>string matching</strong>）。在<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/problem-types/">算法的问题类型</a>那一节里面我们提到了这个问题，这好比你在浏览网页或者在看电子书的时候按下“Ctrl+F”键，然后你输入一个单词或一段话，它就在原文中自动帮你找到那些匹配的文字。</p>
+                        <p><img alt="matching" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/matching.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/matching.png"></p>
+                        <p>上图截自<a href="http://kddlab.zjgsu.edu.cn:7200/students/lipengcheng/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%EF%BC%88%E8%8B%B1%E6%96%87%E7%AC%AC%E4%B8%89%E7%89%88%EF%BC%89.pdf" target="_blank" rel="noopener">《算法导论》</a>的某一页，我在我自己的电脑里试了一下，搜索的是单词“algorithm”，几秒钟就全部搜出来了，可以说速度是相当快的，要知道这本书可是有 1000 多页的呀，这得益于一种高效的算法帮我们能够在短时间内完成复杂的工作。</p>
+                        <p>这类问题似乎很简单，但这也是困扰了科学家们多年，直到现在对于这种算法的探究都还没有停止，因为解决这个问题并不难，我们只需要用最“暴力”的办法就可以解决掉它，但要找到一种高效的算法却是难上加难。我们将在<a href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/">后面</a>的章节里简单介绍它们。</p>
+                        <h2 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h2><p>这里我们举一个更加有意思的例子。懂一点生物的小伙伴们肯定知道，DNA 探针（一段短的 DNA 序列）在与一段长的 DNA 分子杂交的时候，它们的碱基一定会遵循配对原则，即：A 跟 T 配对，C 跟 G 配对。对于这个问题，我们可以抽象成一个算法问题，也就是从一个含有“ATCG”的字符串中查找一个<strong>模式</strong>（<strong>patten</strong>）字符串，比如“GAATTC”。</p>
+                        <p>如果我们用暴力求解的方式，也就是从字符串的起始位置开始，与模式字符串的第一个字符对齐，进行比对。如果比对成功，就再比较下一个字符，直到全部比对成功。如果失败，模式字符串就向右移动一个单位，再从头与字符串比对，直到超出右边边界。用一张图来描述是这样子的：</p>
+                        <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/DNA.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/DNA.png"></p>
+                        <p>将这个过程写成代码的形式：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">string_matching_bf</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">);</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 用于记录成功配对的字符个数</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">pattern</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]:</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 </pre></div>
                         <br>
-                        <p>其中 n 为数组的长度。那冒泡排序的效率如何呢？根据我们前面所学的<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/">复杂度分析</a>的内容，我们可以得到并推导出下面的式子：</p>
-                        <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation0.png"></p>
-                        <p>最后我们推出冒泡排序的复杂度为 Θ(n<sup>2</sup>)。</p>
-                        <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><strong>选择排序</strong>（<strong>selection sort</strong>）是用暴力求解来解决排序问题的第二种方法，同样它也是一种简单、直接的方法，让我们先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）演示中来一探究竟吧。</p>
-                        <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif"></p>
-                        <p>从动画中可以看到，每次循环都会从右边未排序的序列中选择一个最小的数，与未排序的序列中的第一个元素交换，然后反复这个过程，知道循环结束。</p>
-                        <p>选择排序用 Python 实现也很容易，也只需要几行代码：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">min</span> <span class="o">=</span> <span class="n">i</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
-                <span class="nb">min</span> <span class="o">=</span> <span class="n">j</span>
-            <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">array</span>
-</pre></div>
-                        <br>
-                        <p>因为要暂存那些最小值的索引值，所以这里用到了一个变量<code>min</code>。最后来分析一下选择排序的复杂度，跟冒泡排序一样，根据循环结构，可以推导出最终的复杂度也为 Θ(n<sup>2</sup>)</p>
-                        <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation1.png"></p>
-                        <p>从时间复杂度我们可以看出，这两种排序算法的效率都不高。为了间接的证明这个结论，我在这一节的<a href>完整代码</a>里用到了每次排序所需要的比较次数和排序时间这两个指标来间接反映这一结论。后面我们还会接触到一些更为高效的算法，大家也可以通过这两个指标来判断一个排序算法快慢与否。</p>
+                        <p>其中字符串的长度为 <code>n</code>，配对字符串长度为 <code>m</code>。接下来我们分析一下复杂度。先来看看最好的情况，最好的情况当然就是一次就成功啦，所以只需要比较 m 次，时间复杂度就为 Θ(m)。最坏的的情况就是，每当模式字符串向右移动一个单位，都需要比较 m 次，并且第 m 次的时候配对失败，所以最坏的情况总共需要比较 m(n-m+1) 次，时间复杂度就为 Θ(mn)。</p>
+                        <p>在自然语言中，通常第一个字符比对失败的概率很大，每次模式字符串移动的一个单位时候所需要比较的次数一般接近于 1，所以平均情况可以视为一个线性的复杂度：Θ(n)。</p>
 
-                        <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Bubble%20Selection%20Sort" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
                         <br>
@@ -174,15 +155,15 @@
 
                         <nav id="gobottom" class="pagination">
 
-                            <a class="prev-post" title="3.3 复杂度分析（递归）" href="/study/algorithm/complexity-analysis/recursive/" style="color: #C0C0C0">
-                                ← 3.2 复杂度分析（递归）
+                            <a class="prev-post" title="4.1 冒泡排序与选择排序" href="/study/algorithm/brute-force/bubble-selection-sort/" style="color: #C0C0C0">
+                                ← 4.1 冒泡排序与选择排序
                             </a>
 
                             <span class="prev-next-post">
 
                             </span>
-                            <a class="next-post" title=" 4.2 字符串匹配（BF）" href="/study/algorithm/brute-force/string-matching/" style="color: #C0C0C0">
-                                4.2 字符串匹配（BF） →
+                            <a class="next-post" title=" 4.3 图的两种遍历" href="/study/algorithm/brute-force/graph-traversal/" style="color: #C0C0C0">
+                                4.3 图的两种遍历 →
                             </a>
                         </nav>
 
@@ -758,11 +739,11 @@
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="/study/algorithm/brute-force/bubble-selection-sort/" title="冒泡排序与选择排序- 算法与复杂度">
+        <a href="/study/algorithm/brute-force/string-matching/" title="字符串匹配（BF）- 算法与复杂度">
 
             <img src="/static/icons&images/profile.jpg" alt="profile">
 
-            <span>冒泡排序与选择排序 - 算法与复杂度</span>
+            <span>字符串匹配（BF） - 算法与复杂度</span>
         </a>
     </div>
     <span class="floating-header-divider"></span>
