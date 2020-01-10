@@ -148,7 +148,7 @@
                         <p>最后我们推出冒泡排序的复杂度为 Θ(n<sup>2</sup>)。</p>
                         <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><strong>选择排序</strong>（<strong>selection sort</strong>）是用暴力求解来解决排序问题的第二种方法，同样它也是一种简单、直接的方法，让我们先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）演示中来一探究竟吧。</p>
                         <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif"></p>
-                        <p>从动画中可以看到，每次循环都会从右边未排序的序列中选择一个最小的数，与未排序的序列中的第一个元素交换，然后反复这个过程，知道循环结束。</p>
+                        <p>从动画中可以看到，每次循环都会从右边未排序的序列中选择一个最小的数，与未排序的序列中的第一个元素交换，然后反复这个过程，直到循环结束。</p>
                         <p>选择排序用 Python 实现也很容易，也只需要几行代码：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
