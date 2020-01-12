@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>冒泡排序与选择排序 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>图的两种遍历 - 算法与复杂度 | 幽默的白帽子的博客 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -119,54 +119,90 @@
     <main id="site-main" class="site-main outer" role="main">
         <div class="inner">
             <header class="post-full-header">
-                <h1 class="post-full-title">冒泡排序与选择排序</h1>
+                <h1 class="post-full-title">图的两种遍历</h1>
             </header>
             <article class="post-full no-image">
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="暴力求解"><a href="#暴力求解" class="headerlink" title="暴力求解"></a>暴力求解</h2><p>从这一章开始，我们就要正式地进入具体的算法问题了。别忘了，我们没有按照类别将这些算法问题分类（排序，搜索等），而是按照不同的解决方法来划分的。在我们还没有了解那些高(ling)深(ren)莫(tou)测(teng)的算法之前，我们先来学习一种最简单、最直接的解决方式：<strong>暴力求解</strong>（<strong>brute-force</strong>）。</p>
-                        <p><img alt="step" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/step.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/step.jpg"></p>
-                        <p>所谓的暴力求解就是指：根据问题具体的描述直接写出相应的算法，从而忽略我们观察和分析问题的过程。举两个例子，前面提到的扔鸡蛋的问题，假如你从第一层开始一层一层地试，直到试出在哪一层鸡蛋刚好会碎，这种方法就是最简单，最直接的方法，也是你一开始就能够想到的方法。另一个例子就是假设让你猜一个 1-100 之间的整数，每次猜完之后会告诉你大了还是小了，你可能会想到从 1 开始一个一个递增地往上猜，但这样显然是最笨的方法，聪明的你肯定会从两个数的中间开始猜，像这样的方法我们在<a href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/">后面</a>还会再次提及。</p>
-                        <p>从两个简单的例子我们似乎可以提前得出结论：暴力求解的效率一定不会很高，但我们可以很方便的 coding。所以，对于一些规模很小的问题我们可以采用这种方式，但对于规模较大的问题，我们计算机的 CPU 可能就吃不消了。</p>
-                        <p><img alt="sick" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg"></p>
-                        <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>下面我们就从两种最简单的排序算法开始介绍。首先是<strong>冒泡排序</strong>（<strong>bubble sort</strong>），当你一听到这个名字的时候，你就可能认为它跟冒泡泡有一定关系，事实上的确如此，我们可以先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）直观地感受一下：</p>
-                        <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif"></p>
-                        <p>可以看到的是，每次循环，左边总有一些大的数会向右“浮动”到相应的位置，如果把它旋转 90 度，这些数就好像在“冒泡”了。实际上，冒泡排序是基于数组中相邻两个元素的比较，如果乱序就交换位置，一直重复这个过程直到数组有序。因为在每次循环中，那些较大的数总是要跟较小的数做交换，所以在直观上就好像这些较大的数在往右“浮动”了。</p>
-                        <p>冒泡排序的实现非常简单，几行代码就能够搞定：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">array</span>
+                        <h2 id="邻接矩阵和邻接表"><a href="#邻接矩阵和邻接表" class="headerlink" title="邻接矩阵和邻接表"></a>邻接矩阵和邻接表</h2><p>在讲<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/">数据结构</a>的那一节里我们提到了图这种数据结构，并且介绍了两种表示方法：邻接矩阵和邻接表。接下来我们来分别看看这两种方法是如何表示一张图的吧。</p>
+                        <p>和树这种数据结构不同，图的节点之间的连接是自由的，即一个节点可以连接其他任意节点（包括自身），并且是具有方向性的。所以我们可以根据这样的特性，用 0 和 1 来表示一个节点 u 是否能够到达另一个节点 v。假设一个图由 n 个节点组成，那么我们就有 n<sup>2</sup> 种可能的连接。为了方便，我们用一个 n × n 的矩阵来表示：</p>
+                        <p><img alt="邻接矩阵" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/matrix.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/matrix.png"></p>
+                        <p>根据上面的矩阵，我们可以得知节点 a 可以到达节点 c，而节点 d 却不能到达节点 c。如果我们考虑矩阵中的每一项，根据其连接关系，我们就可以画出这个图：</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph0.png"></p>
+                        <p>如果我们用一个链表的形式来表示一个节点到与之相连的节点，那么我们就可以得到一个由多个链表构成的数组。举个例子，上面的图中，节点 b 对应的链表中含有节点 c 和 f，所以节点 b 是可以直接到达节点 c 和节点 f 的。同样，由于我们的图是一个无向图，所以节点 c 和节点 f 分别对应的链表也是含有节点 b 的。根据整个邻接表，我们也可以画出和上面相同的图。</p>
+                        <p><img alt="邻接表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/list.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/list.png"></p>
+                        <h2 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h2><p>在了解两种遍历算法之前，我们先要知道什么是遍历？<strong>遍历</strong>（<strong>traversal</strong>）是对树（图）这种相对复杂的数据结构中的每一个节点进行逐一访问的过程。换句话说就是我们能够找到一条路，将所有节点都“走”过一遍。</p>
+                        <p><strong>深度优先遍历</strong>（<strong>depth-first search</strong>）是图的一种遍历方式。既然是深度优先遍历当然是跟深度有关系啦。具体过程：假设从一个节点出发，我们需要尽可能远地探索其他分支，直到遇到“<strong>死胡同</strong>”（<strong>dead end</strong>）。例如下面的图，我们从节点 a 开始遍历，由于算法是尽可能远地探索那些节点，所以当我们探索到“死胡同”的时候，走过的节点就为 a-b-d-e (分支节点按照字母表顺序进行优先选择)。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph1.png"></p>
+                        <p>节点 e 被遍历后，我们需要退回到节点 d，再尽可能地往更远的地方走，直到再次遇到“死胡同”。所以节点 c 和节点 f 是下一次被遍历的两个节点。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph2.png"></p>
+                        <p>然后重复这个过程，直到退回到了节点 a。显然，这个过程需要用递归或者栈来实现的（因为后来的节点先离开），要实现这个代码，首先我们先要用一个类来表示图中的节点。</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">visited</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">neighbours</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 记录所有与之相邻的节点</span>
 </pre></div>
                         <br>
-                        <p>其中 n 为数组的长度。那冒泡排序的效率如何呢？根据我们前面所学的<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/">复杂度分析</a>的内容，我们可以得到并推导出下面的式子：</p>
-                        <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation0.png"></p>
-                        <p>最后我们推出冒泡排序的复杂度为 Θ(n<sup>2</sup>)。</p>
-                        <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><strong>选择排序</strong>（<strong>selection sort</strong>）是用暴力求解来解决排序问题的第二种方法，同样它也是一种简单、直接的方法，让我们先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）演示中来一探究竟吧。</p>
-                        <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif"></p>
-                        <p>从动画中可以看到，每次循环都会从右边未排序的序列中选择一个最小的数，与未排序的序列中的第一个元素交换，然后反复这个过程，直到循环结束。</p>
-                        <p>选择排序用 Python 实现也很容易，也只需要几行代码：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">min</span> <span class="o">=</span> <span class="n">i</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
-                <span class="nb">min</span> <span class="o">=</span> <span class="n">j</span>
-            <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">array</span>
+                        <p>然后实现一下深度优先遍历的过程：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">v</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">neighbours</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 </pre></div>
                         <br>
-                        <p>因为要暂存那些最小值的索引值，所以这里用到了一个变量<code>min</code>。最后来分析一下选择排序的复杂度，跟冒泡排序一样，根据循环结构，可以推导出最终的复杂度也为 Θ(n<sup>2</sup>)</p>
-                        <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation1.png"></p>
-                        <p>从时间复杂度我们可以看出，这两种排序算法的效率都不高。为了间接的证明这个结论，我在这一节的<a href>完整代码</a>里用到了每次排序所需要的比较次数和排序时间这两个指标来间接反映这一结论。后面我们还会接触到一些更为高效的算法，大家也可以通过这两个指标来判断一个排序算法快慢与否。</p>
+                        <p>我们看到，由于节点 g 和节点 h 没有与左边的图连通，所以我们需要再构建一个函数用来遍历所有节点是否被访问过，如果没有，我们就从该节点开始再进行遍历。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">DFS</span><span class="p">(</span><span class="n">V</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+                        <br>
+                        <p>最后我们遍历完全部的节点。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph3.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph3.png"></p>
+                        <h2 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h2><p>和深度优先遍历一样，<strong>广度优先遍历</strong>（<strong>breadth-first search</strong>）也是从一个节点出发，遍历所有节点。但不一样的是，我们这次是尽可能广地遍历其他邻近的节点。还是拿刚刚的图来做例子，当节点 a 被访问后，节点 b 和节点 c 会紧接着被访问。</p>
+                        <p>此时节点 a 的所有邻近节点全部被访问了，所以这里只需要考虑节点 b 和节点 c 的邻近节点，因此下一次被访问的节点就会有 d 和 f，然后我们反复这个过程，最终遍历全部节点。</p>
+                        <p>这种先进来的节点先离开的形式我们可以用一个队列来实现：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bfs</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">v</span><span class="o">.</span><span class="n">visted</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 初始化一个空队列</span>
+    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>  <span class="c1"># v 入队</span>
+    <span class="k">while</span> <span class="n">queue</span> <span class="o">!=</span> <span class="p">[]:</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">neighbours</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># v 出队</span>
+</pre></div>
+                        <br>
+                        <p>同样，对于那些没有相互连接的图，我们处理的方式是一样的：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">V</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">bfs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+                        <br>
+                        <p>完整的图解如下：</p>
+                        <p>节点 a 入队</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph4.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph4.png"></p>
+                        <p>节点 b, c 入队，节点 a 出队</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph5.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph5.png"></p>
+                        <p>节点 d, f 入队，节点 b, c 出队</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph6.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph6.png"></p>
+                        <p>节点 e 入队，节点 d, f 出队</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph7.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph7.png"></p>
+                        <p>节点 g 入队</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph8.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph8.png"></p>
+                        <p>节点 h 入队，节点 g 出队。再经过一次 <code>while</code> 循环后节点 h 出队，最后遍历完成。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph9.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph9.png"></p>
+                        <p>那么图的遍历跟暴力求解有什么关系呢？事实上，不管是深度优先遍历还是广度优先遍历，我们可以发现，其实每一个节点在被访问的过程中都执行了一次遍历算法，我们正是通过这种方式，才保证了图的每一个节点能够被访问，达到遍历的效果。后面我们讲到的<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhausitive-search/">暴力搜索</a>也是运用到了这么一点性质。</p>
+                        <p>图的复杂度怎么计算呢？我们知道图可以由邻接矩阵或邻接表来表示，所以我们要分别来讨论：</p>
+                        <p>如果我们用邻接矩阵来表示，在执行遍历算法的过程中，由于每个节点都要查看其他节点是否与自己相连，即矩阵中每一行的 0 和 1，所以对于一个有 |V| 个节点的图来讲，就要查看 |V|<sup>2</sup> 次，所以用邻接矩阵来表示的图，其两种遍历的复杂度均为 Θ(|V|<sup>2</sup>)。</p>
+                        <p>邻接表由于只记录了每个节点和与之相连节点的信息，即每条边的信息。所以在遍历的过程中，我们需要 |V| + |E| 次，其中 |V| 表示判断节点是否已经被访问过的次数，|E| 表示一个图里边的条数（具有两个方向的边算作两次）。所以用邻接表表示的图，其两种遍历的复杂度均为 Θ(|V|+|E|)。</p>
 
                         <br>
-                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Bubble%20Selection%20Sort" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/String%20Matching" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
                         <br>
                         <br>
@@ -174,15 +210,15 @@
 
                         <nav id="gobottom" class="pagination">
 
-                            <a class="prev-post" title="3.3 复杂度分析（递归）" href="/study/algorithm/complexity-analysis/recursive/" style="color: #C0C0C0">
-                                ← 3.3 复杂度分析（递归）
+                            <a class="prev-post" title="4.1 冒泡排序与选择排序" href="/study/algorithm/brute-force/string-matching/" style="color: #C0C0C0">
+                                ← 4.2 字符串匹配（BF）
                             </a>
 
                             <span class="prev-next-post">
 
                             </span>
-                            <a class="next-post" title=" 4.2 字符串匹配（BF）" href="/study/algorithm/brute-force/string-matching/" style="color: #C0C0C0">
-                                4.2 字符串匹配（BF） →
+                            <a class="next-post" title=" 4.3 图的两种遍历" href="/study/algorithm/brute-force/clo-pair-con-hull" style="color: #C0C0C0">
+                                4.4 最近点对与凸包问题（BF） →
                             </a>
                         </nav>
 
@@ -758,11 +794,11 @@
 
 <div class="floating-header">
     <div class="floating-header-logo">
-        <a href="/study/algorithm/brute-force/bubble-selection-sort/" title="冒泡排序与选择排序- 算法与复杂度">
+        <a href="/study/algorithm/brute-force/graph-traversal/" title="图的两种遍历 - 算法与复杂度">
 
             <img src="/static/icons&images/profile.jpg" alt="profile">
 
-            <span>冒泡排序与选择排序 - 算法与复杂度</span>
+            <span>图的两种遍历 - 算法与复杂度</span>
         </a>
     </div>
     <span class="floating-header-divider"></span>
