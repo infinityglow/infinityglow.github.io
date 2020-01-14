@@ -187,7 +187,7 @@
 </pre></div>
                         <br>
                         <p>最后来分析一下复杂度。我们知道，如果平面上有 n 个点，那么一共就有 $ \frac{n(n-1)}{2} $ 个点对，也就是直线的条数。对于每一条直线，又要从剩下 n - 2 个点中判断是否在直线的同一侧。这样一来，只要我们列出求和公式，再经过推导就能够得到复杂度为 Θ(n<sup>3</sup>)。这里我就偷个懒，不详细写出来了～</p>
-                        <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们可以看到，用暴力求解的办法解决几何问题依然是那么简单、直接，但效率也是依然的低。所以这两种算法也只能解决小规模的问题。面对 n &gt; 10<sup>6</sup> 这种大规模的问题时，我们就要求救<a href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/">其他算法</a>了。</p>
+                        <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们可以看到，用暴力求解的办法解决几何问题依然是那么简单、直接，但效率也是依然的低。所以这两种算法也只能解决小规模的问题。面对 n &gt; 10<sup>6</sup> 这种大规模的问题时，我们就要求助<a href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/">其他算法</a>了。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Closest-Pair%20%26%20Convex-Hull%20Problem" target="_blank" rel="noopener">本节全部代码</a> ←</p>
