@@ -141,7 +141,7 @@
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">visited</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">neighbours</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 记录所有与之相邻的节点</span>
 </pre></div>
                         <br>
@@ -149,14 +149,16 @@
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
     <span class="n">v</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">neighbours</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="n">dfs</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 </pre></div>
                         <br>
                         <p>我们看到，由于节点 g 和节点 h 没有与左边的图连通，所以我们需要再构建一个函数用来遍历所有节点是否被访问过，如果没有，我们就从该节点开始再进行遍历。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">DFS</span><span class="p">(</span><span class="n">V</span><span class="p">):</span>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">DFS</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
             <span class="n">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 </pre></div>
                         <br>
@@ -169,17 +171,19 @@
     <span class="n">v</span><span class="o">.</span><span class="n">visted</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 初始化一个空队列</span>
     <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>  <span class="c1"># v 入队</span>
-    <span class="k">while</span> <span class="n">queue</span> <span class="o">!=</span> <span class="p">[]:</span>
+    <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">neighbours</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
         <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># v 出队</span>
 </pre></div>
                         <br>
                         <p>同样，对于那些没有相互连接的图，我们处理的方式是一样的：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">V</span><span class="p">):</span>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">visited</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
             <span class="n">bfs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 </pre></div>
                         <br>
@@ -202,7 +206,7 @@
                         <p>邻接表由于只记录了每个节点和与之相连节点的信息，即每条边的信息。所以在遍历的过程中，我们需要 |V| + |E| 次，其中 |V| 表示判断节点是否已经被访问过的次数，|E| 表示一个图里边的条数（具有两个方向的边算作两次）。所以用邻接表表示的图，其两种遍历的复杂度均为 Θ(|V|+|E|)。</p>
 
                         <br>
-                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/String%20Matching" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Graph%20Traversal" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
                         <br>
                         <br>
@@ -210,14 +214,14 @@
 
                         <nav id="gobottom" class="pagination">
 
-                            <a class="prev-post" title="4.1 冒泡排序与选择排序" href="/study/algorithm/brute-force/string-matching/" style="color: #C0C0C0">
+                            <a class="prev-post" title="4.2 字符串匹配（BF）" href="/study/algorithm/brute-force/string-matching/" style="color: #C0C0C0">
                                 ← 4.2 字符串匹配（BF）
                             </a>
 
                             <span class="prev-next-post">
 
                             </span>
-                            <a class="next-post" title=" 4.3 图的两种遍历" href="/study/algorithm/brute-force/clo-pair-con-hull" style="color: #C0C0C0">
+                            <a class="next-post" title=" 4.4 最近点对与凸包问题（BF）" href="/study/algorithm/brute-force/clo-pair-con-hull" style="color: #C0C0C0">
                                 4.4 最近点对与凸包问题（BF） →
                             </a>
                         </nav>
