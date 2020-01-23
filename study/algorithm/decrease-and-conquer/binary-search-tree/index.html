@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <link href="/css/default.css" rel="stylesheet">
+    <link href="/css/github.css" rel="stylesheet">
+
+    <title>二分查找与二叉树- 算法与复杂度 | 幽默的白帽子的博客 </title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
+
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io/about/">
+
+
+    <meta property="article:author" content="Hongzhi Fu">
+    <link rel="stylesheet" href="../../../../../public/css/default.css">
+
+</head>
+<body class="post-template">
+<div class="site-wrapper">
+
+
+
+
+
+    <header class="site-header outer" style="z-index: 999">
+        <div class="inner">
+
+            <nav class="site-nav">
+                <div class="site-nav-left">
+                    <ul class="nav">
+
+                        <li>
+                            <a href="/" title="主页">主页</a>
+                        </li>
+
+                        <li>
+                            <a href="/study" title="技术篇">技术篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/life" title="生活篇">生活篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                        </li>
+
+                        <li>
+                            <a href="/about" title="about">about</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="search-button">
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+                </div>
+
+                <div class="site-nav-right">
+
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+
+
+                    <div class="social-links">
+
+                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+                        </a>
+
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <header class="post-full-header">
+                <h1 class="post-full-title">二分查找与二叉树</h1>
+            </header>
+            <article class="post-full no-image">
+
+                <section class="post-full-content">
+                    <div id="lightgallery" class="markdown-body">
+                        <h2 id="有序表的查找"><a href="#有序表的查找" class="headerlink" title="有序表的查找"></a>有序表的查找</h2><p>我们已经讨论过在一个数组中找到相应元素的算法，我们采用的是最简单，最直接的顺序搜索的方式，即从第一个元素开始，从左往右依次搜索，直到查找到该元素或查找失败。对于复杂度而言，我们也讨论过它的平均复杂度为 Θ(n)。那么还有没有更快的算法呢？这一节我们就来讨论一下吧～</p>
+                        <p>如果一个数组本身是有序的，查找一个元素就类似于在前面提到的<a href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/">猜数问题</a>，只是这里查找的元素变成了要猜的数。如果我们从数组的中间位置开始查找，在每轮查找过后，我们只需要在剩下一半的数组中再继续查找，这样以此类推，直到查找到该元素，或查找失败。</p>
+                        <p>下面来举一个具体的例子，假设我们的数组长这样：</p>
+                        <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array0.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array0.png"></p>
+                        <p>下面查找元素 61，经过一轮的搜索过后，待搜索数组的长度变为原来的一半：</p>
+                        <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array1.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array1.png"></p>
+                        <p>然后反复这个过程，最终找到 61：</p>
+                        <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array2.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array2.png"></p>
+                        <p>我们只需要十行左右的代码就能轻松实现：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">binary_search</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">r</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># 向下取整</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">array</span><span class="p">[</span><span class="n">m</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">m</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">m</span><span class="p">]:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+                        <br>
+                        <p>最后来分析一下时间复杂度。我们知道，每次查找操作，问题的规模都变为原来的一半。所以我们可以写出以下递归关系式。</p>
+                        <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/derivation0.png"></p>
+                        <p>怎样来解这个关系式呢？这里我们不妨设 n = 2<sup>k</sup>，这样关系式就变为了 t(2<sup>k</sup>) = t(2<sup>k-1</sup>) + 1，然后再用回代的方式把它解出来。</p>
+                        <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/derivation1.png"></p>
+                        <p>最后用 n 替换掉 k，得到复杂度为 Θ(log n)。</p>
+                        <h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>如果像下面这幅图一样，把一个有序数组变为二叉树的结构，然后用中间的元素当做树的根节点，左半部分的中间元素当做根节点的左孩子，右半部分的中间元素当做根节点的右孩子，这样以此类推，树的层数就会越来越多，这样我们就构建好了一颗二叉树。</p>
+                        <p><img alt="conversion" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/"></p>
+                        <p>我们可以看到，对于每个节点，左孩子都小于它的父节点，右孩子都大于等于它的父节点。所以我们把这样的二叉树叫做<strong>二叉搜索树</strong>（<strong>binary search tree</strong>）。</p>
+                        <p>如果要搜索二叉树里面的元素（这里我们搜索节点 61），我们首先从根节点开始访问。</p>
+                        <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree0.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree0.png"></p>
+                        <p>假如根节点的元素就是我们要找的，那么就直接返回该节点；如果查找的元素比根节点大，我们就查找它的右子树。在这个例子里，61 比 48 要大，所以我们从 48 的右子树中搜索 61，这样问题就变成了从以 73 为根节点的二叉树中查找 61 这个元素。</p>
+                        <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree1.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree1.png"></p>
+                        <p>同理，如果查找的元素比根节点小，我们就查找它的左子树，这里 61 比 73 要小，所以问题又减小为了从以 61 为根节点的二叉树中查找 61 这个元素。</p>
+                        <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree2.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree2.png"></p>
+                        <p>这个过程，我们用递归就能够轻松地实现。在这之前，我们先要构建 <code>Node</code> 类和 <code>BST</code> 类：</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+                        <br>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BST</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+                        <br>
+                        <p>然后用两个函数来实现：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="c1"># 树的根节点为空就抛出异常</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The tree is null&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">search_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>  <span class="c1"># 如节点为空，则返回 None</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>  <span class="c1"># 从左子树查找</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>  <span class="c1"># 从右子树查找</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">root</span>
+</pre></div>
+                        <br>
+                        <p>除了搜索，二叉树还有插入和删除节点的操作。</p>
+                        <p>对于插入节点，我们首先要进行的操作是先找到插入的位置，即通过搜索操作找到插入位点。举一个例子，如果要插入节点 42，首先我们要先找到插入的位置（节点 34），因为 42 比 34 要大，所以 42 作为 34 的右节点。</p>
+                        <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/insert.gif" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/insert.gif"></p>
+                        <p>代码实现：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># 创建一个新节点</span>
+    <span class="c1"># 查看根节点是否为空</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">new_node</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">new_node</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">insert_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>  <span class="c1"># 从左子树查找</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>  <span class="c1"># 从右子树查找</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
+</pre></div>
+                        <br>
+                        <p>删除节点相对来说就要复杂一些，除了要找到删除的节点之外，我们还要对不同情况的节点执行不同的操作。</p>
+                        <ul>
+                            <li><p>情况 1：删除的为叶子节点</p>
+                                <p>  这种情况最简单，只需要找到该节点，然后删除即可，例如删除这里的 10。</p>
+                            </li>
+                        </ul>
+                        <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete1.gif" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete1.gif"></p>
+                        <ul>
+                            <li><p>情况 2：删除的节点只有左孩子或只有右孩子</p>
+                                <p>  这种情况下，只需要将原本指向它的节点指向它的子节点即可。像下面这幅图这样，我们要删除 34 这个节点，这时我们只需要将节点 25 的右孩子指向 34 的右孩子（节点 42）即可，最后删除掉节点 34 。</p>
+                            </li>
+                        </ul>
+                        <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete2.gif" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete2.gif"></p>
+                        <ul>
+                            <li><p>情况 3：删除的节点既有左孩子又有右孩子</p>
+                                <p>  这种情况是最麻烦的，删除节点后，要想保持原有二叉搜索树的性质，我们首先要从待删除节点的左子树中找到最大的节点，或者从右子树中找到最小的节点。这里以左子树为例，假设我们要删除节点 48，首先从它的左子树中找到最大节点 42，然后交换它们的值，这样 42 就成为了根节点，原先的 42 变为了这里的 48，最后我们删除节点 48。</p>
+                            </li>
+                        </ul>
+                        <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete3.gif" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete3.gif"></p>
+                        <p>代码实现：</p>
+                        <p><code>max</code> 函数</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">root</span>
+</pre></div>
+                        <br>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="c1"># 根节点为空抛出异常</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;树为空树&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="c1"># 查找</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 左右孩子为空</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">root</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="c1"># 只有左孩子或右孩子</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span>
+            <span class="k">del</span> <span class="n">root</span>
+            <span class="k">return</span> <span class="n">temp</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">del</span> <span class="n">root</span>
+            <span class="k">return</span> <span class="n">temp</span>
+        <span class="c1"># 左右孩子都有</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>  <span class="c1"># 找到待删除节点的左子树的最大节点</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">root</span>
+</pre></div>
+                        <br>
+                        <p>二叉搜索树的复杂度取决于二叉树的结构。如果像上面的例子那样，复杂度就跟二分查找一样，为 Θ(log n)。假设二叉树长得像下面这张图的右边的树一样，我们会觉得它显得特别地不“平衡”，跟普通的链表没有什么区别，所以复杂度就退化为线性的复杂度 Θ(n)。</p>
+                        <p><img alt="对比" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/"></p>
+                        <p>因此，二叉树的平衡性显得就尤为重要，后面讲到的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/">AVL树</a>和<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/">红黑树</a>会采用各自的机理，使树尽可能变得“平衡”。</p>
+
+                        <br>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Decrease%20and%20Conquer/Binary%20Search%20Tree" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <nav id="gobottom" class="pagination">
+
+                            <a class="prev-post" title="5.2 拓扑排序" href="/study/algorithm/decrease-and-conquer/topo-sorting/" style="color: #C0C0C0">
+                                ← 5.2 拓扑排序
+                            </a>
+
+                            <span class="prev-next-post">
+
+                            </span>
+                            <a class="next-post" title=" 5.4 插值查找" href="/study/algorithm/decrease-and-conquer/interpolation-search/" style="color: #C0C0C0">
+                                5.4 插值查找 →
+                            </a>
+                        </nav>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <!-- 来必力City版安装代码 -->
+                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
+                            <script type="text/javascript">
+                                (function(d, s) {
+                                    var j, e = d.getElementsByTagName(s)[0];
+
+                                    if (typeof LivereTower === 'function') { return; }
+
+                                    j = d.createElement(s);
+                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                                    j.async = true;
+
+                                    e.parentNode.insertBefore(j, e);
+                                })(document, 'script');
+                            </script>
+                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+                        </div>
+                        <!-- City版安装代码已完成 -->
+                    </div>
+                </section>
+            </article>
+        </div>
+
+
+    </main>
+
+    <div class="toc-bar">
+        <div class="toc-btn-bar">
+            <a href="#site-main" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+            </a>
+            <div class="toc-btn toc-switch">
+                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+            </div>
+            <a href="#gobottom" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+            </a>
+        </div>
+        <div class="toc-main">
+            <ol class="toc">
+                <li class="toc-item toc-level-1">
+                    <a class="toc-link" href="/study/algorithm/overview/">
+                        <span class="toc-text">
+                            算法与复杂度
+                        </span>
+                    </a>
+                    <ol class="toc-child">
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                介绍
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/introduction/">
+                                        <span class="toc-text">
+                                            1.1 什么是算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                基本知识
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
+                                        <span class="toc-text">
+                                            2.1 基本数据结构
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
+                                        <span class="toc-text">
+                                            2.2 算法的问题类型
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                复杂度分析
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
+                                        <span class="toc-text">
+                                            3.1 三种表示方法：O, Ω, Θ
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
+                                        <span class="toc-text">
+                                            3.2 复杂度分析（非递归）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
+                                        <span class="toc-text">
+                                            3.3 复杂度分析（递归）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                暴力求解
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
+                                        <span class="toc-text">
+                                            4.1 冒泡排序与选择排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
+                                        <span class="toc-text">
+                                            4.2 字符串匹配（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
+                                        <span class="toc-text">
+                                            4.3 图的两种遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            4.4 最近点对与凸包问题（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
+                                        <span class="toc-text">
+                                             4.5 暴力搜索
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                减治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
+                                        <span class="toc-text">
+                                            5.1 插入排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
+                                        <span class="toc-text">
+                                            5.2 拓扑排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
+                                        <span class="toc-text">
+                                            5.3 二分查找与二叉树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
+                                        <span class="toc-text">
+                                            5.4 插值查找
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                分治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
+                                        <span class="toc-text">
+                                            6.1 归并排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
+                                        <span class="toc-text">
+                                            6.2 快速排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
+                                        <span class="toc-text">
+                                            6.3 二叉树的遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            6.4 最近点对与凸包问题（DC）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                变治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
+                                        <span class="toc-text">
+                                            7.1 预排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
+                                        <span class="toc-text">
+                                            7.2 霍纳法则
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
+                                        <span class="toc-text">
+                                            7.3 堆与堆排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
+                                        <span class="toc-text">
+                                            7.4 AVL树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
+                                        <span class="toc-text">
+                                            7.5 红黑树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
+                                        <span class="toc-text">
+                                            7.6 2-3树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                时空权衡
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
+                                        <span class="toc-text">
+                                            8.1 计数排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
+                                        <span class="toc-text">
+                                            8.2 字符串匹配（TST）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
+                                        <span class="toc-text">
+                                            8.3 哈希
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                动态规划
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
+                                        <span class="toc-text">
+                                            9.1 关于钱的两个经典问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
+                                        <span class="toc-text">
+                                            9.2 背包问题（DP）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
+                                        <span class="toc-text">
+                                            9.3 弗洛伊德算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                贪心算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
+                                        <span class="toc-text">
+                                            10.1 普林姆算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
+                                        <span class="toc-text">
+                                            10.2 克鲁斯卡尔算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
+                                        <span class="toc-text">
+                                            10.3 迪克斯特拉算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
+                                        <span class="toc-text">
+                                            10.4 哈弗曼树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                *高阶算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
+                                        <span class="toc-text">
+                                            *回溯
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
+                                        <span class="toc-text">
+                                            *分支限界
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
+                                        <span class="toc-text">
+                                            *线性规划（单纯形法）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
+                                        <span class="toc-text">
+                                            *最大流问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
+                                        <span class="toc-text">
+                                            *匈牙利算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
+                                        <span class="toc-text">
+                                            *千禧问题：P = NP ?
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/more/">  MORE  → </a>
+                </footer>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/series/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
+                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
+                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
+                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
+                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
+                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            GitHub:
+        </strong>
+        <a href="https://github.com/infinityglow"; style="text-align: center">
+            github.com/infinityglow
+        </a>
+    </p>
+</footer>
+
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+            .then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="/study/algorithm/decrease-and-conquer/binary-search-tree/" title="二分查找与二叉树- 算法与复杂度">
+
+            <img src="/static/icons&images/profile.jpg" alt="profile">
+
+            <span>二分查找与二叉树 - 算法与复杂度</span>
+        </a>
+    </div>
+    <span class="floating-header-divider"></span>
+    <div class="floating-header-title"></div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+<script>searchFunc("/")</script>
+
+</body>
+</html>

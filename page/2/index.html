@@ -155,6 +155,54 @@
 			<article class="post-card post  no-image ">
 				
 				<div class="post-card-content">
+					<a class="post-card-content-link" title="三种表示方法：O, Ω, Θ" href="/study/algorithm/complexity-analysis/three-notations/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-01T09:08:09.066Z" itemprop="datePublished">
+									2020-01-01
+								</time>
+							</span>
+							<h2 class="post-card-title">三种表示方法：O, Ω, Θ</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								引入前面我们讲到了求最大公约数的算法：欧几里得算法。我们先举一个具体的实例：24 和 16 的公约数。根据其公式 gcd(m, n) = gcd(n, m mod n)，我们可以得到：gcd(24, 16) = gcd(16, 8) = gcd(8, 0)，所以最大公约数是 8。除了这种方法以外，我们还可以从 16 开始一个一个地递减，如果存在两数都能够被整除，那么这个数就是最大公约数。写成代码的形式就是：
+def gcd(m, n):
+    r = min(m, n)  
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							4
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
 					<a class="post-card-content-link" title="算法的问题类型" href="/study/algorithm/basic-knowledge/problem-types/">
 						<header class="post-card-header">
 							<span class="post-card-tags">
@@ -439,6 +487,12 @@
       
       
       <li>
+        <a href="/study/algorithm/decrease-and-conquer/binary-search-tree/">二分查找与二叉树</a>
+      </li>
+      
+      
+      
+      <li>
         <a href="/study/algorithm/decrease-and-conquer/topo-sorting/">拓扑排序</a>
       </li>
       
@@ -449,10 +503,6 @@
       </li>
       
       
-      
-      <li>
-        <a href="/study/algorithm/brute-force/exhaustive-search/">暴力搜索</a>
-      </li>
       
       
       
