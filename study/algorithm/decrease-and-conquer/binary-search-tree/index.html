@@ -154,7 +154,7 @@
                         <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/derivation1.png"></p>
                         <p>最后用 n 替换掉 k，得到复杂度为 Θ(log n)。</p>
                         <h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>如果像下面这幅图一样，把一个有序数组变为二叉树的结构，然后用中间的元素当做树的根节点，左半部分的中间元素当做根节点的左孩子，右半部分的中间元素当做根节点的右孩子，这样以此类推，树的层数就会越来越多，这样我们就构建好了一颗二叉树。</p>
-                        <p><img alt="conversion" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/"></p>
+                        <p><img alt="conversion" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/conversion.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/conversion.png"></p>
                         <p>我们可以看到，对于每个节点，左孩子都小于它的父节点，右孩子都大于等于它的父节点。所以我们把这样的二叉树叫做<strong>二叉搜索树</strong>（<strong>binary search tree</strong>）。</p>
                         <p>如果要搜索二叉树里面的元素（这里我们搜索节点 61），我们首先从根节点开始访问。</p>
                         <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree0.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree0.png"></p>
@@ -279,7 +279,7 @@
 </pre></div>
                         <br>
                         <p>二叉搜索树的复杂度取决于二叉树的结构。如果像上面的例子那样，复杂度就跟二分查找一样，为 Θ(log n)。假设二叉树长得像下面这张图的右边的树一样，我们会觉得它显得特别地不“平衡”，跟普通的链表没有什么区别，所以复杂度就退化为线性的复杂度 Θ(n)。</p>
-                        <p><img alt="对比" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/"></p>
+                        <p><img alt="对比" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/comparison.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/comparison.png"></p>
                         <p>因此，二叉树的平衡性显得就尤为重要，后面讲到的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/">AVL树</a>和<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/">红黑树</a>会采用各自的机理，使树尽可能变得“平衡”。</p>
 
                         <br>
