@@ -130,7 +130,7 @@
                         <p>在这一节的内容里，我们会实现类似于查字典的算法。</p>
                         <h2 id="插值查找"><a href="#插值查找" class="headerlink" title="插值查找"></a>插值查找</h2><p><strong>插值查找</strong>（<strong>interpolation search</strong>）是二分查找的改良版。假设有这样一个数组 [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]，我们可以发现，每个相邻元素的差均为 10，呈现出均匀分布。如果要查找元素 70，我们首先可以计算出在数组中小于等于 70 的元素占所有元素的比例的期望值为 p = (70 - 0) / (90 - 0) = 7 / 9，而数组的长度 n 我们知道等于 10，所以我们期望查找的索引值就为 ⌊n × p⌋ = 7，对应的元素为 70，恰好就是我们要找的元素。</p>
                         <p>这里，我们用一个公式来表示每次查找的期望索引值： </p>
-                        <p><img alt="formula" src="https://infinityglow.github.io/study/algorithm/decease-and-conquer/interpolation-search/images/formula.png"></p>
+                        <p><img alt="formula" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decease-and-conquer/interpolation-search/images/formula.png" data-src="https://infinityglow.github.io/study/algorithm/decease-and-conquer/interpolation-search/images/formula.png"></p>
                         <p>其中，l 和 r 分别代表数组的第一个和最后一个索引，key 代表待查找的元素。</p>
                         <p>跟二分查找一样，如果一次查找失败，数组的长度就相应地减小，再代入上面的公式继续查找，直到查找成功或失败。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">formula</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
