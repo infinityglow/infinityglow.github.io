@@ -133,7 +133,7 @@
                         <p><img alt="sick" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg"></p>
                         <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>下面我们就从两种最简单的排序算法开始介绍。首先是<strong>冒泡排序</strong>（<strong>bubble sort</strong>），当你一听到这个名字的时候，你就可能认为它跟冒泡泡有一定关系，事实上的确如此，我们可以先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）直观地感受一下：</p>
                         <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif"></p>
-                        <p><video controls autoplay loop class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.mp4"></video></p>
+                        <p><video autoplay="true" loop="true" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.mp4"></video></p>
                         <p>可以看到的是，每次循环，左边总有一些大的数会向右“浮动”到相应的位置，如果把它旋转 90 度，这些数就好像在“冒泡”了。实际上，冒泡排序是基于数组中相邻两个元素的比较，如果乱序就交换位置，一直重复这个过程直到数组有序。因为在每次循环中，那些较大的数总是要跟较小的数做交换，所以在直观上就好像这些较大的数在往右“浮动”了。</p>
                         <p>冒泡排序的实现非常简单，几行代码就能够搞定：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
