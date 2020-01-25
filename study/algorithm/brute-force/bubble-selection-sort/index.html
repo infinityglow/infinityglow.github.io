@@ -132,7 +132,6 @@
                         <p>从两个简单的例子我们似乎可以提前得出结论：暴力求解的效率一定不会很高，但我们可以很方便的 coding。所以，对于一些规模很小的问题我们可以采用这种方式，但对于规模较大的问题，我们计算机的 CPU 可能就吃不消了。</p>
                         <p><img alt="sick" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg"></p>
                         <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>下面我们就从两种最简单的排序算法开始介绍。首先是<strong>冒泡排序</strong>（<strong>bubble sort</strong>），当你一听到这个名字的时候，你就可能认为它跟冒泡泡有一定关系，事实上的确如此，我们可以先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）直观地感受一下：</p>
-                        <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.gif"></p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.mp4"></video></p>
                         <p>可以看到的是，每次循环，左边总有一些大的数会向右“浮动”到相应的位置，如果把它旋转 90 度，这些数就好像在“冒泡”了。实际上，冒泡排序是基于数组中相邻两个元素的比较，如果乱序就交换位置，一直重复这个过程直到数组有序。因为在每次循环中，那些较大的数总是要跟较小的数做交换，所以在直观上就好像这些较大的数在往右“浮动”了。</p>
                         <p>冒泡排序的实现非常简单，几行代码就能够搞定：</p>
@@ -149,7 +148,7 @@
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation0.png"></p>
                         <p>最后我们推出冒泡排序的复杂度为 Θ(n<sup>2</sup>)。</p>
                         <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><strong>选择排序</strong>（<strong>selection sort</strong>）是用暴力求解来解决排序问题的第二种方法，同样它也是一种简单、直接的方法，让我们先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）演示中来一探究竟吧。</p>
-                        <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.gif"></p>
+                        <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.mp4"></video></p>
                         <p>从动画中可以看到，每次循环都会从右边未排序的序列中选择一个最小的数，与未排序的序列中的第一个元素交换，然后反复这个过程，直到循环结束。</p>
                         <p>选择排序用 Python 实现也很容易，也只需要几行代码：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
