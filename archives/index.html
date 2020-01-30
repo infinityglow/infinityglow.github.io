@@ -138,7 +138,7 @@
             <h1 class="site-title">
                 Archives
             </h1>
-            <h2 class="site-description">Total: 19</h2>
+            <h2 class="site-description">Total: 20</h2>
         </div>
         
         
@@ -149,6 +149,53 @@
 <main id="site-main" class="site-main outer" role="main">
 	<div class="inner">
 		<div class="post-feed">
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="二叉树的遍历" href="/study/algorithm/divide-and-conquer/bt-traversal/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-29T16:08:46.309Z" itemprop="datePublished">
+									2020-01-30
+								</time>
+							</span>
+							<h2 class="post-card-title">二叉树的遍历</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								引入前面讲到了二叉搜索树以及它的一些基本操作（插入，搜索，删除），可是我们要怎样知道这些操作是被正确执行的呢？这就需要借助遍历来间接“打印”出树的结构。
+和图的遍历一样，我们也需要逐个访问每一个节点，但跟图不同的是，二叉树的遍历是从根节点开始的，而非任意节点。根据二叉树的特点，每颗二叉树都是由三部分组成：根节点，左子树和右子树。而根节点的左右子树也是由这三部分组成，所以二叉树的遍历问题也是可以用分治来解决的，即遍历一颗二叉树 = 访问根节点 + 遍历根节点的左子树 + 遍历根
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							2
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
 			
 			<article class="post-card post  no-image ">
 				
@@ -582,54 +629,6 @@
 				</div>
 			</article>
 			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="字符串匹配" href="/study/algorithm/brute-force/string-matching/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-01-09T13:04:48.124Z" itemprop="datePublished">
-									2020-01-09
-								</time>
-							</span>
-							<h2 class="post-card-title">字符串匹配</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								回顾前面我们学习了两种低效的排序算法，这次我们来看看一个关于搜索的问题：字符串匹配（string matching）。在算法的问题类型那一节里面我们提到了这个问题，这好比你在浏览网页或者在看电子书的时候按下“Ctrl+F”键，然后你输入一个单词或一段话，它就在原文中自动帮你找到那些匹配的文字。
-
-上图截自《算法导论》的某一页，我在我自己的电脑里试了一下，搜索的是单词“algorithm”，几秒钟就全部搜出来了，可以说速度是相当快的，要知道这本书可是有 1000 多页的呀，这得
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							3
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
 		</div>
 	</div>
 
@@ -673,6 +672,12 @@
       
       
       <li>
+        <a href="/study/algorithm/divide-and-conquer/bt-traversal/">二叉树的遍历</a>
+      </li>
+      
+      
+      
+      <li>
         <a href="/study/algorithm/divide-and-conquer/quick-sort/">快速排序</a>
       </li>
       
@@ -683,10 +688,6 @@
       </li>
       
       
-      
-      <li>
-        <a href="/study/algorithm/decrease-and-conquer/interpolation-search/">插值查找</a>
-      </li>
       
       
       
