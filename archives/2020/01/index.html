@@ -138,7 +138,7 @@
             <h1 class="site-title">
                 Archives
             </h1>
-            <h2 class="site-description">Total: 20</h2>
+            <h2 class="site-description">Total: 21</h2>
         </div>
         
         
@@ -149,6 +149,58 @@
 <main id="site-main" class="site-main outer" role="main">
 	<div class="inner">
 		<div class="post-feed">
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="最近点对与凸包问题（DC）" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-31T05:29:02.427Z" itemprop="datePublished">
+									2020-01-31
+								</time>
+							</span>
+							<h2 class="post-card-title">最近点对与凸包问题（DC）</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								最近点对问题在前面的章节里，我们分别讨论了最近点对和凸包问题，但采用的都是列举其所有情况的暴力解法，效率非常低。这节的内容，我们会用到两种更为高效的方法。
+既然这章都在讲分治法，在解决最近点对问题的时候自然也离不开将这些散点进行分组。所以这里我们用一条垂直分界线 L，将散点分成两部分，SL 和 SR。
+
+其中，SL 包含 ⌈n/2⌉ 个点，而 SR 包含 ⌊n/2⌋ 个点。
+接下来，我们要分别计算出左右两部分的最近点对距离 dL 和 dR。
+
+然后我们取其最小值 d = mi
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							13
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
 			
 			<article class="post-card post  no-image ">
 				
@@ -581,54 +633,6 @@
 				</div>
 			</article>
 			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="图的两种遍历" href="/study/algorithm/brute-force/graph-traversal/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-01-10T15:28:10.176Z" itemprop="datePublished">
-									2020-01-10
-								</time>
-							</span>
-							<h2 class="post-card-title">图的两种遍历</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								邻接矩阵和邻接表在讲数据结构的那一节里我们提到了图这种数据结构，并且介绍了两种表示方法：邻接矩阵和邻接表。接下来我们来分别看看这两种方法是如何表示一张图的吧。
-和树这种数据结构不同，图的节点之间的连接是自由的，即一个节点可以连接其他任意节点（包括自身），并且是具有方向性的。所以我们可以根据这样的特性，用 0 和 1 来表示一个节点 u 是否能够到达另一个节点 v。假设一个图由 n 个节点组成，那么我们就有 n2 种可能的连接。为了方便，我们用一个 n × n 的矩阵来表示：
-
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							5
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
 		</div>
 	</div>
 
@@ -672,6 +676,12 @@
       
       
       <li>
+        <a href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">最近点对与凸包问题（DC）</a>
+      </li>
+      
+      
+      
+      <li>
         <a href="/study/algorithm/divide-and-conquer/bt-traversal/">二叉树的遍历</a>
       </li>
       
@@ -682,10 +692,6 @@
       </li>
       
       
-      
-      <li>
-        <a href="/study/algorithm/divide-and-conquer/merge-sort/">归并排序</a>
-      </li>
       
       
       
