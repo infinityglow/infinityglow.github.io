@@ -144,9 +144,9 @@
 </pre></div>
                         <br>
                         <p>如果平面上有 n 个点，那么要考虑的点对数就为 n(n-1)/2。比如这里一共有 16 个点，我们就要考虑 120 种情况。</p>
-                        <p><img alt="最近点对" src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair1.png"></p>
+                        <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair1.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair1.png"></p>
                         <p>关于算法的复杂度，我们很容易就能推导得出为 Θ(n<sup>2</sup>)。最后我们标注出最近点对在图中的位置。</p>
-                        <p><img alt="最近点对" src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair2.png"></p>
+                        <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair2.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair2.png"></p>
                         <h2 id="凸包问题"><a href="#凸包问题" class="headerlink" title="凸包问题"></a>凸包问题</h2><p><strong>凸包问题</strong>（<strong>convex-hull problem</strong>）是这里要讨论的第二个问题。首先我们先要弄明白什么是凸包，在生活中，你一定见过在一个扎满钉子的木头上套上一圈橡皮筋的场景，像下面这张图那样。哈哈，实际上在这里橡皮筋围成的多边形就是一个凸包了。</p>
                         <p><img alt="橡皮筋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/rubber.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/rubber.png"></p>
                         <p>从严格意义上来讲，凸包指的是由数个点构成的凸多边形（每个内角都小于180度），并且这个多边形能够把这个平面上所有的点都囊括在内。就像上面那张图中被橡皮筋围住的钉子一样。所以，我们怎么来解决这个问题呢？答案当然还是采用最“暴力”的手段。穷举所有的情况，找到我们所需要的多边形。</p>
@@ -177,7 +177,7 @@
                         <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/formula.png"></p>
                         <p>其中 a = y<sub>2</sub> - y<sub>1</sub>, b = x<sub>1</sub> - x<sub>2</sub>, c = x<sub>1</sub>y<sub>2</sub> - y<sub>1</sub>x<sub>2</sub>，x 和 y 分别为需代入的点。如果值大于 0，那么该点在直线的左侧；如果小于 0，那么该点在直线的右侧。</p>
                         <p>最后我们将满足条件的点通过收尾相连的方式显示出来，这样我们就能画出多边形了。</p>
-                        <p><img alt="凸包" src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/con-hull.png"></p>
+                        <p><img alt="凸包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/con-hull.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/con-hull.png"></p>
                         <p>作图的代码如下：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotting</span><span class="p">(</span><span class="n">xy_pair</span><span class="p">,</span> <span class="n">polygon</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xy_pair</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xy_pair</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
