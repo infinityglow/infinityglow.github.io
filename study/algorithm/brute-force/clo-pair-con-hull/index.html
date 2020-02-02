@@ -126,7 +126,7 @@
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
                         <h2 id="最近点对问题"><a href="#最近点对问题" class="headerlink" title="最近点对问题"></a>最近点对问题</h2><p>这一节内容，我们来看看两个经典的几何学问题。首先是<strong>最近点对问题</strong>（<strong>closest-pair problem</strong>）。问题的描述是在一个二维平面上有一些随机分布的散点，要求我们在这些散点里找到两个点，使得它们的距离最小。</p>
-                        <p><img alt="最近点对" src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair0.png"></p>
+                        <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair0.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair0.png"></p>
                         <p>有解决这个问题很简单，只需要把所有的情况都列举出来，即每一个点与其他所有节点的距离都计算出来，然后取最小的值。所以，这里我们再次用到了暴力求解的方法。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">closest_pair_bf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>  <span class="c1"># 初始化 d 为无穷</span>
