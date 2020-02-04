@@ -138,7 +138,7 @@
             <h1 class="site-title">
                 Archives
             </h1>
-            <h2 class="site-description">Total: 21</h2>
+            <h2 class="site-description">Total: 22</h2>
         </div>
         
         
@@ -149,6 +149,55 @@
 <main id="site-main" class="site-main outer" role="main">
 	<div class="inner">
 		<div class="post-feed">
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="最近点对与凸包问题（BF）" href="/study/algorithm/brute-force/clo-pair-con-hull/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-13T12:30:12.938Z" itemprop="datePublished">
+									2020-01-13
+								</time>
+							</span>
+							<h2 class="post-card-title">最近点对与凸包问题（BF）</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								最近点对问题这一节内容，我们来看看两个经典的几何学问题。首先是最近点对问题（closest-pair problem）。问题的描述是在一个二维平面上有一些随机分布的散点，要求我们在这些散点里找到两个点，使得它们的距离最小。
+
+有解决这个问题很简单，只需要把所有的情况都列举出来，即每一个点与其他所有节点的距离都计算出来，然后取最小的值。所以，这里我们再次用到了暴力求解的方法。
+1def closest_pair_bf(X, Y):2    d &#x3D; np.inf  # 
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							5
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
 			
 			<article class="post-card post  no-image ">
 				
@@ -586,53 +635,6 @@ def gcd(m, n):
 				</div>
 			</article>
 			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="手把手教你用VPS搭建SS+bbr实现科学上网" href="/others/ss_v2ray/ss/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2019-12-27T09:38:49.679Z" itemprop="datePublished">
-									2019-12-27
-								</time>
-							</span>
-							<h2 class="post-card-title">手把手教你用VPS搭建SS+bbr实现科学上网</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								写在前面  首先先声明一下，本文不带有任何商业性质，单纯地是想方便海内外学生党使用Google、YouTube、Wikipedia等工具来查阅资料，作为一个Google和Wikipedia的重度使用者，有时候离开了这两样东西真的就没办法生活，所以做一个这方面的教程是非常有必要的。
-  如果你对访问外网的频率和带宽要求不高，用一般的免费vpn或者一些在线代理就足够了，市面上这些vpn哪个好用，哪个免费相信你们比我更清楚。如果要经常看YouTube高清视频或者连外服打游戏的小伙伴
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							8
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
 		</div>
 	</div>
 
@@ -676,6 +678,12 @@ def gcd(m, n):
       
       
       <li>
+        <a href="/study/algorithm/transform-and-conquer/presorting/">预排序</a>
+      </li>
+      
+      
+      
+      <li>
         <a href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">最近点对与凸包问题（DC）</a>
       </li>
       
@@ -686,10 +694,6 @@ def gcd(m, n):
       </li>
       
       
-      
-      <li>
-        <a href="/study/algorithm/divide-and-conquer/quick-sort/">快速排序</a>
-      </li>
       
       
       
