@@ -195,16 +195,16 @@
                         <p>所以我们可以得到堆排序的复杂度，即将两者的复杂度相加 Θ(n) + Θ(nlog n) = Θ(nlog n)。</p>
                         <p>堆排序在任何情况下复杂度都保持在 Θ(nlog n)，并且不需要额外的存储空间。但计算的时候我们发现堆排序的比较次数前面有一个常数 2，所以在通常情况下会稍逊色于快速排序和归并排序。如果你分别运行 GitHub 里我写的这三种排序的代码，你会发现堆排序的平均比较次数会多于快速排序和归并排序，所消耗的时间也比这两者要长。</p>
                         <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;heap sort.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">average</span> <span class="n">number</span> <span class="n">of</span> <span class="n">comparison</span><span class="p">:</span> <span class="mi">235346</span>
-    <span class="n">average</span> <span class="n">time</span> <span class="n">consumed</span><span class="p">:</span> <span class="mf">0.0616</span> <span class="n">s</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">平均比较次数：</span><span class="mi">235346</span>
+    <span class="n">平均运行时间：</span><span class="mf">0.0616</span> <span class="n">s</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;merge sort.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">average</span> <span class="n">number</span> <span class="n">of</span> <span class="n">comparison</span><span class="p">:</span> <span class="mi">120467</span>
-    <span class="n">average</span> <span class="n">time</span> <span class="n">consumed</span><span class="p">:</span> <span class="mf">0.0569</span> <span class="n">s</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">平均比较次数：</span><span class="mi">120467</span>
+    <span class="n">平均运行时间：</span><span class="mf">0.0569</span> <span class="n">s</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;quick sort.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">average</span> <span class="n">number</span> <span class="n">of</span> <span class="n">comparison</span><span class="p">:</span> <span class="mi">156098</span>
-    <span class="n">average</span> <span class="n">time</span> <span class="n">consumed</span><span class="p">:</span> <span class="mf">0.0348</span> <span class="n">s</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">平均比较次数：</span><span class="mi">156098</span>
+    <span class="n">平均运行时间：</span><span class="mf">0.0348</span> <span class="n">s</span>
 </pre></div>
                         <br>
                         <br>
