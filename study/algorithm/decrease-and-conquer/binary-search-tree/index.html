@@ -153,10 +153,10 @@
                         <p>怎样来解这个关系式呢？这里我们不妨设 n = 2<sup>k</sup>，这样关系式就变为了 t(2<sup>k</sup>) = t(2<sup>k-1</sup>) + 1，然后再用回代的方式把它解出来。</p>
                         <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/derivation1.png"></p>
                         <p>最后用 n 替换掉 k，得到复杂度为 Θ(log n)。</p>
-                        <h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>如果像下面这幅图一样，把一个有序数组变为二叉树的结构，然后用中间的元素当做树的根节点，左半部分的中间元素当做根节点的左孩子，右半部分的中间元素当做根节点的右孩子，这样以此类推，树的层数就会越来越多，这样我们就构建好了一颗二叉树。</p>
+                        <h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>如果像下面这幅图一样，把一个有序数组变为二叉树的结构，然后用中间的元素当做树的根节点，左半部分的中间元素当做根节点的左孩子，右半部分的中间元素当做根节点的右孩子，这样以此类推，树的层数就会越来越多，这样我们就构建好了一颗二叉树。</p>
                         <p><img alt="conversion" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/conversion.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/conversion.png"></p>
                         <p>我们可以看到，对于每个节点，左孩子都小于它的父节点，右孩子都大于等于它的父节点。所以我们把这样的二叉树叫做<strong>二叉搜索树</strong>（<strong>binary search tree</strong>）。</p>
-                        <p>如果要搜索二叉树里面的元素（这里我们搜索节点 61），我们首先从根节点开始访问。</p>
+                        <h3 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h3><p>如果要搜索二叉树里面的元素（这里我们搜索节点 61），我们首先从根节点开始访问。</p>
                         <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree0.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree0.png"></p>
                         <p>假如根节点的元素就是我们要找的，那么就直接返回该节点；如果查找的元素比根节点大，我们就查找它的右子树。在这个例子里，61 比 48 要大，所以我们从 48 的右子树中搜索 61，这样问题就变成了从以 73 为根节点的二叉树中查找 61 这个元素。</p>
                         <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree1.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/tree1.png"></p>
@@ -193,7 +193,7 @@
 </pre></div>
                         <br>
                         <p>除了搜索，二叉树还有插入和删除节点的操作。</p>
-                        <p>对于插入节点，我们首先要进行的操作是先找到插入的位置，即通过搜索操作找到插入位点。举一个例子，如果要插入节点 42，首先我们要先找到插入的位置（节点 34），因为 42 比 34 要大，所以 42 作为 34 的右节点。</p>
+                        <h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p>对于插入节点，我们首先要进行的操作是先找到插入的位置，即通过搜索操作找到插入位点。举一个例子，如果要插入节点 42，首先我们要先找到插入的位置（节点 34），因为 42 比 34 要大，所以 42 作为 34 的右节点。</p>
                         <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/insert.gif" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/insert.gif"></p>
                         <p>代码实现：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -216,7 +216,7 @@
             <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
 </pre></div>
                         <br>
-                        <p>删除节点相对来说就要复杂一些，除了要找到删除的节点之外，我们还要对不同情况的节点执行不同的操作。</p>
+                        <h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>删除节点相对来说就要复杂一些，除了要找到删除的节点之外，我们还要对不同情况的节点执行不同的操作。</p>
                         <ul>
                             <li><p>情况 1：删除的为叶子节点</p>
                                 <p>  这种情况最简单，只需要找到该节点，然后删除即可，例如删除这里的 10。</p>
@@ -236,17 +236,17 @@
                         </ul>
                         <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete3.gif" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/delete3.gif"></p>
                         <p>代码实现：</p>
-                        <p><code>max</code> 函数</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+                        <p><code>get_max</code> 函数</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">root</span>
 </pre></div>
                         <br>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="c1"># 根节点为空抛出异常</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;树为空树&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The tree is null&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>
@@ -272,13 +272,13 @@
             <span class="k">return</span> <span class="n">temp</span>
         <span class="c1"># 左右孩子都有</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>  <span class="c1"># 找到待删除节点的左子树的最大节点</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>  <span class="c1"># 找到待删除节点的左子树的最大节点</span>
             <span class="n">root</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span>
             <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">root</span>
 </pre></div>
                         <br>
-                        <p>二叉搜索树的复杂度取决于二叉树的结构。如果像上面的例子那样，复杂度就跟二分查找一样，为 Θ(log n)。假设二叉树长得像下面这张图的右边的树一样，我们会觉得它显得特别地不“平衡”，跟普通的链表没有什么区别，所以复杂度就退化为线性的复杂度 Θ(n)。</p>
+                        <h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>二叉搜索树的复杂度取决于二叉树的结构。如果像上面的例子那样，复杂度就跟二分查找一样，为 Θ(log n)。假设二叉树长得像下面这张图的右边的树一样，我们会觉得它显得特别地不“平衡”，跟普通的链表没有什么区别，所以复杂度就退化为线性的复杂度 Θ(n)。</p>
                         <p><img alt="对比" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/comparison.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/comparison.png"></p>
                         <p>因此，二叉树的平衡性显得就尤为重要，后面讲到的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/">AVL树</a>和<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/">红黑树</a>会采用各自的机理，使树尽可能变得“平衡”。</p>
 
