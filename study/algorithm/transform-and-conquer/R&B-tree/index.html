@@ -415,13 +415,17 @@
                                 <p>  <img alt="情况 1" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case1.png"></p>
                             </li>
                             <li><p>情况 2：待删除节点 D 的兄弟节点 B 为红色。按照惯例，由于待删除节点 D 可以为父节点 P 的左孩子，也可以为右孩子。所以我们又可以分为两种情况。</p>
+                                <br>
                                 <p>  i) D 为左孩子的情况。调整的做法是先交换父节点 P 的和兄弟节点 B 的颜色，然后对兄弟节点执行一次左旋操作。</p>
                                 <p>  <img alt="情况 2A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2A.png"></p>
+                                <br>
                                 <p>  ii) D 为右孩子的情况。调整的做法还是先交换父节点 P 的和兄弟节点 B 的颜色，只是对兄弟节点的旋转操作变为了右旋。</p>
                                 <p>  <img alt="情况 2B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2B.png"></p>
+                                <br>
                                 <p>  调整后，待删除的节点 D 的兄弟节点 L 的颜色为黑色，所以这就变为了后面要讨论的情况。</p>
                             </li>
                             <li><p>情况 3：待删除节点 D 的兄弟节点 B 为黑色，且远侄子节点为红色，这里的远侄子节点指的是离 D 较远的节点。同样，待删除节点 D 可能是根节点 P 的左(右)孩子，我们还是把它们分为两种情况：</p>
+                                <br>
                                 <p>  i) D 为左孩子的情况，远侄子节点为图中的 R，图中的白色父节点 P 表示可以为任意颜色。调整策略是交换父节点 P 和兄弟节点 B 的颜色，并将远侄子节点 R 的颜色改为黑色，最后再对 B 执行一次左旋操作。</p>
                                 <p>  <img alt="情况 3A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3A.png"></p>
                                 <p>  ii) D 为右孩子的情况，远侄子节点为图中的 L。调整策略还是先交换父节点 P 和兄弟节点 B 的颜色，将远侄子节点 L 的颜色变为黑色，最后对 B 执行一次右旋操作。</p>
@@ -430,13 +434,18 @@
                             <li><p>情况 4：待删除节点 D 的兄弟节点 B 为黑色，且近侄子节点为红色。相反，近侄子节点指的是离 D 较近的节点。因为待删除节点 D 依然可能是根节点 P 的左(右)孩子，所以我们还是分为两种情况：</p>
                                 <p>  i) D 为左孩子的情况，近侄子节点为图中的 L，图中的白色父节点 P 表示可以为任意颜色。调整方案是先交换兄弟节点 B 和近侄子节点 L 的颜色，然后对 B 执行一次右旋操作，旋转后我们发现情况变为了 3A，因此再调用一次 3A 的操作方法即可。</p>
                                 <p>  <img alt="情况 4A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4A.png"></p>
+                                <br>
                                 <p>  ii) D 为右孩子的情况，近侄子节点为图中的 R。调整方案是先交换兄弟节点 B 和近侄子节点 R 的颜色，然后对 B 执行一次左旋操作，旋转后我们发现情况变为了 3B，因此再调用一次 3B 的操作方法即可。</p>
+                                <br>
                                 <p>  <img alt="情况 4B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4B.png"></p>
+                                <br>
                             </li>
                             <li><p>情况 5：兄弟节点 P 为红色，且它的左右孩子都为黑色。我们根据兄弟节点的颜色进一步分为两种情况。</p>
+                                <br>
                                 <p>  i) 父节点 B 为红色，我们只需要交换 P 和 B 的颜色即可。</p>
                                 <p>  <img alt="情况 5A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5A.png"></p>
                                 <p>  ii) 父节点 B 为黑色，这种情况下，我们需要将 B 的颜色改为红色，由于我们不能判断父节点 P 的父节点和兄弟节点是否都为黑色，所以我们需要在父节点 P 上递归地对情况 5 的进行检查，只是我们不再删除这里的父节点了，像这样一直往上递归，直到到达根节点。</p>
+                                <br>
                                 <p>  <img alt="情况 5B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5B.png"></p>
                             </li>
                         </ul>
