@@ -293,15 +293,21 @@
                         <p><img alt="情况 2" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case2.png"></p>
                         <ul>
                             <li><p>情况 3：父节点 P 为红色，叔父节点 U 为黑色或 NIL，且新插入的节点 N 与父节点和祖父节点在同一侧（G 的左(右)孩子为 P，P 的左(右)孩子为 N）。故我们再把情况 3 分为两种情况：</p>
+                                <br>
                                 <p>  i) 祖父节点 G 的左孩子为父节点 P，父节点 P 的左孩子为新插入节点 N。此时，我们需要先交换父节点 P 和祖父节点 G 的颜色，然后对 P 进行右旋。</p>
                                 <p>  <img alt="情况 3A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3A.png"></p>
+                                <br>
                                 <p>  ii) 同理，如果祖父节点 G 的右孩子为父节点 P，父节点 P 的右孩子为新插入节点 N。我们还是要先交换父节点 P 和祖父节点 G 的颜色，然后对 P 进行左旋操作。</p>
                                 <p>  <img alt="情况 3B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3B.png"></p>
                             </li>
                             <li><p>情况 4：父节点 P 为红色，叔父节点 U 为黑色或 NIL，且新插入的节点 N 与父节点和祖父节点不在同一侧（G 的左(右)孩子为 P，P 的右(左)孩子为 N）。故我们还是把情况 4 分为两种情况：</p>
+                                <br>
                                 <p>  i) 祖父节点 G 的左孩子为父节点 P，父节点 P 的右孩子为新插入节点 N。此时，我们先要对新插入节点 N 执行一次左旋操作，这样就变换为了跟情况 3A 一样的情形，接下来我们只需要再调用情况 3A 即可，只是旋转的节点从父节点 P 变为了新插入节点 N。</p>
+                                <br>
                                 <p>  <img alt="情况 4A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4A.png"></p>
+                                <br>
                                 <p>  ii) 同样，如果祖父节点 G 的右孩子为父节点 P，父节点 P 的左孩子为新插入节点 N。我们还是先要对新插入节点 N 执行一次旋转操作，只是这里变为了互为镜像的右旋。旋转后就变为了情况 3B，因此接下来我们只需要再调用一次 3B 即可，只是旋转的节点从父节点 P 变为了新插入节点 N。</p>
+                                <br>
                                 <p>  <img alt="情况 4B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4B.png"></p>
                             </li>
                         </ul>
@@ -535,7 +541,7 @@
 
                             </span>
                             <a class="next-post" title="7.6 2-3 树" href="/study/algorithm/transform-and-conquer/two-three-tree" style="color: #C0C0C0">
-                                7.5 2-3 树 →
+                                7.6 2-3 树 →
                             </a>
                         </nav>
 
