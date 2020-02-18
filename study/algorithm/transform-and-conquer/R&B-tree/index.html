@@ -432,6 +432,7 @@
                                 <p>  <img alt="情况 3B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3B.png"></p>
                             </li>
                             <li><p>情况 4：待删除节点 D 的兄弟节点 B 为黑色，且近侄子节点为红色。相反，近侄子节点指的是离 D 较近的节点。因为待删除节点 D 依然可能是根节点 P 的左(右)孩子，所以我们还是分为两种情况：</p>
+                                <br>
                                 <p>  i) D 为左孩子的情况，近侄子节点为图中的 L，图中的白色父节点 P 表示可以为任意颜色。调整方案是先交换兄弟节点 B 和近侄子节点 L 的颜色，然后对 B 执行一次右旋操作，旋转后我们发现情况变为了 3A，因此再调用一次 3A 的操作方法即可。</p>
                                 <p>  <img alt="情况 4A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4A.png"></p>
                                 <br>
