@@ -137,9 +137,9 @@
                         <p><img alt="计数排序" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting1.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting1.png"></p>
                         <p>然后我们需要用 8 - 2 + 1 = 7 个计数器来分别统计 2 到 8 之间每种小球的个数（假设 2 到 8 之间的小球对应的元素都为整数），下图中我们用带有标记的桶来表示。</p>
                         <p><img alt="计数排序" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting2.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting2.png"></p>
-                        <p>接下来，我们遍历所有的小球，将每个值为 i 的小球放入到第 (i - 2 + 1) 个桶中，比方说第一个小球的值为 5，那么我们就需要把它放到标号为 5，也就是从左往右第 4 个桶中。</p>
+                        <p>接下来，我们遍历所有的小球，将每个值为 i 的小球放入到第 (i - 2 + 1) 个桶中，比方说第一个小球的值为 5，那么我们就需要把它放到标号为 5，也就是从左往右第 4 个桶中，放入后计数器加 1。</p>
                         <p><img alt="计数排序" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting3.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting3.png"></p>
-                        <p>最后，我们从左往右依次将每个桶里的小球取出，按顺序排列，这样小球就是从小到大排列了。</p>
+                        <p>最后，我们从左往右依次将每个桶里的小球取出，每取出一个小球，对应桶的计数器减 1，直到计数器为 0，这样小球就是从小到大排列了。</p>
                         <p><img alt="计数排序" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting4.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting4.png"></p>
                         <p>我们用一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）来完整地看一看这个过程吧。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/images/counting.mp4"></video></p>
