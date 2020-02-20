@@ -153,10 +153,10 @@
                         <br>
                         <h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><h3 id="最好情况"><a href="#最好情况" class="headerlink" title="最好情况"></a>最好情况</h3><p>插入排序的复杂度分析不同于之前讲到冒泡和选择排序，我们需要考虑不同实例下的数组。假设一个数组已经有序，在每次的 <code>for</code> 循环里，每个待插入的元素只需要跟自己前面的元素比较后就完成一次插入操作，即每个元素只比较一次。所以，对于一个含有 n 个元素的数组来讲，我们只需要比较 n - 1 次。</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/derivation0.png"></p>
-                        <p>所以复杂度就为 Θ(n)。我们用一个动画来直观地感受一下。</p>
+                        <p>所以复杂度就为 Θ(n)。我们用一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）来直观地感受一下。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/insertion-best.mp4"></video></p>                        <h3 id="最坏情况"><a href="#最坏情况" class="headerlink" title="最坏情况"></a>最坏情况</h3><p>如果数组是倒序排列的，那么每次待插入的元素都要插入到第一个位置（假设数组每个元素是唯一的）。也就是说，<code>for</code> 循环每执行一次，需要比较的次数就为 <code>i</code> 次，所以根据这个关系我们可以得出下面的式子：</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/derivation1.png"></p>
-                        <p>复杂度为 Θ(n<sup>2</sup>)，从动画时间的长短我们就可以看出，这种情况下算法的效率是比较低的。</p>
+                        <p>复杂度为 Θ(n<sup>2</sup>)，从动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）时间的长短我们就可以看出，这种情况下算法的效率是比较低的。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/insertion-worst.mp4"></video></p>                        <h3 id="平均情况"><a href="#平均情况" class="headerlink" title="平均情况"></a>平均情况</h3><p>平均情况的复杂度分析相对来说就要稍微困难一点了，这里我们用基于概率的方式计算，对于第 <code>i</code> 个元素，它能够插入的位点有 <code>i</code> 处，每一处需要比较的次数分别为 1, 2, …, i。像下面这张图一样：</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array2.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array2.png"></p>
                         <p>假设每个位点插入的概率相同，我们就可以得到下面的式子：</p>

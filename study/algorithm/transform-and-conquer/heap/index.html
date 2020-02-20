@@ -169,7 +169,7 @@
                         <p>最后求出复杂度为 Θ(n)。</p>
                         <h3 id="堆的删除"><a href="#堆的删除" class="headerlink" title="堆的删除"></a>堆的删除</h3><p>与队列一样，堆的删除只能在堆顶处执行。为了删除堆顶后仍能保持堆的性质，我们实际的操作是将堆的最后一个元素的值赋给堆顶元素，然后堆顶元素从上而下调整，如遇到父节点比孩子节点大就停止。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/delete.mp4"></video></p>
-                        <p>上面的动画展示了删除堆顶元素 95 的全过程。首先需要与最后一个节点的元素 60 交换位置，然后删除 95，最后从上到下调整节点 60 的位置。</p>
+                        <p>上面的动画（来源于<a href="http://btv.melezinek.cz/binary-heap.html" target="_blank" rel="noopener">网络</a>）展示了删除堆顶元素 95 的全过程。首先需要与最后一个节点的元素 60 交换位置，然后删除 95，最后从上到下调整节点 60 的位置。</p>
                         <p>在最坏的情况下，堆删除的复杂度取决于堆的层数 h。如果堆内有 n 个元素，那么堆的层数 h = ⌊log<sub>2</sub>n⌋ + 1，故复杂度为 Θ(log n)。</p>
                         <h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p><strong>堆排序</strong>（<strong>heap sort</strong>）是基于堆的一种排序，整个过程分为四步：</p>
                         <ul>
@@ -187,7 +187,7 @@
         <span class="n">array</span> <span class="o">=</span> <span class="n">heaplify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                        <p>我们再用一个动画来直观地感受一下这个过程。</p>
+                        <p>我们再用一个动画（来源于<a href="http://btv.melezinek.cz/binary-heap.html" target="_blank" rel="noopener">网络</a>）来直观地感受一下这个过程。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/heap.mp4"></video></p>
                         <p>堆排序结合了构建堆和删除堆顶元素两个过程。对于构建堆，复杂度即为 Θ(n)；而删除堆的操作需要执行 n 次，每次删除的复杂度均取决于当前堆的层数，所以我们列出下列的关系式：</p>
                         <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/derivation1.png"></p>
