@@ -144,7 +144,7 @@
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-5.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-5.png"></p>
                         <p>这样我们就把所有的情况都讨论完了，为了表示方便，我们可以用一个表<code>shift table</code>来表示在不同的匹配情况下探针需要向右移动几个单位。</p>
                         <p><img alt="table" src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/table.png"></p>
-                        <p>用代码来表示这个过程就是这个样子的：</p>
+                        <p>用代码来实现这个过程就是这个样子的：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shift_table</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
     <span class="n">table</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
