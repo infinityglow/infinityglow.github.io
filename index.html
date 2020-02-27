@@ -1,784 +1,418 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
-
- 
-
-
-
-
-
-
 <head>
-	
-	
-	<link rel="stylesheet" href="/css/allinone.min.css">
 
-	
-	<!-- Global Site Tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-XXXXXXXXXX-1');
-	</script>
-	
+    <link rel="stylesheet" href="/css/allinone.min.css">
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-	<title>Hexo | </title>
+    <title>幽默的白帽子的博客 </title>
 
-	<meta name="HandheldFriendly" content="True">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-	<meta name="generator" content="hexo">
-	<meta name="author" content="John Doe">
-	<meta name="description" content>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
 
-	
-	<meta name="keywords" content="hexo, casper, ghost, theme">
-	
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
 
-	
-	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
-	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
-	
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
 
-	
-	<meta name="theme-color" content="#3c484e">
-	<meta name="msapplication-TileColor" content="#3c484e">
-	
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io">
+    <script src="../public/sw.js"></script>
 
-	
 
-	
-	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
-	
-
-	<meta property="og:site_name" content="Hexo">
-	<meta property="og:type" content="blog">
-	<meta property="og:title" content="Hexo | ">
-	<meta property="og:description" content>
-	<meta property="og:url" content="https://infinityglow.github.io/index.html">
-
-	
 </head>
 <body class="home-template">
-	<div class="site-wrapper">
-		
+<div class="site-wrapper">
 
 
+    <header class="site-header outer " style="background-image: url(https://infinityglow.github.io/static/icons&images/main.jpg)">
+        <div class="inner">
 
 
-<header class="site-header outer " style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
-    <div class="inner">
-        
-        
-        <div class="site-header-content">
-            
-            <h1 class="site-title">
-                Hexo
-            </h1>
-            <h2 class="site-description">做一个特立独行的少数派</h2>
+            <div class="site-header-content">
+
+                <h1 class="site-title">
+                    Stay Hungry, Stay Foolish
+                </h1>
+                <h2 class="site-description">求知若饥，虚心若愚</h2>
+            </div>
+
+            <nav class="site-nav">
+                <div class="site-nav-left">
+                    <ul class="nav">
+                        <li>
+                            <a href="/" title="主页">主页</a>
+                        </li>
+
+                        <li>
+                            <a href="/study" title="技术篇">技术篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/life" title="生活篇">生活篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                        </li>
+
+                        <li>
+                            <a href="/about" title="about">about</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="search-button">
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+                </div>
+
+                <div class="site-nav-right">
+
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+
+
+                    <div class="social-links">
+
+                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+                        </a>
+
+
+                    </div>
+                </div>
+            </nav>
+
         </div>
-        
-        
-        
-<nav class="site-nav"> 
-    <div class="site-nav-left">
-        <ul class="nav">
-            <li>
-                
-                <a href="/" title="Home">HOME</a>
-                
-            </li>
-            
-            
-            <li>
-                <a href="/about" title="ABOUT">ABOUT</a>
-            </li>
-            
-            <li>
-                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
-            </li>
-            
-            
-        </ul> 
-    </div>
-    
-    <div class="search-button">
-        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-    </div>
-     
-    <div class="site-nav-right">
-        
-        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-         
-        
-<div class="social-links">
-    
-    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
-    </a>
-    
-    
-    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
-    </a>
-    
-    
-    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
-    </a>
-    
-    
-    
-    
-    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
-    </a>
-    
-    
+    </header>
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <div class="post-feed">
+
+                <article class="post-card post ">
+
+                    <a class="post-card-image-link" title="Hexo-Theme-Casper" href="/hexo-theme-casper/2018/hexo-theme-casper/">
+                        <div class="post-card-image b-lazy" data-src="https://i.loli.net/2017/11/26/5a19c04890c51.jpg"></div>
+                    </a>
+
+                    <div class="post-card-content">
+                        <a class="post-card-content-link" title="Hexo-Theme-Casper" href="/hexo-theme-casper/2018/hexo-theme-casper/">
+                            <header class="post-card-header">
+							<span class="post-card-tags">
+
+
+								guide
+								|
+
+								<time datetime="2018-12-03T11:42:54.000Z">
+									2018-12-03
+								</time>
+							</span>
+                                <h2 class="post-card-title">Hexo-Theme-Casper</h2>
+                            </header>
+                            <div class="post-card-excerpt">
+                                <p>
+
+
+
+
+
+
+                                    A new Ghost’s Casper theme port to Hexo.
+                                    DEMO here
+                                    My Blog zhih.me
+                                    This is a sim
+                                    ...
+                                </p>
+                            </div>
+                        </a>
+                        <footer class="post-card-meta">
+                            <div class="author-list">
+                                <div class="author-list-item">
+                                    <div class="author-name-tooltip">Hongzhi</div>
+
+                                    <a href="/about" class="static-avatar">
+                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
+                                    </a>
+
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </article>
+                <article class="post-card post ">
+
+                    <a class="post-card-image-link" title="算法与复杂度" href="/study/algorithm/overview/">
+                        <div class="post-card-image b-lazy" data-src="https://infinityglow.github.io/static/icons&images/R&B_tree.png"></div>
+                    </a>
+
+                    <div class="post-card-content">
+                        <a class="post-card-content-link" title="算法与复杂度" href="/study/algorithm/overview/">
+                            <header class="post-card-header">
+							<span class="post-card-tags">
+								系列 |
+								<time datetime="2019-12-01T23:25:14.000Z">
+									2019-12-01
+								</time>
+							</span>
+                                <h2 class="post-card-title">算法与复杂度</h2>
+                            </header>
+                            <div class="post-card-excerpt">
+                                <p>
+
+                                    《Annabel Lee》Edgar Allan Poe (1809-1849）
+                                    It was many and many a year ago,In a kingdom by the sea,Tha
+                                    ...
+
+                                </p>
+                            </div>
+                        </a>
+                        <footer class="post-card-meta">
+                            <div class="author-list">
+                                <div class="author-list-item">
+                                    <div class="author-name-tooltip">Hongzhi</div>
+
+                                    <a href="/about" class="static-avatar">
+                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </footer>
+                    </div>
+                </article>
+
+                <article class="post-card post ">
+
+                    <a class="post-card-image-link" title="Linux基础" href="/study/linux/">
+                        <div class="post-card-image b-lazy" data-src="https://infinityglow.github.io/static/icons&images/ubuntu.png"></div>
+                    </a>
+
+                    <div class="post-card-content">
+                        <a class="post-card-content-link" title="Linux基础" href="/study/linux/">
+                            <header class="post-card-header">
+							<span class="post-card-tags">
+                                系列 |
+								<time datetime="2019-12-02T15:24:54.000Z">
+									2019-12-02
+								</time>
+							</span>
+                                <h2 class="post-card-title">Linux基础</h2>
+                            </header>
+                            <div class="post-card-excerpt">
+                                <p>
+
+
+
+
+                                    알아야 할 사전지식
+
+                                    GithibPages기본적으로 gitHubPages를 생성 알아야 깃헙 블로그를 제작할 수 있습니다.
+
+                                    HTML, CSS, JavascriptHTML 과 CS
+                                    ...
+                                </p>
+                            </div>
+                        </a>
+                        <footer class="post-card-meta">
+                            <div class="author-list">
+                                <div class="author-list-item">
+                                    <div class="author-name-tooltip">Hongzhi</div>
+
+                                    <a href="/about" class="static-avatar">
+                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
+                                    </a>
+
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </article>
+
+                <article class="post-card post ">
+
+                    <a class="post-card-image-link" title="机器学习" href="/study/ml/">
+                        <div class="post-card-image b-lazy" data-src="https://infinityglow.github.io/static/icons&images/neuron.png"></div>
+                    </a>
+
+                    <div class="post-card-content">
+                        <a class="post-card-content-link" title="机器学习" href="/study/ml/">
+                            <header class="post-card-header">
+							<span class="post-card-tags">
+                                系列 |
+								<time datetime="2019-12-02T16:41:00.000Z">
+									2019-12-02
+								</time>
+							</span>
+                                <h2 class="post-card-title">机器学习</h2>
+                            </header>
+                            <div class="post-card-excerpt">
+                                <p>
+                                    这是本人移植自 Ghost’s Casper theme 的一个 Hexo 主题。
+                                    项目地址 https://github.com/xzhih/hexo-theme-casper
+                                    DEMO https
+                                    ...
+                                </p>
+                            </div>
+                        </a>
+                        <footer class="post-card-meta">
+                            <div class="author-list">
+                                <div class="author-list-item">
+                                    <div class="author-name-tooltip">Hongzhi</div>
+
+                                    <a href="/about" class="static-avatar">
+                                        <img class="author-profile-image" src="/static/icons&images/profile.jpg" alt="Hongzhi">
+                                    </a>
+
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </article>
+
+
+
+            </div>
+        </div>
+
+
+
+        <nav class="pagination">
+
+        </nav>
+
+
+    </main>
+
+
 </div>
-    </div>
-</nav>
-        
-    </div>
-</header>
 
-
-<main id="site-main" class="site-main outer" role="main">
-	<div class="inner">
-		<div class="post-feed">
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="关于钱的两个经典问题" href="/study/algorithm/dynamic-programming/classic-problems/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-25T14:33:25.673Z" itemprop="datePublished">
-									2020-02-25
-								</time>
-							</span>
-							<h2 class="post-card-title">关于钱的两个经典问题</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								动态规划在介绍动态规划（dynamic programming）前，咱们首先来清楚一个概念，重叠子问题（overlapping subproblem）。前面我们学到的分治法是将一个大问题分成若干个子问题，然后逐一解决子问题，然后合并子问题的解，从而得到原问题的解。这里的子问题之间都是相互独立的，不存在任何交集，就像归并排序一样，子序列 a 和子序列 b 的合并不会跟子序列 c 和子序列 d 的合并有任何重叠，反过来也一样。而动态规划就是专门为了解决这类子问题存在重叠的问题（子
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							9
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="哈希" href="/study/algorithm/time-space-tradeoff/hashing/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-22T13:31:05.992Z" itemprop="datePublished">
-									2020-02-22
-								</time>
-							</span>
-							<h2 class="post-card-title">哈希</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								介绍这一节我们会介绍一种新的概念：哈希（hashing）。一提到它，你可能就想到了在比特币交易中的区块链技术，不管你是挖矿还是单纯的交易，都离不开哈希算法。事实上，哈希算法还广泛地运用在银行、通讯、商业等领域，目的只有一个，那就是加密，并且加密后几乎不能被破解。
-
-除了加密，哈希还被运用在快速查找的领域，因为它的高效性，一些主流的编程语言都采用了这种方式来做数据之间的映射。比如 Python 中的字典类型dict，以及 Java 中的HashMap。它们都能够在很短的时间内从
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							14
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="字符串匹配（TST）" href="/study/algorithm/time-space-tradeoff/string-matching/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-20T14:05:05.677Z" itemprop="datePublished">
-									2020-02-20
-								</time>
-							</span>
-							<h2 class="post-card-title">字符串匹配（TST）</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								回顾这一节我们再来讨论一下字符串匹配问题。在前面的学习中我们已经知道了字符串匹配就是在文本字符串中找到模式字符串，以及它第一次出现的位置。如使用暴力求解的方法，我们将文本字符串和模式字符串对齐，然后从左往右依次比对，如果全部比对成功就返回模式字符串出现的位置；如果失败就向右移动一个单位，然后再进行比较，如果超出文本字符串的右边界就返回匹配失败。这种方式在最坏的情况下复杂度为 Θ(mn)，其中 m 和 n 分别代表模式字符串和文本字符串的长度，而在一般情况下则是线性的复杂度 Θ
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							4
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="计数排序" href="/study/algorithm/time-space-tradeoff/counting-sort/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-19T02:56:29.801Z" itemprop="datePublished">
-									2020-02-19
-								</time>
-							</span>
-							<h2 class="post-card-title">计数排序</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								时空权衡在前面的章节里，我们知道归并排序是一种高效的排序算法，在任何情况下时间复杂度都为 Θ(nlog n)。但是，它需要用额外的内存空间来暂时储存归并过程中的元素，因此我们可以说归并排序是以牺牲一部分内存空间来换取时间上的高效性。相反，如果存储空间有限，我们就必须以牺牲时间为代价来保证空间不被过度使用。像这样在设计一个算法的过程中同时考虑时间复杂度和空间复杂度，并且在这两者中找到一个平衡点的过程我们把它称作时空权衡（time and space trade-off）。
-
-在
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							3
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="红黑树" href="/study/algorithm/transform-and-conquer/R&B-tree/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-14T04:07:56.661Z" itemprop="datePublished">
-									2020-02-14
-								</time>
-							</span>
-							<h2 class="post-card-title">红黑树</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								介绍上一节的内容中，我们讨论了 AVL 这种自平衡的树，不知道各位小伙伴有没有真正理解这种神奇的操作呢？哈哈，在这一节中，你将会遇到更神奇，同时也更复杂的算法来帮助我们平衡二叉树。下面就让我们的红黑树浓重登场吧！
-
-红黑树（red-black tree）也是自平衡的二叉树，在介绍它是如何做到自平衡之前，我们首先来了解一下它的性质。
-
-性质 1：所有节点必须为红色或黑色
-性质 2：根节点为黑色
-性质 3：所有叶子节点（NIL）为黑色
-性质 4：如果节点为红色，那么其孩子节点（包
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							30
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="AVL树" href="/study/algorithm/transform-and-conquer/AVL-tree/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-10T04:55:14.709Z" itemprop="datePublished">
-									2020-02-10
-								</time>
-							</span>
-							<h2 class="post-card-title">AVL树</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								介绍在二叉搜索树那一节里，我们在最后分析复杂度的时候提到了如果二叉树严重不平衡，那么它的时间复杂度会退化到线性的复杂度，例如从有序数组[1, 2, 3, 4, 5]中构建出的二叉树，就会成为一个线性表，如下图所示。
-
-因此，我们需要有一棵能够自动平衡的二叉树，使得每次插入、删除和查找的复杂度都接近 Θ(nlog n) 的复杂度。AVL 树就是最早被提出的自平衡二叉搜索树，它的名字来自于两名俄国的科学家 G. M. Adelson-Velsky 和 E. M. Landis。下
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							13
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="堆与堆排序" href="/study/algorithm/transform-and-conquer/heap/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-06T12:32:30.464Z" itemprop="datePublished">
-									2020-02-06
-								</time>
-							</span>
-							<h2 class="post-card-title">堆与堆排序</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								优先队列乘坐过飞机时你一定清楚这样一个场景，在候机厅排队登机的过程中，拥有头等舱的乘客总是能够有“特权”，不用排队就能直接登机。
-
-我们看到，坐头等舱的乘客的优先级比坐普通经济舱的乘客要高。如果用计算机里的队列来描述的话，头等舱的乘客在出队时总是先于经济舱的乘客。于是，我们可以定义出一种新的抽象数据类型，优先队列（priority queue），即所有元素都按照优先级的大小出队。举个例子，假设一个数组为 [34, 12, 56, 98, 49]，优先级的顺序为 [4, 2, 
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							7
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="霍纳法则" href="/study/algorithm/transform-and-conquer/horners-rule/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-04T13:41:34.076Z" itemprop="datePublished">
-									2020-02-04
-								</time>
-							</span>
-							<h2 class="post-card-title">霍纳法则</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								多项式计算在计算机科学里，有时会遇到很多关于计算多项式的问题，例如 2x4 - 3x3 + 5x2 + x - 7。我们首先能够想到的方法就是求出每一项的值，然后把它们全部加起来。如果多项式的阶数不高，这种方法完全可行，甚至更容易理解，可是如果把这个问题推广到 n 阶，即计算 anxn + an-1xn-1 + ··· + a2x2 + a1x + a0 的值，并且当 n 很大时，这种算法就显得力不从心了。
-这里以 x = 4 为例来计算多项式 2x4 - 3x3 + 5x2
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							2
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="预排序" href="/study/algorithm/transform-and-conquer/presorting/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-02-02T15:48:11.501Z" itemprop="datePublished">
-									2020-02-02
-								</time>
-							</span>
-							<h2 class="post-card-title">预排序</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								变治变治（transform and conquer）也是一类解决问题的方法。前面的减治和分治都是针对问题本身进行求解，并没有对问题的实例做任何的变换。变治法就是将实例从一种形式转换为另外一种形式的方法。这样听起来还是太抽象了，咱们还是拿一个具体的例子吧。
-不知道大家有没有玩过一个叫做熄灯（英文叫 lights out）的游戏。规则很简单，以下面的图片（来源：维基百科）为例，面板上分布着 5 × 5 的格子，每个格子的灯都是亮着的，且灯只有亮着和熄灭两种状态，每按一次格子，都
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							5
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="最近点对与凸包问题（DC）" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2020-01-31T05:29:02.427Z" itemprop="datePublished">
-									2020-01-31
-								</time>
-							</span>
-							<h2 class="post-card-title">最近点对与凸包问题（DC）</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								最近点对问题在前面的章节里，我们分别讨论了最近点对和凸包问题，但采用的都是列举其所有情况的暴力解法，效率非常低。这节的内容，我们会用到两种更为高效的方法。
-既然这章都在讲分治法，在解决最近点对问题的时候自然也离不开将这些散点进行分组。所以这里我们用一条垂直分界线 L，将散点分成两部分，SL 和 SR。
-
-其中，SL 包含 ⌈n/2⌉ 个点，而 SR 包含 ⌊n/2⌋ 个点。
-接下来，我们要分别计算出左右两部分的最近点对距离 dL 和 dR。
-
-然后我们取其最小值 d = mi
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							13
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-		</div>
-	</div>
-
-	
-	
-	<nav class="pagination">
-		
-		<nav class="page-nav">
-			<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next →</a>
-		</nav>
-		
-	</nav>
-	
-	
-</main>
-
-
-	</div>
-	
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            
-            
 
-<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
-  <header class="read-next-card-header">
-    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
-    <h3 class="read-next-card-header-title">Recent Posts</h3>
-  </header>
-  <div class="read-next-divider">
-    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-    </svg>
-  </div>
-  <div class="read-next-card-content">
-    <ul>
-      
-      
-      
-      <li>
-        <a href="/study/algorithm/dynamic-programming/classic-problems/">关于钱的两个经典问题</a>
-      </li>
-      
-      
-      
-      <li>
-        <a href="/study/algorithm/time-space-tradeoff/hashing/">哈希</a>
-      </li>
-      
-      
-      
-      <li>
-        <a href="/study/algorithm/time-space-tradeoff/string-matching/">字符串匹配（TST）</a>
-      </li>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-    </ul>
-  </div>
-  <footer class="read-next-card-footer">
-    <a href="/archives">  MORE  → </a>
-  </footer>
-</article>
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                        </li>
 
-            
-            
-            
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
 
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
 
-            
-            
-            
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/more/">  MORE  → </a>
+                </footer>
+            </article>
 
-            
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/series/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
+                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
+                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
+                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
+                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
+                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
+                </div>
+            </article>
         </div>
     </div>
 </aside>
 
-	
-
-
-
-
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-        
-        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
-        
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -787,30 +421,37 @@
 
 
 <footer class="site-footer outer">
-	<div class="site-footer-content inner">
-		<section class="copyright">
-			<a href="/" title="Hexo">Hexo</a>
-			&copy; 2020
-		</section>
-		<nav class="site-footer-nav">
-			
-            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
-            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
-        </nav>
-    </div>
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            GitHub:
+        </strong>
+    <a href="https://github.com/infinityglow"; style="text-align: center">
+        github.com/infinityglow
+    </a>
+    </p>
 </footer>
-	
+
+
+
 
 
 <script>
     if(window.navigator && navigator.serviceWorker) {
         navigator.serviceWorker.getRegistrations()
-        .then(function(registrations) {
-            for(let registration of registrations) {
-                registration.unregister();
-            }
-        });
+            .then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
     }
 </script>
 
@@ -834,22 +475,6 @@
 
 
 
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
-</script>
 
 </body>
 </html>
