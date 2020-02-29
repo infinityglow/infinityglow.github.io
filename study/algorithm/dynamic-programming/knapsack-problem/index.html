@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <link href="/css/default.css" rel="stylesheet">
+    <link href="/css/github.css" rel="stylesheet">
+
+    <title>背包问题（DP）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
+
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io/about/">
+
+
+    <meta property="article:author" content="Hongzhi Fu">
+    <link rel="stylesheet" href="../../../../../public/css/default.css">
+
+</head>
+<body class="post-template">
+<div class="site-wrapper">
+
+
+
+
+
+    <header class="site-header outer" style="z-index: 999">
+        <div class="inner">
+
+            <nav class="site-nav">
+                <div class="site-nav-left">
+                    <ul class="nav">
+
+                        <li>
+                            <a href="/" title="主页">主页</a>
+                        </li>
+
+                        <li>
+                            <a href="/study" title="技术篇">技术篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/life" title="生活篇">生活篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                        </li>
+
+                        <li>
+                            <a href="/about" title="about">about</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="search-button">
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+                </div>
+
+                <div class="site-nav-right">
+
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+
+
+                    <div class="social-links">
+
+                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+                        </a>
+
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <header class="post-full-header">
+                <h1 class="post-full-title">背包问题（DP）</h1>
+            </header>
+            <article class="post-full no-image">
+
+                <section class="post-full-content">
+                    <div id="lightgallery" class="markdown-body">
+                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>再来回顾一下背包问题，背包问题是一个典型的组合问题，目标是让我们在容量为 W 的背包中尽可能装价值越高的物品，其中每件物品都对应自己的重量 w<sub>i</sub> 和价值 v<sub>i</sub> 。前面我们通过<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/">暴力求解</a>的方式将所有可能的组合一一列举出来，然后找到价值最高的组合。但是这样做的效率非常低，时间复杂度是指数级 Θ(2<sup>n</sup>) ，因此不能成为一种可以接受的算法。</p>
+                        <p><img alt="背包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/knapsack.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/knapsack.png"></p>
+                        <p>如用动态规划来解决背包问题，事情就会变得简单得多。这里我们用两种方式来实现：<strong>自底向上</strong>（<strong>bottom-up</strong>）和<strong>自顶向下</strong>（<strong>top-down</strong>）。两者的区别可以这样来理解，假设我们需要用一些零件来拼接一件工艺品，自底向上就好比一名技术精湛的工人，虽然他不知道最后这些零件要拼出一件什么东西，但他深知这些零件的构造，熟悉拼接过程中的顺序，因此如果他一直重复拼接的过程就能最终拼出一件工艺品；而自顶向下则好似一名工程师，他有一张该工艺品的设计图纸，懂得每一部分的具体功能，并且细分至零件，最后根据这张图纸将它们拼接起来。有同学就会问了，这和分治有什么区别？答案是当然有，工程师很聪明，因为他从来没有接触过零件的组装，因此每当有一部分零件组装好了之后，它都会拿笔记录下来组装的过程，下次组装相同的零件的时候就会大大缩短所需要的时间。下面我们就来看看这两种方式是如何在背包问题中实现的吧！</p>
+                        <p><img alt="图例" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/illustration.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/illustration.png"></p>
+                        <h2 id="自底向上"><a href="#自底向上" class="headerlink" title="自底向上"></a>自底向上</h2><p>我们先来考虑一下背包问题的子问题。假设物品数为 n，背包容量为 W。子问题可以首先分为如何挑选这些物品，使得组合的价值最大，同时保证总重量小于等于 x，其中 1 ≤ x ≤ W；当然，在挑选物品时，我们也可以只考虑前 i 个物品（1 ≤ i ≤ n），因此，子问题可以被进一步细分为如何挑选前 i 个物品，使得组合的价值最大，同时保证总重量小于等于 x。</p>
+                        <p>再来说说子问题之间的关系，我们用 S(i, x) 来表示任意一个子问题，对于第 i 个物品，我们有两种可能，选或不选。如不选，我们就从前 i - 1 件物品中找最大的组合，总重量不超过 x。如选了，那么还是从前 i - 1 件物品中找最大的组合，只是总重量变为了不超过 x - w<sub>i</sub> ，如果 x - w<sub>i</sub> &lt; 0，我们就从前 i - 1 件物品中选择。因此我们从这两种情况中取较大者作为 S(i, x) 的最优解，表示为：</p>
+                        <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/relation1.png"></p>
+                        <p>这里我们规定 S(0, x) 和 S(i, 0) 都等于 0，这样我们就用一张 n × W 的二维表来记录每一个子问题的解，并用 0 补全 S(0, x) 和 S(i, 0)。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table0.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table0.png"></p>
+                        <p>我们的实例为：W = 10, w<sub>1</sub> = 7, v<sub>1</sub> = 42; w<sub>2</sub> = 3, v<sub>2</sub> = 12; w<sub>3</sub> = 4, v<sub>3</sub> = 40; w<sub>1</sub> = 5, v<sub>1</sub> = 25。 从最简单的子问题 S(1, 1) 开始，显然 1 &lt; w<sub>1</sub>，所以 S(1, 1) = S(0, 1) = 0。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table1.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table1.png"></p>
+                        <p>随后我们增大 x 的值，直到 x = 7，得出 S(1, 7) = 42。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table2.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table2.png"></p>
+                        <p>第一行剩下的列我们根据关系式 S(i, x) = max(S(i - 1, x), S(i - 1, x - w<sub>i</sub>) + v<sub>i</sub>)填满。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table3.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table3.png"></p>
+                        <p>同理，第二行也是从 x = 1 开始，逐渐增加 x 的值，直到 x = 3 时我们得到 S(2, 3) = 12。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table4.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table4.png"></p>
+                        <p>剩下的列同样也是通过关系式求得。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table5.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table5.png"></p>
+                        <p>下面的行和列以此类推，直到把整张表填满，最后原问题的最优解为 65。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table6.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table6.png"></p>
+                        <p>像这样，先从最简单的子问题入手，将子问题的解用一张表存储起来，然后后面复杂的子问题是通过前面子问题的解得出的，我们把这种方法叫做自底向上。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knapsack_bottom_up</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># 物品数</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">wi</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span> <span class="n">vi</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">wi</span><span class="p">:</span>
+                <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="n">wi</span><span class="p">]</span> <span class="o">+</span> <span class="n">vi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">capacity</span><span class="p">]</span>
+</pre></div>
+                        <p>由于需要用到 n × W 的表格，以及计算表格中的每一项，所以自底向上解决背包问题的时间和空间复杂度都为 Θ(nW)。</p>
+                        <h2 id="自顶向下"><a href="#自顶向下" class="headerlink" title="自顶向下"></a>自顶向下</h2><p>自顶向下法又叫做备忘录法，它是基于递归来实现的。首先我们还是需要建一个 n × W 的表，并且表中所有项均初始化为 -1，表示该项还没有被计算过，并用 0 补全 S(0, x) 和 S(i, 0)。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table7.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table7.png"></p>
+                        <p>跟自底向上的方法不同的是，自顶向下着眼于原问题的解，然后通过递归的方式搜索子问题的解，如果子问题没有解（表中对应项为 -1），则继续向下搜索直至遇到递归出口（i = 0 或 x = 0），每次子问题从递归出口中得到了求解，我们就将它们记录在表中的相应位置。如果子问题已经存在解，我们就直接用现有的解，以此避免子问题的重复求解，因此这里我们着眼于 S(4, 10)。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table8.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table8.png"></p>
+                        <p>然后我们递归地向下搜索，这里即是从 S(3, 10) 和 S(3, 5) + 25 中取较大者。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table9.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table9.png"></p>
+                        <p>S(3, 10) 和 S(3, 5) 对应表格的值都为 -1，所以我们还要继续向下搜索，一旦遇到递归出口，我们就返回 0。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table10.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table10.png"></p>
+                        <p>返回后，在表中记录下相应的最优解，以便后面的子问题使用，最后得到原问题的解。</p>
+                        <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table11.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table11.png"></p>
+                        <p>这样就完成了自顶向下的全部过程，下面就是用代码来实现它啦～</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knapsack_top_down</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">knapsack_top_down</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">knapsack_top_down</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">knapsack_top_down</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="o">-</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">knapsack_top_down_main</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># 物品数</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">table</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 用 0 填满第一行和第一列</span>
+    <span class="n">maximum</span> <span class="o">=</span> <span class="n">knapsack_top_down</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">maximum</span>
+</pre></div>
+                        <p>同样，自顶向下解决背包问题的时间和空间复杂度也为 Θ(nW)。但我们可以看到在记录子问题的解的表格中只有那些不为 -1 的项才是真正被计算的部分，所以自顶向下的优势是计算的次数会比自底向上要少，但缺点是递归会造成更多的内存空间的使用。</p>
+
+                        <br>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Dynamic%20Programming/Knapsack%20Problem" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <nav id="gobottom" class="pagination">
+
+                            <a class="prev-post" title="9.1 关于钱的两个经典问题" href="/study/algorithm/dynamic-programming/classic-problems" style="color: #C0C0C0">
+                                ← 9.1 关于钱的两个经典问题
+                            </a>
+
+                            <span class="prev-next-post">
+
+                            </span>
+                            <a class="next-post" title="9.3 弗洛伊德算法" href="/study/algorithm/dynamic-programming/Floyd-Warshall" style="color: #C0C0C0">
+                                9.3 弗洛伊德算法 →
+                            </a>
+                        </nav>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <!-- 来必力City版安装代码 -->
+                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
+                            <script type="text/javascript">
+                                (function(d, s) {
+                                    var j, e = d.getElementsByTagName(s)[0];
+
+                                    if (typeof LivereTower === 'function') { return; }
+
+                                    j = d.createElement(s);
+                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                                    j.async = true;
+
+                                    e.parentNode.insertBefore(j, e);
+                                })(document, 'script');
+                            </script>
+                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+                        </div>
+                        <!-- City版安装代码已完成 -->
+                    </div>
+                </section>
+            </article>
+        </div>
+
+
+    </main>
+
+    <div class="toc-bar">
+        <div class="toc-btn-bar">
+            <a href="#site-main" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+            </a>
+            <div class="toc-btn toc-switch">
+                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+            </div>
+            <a href="#gobottom" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+            </a>
+        </div>
+        <div class="toc-main">
+            <ol class="toc">
+                <li class="toc-item toc-level-1">
+                    <a class="toc-link" href="/study/algorithm/overview/">
+                        <span class="toc-text">
+                            算法与复杂度
+                        </span>
+                    </a>
+                    <ol class="toc-child">
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                介绍
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/introduction/">
+                                        <span class="toc-text">
+                                            1.1 什么是算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                基本知识
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
+                                        <span class="toc-text">
+                                            2.1 基本数据结构
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
+                                        <span class="toc-text">
+                                            2.2 算法的问题类型
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                复杂度分析
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
+                                        <span class="toc-text">
+                                            3.1 三种表示方法：O, Ω, Θ
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
+                                        <span class="toc-text">
+                                            3.2 复杂度分析（非递归）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
+                                        <span class="toc-text">
+                                            3.3 复杂度分析（递归）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                暴力求解
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
+                                        <span class="toc-text">
+                                            4.1 冒泡排序与选择排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
+                                        <span class="toc-text">
+                                            4.2 字符串匹配（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
+                                        <span class="toc-text">
+                                            4.3 图的两种遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            4.4 最近点对与凸包问题（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
+                                        <span class="toc-text">
+                                             4.5 暴力搜索
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                减治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
+                                        <span class="toc-text">
+                                            5.1 插入排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
+                                        <span class="toc-text">
+                                            5.2 拓扑排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
+                                        <span class="toc-text">
+                                            5.3 二分查找与二叉树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
+                                        <span class="toc-text">
+                                            5.4 插值查找
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                分治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
+                                        <span class="toc-text">
+                                            6.1 归并排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
+                                        <span class="toc-text">
+                                            6.2 快速排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
+                                        <span class="toc-text">
+                                            6.3 二叉树的遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            6.4 最近点对与凸包问题（DC）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                变治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
+                                        <span class="toc-text">
+                                            7.1 预排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
+                                        <span class="toc-text">
+                                            7.2 霍纳法则
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
+                                        <span class="toc-text">
+                                            7.3 堆与堆排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
+                                        <span class="toc-text">
+                                            7.4 AVL树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
+                                        <span class="toc-text">
+                                            7.5 红黑树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
+                                        <span class="toc-text">
+                                            7.6 2-3树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                时空权衡
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
+                                        <span class="toc-text">
+                                            8.1 计数排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
+                                        <span class="toc-text">
+                                            8.2 字符串匹配（TST）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
+                                        <span class="toc-text">
+                                            8.3 哈希
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                动态规划
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
+                                        <span class="toc-text">
+                                            9.1 关于钱的两个经典问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
+                                        <span class="toc-text">
+                                            9.2 背包问题（DP）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
+                                        <span class="toc-text">
+                                            9.3 弗洛伊德算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                贪心算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
+                                        <span class="toc-text">
+                                            10.1 普林姆算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
+                                        <span class="toc-text">
+                                            10.2 克鲁斯卡尔算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
+                                        <span class="toc-text">
+                                            10.3 迪克斯特拉算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
+                                        <span class="toc-text">
+                                            10.4 哈弗曼树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                *高阶算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
+                                        <span class="toc-text">
+                                            *回溯
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
+                                        <span class="toc-text">
+                                            *分支限界
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
+                                        <span class="toc-text">
+                                            *线性规划（单纯形法）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
+                                        <span class="toc-text">
+                                            *最大流问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
+                                        <span class="toc-text">
+                                            *匈牙利算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
+                                        <span class="toc-text">
+                                            *千禧问题：P = NP ?
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/more/">  MORE  → </a>
+                </footer>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/series/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
+                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
+                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
+                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
+                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
+                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            GitHub:
+        </strong>
+        <a href="https://github.com/infinityglow"; style="text-align: center">
+            github.com/infinityglow
+        </a>
+    </p>
+</footer>
+
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+            .then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="/study/algorithm/dynamic-programming/knapsack-problem" title="背包问题（DP） - 算法与复杂度">
+
+            <img src="/static/icons&images/profile.jpg" alt="profile">
+
+            <span>背包问题（DP） - 算法与复杂度</span>
+        </a>
+    </div>
+    <span class="floating-header-divider"></span>
+    <div class="floating-header-title"></div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+<script>searchFunc("/")</script>
+
+</body>
+</html>

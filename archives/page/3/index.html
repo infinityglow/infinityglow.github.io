@@ -138,7 +138,7 @@
             <h1 class="site-title">
                 Archives
             </h1>
-            <h2 class="site-description">Total: 30</h2>
+            <h2 class="site-description">Total: 31</h2>
         </div>
         
         
@@ -149,6 +149,54 @@
 <main id="site-main" class="site-main outer" role="main">
 	<div class="inner">
 		<div class="post-feed">
+			
+			<article class="post-card post  no-image ">
+				
+				<div class="post-card-content">
+					<a class="post-card-content-link" title="图的两种遍历" href="/study/algorithm/brute-force/graph-traversal/">
+						<header class="post-card-header">
+							<span class="post-card-tags">
+								
+								| 
+								
+								<time datetime="2020-01-10T15:28:10.176Z" itemprop="datePublished">
+									2020-01-10
+								</time>
+							</span>
+							<h2 class="post-card-title">图的两种遍历</h2>
+						</header>
+						<section class="post-card-excerpt">
+							<p>
+								
+								
+								
+								
+								
+								邻接矩阵和邻接表在讲数据结构的那一节里我们提到了图这种数据结构，并且介绍了两种表示方法：邻接矩阵和邻接表。接下来我们来分别看看这两种方法是如何表示一张图的吧。
+和树这种数据结构不同，图的节点之间的连接是自由的，即一个节点可以连接其他任意节点（包括自身），并且是具有方向性的。所以我们可以根据这样的特性，用 0 和 1 来表示一个节点 u 是否能够到达另一个节点 v。假设一个图由 n 个节点组成，那么我们就有 n2 种可能的连接。为了方便，我们用一个 n × n 的矩阵来表示：
+
+								...
+							</p>
+						</section>
+					</a>
+					<footer class="post-card-meta">
+						<div class="author-list">
+							<div class="author-list-item">
+								<div class="author-name-tooltip">John Doe</div>
+								
+								<a href="/about" class="static-avatar">
+									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
+								</a>
+								
+							</div>
+						</div>
+						<span class="reading-time">
+							5
+							min read
+						</span>
+					</footer>
+				</div>
+			</article>
 			
 			<article class="post-card post  no-image ">
 				
@@ -585,53 +633,6 @@ def gcd(m, n):
 				</div>
 			</article>
 			
-			<article class="post-card post  no-image ">
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="什么是算法" href="/study/algorithm/introduction/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								| 
-								
-								<time datetime="2019-12-27T09:35:25.224Z" itemprop="datePublished">
-									2019-12-27
-								</time>
-							</span>
-							<h2 class="post-card-title">什么是算法</h2>
-						</header>
-						<section class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								概念什么是算法？英文维基百科给出了这样的定义：“An algorithm is a finite sequence of well-defined, computer-implementable instructions, typically to solve a class of problems or to perform a computation.”翻译过来的意思就是一系列有限的、清晰定义的、可实现的计算机指令，并用以解决一类问题或进行计算。
-是不是被这么官方的定义搞
-								...
-							</p>
-						</section>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">John Doe</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/author.png" alt="John Doe">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							3
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
 		</div>
 	</div>
 
@@ -640,7 +641,7 @@ def gcd(m, n):
 	<nav class="pagination">
 		
 		<nav class="page-nav">
-			<a class="extend prev" rel="prev" href="/archives/page/2/">← Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
+			<a class="extend prev" rel="prev" href="/archives/page/2/">← Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/">Next →</a>
 		</nav>
 		
 	</nav>
@@ -675,6 +676,12 @@ def gcd(m, n):
       
       
       <li>
+        <a href="/study/algorithm/dynamic-programming/knapsack-problem/">背包问题</a>
+      </li>
+      
+      
+      
+      <li>
         <a href="/study/algorithm/dynamic-programming/classic-problems/">关于钱的两个经典问题</a>
       </li>
       
@@ -685,10 +692,6 @@ def gcd(m, n):
       </li>
       
       
-      
-      <li>
-        <a href="/study/algorithm/time-space-tradeoff/string-matching/">字符串匹配（TST）</a>
-      </li>
       
       
       
