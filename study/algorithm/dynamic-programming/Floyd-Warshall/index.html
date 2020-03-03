@@ -129,7 +129,7 @@
                         <h2 id="图的最短路径"><a href="#图的最短路径" class="headerlink" title="图的最短路径"></a>图的最短路径</h2><p>生活中，当我们在使用高德地图导航的时候，系统总是为我们选择最近的路。我们知道从一个地方到另一个地方可能有很多条路可以选择，而高德地图是怎样做到为我们选择更近的路呢？这就要用到图的最短路径了。</p>
                         <p><img alt="地图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/map.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/map.png"></p>
                         <p>在计算机里，我们用有权图来表示城市的路网，其中每个节点代表一个地点，每条边代表从一个地方到另一个地方的距离，数据结构我们使用邻接矩阵的形式。</p>
-                        <p>计算最短路径分成两种情况，一种是一次计算所有点对的最短路径，就是下面我们要讲到的弗洛伊德算法；另一种是单源最短路径，也就是计算某一个节点到其他所有节点的最短距离，后面的<a href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra-algorithm/">迪克斯特拉算法</a>采用的就是这种方式。</p>
+                        <p>计算最短路径分成两种情况，一种是一次计算所有点对的最短路径，就是下面我们要讲到的弗洛伊德算法；另一种是单源最短路径，也就是计算某一个节点到其他所有节点的最短距离，后面的<a href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/">迪克斯特拉算法</a>采用的就是这种方式。</p>
                         <h2 id="弗洛伊德算法"><a href="#弗洛伊德算法" class="headerlink" title="弗洛伊德算法"></a>弗洛伊德算法</h2><p>我们从一个地方出发，在到达目的地之前可能还会经过其他的地方。例如下面的图中，假设 AB，BC 之间的距离分别为 7 和 2。我们看到，A 和 C 之间不能直接通达，因此，要计算 A 和 C 之间的距离，我们就要借助 B 来作为中转站。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph0.png"></p>
                         <p>但是，单凭一个中转站在有些情况下也是不行的，比如从 D 到 F 就不能只通过一个中转站。</p>
