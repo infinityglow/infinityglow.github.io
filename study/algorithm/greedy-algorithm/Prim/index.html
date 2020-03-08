@@ -225,7 +225,7 @@
 </pre></div>
                         <p>我们用一张动图来表示普林姆算法的整个过程。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Prim/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Prim/images/demo.gif"></p>
-                        <p>最后，我们来计算一下复杂度。每当一个元素加入到堆中或从堆顶中删除，时间复杂度为都为 Θ(log(|V|))，普林姆算法需要将每一个边加入到堆中，所以建堆的时间复杂度为 Θ(|E| log |V|)。而生成树最少需要 |V| - 1 条边来构成，所以需要执行 |V| - 1 次删除操作（复杂度为 Θ((|V| - 1)) log |V|)）。最后总的时间复杂度就为 Θ((|V| - 1 + |E|)log |V|)。</p>
+                        <p>最后，我们来计算一下复杂度。每当一个元素加入到堆中或从堆顶中删除，时间复杂度为都为 Θ(log(|V|))，普林姆算法需要将每一个边加入到堆中，所以建堆的时间复杂度为 Θ(|E|log|V|)。而生成树最少需要 |V| - 1 条边来构成，所以需要执行 |V| - 1 次删除操作（复杂度为 Θ((|V| - 1))log|V|)）。最后总的时间复杂度就为 Θ((|V| - 1 + |E|)log|V|)。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Greedy%20Algorithm/Prim's%20Algorithm" target="_blank" rel="noopener">本节全部代码</a> ←</p>
