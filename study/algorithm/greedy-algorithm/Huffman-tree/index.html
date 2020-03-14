@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <link href="/css/default.css" rel="stylesheet">
+    <link href="/css/github.css" rel="stylesheet">
+
+    <title>哈弗曼树 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
+
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io/about/">
+
+
+    <meta property="article:author" content="Hongzhi Fu">
+    <link rel="stylesheet" href="../../../../../public/css/default.css">
+
+</head>
+<body class="post-template">
+<div class="site-wrapper">
+
+
+
+
+
+    <header class="site-header outer" style="z-index: 999">
+        <div class="inner">
+
+            <nav class="site-nav">
+                <div class="site-nav-left">
+                    <ul class="nav">
+
+                        <li>
+                            <a href="/" title="主页">主页</a>
+                        </li>
+
+                        <li>
+                            <a href="/study" title="技术篇">技术篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/life" title="生活篇">生活篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                        </li>
+
+                        <li>
+                            <a href="/about" title="about">about</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="search-button">
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+                </div>
+
+                <div class="site-nav-right">
+
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+
+
+                    <div class="social-links">
+
+                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+                        </a>
+
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <header class="post-full-header">
+                <h1 class="post-full-title">哈弗曼树</h1>
+            </header>
+            <article class="post-full no-image">
+
+                <section class="post-full-content">
+                    <div id="lightgallery" class="markdown-body">
+                        <h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>我们知道，计算机只能读懂由 0 和 1 构成的二进制编码。因此，我们每天看到的汉字或英文字符都会被编码成二进制的形式，如果你熟悉一些常用的编码方式，你会发现无论是<a href="https://en.wikipedia.org/wiki/ASCII" target="_blank" rel="noopener">ASCII</a>码还是<a href="https://en.wikipedia.org/wiki/Unicode" target="_blank" rel="noopener">Unicode</a>，每个字符都占用都是等长的的编码位，也就是说，无论是 A, B, C, D 还是 + - × ÷，它们都是有 m 个 0 和 1 的二进制来编码。</p>
+                        <p><img alt="编码" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/code.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/code.png"></p>
+                        <p>但这样的编码会出现一些问题，我们先假设 A, B, C, D, E 对应的编码分别为 000, 001, 010, 011, 100, 如果我们要对“ADCEBDABCCADEDBCACBD” 进行编码，得到的结果就是 000011010100001011000001010010000011100011001010000010001011，我们发现一些经常出现的字符，如 A 和 B 的编码长度始终是 3，对于这部分字符来讲，我们完全可以用更短的编码长度来进行编码，所以就有了变长的编码方式，而哈弗曼编码就是其中的一种。</p>
+                        <h2 id="哈弗曼树和哈弗曼编码"><a href="#哈弗曼树和哈弗曼编码" class="headerlink" title="哈弗曼树和哈弗曼编码"></a>哈弗曼树和哈弗曼编码</h2><p>下面就来介绍一下哈弗曼树以及哈弗曼编码，它的发明者 David Huffman，在 MIT 攻读博士学位期间提出了这种基于树形结构的编码方式。首先，我们将每一个符号（字符）用节点的形式来表示。每个节点包含了字符、出现的频率、对应编码、以及后面构建哈弗曼树时的左右孩子的信息。</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="n">char</span>  <span class="c1"># 字符</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span>  <span class="c1"># 频率</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 节点的左孩子</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 节点的右孩子</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># 哈弗曼编码</span>
+</pre></div>
+
+                        <p><img alt="哈弗曼树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman0.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman0.png"></p>
+                        <p>我们用一个类<code>HuffmanTree</code>来表示哈弗曼树，首先需要做的是初始化字符串信息，以及每个字符和编码之间的映射关系。</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HuffmanTree</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char2code</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 字符到编码的映射</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code2char</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 编码到字符的映射</span>
+</pre></div>
+                        <p>对于一个变长的编码而言，最重要的就是统计各个符号在字符串中出现的次数，次数越高的编码长度越短，次数越低的编码长度就越长，统计完成后我们将节点按照从小到大的方式排列。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_freq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span>
+    <span class="n">char_freq</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="n">char_freq</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">char_freq</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 计算每个字符出现的频率</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">char_freq</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+                        <p><img alt="哈弗曼树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman1.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman1.png"></p>
+                        <p>接下来，我们采用贪心的策略，选择频率最低的两个节点，这里选择 E 和 A，然后我们创建一个新节点，它的频率等于节点 E 和 A 之和，并且它的左右孩子分别指向 E 和 A。</p>
+                        <p><img alt="哈弗曼树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman2.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman2.png"></p>
+                        <p>得到新节点之后，节点的频率分布就变成了<code>{&#39;B&#39;: 4, &#39;C&#39;: 5, &#39;D&#39;: 5, &#39;AE&#39;: 6}</code>，我们依然采用贪心的策略，再从中选择频率最小的两个节点，B 和 C，并构建新的节点。</p>
+                        <p><img alt="哈弗曼树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman3.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman3.png"></p>
+                        <p>这样下来，节点的频率分布就变成了<code>{&#39;D&#39;: 5, &#39;AE&#39;: 6, &#39;BC&#39;: 9}</code>，于是我们还是重复上面的步骤，这一次我们选择节点 D 和 AE，并创建新节点，于是得到：</p>
+                        <p><img alt="哈弗曼树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman4.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman4.png"></p>
+                        <p>最后只剩下了 BC 和 ADE。用新节点将它们连接起来过后，我们就构建好了一棵哈弗曼树。</p>
+                        <p><img alt="哈弗曼树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman5.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman5.png"></p>
+                        <p>上述过程中涉及到了两个节点从队列中移除并创建新节点，因此，我们用一个类<code>Queue</code>来实现。</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Queue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 用于保存节点</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 队列的长度</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># 入队</span>
+        <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="n">freq</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="c1"># 队列为空</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 将新节点插入到队列的相应位置</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">freq</span> <span class="o">&gt;=</span> <span class="n">node</span><span class="o">.</span><span class="n">freq</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="c1"># 插入到末尾</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+                        <p>构建好哈弗曼树之后，我们需要将每个字符转换成相应的编码。哈弗曼编码的规则是，从树的根节点出发，我们规定每访问一个左孩子，就在节点的编码后面增加一个<code>0</code>，如果是右孩子就在后面增加一个<code>1</code>。于是我们访问每一个叶子节点，求出每个字符对应的编码，然后用<code>char2code</code>和<code>code2char</code>两个字典来分别储存它们之间的映射关系。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">queue</span><span class="o">.</span><span class="n">length</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">remove</span><span class="p">();</span> <span class="n">v</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">freq</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span>  <span class="c1"># 创建新节点 w ，其频率等于 u 和 v 频率之和</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span> <span class="n">w</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">v</span>  <span class="c1"># w 左右孩子指向 u 和 v</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">queue</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+        <span class="c1"># 递归地访问节点</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">char</span><span class="p">:</span>
+            <span class="c1"># 构建映射关系</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">char2code</span><span class="p">[</span><span class="n">root</span><span class="o">.</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">code</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code2char</span><span class="p">[</span><span class="n">root</span><span class="o">.</span><span class="n">code</span><span class="p">]</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">char</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</pre></div>
+                        <p><img alt="哈弗曼树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman6.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/Huffman6.png"></p>
+                        <p>最后，我们写出<code>encode</code>和<code>decode</code>函数来对字符串进行编码和解码。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="n">code</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char2code</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">code</span>
+<span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">code</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="c1"># 编码存在于字典中</span>
+        <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">code2char</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code2char</span><span class="p">[</span><span class="n">pattern</span><span class="p">]</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">string</span>
+</pre></div>
+                        <p>下面来运行一下程序，我们的字符串为<code>ADCEBDABCCADEDBCACBD</code>，运行后结果为：</p>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">Huffman</span><span class="n">.</span><span class="n">py</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">原字符串</span><span class="n">:</span> <span class="n">ADCEBDABCCADEDBCACBD</span>
+    <span class="n">每个字符的频率</span><span class="n">:</span>  <span class="n">[(</span><span class="n">&#39;E&#39;</span><span class="n">,</span> <span class="n">2</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;A&#39;</span><span class="n">,</span> <span class="n">4</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;B&#39;</span><span class="n">,</span> <span class="n">4</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;D&#39;</span><span class="n">,</span> <span class="n">5</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;C&#39;</span><span class="n">,</span> <span class="n">5</span><span class="n">)]</span>
+    <span class="n">字符到编码的映射</span><span class="n">:</span>  <span class="n">{</span><span class="n">&#39;B&#39;</span><span class="n">:</span> <span class="n">&#39;00&#39;</span><span class="n">,</span> <span class="n">&#39;D&#39;</span><span class="n">:</span> <span class="n">&#39;01&#39;</span><span class="n">,</span> <span class="n">&#39;C&#39;</span><span class="n">:</span> <span class="n">&#39;10&#39;</span><span class="n">,</span> <span class="n">&#39;E&#39;</span><span class="n">:</span> <span class="n">&#39;110&#39;</span><span class="n">,</span> <span class="n">&#39;A&#39;</span><span class="n">:</span> <span class="n">&#39;111&#39;</span><span class="n">}</span>
+    <span class="n">编码到字符的映射</span><span class="n">:</span>  <span class="n">{</span><span class="n">&#39;00&#39;</span><span class="n">:</span> <span class="n">&#39;B&#39;</span><span class="n">,</span> <span class="n">&#39;01&#39;</span><span class="n">:</span> <span class="n">&#39;D&#39;</span><span class="n">,</span> <span class="n">&#39;10&#39;</span><span class="n">:</span> <span class="n">&#39;C&#39;</span><span class="n">,</span> <span class="n">&#39;110&#39;</span><span class="n">:</span> <span class="n">&#39;E&#39;</span><span class="n">,</span> <span class="n">&#39;111&#39;</span><span class="n">:</span> <span class="n">&#39;A&#39;</span><span class="n">}</span>
+    <span class="n">编码后</span><span class="n">:</span> <span class="n">1110110110000111100101011101110010010111100001</span>
+    <span class="n">解码后</span><span class="n">:</span> <span class="n">ADCEBDABCCADEDBCACBD</span>
+</pre></div>
+                        <p>我们看到，出现频率较高的 B, C, D 都是由两位二进制来编码，而较低的 A 和 E 则需要三位二进制来编码，这样我们在编码一个字符串的时候就会降低编码所占的储存空间，这也就是哈弗曼编码这么受欢迎的原因了。</p>
+
+                        <br>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Greedy%20Algorithm/Huffman%20Tree" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <nav id="gobottom" class="pagination">
+
+                            <a class="prev-post" title="10.3 迪克斯特拉算法" href="/study/algorithm/greedy-algorithm/Dijkstra" style="color: #C0C0C0">
+                                ← 10.3 迪克斯特拉算法
+                            </a>
+
+                            <span class="prev-next-post">
+
+                            </span>
+                            <a class="next-post" title="*回溯" href="/study/algorithm/advanced-algorithm/backtracking" style="color: #C0C0C0">
+                                *回溯 →
+                            </a>
+                        </nav>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <!-- 来必力City版安装代码 -->
+                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
+                            <script type="text/javascript">
+                                (function(d, s) {
+                                    var j, e = d.getElementsByTagName(s)[0];
+
+                                    if (typeof LivereTower === 'function') { return; }
+
+                                    j = d.createElement(s);
+                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                                    j.async = true;
+
+                                    e.parentNode.insertBefore(j, e);
+                                })(document, 'script');
+                            </script>
+                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+                        </div>
+                        <!-- City版安装代码已完成 -->
+                    </div>
+                </section>
+            </article>
+        </div>
+
+
+    </main>
+
+    <div class="toc-bar">
+        <div class="toc-btn-bar">
+            <a href="#site-main" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+            </a>
+            <div class="toc-btn toc-switch">
+                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+            </div>
+            <a href="#gobottom" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+            </a>
+        </div>
+        <div class="toc-main">
+            <ol class="toc">
+                <li class="toc-item toc-level-1">
+                    <a class="toc-link" href="/study/algorithm/overview/">
+                        <span class="toc-text">
+                            算法与复杂度
+                        </span>
+                    </a>
+                    <ol class="toc-child">
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                介绍
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/introduction/">
+                                        <span class="toc-text">
+                                            1.1 什么是算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                基本知识
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
+                                        <span class="toc-text">
+                                            2.1 基本数据结构
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
+                                        <span class="toc-text">
+                                            2.2 算法的问题类型
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                复杂度分析
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
+                                        <span class="toc-text">
+                                            3.1 三种表示方法：O, Ω, Θ
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
+                                        <span class="toc-text">
+                                            3.2 复杂度分析（非递归）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
+                                        <span class="toc-text">
+                                            3.3 复杂度分析（递归）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                暴力求解
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
+                                        <span class="toc-text">
+                                            4.1 冒泡排序与选择排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
+                                        <span class="toc-text">
+                                            4.2 字符串匹配（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
+                                        <span class="toc-text">
+                                            4.3 图的两种遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            4.4 最近点对与凸包问题（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
+                                        <span class="toc-text">
+                                             4.5 暴力搜索
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                减治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
+                                        <span class="toc-text">
+                                            5.1 插入排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
+                                        <span class="toc-text">
+                                            5.2 拓扑排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
+                                        <span class="toc-text">
+                                            5.3 二分查找与二叉树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
+                                        <span class="toc-text">
+                                            5.4 插值查找
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                分治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
+                                        <span class="toc-text">
+                                            6.1 归并排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
+                                        <span class="toc-text">
+                                            6.2 快速排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
+                                        <span class="toc-text">
+                                            6.3 二叉树的遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            6.4 最近点对与凸包问题（DC）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                变治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
+                                        <span class="toc-text">
+                                            7.1 预排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
+                                        <span class="toc-text">
+                                            7.2 霍纳法则
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
+                                        <span class="toc-text">
+                                            7.3 堆与堆排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
+                                        <span class="toc-text">
+                                            7.4 AVL树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
+                                        <span class="toc-text">
+                                            7.5 红黑树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
+                                        <span class="toc-text">
+                                            7.6 2-3树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                时空权衡
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
+                                        <span class="toc-text">
+                                            8.1 计数排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
+                                        <span class="toc-text">
+                                            8.2 字符串匹配（TST）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
+                                        <span class="toc-text">
+                                            8.3 哈希
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                动态规划
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
+                                        <span class="toc-text">
+                                            9.1 关于钱的两个经典问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
+                                        <span class="toc-text">
+                                            9.2 背包问题（DP）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
+                                        <span class="toc-text">
+                                            9.3 弗洛伊德算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                贪心算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
+                                        <span class="toc-text">
+                                            10.1 普林姆算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
+                                        <span class="toc-text">
+                                            10.2 克鲁斯卡尔算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
+                                        <span class="toc-text">
+                                            10.3 迪克斯特拉算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
+                                        <span class="toc-text">
+                                            10.4 哈弗曼树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                *高阶算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
+                                        <span class="toc-text">
+                                            *回溯
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
+                                        <span class="toc-text">
+                                            *分支限界
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
+                                        <span class="toc-text">
+                                            *线性规划（单纯形法）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
+                                        <span class="toc-text">
+                                            *最大流问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
+                                        <span class="toc-text">
+                                            *匈牙利算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
+                                        <span class="toc-text">
+                                            *千禧问题：P = NP ?
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/more/">  MORE  → </a>
+                </footer>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/series/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
+                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
+                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
+                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
+                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
+                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            GitHub:
+        </strong>
+        <a href="https://github.com/infinityglow"; style="text-align: center">
+            github.com/infinityglow
+        </a>
+    </p>
+</footer>
+
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+            .then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="/study/algorithm/greedy-algorithm/Huffman-tree/" title="哈弗曼树 - 算法与复杂度">
+
+            <img src="/static/icons&images/profile.jpg" alt="profile">
+
+            <span>哈弗曼树 - 算法与复杂度</span>
+        </a>
+    </div>
+    <span class="floating-header-divider"></span>
+    <div class="floating-header-title"></div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+<script>searchFunc("/")</script>
+
+</body>
+</html>
