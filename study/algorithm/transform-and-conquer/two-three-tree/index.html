@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/allinone.min.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <link href="/css/default.css" rel="stylesheet">
+    <link href="/css/github.css" rel="stylesheet">
+
+    <title>2-3树 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
+
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io/about/">
+
+
+    <meta property="article:author" content="Hongzhi Fu">
+    <link rel="stylesheet" href="../../../../../public/css/default.css">
+
+</head>
+<body class="post-template">
+<div class="site-wrapper">
+
+
+
+
+
+    <header class="site-header outer" style="z-index: 999">
+        <div class="inner">
+
+            <nav class="site-nav">
+                <div class="site-nav-left">
+                    <ul class="nav">
+
+                        <li>
+                            <a href="/" title="主页">主页</a>
+                        </li>
+
+                        <li>
+                            <a href="/study" title="技术篇">技术篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/life" title="生活篇">生活篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                        </li>
+
+                        <li>
+                            <a href="/about" title="about">about</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="search-button">
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+                </div>
+
+                <div class="site-nav-right">
+
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+
+
+                    <div class="social-links">
+
+                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+                        </a>
+
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <header class="post-full-header">
+                <h1 class="post-full-title">2-3树</h1>
+            </header>
+            <article class="post-full no-image">
+
+                <section class="post-full-content">
+                    <div id="lightgallery" class="markdown-body">
+                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>无论是 AVL 树还是红黑树，它们都有个共同的特点：每个节点最多只能存放一个值，并且最多只有两个子节点。我们知道，AVL 树和红黑树的查找效率接近于 Θ(log n)，这得益于我们将树的结构做了调整，使得树的高度尽可能的减小，来达到平均搜索的次数减少。因此，从这一点可以启发我们，要想使查找效率高，我们就要尽可能的减小树的高度，于是就有了多路查找的树，就好比树根有多条分叉一样，这里我们只说最经典的 2-3 树。</p>
+                        <p><img alt="树根" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/root.jpg" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/root.jpg"></p>
+                        <h2 id="两种节点"><a href="#两种节点" class="headerlink" title="两种节点"></a>两种节点</h2><p>2-3 树从字面上很难理解它要传达出的意思，因此我们要首先明白一个概念，所有二叉树的节点最多只有 2 个子节点，我们把这种节点称作 2-节点，它跟二叉树的节点一样，左孩子的值小于根节点的值，右孩子的值大于等于根节点的值，同理，3-节点就是指最多只有 3 个子节点的节点，而每个节点最多可以存放两个值。假设根节点的两个值分别为 v1, v2，左中右 3 个孩子节点的值分别为 l, m, r，那么它们之间的关系就为 l ≤ v1 ≤ m ≤ v2 ≤ r 。所以，2-3 树就是指由 2-节点和（或） 3-节点共同构成的树。</p>
+                        <p><img alt="节点比较" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/comparison.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/comparison.png"></p>
+                        <p>这里为了方便用代码来实现 2-3 树，我们将所有的节点都看做 3-节点，在表示 2-节点时候只需稍微做一下调整就好。另外，为了更方便后面的插入和删除操作，我们定义了判断节点是否为叶子节点的方法<code>is_leaf</code>，判断节点是否是 3-节点的方法<code>is_full</code>，以及获取孩子节点和兄弟节点的方法<code>get_child</code>和<code>brother</code>。</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 父节点</span>
+    <span class="k">def</span> <span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 判断节点是否为叶子节点</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span>
+    <span class="k">def</span> <span class="nf">is_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 判断节点是否为 3-节点</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">get_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># 给定一个值，返回要搜索的下一个子节点</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value2</span><span class="p">:</span>  <span class="c1"># 3-节点</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span>  <span class="c1"># 返回左节点</span>
+            <span class="k">elif</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid</span>  <span class="c1"># 返回中间节点</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span>  <span class="c1"># 返回右节点</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># 2-节点</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span>
+    <span class="c1"># 返回有 3-节点的兄弟节点</span>
+    <span class="k">def</span> <span class="nf">brother</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 只有父节点存在时才返回兄弟节点</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="c1"># 父节点为 2-节点时</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span>
+            <span class="c1"># 父节点为 3-节点时</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span>
+                    <span class="c1"># 左右节点任选一个</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span>
+</pre></div>
+                        <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>还是和二叉搜索树一样，2-3 树也是从根节点出发，只是每次可能需要跟两个值进行比较，如果和值<code>value</code>相等，我们就返回该节点；否则就调用前面<code>Node</code>类的<code>get_child</code>方法，获得子节点，然后再在子节点中继续搜索，如查找失败则返回<code>None</code>。</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TwoThreeTree</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># 树的根节点为空就抛出异常</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The tree is null&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">search_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>  <span class="c1"># 查找失败</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">root</span><span class="o">.</span><span class="n">value1</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="n">root</span><span class="o">.</span><span class="n">value2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">root</span>  <span class="c1"># 查找成功</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">get_child</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># 从对应的孩子节点中继续查找</span>
+</pre></div>
+                        <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>2-3 树的插入操作跟二叉树既有相似的地方又有不同的地方。相似之处在于两者都要通过搜索先找到插入的位点；不同之处在于这个插入的位点总是位于叶子节点，而非任意节点，另外，2-3 树的插入操作是将插入值<code>value</code>直接放进待插入的节点，而不是新建一个节点。</p>
+                        <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion0.png"></p>
+                        <p>但是，2-3 树存在两种类型的节点（2-节点和 3-节点），因此我们要分为两种情况讨论：</p>
+                        <h3 id="插入到-2-节点"><a href="#插入到-2-节点" class="headerlink" title="插入到 2-节点"></a>插入到 2-节点</h3><p>将一个值<code>value</code>插入到 2-节点的情况很简单，只需要将<code>value</code>放入正确的位置即可。因此，我们用一个函数<code>put_item</code>来实现它。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">put_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span><span class="p">:</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+                        <p>例如我们把 4 插入到下面的树中，将会得到：</p>
+                        <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion1.png"></p>
+                        <h3 id="插入到-3-节点"><a href="#插入到-3-节点" class="headerlink" title="插入到 3-节点"></a>插入到 3-节点</h3><p>插入到 3-节点的情况会比较麻烦，因为节点已经满了，在这种情况下，2-3 树采用的策略是分裂成两个节点，下面就来介绍一下节点是如何分裂的。</p>
+                        <h4 id="分裂"><a href="#分裂" class="headerlink" title="分裂"></a>分裂</h4><p>分裂的过程可以概括为，原节点保留 3 个值（新来的值以及节点中原有的两个值）中的最小值，新分裂出的节点用来存放最大值，而将中间值向上传递到父节点中，换句话说就是将中间值插入到父节点中，因为父节点是 2-节点还是 3-节点未知，所以我们又要分情况讨论：</p>
+                        <ul>
+                            <li>情况 1：父节点存在，且为 2-节点。这种情况下只需将中间值插入到父节点即可。下面中的例子中，如果要在向 2-3 树中插入 9，插入后原节点分裂成两个节点，并将 8 传递到父节点，最后父节点变为 3-节点。</li>
+                        </ul>
+                        <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion2.png"></p>
+                        <ul>
+                            <li>情况 2：父节点存在，且为 3-节点。这时父节点也需要分裂，因此分裂后父节点再将其中间值向上传递，整个过程递归地进行直到遇到根节点。例如，我们还是在绿色的 3-节点中插入 9，插入后原节点分裂成两个节点，并将 8 传递到父节点中，这时发现父节点也为 3-节点，所以父节点的父节点也要分裂，分裂后我们把中间值 6 传递到上一层。</li>
+                        </ul>
+                        <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion3.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion3.png"></p>
+                        <ul>
+                            <li>情况 3：父节点不存在，也就是当情况 2 中递归到根节点时，我们要新建一个节点，用来保存由下一层分裂出的中间值，并使分裂出的两个节点成为新节点的左右孩子，最后让新建节点成为树的根节点，此时树的高度加 1。紧接着上面的例子来看，此时中间值 6 传递的上一层为空。因而，我们需要用一个新节点来存放 6，并将其左右孩子指针指向分裂的两个节点。</li>
+                        </ul>
+                        <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion4.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion4.png"></p>
+                        <p>这个过程我们用两个函数来实现，其中<code>split</code>表示一次分裂的过程，返回中间值以及新分裂出的节点。另一个函数<code>put_item_full</code>用来实现上述的 3 种情况。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+    <span class="c1"># `value1` 为中间值</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span><span class="p">:</span>
+        <span class="n">pvalue</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span>
+        <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span>
+    <span class="c1"># `value` 为中间值</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span><span class="p">:</span>
+        <span class="n">pvalue</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span>
+    <span class="c1"># `value2` 为中间值</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pvalue</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">return</span> <span class="n">pvalue</span><span class="p">,</span> <span class="n">new_node</span>
+</pre></div>
+                        <br>
+                        <div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">put_item_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">pvalue</span><span class="p">,</span> <span class="n">new_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># 获得由叶子节点得到的中间值和新分裂的节点</span>
+        <span class="c1"># 从叶子节点出发，向上递归到根节点</span>
+        <span class="k">while</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="c1"># 父节点为 2-节点，直接插入，然后退出循环</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
+                <span class="c1"># 叶子节点为父节点的左孩子</span>
+                <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">leaf</span><span class="p">:</span>
+                    <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">new_node</span>
+                <span class="c1"># 叶子节点为父节点的右孩子</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">leaf</span><span class="p">;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_node</span>
+                <span class="n">new_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+                <span class="k">break</span>
+            <span class="c1"># 分裂父节点并根据不同的情况来调整指针</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pvalue_p</span><span class="p">,</span> <span class="n">new_node_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
+                <span class="c1"># 情况 1：分裂的节点是父节点的左孩子</span>
+                <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">leaf</span><span class="p">:</span>
+                    <span class="n">new_node_p</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span><span class="p">;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_node_p</span>
+                    <span class="n">new_node_p</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_node_p</span>
+                    <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_node</span><span class="p">;</span> <span class="n">new_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span>
+                <span class="c1"># 情况 2：分裂的节点是父节点的中间孩子</span>
+                <span class="k">elif</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="ow">is</span> <span class="n">leaf</span><span class="p">:</span>
+                    <span class="n">new_node_p</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">new_node</span><span class="p">;</span> <span class="n">new_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_node_p</span>
+                    <span class="n">new_node_p</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_node_p</span>
+                    <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span>
+                <span class="c1"># 情况 3：分裂的节点是父节点的右孩子</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span><span class="p">;</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
+                    <span class="n">new_node_p</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">leaf</span><span class="p">;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_node_p</span>
+                    <span class="n">new_node_p</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_node</span><span class="p">;</span> <span class="n">new_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_node_p</span>
+                    <span class="n">leaf</span> <span class="o">=</span> <span class="n">temp</span>
+                <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 变为 2-节点</span>
+                <span class="n">leaf</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span><span class="p">;</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">pvalue_p</span><span class="p">;</span> <span class="n">new_node</span> <span class="o">=</span> <span class="n">new_node_p</span>  <span class="c1"># 对应节点向上移动</span>
+        <span class="c1"># 如果递归到根节点，则创建一个新的根节点</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">pvalue</span><span class="p">)</span>
+            <span class="n">new_root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">leaf</span><span class="p">;</span> <span class="n">new_root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_node</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_root</span><span class="p">;</span> <span class="n">new_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_root</span>
+</pre></div>
+                        <p>最后，我们写出插入操作的两个主函数，用来分别控制不同情况下采用的不同插入策略。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">insert_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="c1"># 搜索`value`，直到遇到叶子节点</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">root</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">get_child</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="c1"># 节点为 2-节点</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="c1"># 节点为 3-节点</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_item_full</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+                        <h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>删除操作会更加麻烦，网上的 2-3 树教程通常到插入操作就结束了，就算有也没有代码的实现，因此，这一部分全都是我自己慢慢写出来的，如果有什么不对或者需要完善的地方，请各位大佬批评指正。</p>
+                        <p>和二叉树一样，首先我们通过调用<code>search</code>找到待删除的节点，然后删除里面的值即可。但是不同的是，2-3 树有两种节点，并且 2-3 树的其中一条性质是所有叶子节点的高度均相等。因此，我们的删除操作要分为主要 5 种情况，下面就来分别看看：</p>
+                        <h3 id="待删除的值在父节点"><a href="#待删除的值在父节点" class="headerlink" title="待删除的值在父节点"></a>待删除的值在父节点</h3><p>如果待删除的值在父节点，我们还是和二叉树一样先在父节点中找到前驱，也就是在对应子树中找到最大值，然后交换它们的值，这样删除父节点的问题就被转换为了删除叶子节点的问题。</p>
+                        <p>那么前驱怎么找呢？当父节点为 2-节点时，我们从父节点的左子树中找最大值，例如在下面的图中，我们要找 5 的前驱，我们就从 5 的左子树中找最大值，然后交换它们的值。</p>
+                        <p><img alt="前驱" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/predecessor0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/predecessor0.png"></p>
+                        <p>当父节点为 3-节点，待删除的值为较小者时，我们还是从父节点的左子树找最大值；而如果待删除的值为较大者，我们就从父节点的中间子树中找最大值。例如下图中，3 和 6 的前驱分别为 2 和 5。</p>
+                        <p><img alt="前驱" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/predecessor1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/predecessor1.png"></p>
+                        <p>寻找前驱节点的代码如下：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_predecessor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_predecessor</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">root</span>
+</pre></div>
+                        <h3 id="待删除的值在叶子节点"><a href="#待删除的值在叶子节点" class="headerlink" title="待删除的值在叶子节点"></a>待删除的值在叶子节点</h3><p>当待删除的值在叶子节点上时，我们又可以分为下面两大类：</p>
+                        <h4 id="叶子节点为-3-节点"><a href="#叶子节点为-3-节点" class="headerlink" title="叶子节点为 3-节点"></a>叶子节点为 3-节点</h4><p>这种情况最简单，直接删除即可，3-节点变为 2-节点。</p>
+                        <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf0.png"></p>
+                        <p>我们定义一个函数<code>remove_item</code>来实现上述过程。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="c1"># 假设节点都为 3-节点</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value2</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+                        <h4 id="叶子节点为-2-节点"><a href="#叶子节点为-2-节点" class="headerlink" title="叶子节点为 2-节点"></a>叶子节点为 2-节点</h4><p>当叶子节点为 2-节点时，我们要分别查看兄弟节点和父节点的类型，因此，我们再将它们分为三种情况：</p>
+                        <ul>
+                            <li>情况 1：兄弟节点为 3-节点。这种情况下，我们需要向兄弟节点借一个最近的值，来补充删除后的叶子节点。下面的例子中，如果删除的值为 6，我们需要向兄弟节点借一个值 8，但借来后发现不满足大小关系（7 ≯ 8），所以我们需要再交换一下父节点和叶子节点的值。</li>
+                        </ul>
+                        <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf1.png"></p>
+                        <p>上面的图中只呈现了父节点为 3-节点的情况，事实上，父节点也可以为 2-节点，但处理的方式都一样，这里就不一一画图演示了，在代码中都有详尽的列举。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">leaf_case1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">brother</span><span class="p">):</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 叶子节点的值置为空</span>
+    <span class="c1"># 叶子节点为父节点的左孩子</span>
+    <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">value1</span>
+        <span class="c1"># 兄弟节点有左孩子</span>
+        <span class="k">if</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">mid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">brother</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
+    <span class="c1"># 叶子节点为父节点的右孩子</span>
+    <span class="k">elif</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">value2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">value2</span>
+        <span class="c1"># 兄弟节点有右孩子</span>
+        <span class="k">if</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">mid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">brother</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+    <span class="c1"># 叶子节点为父节点的中间孩子</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 兄弟节点为父节点的右孩子</span>
+        <span class="k">if</span> <span class="n">brother</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">value1</span>
+            <span class="c1"># 兄弟节点有左孩子</span>
+            <span class="k">if</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">mid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">brother</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
+        <span class="c1"># 兄弟节点为父节点的左孩子</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">value2</span>
+            <span class="c1"># 兄弟节点有右孩子</span>
+            <span class="k">if</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">mid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">brother</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+    <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+                        <ul>
+                            <li>情况 2：兄弟节点为 2-节点，父节点为 3-节点。因为兄弟节点为 2-节点，所以就不能向兄弟节点借一个值了，我们转而向父节点借，并与兄弟节点结合，最后父节点从 3-节点变成了 2-节点。</li>
+                        </ul>
+                        <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf2.png"></p>
+                        <p>例子中，如果我们要删除 2，删除后我们向父节点借来一个值 5，然后与兄弟节点 6 结合就得到上图的结果。</p>
+                        <div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">leaf_case2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">brother</span><span class="p">):</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 叶子节点的值置为空</span>
+        <span class="c1"># 叶子节点为父节点的左孩子</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
+            <span class="c1"># 叶子节点有中间孩子</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">brother</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
+        <span class="c1"># 叶子节点为父节点的右孩子</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+            <span class="c1"># 叶子节点有中间孩子</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">brother</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+        <span class="c1"># 叶子节点为父节点的中间孩子</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+            <span class="c1"># 叶子节点有中间孩子</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
+                <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">del</span> <span class="n">node</span>
+</pre></div>
+                        <ul>
+                            <li>情况 3：父节点和兄弟节点都为 2-节点。这种情况是最麻烦的，首先我们要让父节点和兄弟节点合并。例如下方如要删除 1，则 2 和 3 进行合并。</li>
+                        </ul>
+                        <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf3.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf3.png"></p>
+                        <p>我们发现原来的父节点内值为空，为了填补这个空节点，我们要再对父节点执行一次删除操作，注意这里我们仅仅只是调整树的结构，而非删除某个值。接下来我们查看这个节点的兄弟节点和父节点，如果它的兄弟节点是 3-节点，我们就向兄弟节点借一个值来填补这个空值，最后调整节点之间的值使之满足大小关系。</p>
+                        <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf4.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf4.png"></p>
+                        <p>如果父节点是 3-节点，那么我们就向其父节点中借一个值来补充这个空值。</p>
+                        <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf5.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf5.png"></p>
+                        <p>假如父节点和兄弟节点都不是 3-节点，我们就再次合并父节点和兄弟节点，并把空节点传递到上一层，然后再看前面的情况是否满足，这就变成了一个递归的过程，当这个空节点是这棵 2-3 树的根节点时，我们就删除这个节点，并且它的孩子节点为树的根节点，此时树的高度减 1。</p>
+                        <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf6.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf6.png"></p>
+                        <p>这样我们就讨论完情况 3 的所有内容了，代码的实现并不难，我们只需要创建一个<code>while</code>循环，然后反复查看兄弟节点和父节点是否为 3-节点，满足就执行对应的函数（<code>leaf_case1</code>和<code>leaf_case2</code>），执行后退出循环，如果<code>while</code>循环正常退出，我们就认为空节点为根节点，因此在<code>else</code>语句中我们将调整<code>self.root</code>为<code>node</code>的子节点，调整后删除<code>node</code>。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="c1"># 直接删除，无需调整</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">brother</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">brother</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="c1"># 情况 1</span>
+            <span class="k">if</span> <span class="n">brother</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">leaf_case1</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">brother</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 情况 2</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">leaf_case2</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">brother</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="c1"># 情况 3</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">brother</span><span class="p">)</span>
+                    <span class="n">brother</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">brother</span><span class="p">()</span>
+        <span class="c1"># 循环正常退出</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+            <span class="k">del</span> <span class="n">node</span>
+</pre></div>
+                        <p>最后我们写出删除操作的主函数<code>remove</code>。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="c1"># 树的根节点为空就抛出异常</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The tree is null&quot;</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># 搜索待删除元素对应的节点</span>
+    <span class="c1"># 待删除的值在叶子节点</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="c1"># 待删除的值在父节点</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 从中间子树中寻找前驱</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_full</span><span class="p">()</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">value2</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">predecessor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_predecessor</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">)</span>
+            <span class="c1"># 交换值</span>
+            <span class="k">if</span> <span class="n">predecessor</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                <span class="n">predecessor</span><span class="o">.</span><span class="n">value2</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value2</span><span class="p">,</span> <span class="n">predecessor</span><span class="o">.</span><span class="n">value2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predecessor</span><span class="o">.</span><span class="n">value1</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value2</span><span class="p">,</span> <span class="n">predecessor</span><span class="o">.</span><span class="n">value1</span>
+        <span class="c1"># 从左子树中寻找前驱</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">predecessor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_predecessor</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="c1"># 交换值</span>
+            <span class="k">if</span> <span class="n">predecessor</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
+                <span class="n">predecessor</span><span class="o">.</span><span class="n">value2</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value1</span><span class="p">,</span> <span class="n">predecessor</span><span class="o">.</span><span class="n">value2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predecessor</span><span class="o">.</span><span class="n">value1</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value1</span><span class="p">,</span> <span class="n">predecessor</span><span class="o">.</span><span class="n">value1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_leaf</span><span class="p">(</span><span class="n">predecessor</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+                        <h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>来分析一下 2-3 树的复杂度，首先我们要弄明白树的高度 h 和所有键值的个数 n 之间的关系。假设树的全部节点都为 2-节点，那么 n 的数目最少为 1 + 2 + 2<sup>2</sup> + ··· + 2<sup>h</sup> = 2<sup>h+1</sup> - 1 。如果全部节点都为 3-节点，那么 n = 2·1 + 2·3 + 2·3<sup>2</sup> + ··· + 2·3<sup>h</sup> = 3<sup>h+1</sup> - 1，因此我们能够得到下面的关系式：</p>
+                        <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/relation0.png"></p>
+                        <p>根据上式得到关于 h 的不等式，于是得到：</p>
+                        <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/relation1.png"></p>
+                        <p>最后得到复杂度为 Θ(log n)。 </p>
+                        <h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><p>理解 2-3 树的原理并不难，但用代码实现整个过程会非常的复杂，我花了至少三个晚上的时间才从头到尾地写了出来，所以如果你看不懂代码也没有关系，理解它的原理就好。另外这里有一个非常好的算法可视化网站，它用动画的形式呈现出了各种算法的过程，使我们更好地理解 2-3 树插入和删除过程。话不多说，先奉上<a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html" target="_blank" rel="noopener">网站地址</a>。</p>
+
+                        <br>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Transform%20and%20Conquer/Two-Three%20Tree" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <nav id="gobottom" class="pagination">
+
+                            <a class="prev-post" title="7.5 红黑树" href="/study/algorithm/transform-and-conquer/R&B-tree" style="color: #C0C0C0">
+                                ← 7.5 红黑树
+                            </a>
+
+                            <span class="prev-next-post">
+
+                            </span>
+                            <a class="next-post" title="8.1 计数排序" href="/study/algorithm/time-space-tradeoff/counting-sort" style="color: #C0C0C0">
+                                8.1 计数排序 →
+                            </a>
+                        </nav>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <!-- 来必力City版安装代码 -->
+                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
+                            <script type="text/javascript">
+                                (function(d, s) {
+                                    var j, e = d.getElementsByTagName(s)[0];
+
+                                    if (typeof LivereTower === 'function') { return; }
+
+                                    j = d.createElement(s);
+                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                                    j.async = true;
+
+                                    e.parentNode.insertBefore(j, e);
+                                })(document, 'script');
+                            </script>
+                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+                        </div>
+                        <!-- City版安装代码已完成 -->
+                    </div>
+                </section>
+            </article>
+        </div>
+
+
+    </main>
+
+    <div class="toc-bar">
+        <div class="toc-btn-bar">
+            <a href="#site-main" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+            </a>
+            <div class="toc-btn toc-switch">
+                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+            </div>
+            <a href="#gobottom" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+            </a>
+        </div>
+        <div class="toc-main">
+            <ol class="toc">
+                <li class="toc-item toc-level-1">
+                    <a class="toc-link" href="/study/algorithm/overview/">
+                        <span class="toc-text">
+                            算法与复杂度
+                        </span>
+                    </a>
+                    <ol class="toc-child">
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                介绍
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/introduction/">
+                                        <span class="toc-text">
+                                            1.1 什么是算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                基本知识
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
+                                        <span class="toc-text">
+                                            2.1 基本数据结构
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
+                                        <span class="toc-text">
+                                            2.2 算法的问题类型
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                复杂度分析
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
+                                        <span class="toc-text">
+                                            3.1 三种表示方法：O, Ω, Θ
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
+                                        <span class="toc-text">
+                                            3.2 复杂度分析（非递归）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
+                                        <span class="toc-text">
+                                            3.3 复杂度分析（递归）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                暴力求解
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
+                                        <span class="toc-text">
+                                            4.1 冒泡排序与选择排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
+                                        <span class="toc-text">
+                                            4.2 字符串匹配（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
+                                        <span class="toc-text">
+                                            4.3 图的两种遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            4.4 最近点对与凸包问题（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
+                                        <span class="toc-text">
+                                             4.5 暴力搜索
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                减治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
+                                        <span class="toc-text">
+                                            5.1 插入排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
+                                        <span class="toc-text">
+                                            5.2 拓扑排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
+                                        <span class="toc-text">
+                                            5.3 二分查找与二叉树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
+                                        <span class="toc-text">
+                                            5.4 插值查找
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                分治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
+                                        <span class="toc-text">
+                                            6.1 归并排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
+                                        <span class="toc-text">
+                                            6.2 快速排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
+                                        <span class="toc-text">
+                                            6.3 二叉树的遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            6.4 最近点对与凸包问题（DC）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                变治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
+                                        <span class="toc-text">
+                                            7.1 预排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
+                                        <span class="toc-text">
+                                            7.2 霍纳法则
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
+                                        <span class="toc-text">
+                                            7.3 堆与堆排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
+                                        <span class="toc-text">
+                                            7.4 AVL树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
+                                        <span class="toc-text">
+                                            7.5 红黑树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
+                                        <span class="toc-text">
+                                            7.6 2-3树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                时空权衡
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
+                                        <span class="toc-text">
+                                            8.1 计数排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
+                                        <span class="toc-text">
+                                            8.2 字符串匹配（TST）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
+                                        <span class="toc-text">
+                                            8.3 哈希
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                动态规划
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
+                                        <span class="toc-text">
+                                            9.1 关于钱的两个经典问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
+                                        <span class="toc-text">
+                                            9.2 背包问题（DP）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
+                                        <span class="toc-text">
+                                            9.3 弗洛伊德算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                贪心算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
+                                        <span class="toc-text">
+                                            10.1 普林姆算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
+                                        <span class="toc-text">
+                                            10.2 克鲁斯卡尔算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
+                                        <span class="toc-text">
+                                            10.3 迪克斯特拉算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
+                                        <span class="toc-text">
+                                            10.4 哈弗曼树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                *高阶算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
+                                        <span class="toc-text">
+                                            *回溯
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
+                                        <span class="toc-text">
+                                            *分支限界
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
+                                        <span class="toc-text">
+                                            *线性规划（单纯形法）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
+                                        <span class="toc-text">
+                                            *最大流问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
+                                        <span class="toc-text">
+                                            *匈牙利算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
+                                        <span class="toc-text">
+                                            *千禧问题：P = NP ?
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
+
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/more/">  MORE  → </a>
+                </footer>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/series/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
+                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
+                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
+                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
+                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
+                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+
+
+<div id="search" class="search-overlay subscribe-overlay">
+    <div class="search-form">
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<footer class="site-footer outer">
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            GitHub:
+        </strong>
+        <a href="https://github.com/infinityglow"; style="text-align: center">
+            github.com/infinityglow
+        </a>
+    </p>
+</footer>
+
+
+
+<script>
+    if(window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+            .then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+    }
+</script>
+
+
+
+
+
+
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="/study/algorithm/transform-and-conquer/two-three-tree/" title="2-3树 - 算法与复杂度">
+
+            <img src="/static/icons&images/profile.jpg" alt="profile">
+
+            <span>2-3树 - 算法与复杂度</span>
+        </a>
+    </div>
+    <span class="floating-header-divider"></span>
+    <div class="floating-header-title"></div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+<script src="/js/mix/post-lazy-local.min.js"></script>
+
+<script>;(function() {var bLazy = new Blazy()})();</script>
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+<script>searchFunc("/")</script>
+
+</body>
+</html>
