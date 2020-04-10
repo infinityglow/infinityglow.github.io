@@ -1,447 +1,826 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
-
-
-
-
 <head>
-	
-	
-	<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/allinone.min.css">
 
-	
-	<!-- Global Site Tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-XXXXXXXXXX-1');
-	</script>
-	
+    <link rel="stylesheet" href="/css/allinone.min.css">
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/allinone.min.css">
 
-	<title>哈希 | Hexo</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-	<meta name="HandheldFriendly" content="True">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-	<meta name="generator" content="hexo">
-	<meta name="author" content="John Doe">
-	<meta name="description" content>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <link href="/css/default.css" rel="stylesheet">
+    <link href="/css/github.css" rel="stylesheet">
 
-	
-	<meta name="keywords" content>
-	
+    <title>哈希 - 算法与复杂度 | 幽默的白帽子的博客 </title>
 
-	
-	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
-	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
-	
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="generator" content="hexo">
+    <meta name="author" content="Hongzhi, 鸿志">
+    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
+          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
 
-	
-	<meta name="theme-color" content="#3c484e">
-	<meta name="msapplication-TileColor" content="#3c484e">
-	
+    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
 
-	
+    <meta name="theme-color" content="#3c484e">
+    <meta name="msapplication-TileColor" content="#3c484e">
 
-	
-	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
-	
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Hexo | ">
+    <meta property="og:description" content>
+    <meta property="og:url" content="https://infinityglow.github.io/about/">
 
-	<meta property="og:site_name" content="Hexo">
-	<meta property="og:type" content="article">
-	<meta property="og:title" content="哈希 | Hexo">
-	<meta property="og:description" content>
-	<meta property="og:url" content="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/">
 
-	
-	<meta property="article:published_time" content="2020-02-22T21:02:99+08:00"> 
-	<meta property="article:author" content="John Doe">
-	<meta property="article:published_first" content="Hexo, /study/algorithm/time-space-tradeoff/hashing/"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-	
+    <meta property="article:author" content="Hongzhi Fu">
+    <link rel="stylesheet" href="../../../../../public/css/default.css">
+
 </head>
 <body class="post-template">
-	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-wrapper">
-		
+<div class="site-wrapper">
 
 
 
 
-<header class="site-header outer" style="z-index: 999">
-    <div class="inner">
-        
-<nav class="site-nav"> 
-    <div class="site-nav-left">
-        <ul class="nav">
-            <li>
-                
-                <a href="/" title="Home">HOME</a>
-                
-            </li>
-            
-            
-            <li>
-                <a href="/about" title="ABOUT">ABOUT</a>
-            </li>
-            
-            <li>
-                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
-            </li>
-            
-            
-        </ul> 
-    </div>
-    
-    <div class="search-button">
-        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-    </div>
-     
-    <div class="site-nav-right">
-        
-        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-         
-        
-<div class="social-links">
-    
-    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
-    </a>
-    
-    
-    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
-    </a>
-    
-    
-    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
-    </a>
-    
-    
-    
-    
-    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
-        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
-    </a>
-    
-    
-</div>
-    </div>
-</nav>
-    </div>
-</header>
 
+    <header class="site-header outer" style="z-index: 999">
+        <div class="inner">
 
-<main id="site-main" class="site-main outer" role="main">
-    <div class="inner">
-        <header class="post-full-header">
-            <section class="post-full-meta">
-                <time class="post-full-meta-date" datetime="2020-02-22T13:31:05.992Z" itemprop="datePublished">
-                    2020-02-22
-                </time>
-                
-                <span class="date-divider">/</span>
-                
-                
-            </section>
-            <h1 class="post-full-title">哈希</h1>
-        </header>
-        <article class="post-full no-image">
-            
-            <section class="post-full-content">
-                <div id="lightgallery" class="markdown-body">
-                    <h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
-<p>这一节我们会介绍一种新的概念：<strong>哈希</strong>（<strong>hashing</strong>）。一提到它，你可能就想到了在比特币交易中的区块链技术，不管你是挖矿还是单纯的交易，都离不开哈希算法。事实上，哈希算法还广泛地运用在银行、通讯、商业等领域，目的只有一个，那就是加密，并且加密后几乎不能被破解。</p>
-<p><img alt="比特币" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/bitcoin.jpg" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/bitcoin.jpg"></p>
-<p>除了加密，哈希还被运用在快速查找的领域，因为它的高效性，一些主流的编程语言都采用了这种方式来做数据之间的映射。比如 Python 中的字典类型<code>dict</code>，以及 Java 中的<code>HashMap</code>。它们都能够在很短的时间内从上百万条记录中找到我们所需要的内容。这么厉害～下面我们就来探究一下它的原理吧。</p>
-<h2 id="哈希表"><a class="markdownIt-Anchor" href="#哈希表"></a> 哈希表</h2>
-<p>我们知道，查找可以通过两种数据结构来实现：数组和链表。两者的主要区别在于数据是否存储在连续的地址空间中，但无论是哪一种，我们从外部访问的时候，都是访问的第一个元素或节点的地址，这就造成了如果需要查找一个值或记录，我们要从头开始，遍历整个数组或链表，直到找到该值或查找失败。因此无论是数组还是链表，查找的平均时间复杂度都为 Θ(n)。</p>
-<p><img alt="数组 链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/array-linked-list.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/array-linked-list.png"></p>
-<p>既然查找一个元素都需要先获取该数据结构头部的地址，那么我们可不可以直接获取一个元素对应的存储地址呢？答案肯定的，这里需要用到一种特殊的数据结构：哈希表。</p>
-<p><strong>哈希表</strong>（<strong>hash table</strong>）也叫散列表。它是用来存储我们经过哈希操作后的数据，每一个数据都对应一个地址，供外部程序来访问。如果你想查找一个值<code>key</code>，我们需要用一个函数<code>H(key)</code>将<code>key</code>映射到一个特定的地址<code>address</code>上，然后比较该地址上的值来判断是否查找成功。</p>
-<p><img alt="哈希表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-table.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-table.png"></p>
-<h2 id="哈希函数"><a class="markdownIt-Anchor" href="#哈希函数"></a> 哈希函数</h2>
-<p>要想实现<code>key</code>到<code>address</code>之间的映射关系，我们需要借助一个特殊的函数，<strong>哈希函数</strong>（<strong>hash function</strong>）。哈希函数多种多样，但它们的功能只有一个，那就是将不同的<code>key</code>均匀地分布在哈希表中，以达到便于查找的目的。最常见的，也是最简单的哈希函数就是取余操作，即<code>H(key) = key mod m</code>，其中<code>m</code>表示哈希表的长度。</p>
-<p>举个例子，假设哈希函数<code>H(key) = key mod 7</code>，当<code>key</code>为 32 时，计算出的结果等于 4，这里的 4 就代表由哈希函数计算出的哈希地址<code>address</code>，当然这里的地址不是计算机的物理地址，只是为了方便而举的例子而已。在哈希表中我们就在索引为 4 的位置记录 32。下次查找的时候，我们就可以通过哈希函数计算出的地址然后直接访问表里的值了。</p>
-<p><img alt="哈希函数" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function0.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function0.png"></p>
-<p>但是，如果其他值<code>key'</code>通过哈希函数计算得到了相同的地址，这就会造成一种现象叫做<strong>冲突</strong>（<strong>collision</strong>），比如 25 mod 7 也等于 4，造成了 25 不能够直接存储在索引为 4 的位置。为了解决冲突的问题，我们需要采用一些机制来保证那些冲突的元素能够存储在正确的位置，下面就来分别介绍一下几种主要的处理冲突的方法。</p>
-<p><img alt="哈希函数" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function1.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function1.png"></p>
-<h2 id="冲突处理"><a class="markdownIt-Anchor" href="#冲突处理"></a> 冲突处理</h2>
-<p>我们将用三种处理冲突的方法来构建哈希表。元素从数组<code>[58, 19, 75, 38, 29, 4, 60, 94, 84]</code>中获取，哈希表的长度为 13，哈希函数为<code>H(key) = key mod 13</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class HashTable(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__(self, size):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.size &#x3D; size</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.table &#x3D; [None for i in range(size)]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    def function(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        return key % self.size</span></pre></td></tr></table></figure>
-<h3 id="链地址法"><a class="markdownIt-Anchor" href="#链地址法"></a> 链地址法</h3>
-<p><strong>链地址法</strong>（<strong>separate chaining</strong>）是将冲突的元素以链表的形式储存起来，具体来讲，具有相同的哈希地址的元素用节点的方式保存在链表的尾部。</p>
-<p>将上面的数组按照顺序放入到哈希表中：</p>
-<p>H(58) = 58 mod 13 = 6，索引为 6 的位置为空，所以节点 58 直接放入到哈希表中。</p>
-<p>H(19) = 19 mod 13 = 6，索引为 6 的位置不为空，所以需要将节点 19 连到节点 58 的后面。</p>
-<p>H(75) = 75 mod 13 = 10，索引为 10 的位置为空，所以节点 75 直接放入到哈希表中。</p>
-<p>H(38) = 38 mod 13 = 12，索引为 12 的位置为空，所以节点 38 直接放入到哈希表中。</p>
-<p>H(29) = 29 mod 13 = 3，索引为 3 的位置为空，所以节点 29 直接放入到哈希表中。</p>
-<p>H(4) = 4 mod 13 = 4，索引为 4 的位置为空，所以节点 4 直接放入到哈希表中。</p>
-<p>H(60) = 60 mod 13 = 8，索引为 8 的位置为空，所以节点 60 直接放入到哈希表中。</p>
-<p>H(94) = 94 mod 13 = 3，索引为 3 的位置不为空，所以需要将节点 94 连到节点 29 的后面。</p>
-<p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，所以需要将节点 84 连到节点 19 的后面。</p>
-<p><img alt="链地址法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/separate-chaining.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/separate-chaining.png"></p>
-<p>查找的时候，我们先计算查找元素的哈希值，然后从哈希表中找到对应的元素的值，如果值为空（None），那么就查找失败，如果不为空，那么就从链表里查找该元素。</p>
-<p>假设查找的值为 84，计算出哈希值为 6，由于索引 6 的位置不为空，所以我们从链表中查找，最后查找成功。如果查找元素 22，计算出哈希值为 9，发现索引 9 的位置为空，因此查找失败。</p>
-<p>代码实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class Node(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__(self, address):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.address &#x3D; address</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.next &#x3D; None</span></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def put(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    address &#x3D; self.function(key)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    node &#x3D; Node(key)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    # 表中对应值为 None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    if not self.table[address]:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        self.table[address] &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        p &#x3D; self.table[address]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        while p.next:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">            p &#x3D; p.next</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        p.next &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">def get(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    address &#x3D; self.function(key)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    p &#x3D; self.table[address]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    while p:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        if p.address &#x3D;&#x3D; key:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            return True</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        p &#x3D; p.next</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    return False</span></pre></td></tr></table></figure>
-<h3 id="线性探测法"><a class="markdownIt-Anchor" href="#线性探测法"></a> 线性探测法</h3>
-<p><strong>线性探测法</strong>（<strong>linear probing</strong>）是将冲突元素放在产生冲突地址的下一个位置单元的方式来处理冲突，如再冲突，就再探测下一个位置单元是否冲突，直到不冲突为止（如果最后一个索引值是冲突，那么就探测第一个索引值是否冲突）。比如，索引 6 的位置发生了冲突，那么就探测索引 7 是否也冲突，如果不冲突就把元素存储在索引 7 的位置上；如果继续冲突就探测索引 8，以此类推，直到不冲突为止。</p>
-<p>将上面的数组按照顺序放入到哈希表中：</p>
-<p>H(58) = 58 mod 13 = 6，索引为 6 的位置为空，所以元素 58 直接放入到哈希表中。</p>
-<p>H(19) = 19 mod 13 = 6，索引为 6 的位置不为空，探测索引 7，发现位置为空，所以元素 19 就放入到索引 7 的位置。</p>
-<p>H(75) = 75 mod 13 = 10，索引为 10 的位置为空，所以元素 75 直接放入到哈希表中。</p>
-<p>H(38) = 38 mod 13 = 12，索引为 12 的位置为空，所以元素 38 直接放入到哈希表中。</p>
-<p>H(29) = 29 mod 13 = 3，索引为 3 的位置为空，所以元素 29 直接放入到哈希表中。</p>
-<p>H(4) = 4 mod 13 = 4，索引为 4 的位置为空，所以元素 4 直接放入到哈希表中。</p>
-<p>H(60) = 60 mod 13 = 8，索引为 8 的位置为空，所以元素 60 直接放入到哈希表中。</p>
-<p>H(94) = 94 mod 13 = 3，索引为 3 的位置不为空，探测索引 4，发现还是不为空，继续探测索引 5，发现位置为空，所以元素 94 就放入到索引 5 的位置。</p>
-<p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，探测索引 7，发现还是不为空，继续探测索引 8，也不为空，继续探测索引 9，发现位置为空，所以元素 84 就放入到索引 9 的位置。</p>
-<p><img alt="线性探测法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/linear-probing.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/linear-probing.png"></p>
-<p>查找跟链地址法相似，也是先计算哈希值，找到对应元素，如果值相等，就查找成功；如果不相等，就按照线性探测的方式看下一个索引值对应的元素的值是否相等，这样一直探测下去，直到探测到的值为 None，即查找失败。</p>
-<p>假设还是查找 84 和 22，查找 84 时，先计算出哈希值为 6，而索引 6 对应元素的值为 58，不等于 84，所以继续探测下一个索引值，发现还是不相等，直到最后我们在索引 9 的位置探测到 84 = 84，故查找成功。如果查找值为 22，其哈希值计算得到为 9，发现 22 不等于对应元素的值 89，所以要继续探测，探测两轮后发现索引 11 为空，所以查找失败。</p>
-<p>代码实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def put(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    address &#x3D; self.function(key)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    # 表中对应值为 None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    while self.table[address]:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        address &#x3D; (address + 1) % self.size</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    self.table[address] &#x3D; key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">def get(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    address &#x3D; self.function(key)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    while self.table[address] is not None:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        if self.table[address] &#x3D;&#x3D; key:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            return True</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        address &#x3D; (address + 1) % self.size</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    return False</span></pre></td></tr></table></figure>
-<h3 id="再哈希法"><a class="markdownIt-Anchor" href="#再哈希法"></a> 再哈希法</h3>
-<p><strong>再哈希法</strong>（<strong>rehashing</strong>）是通过用另外一个哈希函数的方式来处理冲突。具体来讲，我们将原哈希值<code>l = H(key)</code>加上另外一个哈希函数的值<code>s(key)</code>，再把相加后的结果放到原哈希函数里计算哈希值<code>H(l + s(key))</code>，然后看是否冲突，如不冲突就把元素存储到对应索引值的下方；如果还是冲突，就计算<code>H(l + 2s(key))</code>的值然后再判断，这样以此类推，直到不冲突为止。</p>
-<p>还是来看具体的例子，这里<code>s(key) = m - 2 - key mod (m - 2) = 11 - key mod 11</code>。</p>
-<p>H(58) = 58 mod 13 = 6，索引为 6 的位置为空，所以元素 58 直接放入到哈希表中。</p>
-<p>H(19) = 19 mod 13 = 6，索引为 6 的位置不为空，再哈希后 H(l + s(key)) = 9，发现位置为空，所以元素 19 就放入到索引 9 的位置。</p>
-<p>H(75) = 75 mod 13 = 10，索引为 10 的位置为空，所以元素 75 直接放入到哈希表中。</p>
-<p>H(38) = 38 mod 13 = 12，索引为 12 的位置为空，所以元素 38 直接放入到哈希表中。</p>
-<p>H(29) = 29 mod 13 = 3，索引为 3 的位置为空，所以元素 29 直接放入到哈希表中。</p>
-<p>H(4) = 4 mod 13 = 4，索引为 4 的位置为空，所以元素 4 直接放入到哈希表中。</p>
-<p>H(60) = 60 mod 13 = 8，索引为 8 的位置为空，所以元素 60 直接放入到哈希表中。</p>
-<p>H(94) = 94 mod 13 = 3，索引为 3 的位置不为空，再哈希后 H(l + s(key)) = 8，发现还是不为空，继续再哈希， H(l + 2s(key)) = 0，发现位置为空，所以元素 94 就放入到索引 0 的位置。</p>
-<p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，再哈希后 H(l + s(key)) = 10，发现还是不为空，继续再哈希，H(l + 2s(key)) = 1，发现位置为空，所以元素 84 就放入到索引 1 的位置。</p>
-<p><img alt="再哈希法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/double-hashing.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/double-hashing.png"></p>
-<p>查找也跟线性探测法相似，先计算哈希值，如果对应元素的值相等就查找成功，否则就再哈希，直到对应元素的值为 None，即查找失败。例如要查找 22，计算得到哈希值为 9，发现 22 不等于对应元素的值 89，于是我们再哈希，得到的哈希值为 7，对应值为 None，所以查找失败。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def rehash(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    m &#x3D; self.size</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    return m - 2 - key % (m - 2)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">def put(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    address &#x3D; self.function(key)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    # 表中对应值为 None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    while self.table[address]:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        address &#x3D; self.function(address+self.rehash(key))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    self.table[address] &#x3D; key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">def get(self, key):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    value &#x3D; self.function(key)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    while self.table[value] is not None:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        if self.table[value] &#x3D;&#x3D; key:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">            return True</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        value &#x3D; self.function(value+self.rehash(key))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    return False</span></pre></td></tr></table></figure>
-<h2 id="复杂度分析"><a class="markdownIt-Anchor" href="#复杂度分析"></a> 复杂度分析</h2>
-<p>由于哈希表能够直接访问查找元素的地址，所以它的时间复杂度为常数的复杂度 Θ(1)。而每一个<code>key</code>到<code>address</code>的映射关系需要记录下来，假设哈希表有 n 个元素，那么就需要 n 条记录，故空间复杂度为 Θ(n)。</p>
-<p>至于处理冲突的三种方式，它们各自都有优缺点，下面来分别列举一下：</p>
-<p>链地址法</p>
-<ul>
-<li>优点：处理冲突的方式简单，查找效率高</li>
-<li>缺点：内存空间占用较大（需要存放下一个节点的指针）</li>
-</ul>
-<p>线性探测法</p>
-<ul>
-<li>优点：处理冲突的方式简单，不需要额外计算</li>
-<li>缺点：容易成簇聚集，造成查找效率降低</li>
-</ul>
-<p>再哈希法</p>
-<ul>
-<li>优点：再哈希后的值分散不聚集</li>
-<li>缺点：需要做额外计算，如选择不好再哈希的函数，可能会造成一直冲突。</li>
-</ul>
-<p>为了客观地反应这三者的查找效率，我在这节的<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Time-Space%20Tradeoff/Hashing" target="_blank" rel="noopener">代码</a>中分别模拟了查找成功和查找失败的情况下的平均查找次数，最后的结论是：链地址法 &gt; 再哈希法 &gt; 线性探测法。当然，这个结果只是作为参考，真实的情况比这个要复杂得多，所以三种处理冲突的方法都是有它的用武之地的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; python &quot;separate chaining.py&quot;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 平均查找次数（查找成功）&#x3D; 1.44</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    平均查找次数（查找失败）&#x3D; 1.62</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; python &quot;linear probing.py&quot;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 平均查找次数（查找成功）&#x3D; 1.67</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    平均查找次数（查找失败）&#x3D; 3.77</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; python &quot;double hashing.py&quot;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 平均查找次数（查找成功）&#x3D; 1.56</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    平均查找次数（查找失败）&#x3D; 2.77</span></pre></td></tr></table></figure>
+            <nav class="site-nav">
+                <div class="site-nav-left">
+                    <ul class="nav">
+
+                        <li>
+                            <a href="/" title="主页">主页</a>
+                        </li>
+
+                        <li>
+                            <a href="/study" title="技术篇">技术篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/life" title="生活篇">生活篇</a>
+                        </li>
+
+                        <li>
+                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                        </li>
+
+                        <li>
+                            <a href="/about" title="about">about</a>
+                        </li>
+
+                    </ul>
                 </div>
-            </section>
-        </article>
-    </div>
 
-    
-    <div style="height: 4vw;width: 100%"></div>
-    <nav id="gobottom" class="pagination">
-        
-        <a class="prev-post" title="关于钱的两个经典问题" href="/study/algorithm/dynamic-programming/classic-problems/">
-            ← 关于钱的两个经典问题
-        </a>
-        
-        <span class="prev-next-post">•</span>
-        
-        <a class="next-post" title="字符串匹配（TST）" href="/study/algorithm/time-space-tradeoff/string-matching/">
-            字符串匹配（TST） →
-        </a>
-        
-    </nav>
+                <div class="search-button">
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+                </div>
 
-    
-    <div class="inner">
-        <div id="comment"></div>
-    </div>
-    
-</main>
+                <div class="site-nav-right">
 
-<div class="toc-bar">
-    <div class="toc-btn-bar">
-        <a href="#site-main" class="toc-btn">
-            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
-        </a>
-        <div class="toc-btn toc-switch">
-            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
-            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+
+
+                    <div class="social-links">
+
+                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+                        </a>
+
+                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+                        </a>
+
+
+                    </div>
+                </div>
+            </nav>
         </div>
-        <a href="#gobottom" class="toc-btn">
-            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
-        </a>
+    </header>
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <header class="post-full-header">
+                <h1 class="post-full-title">哈希</h1>
+            </header>
+            <article class="post-full no-image">
+
+                <section class="post-full-content">
+                    <div id="lightgallery" class="markdown-body">
+                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这一节我们会介绍一种新的概念：<strong>哈希</strong>（<strong>hashing</strong>）。一提到它，你可能就想到了在比特币交易中的区块链技术，不管你是挖矿还是单纯的交易，都离不开哈希算法。事实上，哈希算法还广泛地运用在银行、通讯、商业等领域，目的只有一个，那就是加密，并且加密后几乎不能被破解。</p>
+                        <p><img alt="比特币" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/bitcoin.jpg" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/bitcoin.jpg"></p>
+                        <p>除了加密，哈希还被运用在快速查找的领域，因为它的高效性，一些主流的编程语言都采用了这种方式来做数据之间的映射。比如 Python 中的字典类型<code>dict</code>，以及 Java 中的<code>HashMap</code>。它们都能够在很短的时间内从上百万条记录中找到我们所需要的内容。这么厉害～下面我们就来探究一下它的原理吧。</p>
+                        <h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>我们知道，查找可以通过两种数据结构来实现：数组和链表。两者的主要区别在于数据是否存储在连续的地址空间中，但无论是哪一种，我们从外部访问的时候，都是访问的第一个元素或节点的地址，这就造成了如果需要查找一个值或记录，我们要从头开始，遍历整个数组或链表，直到找到该值或查找失败。因此无论是数组还是链表，查找的平均时间复杂度都为 Θ(n)。</p>
+                        <p><img alt="数组 链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/array-linked-list.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/array-linked-list.png"></p>
+                        <p>既然查找一个元素都需要先获取该数据结构头部的地址，那么我们可不可以直接获取一个元素对应的存储地址呢？答案肯定的，这里需要用到一种特殊的数据结构：哈希表。</p>
+                        <p><strong>哈希表</strong>（<strong>hash table</strong>）也叫散列表。它是用来存储我们经过哈希操作后的数据，每一个数据都对应一个地址，供外部程序来访问。如果你想查找一个值<code>key</code>，我们需要用一个函数<code>H(key)</code>将<code>key</code>映射到一个特定的地址<code>address</code>上，然后比较该地址上的值来判断是否查找成功。</p>
+                        <p><img alt="哈希表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-table.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-table.png"></p>
+                        <h2 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h2><p>要想实现<code>key</code>到<code>address</code>之间的映射关系，我们需要借助一个特殊的函数，<strong>哈希函数</strong>（<strong>hash function</strong>）。哈希函数多种多样，但它们的功能只有一个，那就是将不同的<code>key</code>均匀地分布在哈希表中，以达到便于查找的目的。最常见的，也是最简单的哈希函数就是取余操作，即<code>H(key) = key mod m</code>，其中<code>m</code>表示哈希表的长度。</p>
+                        <p>举个例子，假设哈希函数<code>H(key) = key mod 7</code>，当<code>key</code>为 32 时，计算出的结果等于 4，这里的 4 就代表由哈希函数计算出的哈希地址<code>address</code>，当然这里的地址不是计算机的物理地址，只是为了方便而举的例子而已。在哈希表中我们就在索引为 4 的位置记录 32。下次查找的时候，我们就可以通过哈希函数计算出的地址然后直接访问表里的值了。</p>
+                        <p><img alt="哈希函数" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function0.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function0.png"></p>
+                        <p>但是，如果其他值<code>key&#39;</code>通过哈希函数计算得到了相同的地址，这就会造成一种现象叫做<strong>冲突</strong>（<strong>collision</strong>），比如 25 mod 7 也等于 4，造成了 25 不能够直接存储在索引为 4 的位置。为了解决冲突的问题，我们需要采用一些机制来保证那些冲突的元素能够存储在正确的位置，下面就来分别介绍一下几种主要的处理冲突的方法。</p>
+                        <p><img alt="哈希函数" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function1.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function1.png"></p>
+                        <h2 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a>冲突处理</h2><p>我们将用三种处理冲突的方法来构建哈希表。元素从数组<code>[58, 19, 75, 38, 29, 4, 60, 94, 84]</code>中获取，哈希表的长度为 13，哈希函数为<code>H(key) = key mod 13</code>。</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HashTable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span>
+    <span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+                        <h3 id="链地址法"><a href="#链地址法" class="headerlink" title="链地址法"></a>链地址法</h3><p><strong>链地址法</strong>（<strong>separate chaining</strong>）是将冲突的元素以链表的形式储存起来，具体来讲，具有相同的哈希地址的元素用节点的方式保存在链表的尾部。</p>
+                        <p>将上面的数组按照顺序放入到哈希表中：</p>
+                        <p>H(58) = 58 mod 13 = 6，索引为 6 的位置为空，所以节点 58 直接放入到哈希表中。</p>
+                        <p>H(19) = 19 mod 13 = 6，索引为 6 的位置不为空，所以需要将节点 19 连到节点 58 的后面。</p>
+                        <p>H(75) = 75 mod 13 = 10，索引为 10 的位置为空，所以节点 75 直接放入到哈希表中。</p>
+                        <p>H(38) = 38 mod 13 = 12，索引为 12 的位置为空，所以节点 38 直接放入到哈希表中。</p>
+                        <p>H(29) = 29 mod 13 = 3，索引为 3 的位置为空，所以节点 29 直接放入到哈希表中。</p>
+                        <p>H(4) = 4 mod 13 = 4，索引为 4 的位置为空，所以节点 4 直接放入到哈希表中。</p>
+                        <p>H(60) = 60 mod 13 = 8，索引为 8 的位置为空，所以节点 60 直接放入到哈希表中。</p>
+                        <p>H(94) = 94 mod 13 = 3，索引为 3 的位置不为空，所以需要将节点 94 连到节点 29 的后面。</p>
+                        <p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，所以需要将节点 84 连到节点 19 的后面。</p>
+                        <p><img alt="链地址法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/separate-chaining.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/separate-chaining.png"></p>
+                        <p>查找的时候，我们先计算查找元素的哈希值，然后从哈希表中找到对应的元素的值，如果值为空（None），那么就查找失败，如果不为空，那么就从链表里查找该元素。</p>
+                        <p>假设查找的值为 84，计算出哈希值为 6，由于索引 6 的位置不为空，所以我们从链表中查找，最后查找成功。如果查找元素 22，计算出哈希值为 9，发现索引 9 的位置为空，因此查找失败。</p>
+                        <p>代码实现：</p>
+                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="c1"># 表中对应值为 None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span>
+<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">p</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">address</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
+    <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+                        <h3 id="线性探测法"><a href="#线性探测法" class="headerlink" title="线性探测法"></a>线性探测法</h3><p><strong>线性探测法</strong>（<strong>linear probing</strong>）是将冲突元素放在产生冲突地址的下一个位置单元的方式来处理冲突，如再冲突，就再探测下一个位置单元是否冲突，直到不冲突为止（如果最后一个索引值是冲突，那么就探测第一个索引值是否冲突）。比如，索引 6 的位置发生了冲突，那么就探测索引 7 是否也冲突，如果不冲突就把元素存储在索引 7 的位置上；如果继续冲突就探测索引 8，以此类推，直到不冲突为止。</p>
+                        <p>将上面的数组按照顺序放入到哈希表中：</p>
+                        <p>H(58) = 58 mod 13 = 6，索引为 6 的位置为空，所以元素 58 直接放入到哈希表中。</p>
+                        <p>H(19) = 19 mod 13 = 6，索引为 6 的位置不为空，探测索引 7，发现位置为空，所以元素 19 就放入到索引 7 的位置。</p>
+                        <p>H(75) = 75 mod 13 = 10，索引为 10 的位置为空，所以元素 75 直接放入到哈希表中。</p>
+                        <p>H(38) = 38 mod 13 = 12，索引为 12 的位置为空，所以元素 38 直接放入到哈希表中。</p>
+                        <p>H(29) = 29 mod 13 = 3，索引为 3 的位置为空，所以元素 29 直接放入到哈希表中。</p>
+                        <p>H(4) = 4 mod 13 = 4，索引为 4 的位置为空，所以元素 4 直接放入到哈希表中。</p>
+                        <p>H(60) = 60 mod 13 = 8，索引为 8 的位置为空，所以元素 60 直接放入到哈希表中。</p>
+                        <p>H(94) = 94 mod 13 = 3，索引为 3 的位置不为空，探测索引 4，发现还是不为空，继续探测索引 5，发现位置为空，所以元素 94 就放入到索引 5 的位置。</p>
+                        <p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，探测索引 7，发现还是不为空，继续探测索引 8，也不为空，继续探测索引 9，发现位置为空，所以元素 84 就放入到索引 9 的位置。</p>
+                        <p><img alt="线性探测法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/linear-probing.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/linear-probing.png"></p>
+                        <p>查找跟链地址法相似，也是先计算哈希值，找到对应元素，如果值相等，就查找成功；如果不相等，就按照线性探测的方式看下一个索引值对应的元素的值是否相等，这样一直探测下去，直到探测到的值为 None，即查找失败。</p>
+                        <p>假设还是查找 84 和 22，查找 84 时，先计算出哈希值为 6，而索引 6 对应元素的值为 58，不等于 84，所以继续探测下一个索引值，发现还是不相等，直到最后我们在索引 9 的位置探测到 84 = 84，故查找成功。如果查找值为 22，其哈希值计算得到为 9，发现 22 不等于对应元素的值 89，所以要继续探测，探测两轮后发现索引 11 为空，所以查找失败。</p>
+                        <p>代码实现：</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="c1"># 表中对应值为 None</span>
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]:</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="n">address</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="n">address</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+    <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+                        <h3 id="再哈希法"><a href="#再哈希法" class="headerlink" title="再哈希法"></a>再哈希法</h3><p><strong>再哈希法</strong>（<strong>rehashing</strong>）是通过用另外一个哈希函数的方式来处理冲突。具体来讲，我们将原哈希值<code>l = H(key)</code>加上另外一个哈希函数的值<code>s(key)</code>，再把相加后的结果放到原哈希函数里计算哈希值<code>H(l + s(key))</code>，然后看是否冲突，如不冲突就把元素存储到对应索引值的下方；如果还是冲突，就计算<code>H(l + 2s(key))</code>的值然后再判断，这样以此类推，直到不冲突为止。</p>
+                        <p>还是来看具体的例子，这里<code>s(key) = m - 2 - key mod (m - 2) = 11 - key mod 11</code>。</p>
+                        <p>H(58) = 58 mod 13 = 6，索引为 6 的位置为空，所以元素 58 直接放入到哈希表中。</p>
+                        <p>H(19) = 19 mod 13 = 6，索引为 6 的位置不为空，再哈希后 H(l + s(key)) = 9，发现位置为空，所以元素 19 就放入到索引 9 的位置。</p>
+                        <p>H(75) = 75 mod 13 = 10，索引为 10 的位置为空，所以元素 75 直接放入到哈希表中。</p>
+                        <p>H(38) = 38 mod 13 = 12，索引为 12 的位置为空，所以元素 38 直接放入到哈希表中。</p>
+                        <p>H(29) = 29 mod 13 = 3，索引为 3 的位置为空，所以元素 29 直接放入到哈希表中。</p>
+                        <p>H(4) = 4 mod 13 = 4，索引为 4 的位置为空，所以元素 4 直接放入到哈希表中。</p>
+                        <p>H(60) = 60 mod 13 = 8，索引为 8 的位置为空，所以元素 60 直接放入到哈希表中。</p>
+                        <p>H(94) = 94 mod 13 = 3，索引为 3 的位置不为空，再哈希后 H(l + s(key)) = 8，发现还是不为空，继续再哈希， H(l + 2s(key)) = 0，发现位置为空，所以元素 94 就放入到索引 0 的位置。</p>
+                        <p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，再哈希后 H(l + s(key)) = 10，发现还是不为空，继续再哈希，H(l + 2s(key)) = 1，发现位置为空，所以元素 84 就放入到索引 1 的位置。</p>
+                        <p><img alt="再哈希法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/double-hashing.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/double-hashing.png"></p>
+                        <p>查找也跟线性探测法相似，先计算哈希值，如果对应元素的值相等就查找成功，否则就再哈希，直到对应元素的值为 None，即查找失败。例如要查找 22，计算得到哈希值为 9，发现 22 不等于对应元素的值 89，于是我们再哈希，得到的哈希值为 7，对应值为 None，所以查找失败。</p>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rehash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+    <span class="k">return</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">key</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="c1"># 表中对应值为 None</span>
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]:</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">address</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">rehash</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">value</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">rehash</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+                        <h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>由于哈希表能够直接访问查找元素的地址，所以它的时间复杂度为常数的复杂度 Θ(1)。而每一个<code>key</code>到<code>address</code>的映射关系需要记录下来，假设哈希表有 n 个元素，那么就需要 n 条记录，故空间复杂度为 Θ(n)。</p>
+                        <p>至于处理冲突的三种方式，它们各自都有优缺点，下面来分别列举一下：</p>
+                        <p>链地址法</p>
+                        <ul>
+                            <li>优点：处理冲突的方式简单，查找效率高</li>
+                            <li>缺点：内存空间占用较大（需要存放下一个节点的指针）</li>
+                        </ul>
+                        <p>线性探测法</p>
+                        <ul>
+                            <li>优点：处理冲突的方式简单，不需要额外计算</li>
+                            <li>缺点：容易成簇聚集，造成查找效率降低</li>
+                        </ul>
+                        <p>再哈希法</p>
+                        <ul>
+                            <li>优点：再哈希后的值分散不聚集</li>
+                            <li>缺点：需要做额外计算，如选择不好再哈希的函数，可能会造成一直冲突。</li>
+                        </ul>
+                        <p>为了客观地反应这三者的查找效率，我在这节的<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Time-Space%20Tradeoff/Hashing" target="_blank" rel="noopener">代码</a>中分别模拟了查找成功和查找失败的情况下的平均查找次数，最后的结论是：链地址法 &gt; 再哈希法 &gt; 线性探测法。当然，这个结果只是作为参考，真实的情况比这个要复杂得多，所以三种处理冲突的方法都是有它的用武之地的。</p>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;separate chaining.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">平均查找次数（查找成功）</span><span class="o">=</span> <span class="mf">1.44</span>
+    <span class="n">平均查找次数（查找失败）</span><span class="o">=</span> <span class="mf">1.62</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;linear probing.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">平均查找次数（查找成功）</span><span class="o">=</span> <span class="mf">1.67</span>
+    <span class="n">平均查找次数（查找失败）</span><span class="o">=</span> <span class="mf">3.77</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;double hashing.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">平均查找次数（查找成功）</span><span class="o">=</span> <span class="mf">1.56</span>
+    <span class="n">平均查找次数（查找失败）</span><span class="o">=</span> <span class="mf">2.77</span>
+</pre></div>
+                        <br>
+                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Time-Space%20Tradeoff/Hashing" target="_blank" rel="noopener">本节全部代码</a> ←</p>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <nav id="gobottom" class="pagination">
+
+                            <a class="prev-post" title="8.2 字符串匹配（TST）" href="/study/algorithm/time-space-tradeoff/string-matching" style="color: #C0C0C0">
+                                ← 8.2 字符串匹配（TST）
+                            </a>
+
+                            <span class="prev-next-post">
+
+                            </span>
+                            <a class="next-post" title="9.1 关于钱的两个经典问题" href="/study/algorithm/dynamic-programming/classic-problems" style="color: #C0C0C0">
+                                9.1 关于钱的两个经典问题 →
+                            </a>
+                        </nav>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <!-- 来必力City版安装代码 -->
+                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
+                            <script type="text/javascript">
+                                (function(d, s) {
+                                    var j, e = d.getElementsByTagName(s)[0];
+
+                                    if (typeof LivereTower === 'function') { return; }
+
+                                    j = d.createElement(s);
+                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                                    j.async = true;
+
+                                    e.parentNode.insertBefore(j, e);
+                                })(document, 'script');
+                            </script>
+                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+                        </div>
+                        <!-- City版安装代码已完成 -->
+                    </div>
+                </section>
+            </article>
+        </div>
+
+
+    </main>
+
+    <div class="toc-bar">
+        <div class="toc-btn-bar">
+            <a href="#site-main" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+            </a>
+            <div class="toc-btn toc-switch">
+                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+            </div>
+            <a href="#gobottom" class="toc-btn">
+                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+            </a>
+        </div>
+        <div class="toc-main">
+            <ol class="toc">
+                <li class="toc-item toc-level-1">
+                    <a class="toc-link" href="/study/algorithm/overview/">
+                        <span class="toc-text">
+                            算法与复杂度
+                        </span>
+                    </a>
+                    <ol class="toc-child">
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                介绍
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/introduction/">
+                                        <span class="toc-text">
+                                            1.1 什么是算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                基本知识
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
+                                        <span class="toc-text">
+                                            2.1 基本数据结构
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
+                                        <span class="toc-text">
+                                            2.2 算法的问题类型
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                复杂度分析
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
+                                        <span class="toc-text">
+                                            3.1 三种表示方法：O, Ω, Θ
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
+                                        <span class="toc-text">
+                                            3.2 复杂度分析（非递归）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
+                                        <span class="toc-text">
+                                            3.3 复杂度分析（递归）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                暴力求解
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
+                                        <span class="toc-text">
+                                            4.1 冒泡排序与选择排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
+                                        <span class="toc-text">
+                                            4.2 字符串匹配（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
+                                        <span class="toc-text">
+                                            4.3 图的两种遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            4.4 最近点对与凸包问题（BF）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
+                                        <span class="toc-text">
+                                             4.5 暴力搜索
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                减治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
+                                        <span class="toc-text">
+                                            5.1 插入排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
+                                        <span class="toc-text">
+                                            5.2 拓扑排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
+                                        <span class="toc-text">
+                                            5.3 二分查找与二叉树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
+                                        <span class="toc-text">
+                                            5.4 插值查找
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                分治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
+                                        <span class="toc-text">
+                                            6.1 归并排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
+                                        <span class="toc-text">
+                                            6.2 快速排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
+                                        <span class="toc-text">
+                                            6.3 二叉树的遍历
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
+                                        <span class="toc-text">
+                                            6.4 最近点对与凸包问题（DC）
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                变治法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
+                                        <span class="toc-text">
+                                            7.1 预排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
+                                        <span class="toc-text">
+                                            7.2 霍纳法则
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
+                                        <span class="toc-text">
+                                            7.3 堆与堆排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
+                                        <span class="toc-text">
+                                            7.4 AVL树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
+                                        <span class="toc-text">
+                                            7.5 红黑树
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
+                                        <span class="toc-text">
+                                            7.6 2-3树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                时空权衡
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
+                                        <span class="toc-text">
+                                            8.1 计数排序
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
+                                        <span class="toc-text">
+                                            8.2 字符串匹配（TST）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
+                                        <span class="toc-text">
+                                            8.3 哈希
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                动态规划
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
+                                        <span class="toc-text">
+                                            9.1 关于钱的两个经典问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
+                                        <span class="toc-text">
+                                            9.2 背包问题（DP）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
+                                        <span class="toc-text">
+                                            9.3 弗洛伊德算法
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                贪心算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
+                                        <span class="toc-text">
+                                            10.1 普林姆算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
+                                        <span class="toc-text">
+                                            10.2 克鲁斯卡尔算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
+                                        <span class="toc-text">
+                                            10.3 迪克斯特拉算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
+                                        <span class="toc-text">
+                                            10.4 哈弗曼树
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="toc-item toc-level-2">
+                            <span class="toc-text">
+                                *高阶算法
+                            </span>
+                            <ol class="toc-child">
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
+                                        <span class="toc-text">
+                                            *回溯
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
+                                        <span class="toc-text">
+                                            *分支限界
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
+                                        <span class="toc-text">
+                                            *线性规划（单纯形法）
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
+                                        <span class="toc-text">
+                                            *最大流问题
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
+                                        <span class="toc-text">
+                                            *匈牙利算法
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="toc-item toc-level-3">
+                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
+                                        <span class="toc-text">
+                                            *千禧问题：P = NP ?
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+
+        </div>
     </div>
-    <div class="toc-main">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-text"> 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希表"><span class="toc-text"> 哈希表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#哈希函数"><span class="toc-text"> 哈希函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#冲突处理"><span class="toc-text"> 冲突处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#链地址法"><span class="toc-text"> 链地址法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性探测法"><span class="toc-text"> 线性探测法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再哈希法"><span class="toc-text"> 再哈希法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂度分析"><span class="toc-text"> 复杂度分析</span></a></li></ol>
-    </div>
+
 </div>
 
-
-
-	</div>
-	
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            
-            
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">最近更新</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul>
+                        <li>
+                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                        </li>
 
-<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
-  <header class="read-next-card-header">
-    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
-    <h3 class="read-next-card-header-title">Recent Posts</h3>
-  </header>
-  <div class="read-next-divider">
-    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-    </svg>
-  </div>
-  <div class="read-next-card-content">
-    <ul>
-      
-      
-      
-      <li>
-        <a href="/others/ss_v2ray/test/">test</a>
-      </li>
-      
-      
-      
-      <li>
-        <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
-      </li>
-      
-      
-      
-      <li>
-        <a href="/study/algorithm/advanced-algorithm/branch-and-bound/">分支限界</a>
-      </li>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-    </ul>
-  </div>
-  <footer class="read-next-card-footer">
-    <a href="/archives">  MORE  → </a>
-  </footer>
-</article>
+                        <li>
+                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                        </li>
 
-            
-            
-            
+                        <li>
+                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                        </li>
 
+                    </ul>
+                </div>
+                <footer class="read-next-card-footer">
+                    <a href="/more/">  MORE  → </a>
+                </footer>
+            </article>
 
-            
-            
-            
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header">
+                    <h3 class="read-next-card-header-title">分类</h3>
+                </header>
+                <div class="read-next-divider">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+                    </svg>
+                </div>
+                <div class="read-next-card-content">
+                    <ul class="category-list">
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/series/">系列</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/tutorial/">教程</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/life/">生活</a>
+                        </li>
+                        <li class="category-list-item">
+                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                        </li>
+                    </ul>
+                </div>
+            </article>
 
-            
+            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
+                <header class="read-next-card-header tagcloud-card">
+                    <h3 class="read-next-card-header-title">标签</h3>
+                </header>
+                <div class="read-next-card-content-ext">
+                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
+                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
+                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
+                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
+                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
+                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
+                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
+                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
+                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
+                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
+                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
+                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
+                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
+                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
+                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
+                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
+                </div>
+            </article>
         </div>
     </div>
 </aside>
 
-	
+
 
 
 
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-        
-        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
-        
+
+        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
+
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -450,30 +829,35 @@
 
 
 <footer class="site-footer outer">
-	<div class="site-footer-content inner">
-		<section class="copyright">
-			<a href="/" title="Hexo">Hexo</a>
-			&copy; 2020
-		</section>
-		<nav class="site-footer-nav">
-			
-            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
-            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
-        </nav>
-    </div>
+    <p style="text-align: center; margin: auto">
+        @ infinityglow.github.io All Right Reserved
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            Email:
+        </strong>
+        heartbeats1216@gmail.com
+    </p>
+    <p style="text-align: center; margin: auto">
+        <strong>
+            GitHub:
+        </strong>
+        <a href="https://github.com/infinityglow"; style="text-align: center">
+            github.com/infinityglow
+        </a>
+    </p>
 </footer>
-	
+
 
 
 <script>
     if(window.navigator && navigator.serviceWorker) {
         navigator.serviceWorker.getRegistrations()
-        .then(function(registrations) {
-            for(let registration of registrations) {
-                registration.unregister();
-            }
-        });
+            .then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
     }
 </script>
 
@@ -484,16 +868,16 @@
 
 
 <div class="floating-header">
-	<div class="floating-header-logo">
-        <a href="/" title="Hexo">
-			
-                <img src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo icon">
-			
-            <span>Hexo</span>
+    <div class="floating-header-logo">
+        <a href="/study/algorithm/time-space-tradeoff/hashing" title="哈希 - 算法与复杂度">
+
+            <img src="/static/icons&images/profile.jpg" alt="profile">
+
+            <span>哈希 - 算法与复杂度</span>
         </a>
     </div>
-    <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">哈希</div>
+    <span class="floating-header-divider"></span>
+    <div class="floating-header-title"></div>
     <progress class="progress" value="0">
         <div class="progress-container">
             <span class="progress-bar"></span>
@@ -501,16 +885,9 @@
     </progress>
 </div>
 
-
-
-
-
 <script src="/js/mix/post-lazy-local.min.js"></script>
 
 <script>;(function() {var bLazy = new Blazy()})();</script>
-
-
-
 
 <script src="/js/lightgallery.min.js"></script>
 <link rel="stylesheet" href="/css/lightgallery.min.css">
@@ -520,51 +897,7 @@
     });
 </script>
 
-
-
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-    new Valine({
-        el: '#comment' ,
-        verify: false,
-        notify: false,
-        appId: 'aBRltWkLKGNezPSGs1TBA0GE-gzGzoHsz',
-        appKey: 'Tg0cJFUAcAbzFVaO5hwaRXsx',
-        placeholder: '你是魔鬼吧，都不留言！',
-        pageSize: 10,
-        avatar: 'mm',
-        visitor: true,
-    });
-</script>
-
-
-
-
-
-
 <script>searchFunc("/")</script>
-
-
-
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>
