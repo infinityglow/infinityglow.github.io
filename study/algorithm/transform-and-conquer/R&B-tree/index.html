@@ -1,1084 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
+
+
+
+
 <head>
+	
+	
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/allinone.min.css">
 
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-XXXXXXXXXX-1');
+	</script>
+	
 
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>红黑树 | Hexo</title>
 
-    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-    <link href="/css/default.css" rel="stylesheet">
-    <link href="/css/github.css" rel="stylesheet">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="John Doe">
+	<meta name="description" content>
 
-    <title>红黑树 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+	
+	<meta name="keywords" content>
+	
 
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="generator" content="hexo">
-    <meta name="author" content="Hongzhi, 鸿志">
-    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
-          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+	
+	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	
 
-    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
-    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta name="theme-color" content="#3c484e">
-    <meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta property="og:site_name" content="Hexo">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Hexo | ">
-    <meta property="og:description" content>
-    <meta property="og:url" content="https://infinityglow.github.io/about/">
+	
+	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
+	
 
+	<meta property="og:site_name" content="Hexo">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="红黑树 | Hexo">
+	<meta property="og:description" content>
+	<meta property="og:url" content="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/">
 
-    <meta property="article:author" content="Hongzhi Fu">
-    <link rel="stylesheet" href="../../../../../public/css/default.css">
-
+	
+	<meta property="article:published_time" content="2020-02-14T12:02:66+08:00"> 
+	<meta property="article:author" content="John Doe">
+	<meta property="article:published_first" content="Hexo, /study/algorithm/transform-and-conquer/R&B-tree/"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+	
 </head>
 <body class="post-template">
-<div class="site-wrapper">
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-wrapper">
+		
 
 
 
 
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                <a href="/" title="Home">HOME</a>
+                
+            </li>
+            
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
+    </a>
+    
+    
+    
+    
+    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
+    </a>
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
 
-    <header class="site-header outer" style="z-index: 999">
-        <div class="inner">
 
-            <nav class="site-nav">
-                <div class="site-nav-left">
-                    <ul class="nav">
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2020-02-14T04:07:56.661Z" itemprop="datePublished">
+                    2020-02-14
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                
+            </section>
+            <h1 class="post-full-title">红黑树</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
+<p>上一节的内容中，我们讨论了 AVL 这种自平衡的树，不知道各位小伙伴有没有真正理解这种神奇的操作呢？哈哈，在这一节中，你将会遇到更神奇，同时也更复杂的算法来帮助我们平衡二叉树。下面就让我们的红黑树浓重登场吧！</p>
+<p><img alt="红黑树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/demo.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/demo.png"></p>
+<p><strong>红黑树</strong>（<strong>red-black tree</strong>）也是自平衡的二叉树，在介绍它是如何做到自平衡之前，我们首先来了解一下它的性质。</p>
+<ul>
+<li>性质 1：所有节点必须为红色或黑色</li>
+<li>性质 2：根节点为黑色</li>
+<li>性质 3：所有叶子节点（NIL）为黑色</li>
+<li>性质 4：如果节点为红色，那么其孩子节点（包括 NIL）必须为黑色</li>
+<li>性质 5：任意一个节点到每个叶子节点所经过的路径包含相同的数目的黑色节点</li>
+</ul>
+<p>红黑树每插入或删除一个节点，都会检查是否违反了上述的性质。如违反，红黑树就做出相应的改变，但和 AVL 树不同的是，红黑树不但继承了 AVL 树的旋转操作，还可以通过节点的颜色变换使树达到平衡，下面我们就分别来介绍一下这两种操作。</p>
+<h2 id="旋转操作"><a class="markdownIt-Anchor" href="#旋转操作"></a> 旋转操作</h2>
+<p>红黑树的旋转操作与 AVL 树的旋转操作是基本上一样的，唯一的不同是每一个节点都对应自己的父节点，因此涉及指针的操作会有所不同。</p>
+<p>因此下面我们定义出 <code>Node</code> 类，其中包含了获取祖父节点，叔父节点和兄弟节点的操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class Node(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__(self, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.value &#x3D; value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        self.left &#x3D; None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        self.right &#x3D; None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        self.parent &#x3D; None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    # 获取祖父节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    def grandparent(self):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        if not self.parent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            return None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        return self.parent.parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    # 获取叔父节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    def uncle(self):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        if not self.grandparent():</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            return None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        if self.parent is self.grandparent().left:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            return self.grandparent().right</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            return self.grandparent().left</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    # 获取兄弟节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    def brother(self):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        if self.parent.left is self:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">            return self.parent.right</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            return self.parent.left</span></pre></td></tr></table></figure>
+<h3 id="左旋"><a class="markdownIt-Anchor" href="#左旋"></a> 左旋</h3>
+<p>如下图所示，c 代表旋转节点，g 代表祖父节点，p 代表父节点，l 和 r 分别代表 c 的左孩子和右孩子。经过一次左旋后，原来的 c 节点成为了 g 的右孩子，原来的 p 节点成为了 c 节点的左孩子，并且成为 c 节点的左孩子的父节点。</p>
+<p><img alt="左旋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/left-rotation.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/left-rotation.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def left_rotation(self, node):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    # node 为根节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    if not node.parent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.root &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        return</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    grandparent &#x3D; node.grandparent()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    parent &#x3D; node.parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    t &#x3D; node.left</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    parent.right &#x3D; t</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    # 判断 t 是否为叶子节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    if t is not self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        t.parent &#x3D; parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    node.left &#x3D; parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    parent.parent &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    # 判断父节点是否为根节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    if parent is self.root:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        self.root &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    node.parent &#x3D; grandparent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    # 判断祖父节点是否为空</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    if grandparent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        # 父节点为祖父节点的左孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        if grandparent.left is parent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            grandparent.left &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        # 父节点为祖父节点的右孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">            grandparent.right &#x3D; node</span></pre></td></tr></table></figure>
+<h3 id="右旋"><a class="markdownIt-Anchor" href="#右旋"></a> 右旋</h3>
+<p>同理，右旋的操作跟左旋几乎一模一样，只是与左旋互为镜像。下图展示了右旋的全过程。</p>
+<p><img alt="右旋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/right-rotation.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/right-rotation.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def right_rotation(self, node):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    # node 为根节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    if not node.parent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.root &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        return</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    grandparent &#x3D; node.grandparent()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    parent &#x3D; node.parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    t &#x3D; node.right</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    parent.left &#x3D; t</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    # 判断 t 是否为叶子节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    if t is not self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        t.parent &#x3D; parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    node.right &#x3D; parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    parent.parent &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    # 判断父节点是否为根节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    if parent is self.root:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        self.root &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    node.parent &#x3D; grandparent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    # 判断祖父节点是否为空</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    if grandparent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        # 父节点为祖父节点的左孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        if grandparent.left is parent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            grandparent.left &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        # 父节点为祖父节点的右孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">            grandparent.right &#x3D; node</span></pre></td></tr></table></figure>
+<p>和 AVL 树一样，旋转操作只涉及了指针操作，因此不管是左旋还是右旋都是 Θ(1) 的复杂度。</p>
+<h2 id="颜色变换"><a class="markdownIt-Anchor" href="#颜色变换"></a> 颜色变换</h2>
+<p>当红黑树插入或删除一个节点时，免不了会违反前面 5 种性质中的一条或多条，在这种情况下，我们就不需要每次都像 AVL 树那样进行麻烦的旋转操作了，而是采取颜色变换的方式，以此来减小因旋转而带来的时间开销。</p>
+<p>例如，下图中违反了性质 4，我们只需要调整其中一些节点的颜色就能再次满足该性质。</p>
+<p><img alt="颜色变换" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/color-rearrange0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/color-rearrange0.png"></p>
+<p>再比如，下图中违反了性质 5，同样也只需调整节点的颜色就能保证再次满足该性质。</p>
+<p><img alt="颜色变换" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/color-rearrange1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/color-rearrange1.png"></p>
+<p>颜色变换不涉及任何的运算，因此时间复杂度为 Θ(1)。</p>
+<h2 id="搜索"><a class="markdownIt-Anchor" href="#搜索"></a> 搜索</h2>
+<p>同二叉搜索树一样，红黑树的搜索也是从根节点出发，比较搜索元素与根节点值的大小，然后决定是直接返回该节点，还是从左(右)子树中继续搜索。如果一直搜索到 NIL 节点都还是搜索失败，那么就返回<code>None</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def search(self, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    # 树的根节点为空就抛出异常</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    if not self.root:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        raise ValueError(&quot;The tree is null&quot;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    return self.search_node(self.root, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">def search_node(self, root, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    if root is self.NIL:  # 如果是叶子节点 NIL，则返回 None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        return None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    if value &lt; root.value:  # 从左子树中查找</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        return self.search_node(root.left, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    elif value &gt; root.value:  # 从右子树中查找</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        return self.search_node(root.right, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        return root</span></pre></td></tr></table></figure>
+<p>由于红黑树是一棵近似的平衡二叉树，故搜索的时间复杂度为 Θ(log n)。</p>
+<h2 id="插入"><a class="markdownIt-Anchor" href="#插入"></a> 插入</h2>
+<p>插入操作的前序步骤也和二叉搜索树一样，先找到插入节点的位置，创建一个新的节点，最后使该节点指向其父节点，父节点指向新插入的节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def insert(self, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    # 每个新节点均有两个叶子节点 NIL</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    new_node &#x3D; Node(value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    new_node.left &#x3D; self.NIL</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    new_node.right &#x3D; self.NIL</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    if not self.root:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        self.root &#x3D; new_node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        new_node.color &#x3D; &#39;b&#39;  # 根节点的颜色置为黑色</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        self.insert_node(self.root, new_node)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">def insert_node(self, root, node):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    # 搜索</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    if node.value &lt; root.value:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        if root.left is not self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            self.insert_node(root.left, node)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            root.left &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            node.parent &#x3D; root</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">            self.insert_case(node)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        if root.right is not self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">            self.insert_node(root.right, node)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">            root.right &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">            node.parent &#x3D; root</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            self.insert_case(node)</span></pre></td></tr></table></figure>
+<p>完成插入后，我们需要判断新的红黑树有没有违反上面的 5 种性质，如果违反了，就根据不同的情况，做出相应的旋转或变色操作。下面我们就分情况来讨论一下。</p>
+<ul>
+<li>情况 1：根节点为红色。由于违反了性质 2，所以当根节点的颜色为红色时，我们需要将颜色调整为黑色。</li>
+</ul>
+<p><img alt="情况 1" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case1.png"></p>
+<ul>
+<li>情况 2：父节点 P 和叔父节点 U 都为红色，祖父节点 G 为黑色，因为新加入的节点 N 为红色，所以违反了性质 4。因此做出的调整是交换父节点和叔父节点的颜色。因为我们不能保证祖父节点的父节点的颜色是否也为红色，所以我们需要在祖父节点 G 上递归地对情况 2 的进行检查。</li>
+</ul>
+<p><img alt="情况 2" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case2.png"></p>
+<ul>
+<li>
+<p>情况 3：父节点 P 为红色，叔父节点 U 为黑色或 NIL，且新插入的节点 N 与父节点和祖父节点在同一侧（G 的左(右)孩子为 P，P 的左(右)孩子为 N）。故我们再把情况 3 分为两种情况：</p>
+<p>i) 祖父节点 G 的左孩子为父节点 P，父节点 P 的左孩子为新插入节点 N。此时，我们需要先交换父节点 P 和祖父节点 G 的颜色，然后对 P 进行右旋。</p>
+<p><img alt="情况 3A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case3A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case3A.png"></p>
+<p>ii) 同理，如果祖父节点 G 的右孩子为父节点 P，父节点 P 的右孩子为新插入节点 N。我们还是要先交换父节点 P 和祖父节点 G 的颜色，然后对 P 进行左旋操作。</p>
+<p><img alt="情况 3B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case3B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case3B.png"></p>
+</li>
+<li>
+<p>情况 4：父节点 P 为红色，叔父节点 U 为黑色或 NIL，且新插入的节点 N 与父节点和祖父节点不在同一侧（G 的左(右)孩子为 P，P 的右(左)孩子为 N）。故我们还是把情况 4 分为两种情况：</p>
+<p>i) 祖父节点 G 的左孩子为父节点 P，父节点 P 的右孩子为新插入节点 N。此时，我们先要对新插入节点 N 执行一次左旋操作，这样就变换为了跟情况 3A 一样的情形，接下来我们只需要再调用情况 3A 即可，只是旋转的节点从父节点 P 变为了新插入节点 N。</p>
+<p><img alt="情况 4A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case4A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case4A.png"></p>
+<p>ii) 同样，如果祖父节点 G 的右孩子为父节点 P，父节点 P 的左孩子为新插入节点 N。我们还是先要对新插入节点 N 执行一次旋转操作，只是这里变为了互为镜像的右旋。旋转后就变为了情况 3B，因此接下来我们只需要再调用一次 3B 即可，只是旋转的节点从父节点 P 变为了新插入节点 N。</p>
+<p><img alt="情况 4B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case4B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/insert-case4B.png"></p>
+</li>
+</ul>
+<p>我们把所有的情况用一个函数<code>insert_case</code>来表示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def insert_case(self, node):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    # 情况 1: 根节点为红色</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    if not node.parent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.root &#x3D; node</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        node.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        return</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    # 情况 2: 父节点和叔父节点为红色，祖父节点为黑色。</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    if node.parent.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        if node.uncle().color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">            node.parent.color &#x3D; &#39;b&#39;; node.uncle().color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            node.grandparent().color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">            self.insert_case(node.grandparent())  # 对祖父节点递归地调用 insert_case()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">            # 情况 3A: 叔父节点为黑色或 NIL，祖父节点的左孩子为父节点，父节点的左孩子为新插入节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            if node.parent.left is node and node.parent is node.grandparent().left:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">                node.parent.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">                node.grandparent().color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">                self.right_rotation(node.parent)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">            # 情况 3B: 叔父节点为黑色或 NIL，祖父节点的右孩子为父节点，父节点的右孩子为新插入节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            elif node.parent.right is node and node.parent is node.grandparent().right:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">                node.parent.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">                node.grandparent().color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">                self.left_rotation(node.parent)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">            # 情况 4A: 叔父节点为黑色或 NIL，祖父节点的左孩子为父节点，父节点的右孩子为新插入节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">            elif node.parent.right is node and node.parent is node.grandparent().left:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">                node.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">                node.grandparent().color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">                self.left_rotation(node)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">                self.right_rotation(node)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">            # 情况 4B: 叔父节点为黑色或 NIL，祖父节点的右孩子为父节点，父节点的左孩子为新插入节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">            elif node.parent.left is node and node.parent is node.grandparent().right:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">                node.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">                node.grandparent().color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">                self.right_rotation(node)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">                self.left_rotation(node)</span></pre></td></tr></table></figure>
+<p>插入只涉及到了搜索，旋转和变色操作，因此时间复杂度为 Θ(log n) + Θ(1) + Θ(1) = Θ(log n)。</p>
+<h2 id="删除"><a class="markdownIt-Anchor" href="#删除"></a> 删除</h2>
+<p>红黑树的删除操作也和二叉搜索树相似，先找到删除的节点，然后根据待删除节点的孩子个数判断采取相应的删除方式。</p>
+<p>我们知道，如果待删除的节点有两个孩子节点，我们需要从它的左子树中找到最大的节点，或者从它的右子树中找到最小的节点，交换两者的值，然后再删除交换后的节点。因此，删除拥有两个孩子的节点实际上等同于删除叶子节点或只有一个孩子的节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def get_max(self, root):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    if root.right:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        return self.get_max(root.right)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">def remove(self, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    # 树的根节点为空就抛出异常</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    if not self.root:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        raise ValueError(&quot;The tree is null&quot;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    self.remove_node(self.root, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">def remove_node(self, root, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    if root is self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        return</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    # 搜索</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    if value &lt; root.value:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        self.remove_node(root.left, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    elif value &gt; root.value:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        self.remove_node(root.right, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        # 左右孩子为空</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        if root.left is self.NIL and root.right is self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            self.remove_leaf(root, True)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        # 只有左孩子或右孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">        elif root.left is self.NIL or root.right is self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">            self.remove_one_child(root)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        # 左右孩子都有</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            temp &#x3D; self.get_max(root.left)  # 从左子树中找最大的节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">            root.value &#x3D; temp.value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">            self.remove_node(root.left, temp.value)</span></pre></td></tr></table></figure>
+<h3 id="删除只有一个孩子的节点"><a class="markdownIt-Anchor" href="#删除只有一个孩子的节点"></a> 删除只有一个孩子的节点</h3>
+<p>我们先来看看删除只有一个孩子的节点。如图所示，如果删除的是黑色节点 D，我们只需要将父节点 P 和待删除节点 D 的左(右)孩子相互连接起来即可。因为删除的是黑色节点，所以从父节点 P 出发到左侧任意叶子节点所经过的黑色节点的数目一定不等于到右侧任意叶子节点所经过的黑色节点的数目，也就是说删除后违反了性质 5。为了平衡，我们需要将待删除节点 D 的左(右)孩子的颜色调整为黑色。</p>
+<p><img alt="单孩子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-one-child0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-one-child0.png"></p>
+<p>删除的节点不可能为红色节点，因为违反了性质 5。如图所示，如果就从该红色节点出发，到达左子树的任意节点所经过的黑色节点的数目一定大于 1，而它的右侧仅为一个 NIL 节点，所以经过黑色节点的数目为 1，所以我们不需要考虑删除红色节点的情况。</p>
+<p><img alt="单孩子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-one-child1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-one-child1.png"></p>
+<p>用代码来实现这个过程是这样子的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def remove_one_child(self, node):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    if node.left is not self.NIL:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        node.left.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.fix(node, node.left)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        node.right.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        self.fix(node, node.right)</span></pre></td></tr></table></figure>
+<p>最后将待删除的节点删除掉，并用<code>fix</code>函数改变父节点和孩子节点的指针。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def fix(self, p, n):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    # p.parent 为空</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    if not p.parent:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.root &#x3D; n</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    elif p.parent.left is p:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        p.parent.left &#x3D; n</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    elif p.parent.right is p:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        p.parent.right &#x3D; n</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    if n is not self.NIL and n is not None:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        n.parent &#x3D; p.parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    del p</span></pre></td></tr></table></figure>
+<h3 id="删除叶子节点"><a class="markdownIt-Anchor" href="#删除叶子节点"></a> 删除叶子节点</h3>
+<p>下面来讨论一下删除叶子节点的情况，如果删除的是红色节点，由于删除后没有违反红黑树的任何性质，因此我们直接删除即可。</p>
+<p><img alt="红色叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-red.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-red.png"></p>
+<p>接下来是最最麻烦的删除黑色叶子节点的情况。前面看晕了的小伙伴可以先喘口气，下面的情况会更复杂。我们一共把删除黑色叶子节点分为 5 种情况。</p>
+<ul>
+<li>
+<p>情况 1：删除的节点为根节点。</p>
+<p>这种情况最简单，直接删除即可，然后将红黑树的根节点<code>self.root</code>置为<code>None</code>。</p>
+<p><img alt="情况 1" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case1.png"></p>
+</li>
+<li>
+<p>情况 2：待删除节点 D 的兄弟节点 B 为红色。按照惯例，由于待删除节点 D 可以为父节点 P 的左孩子，也可以为右孩子。所以我们又可以分为两种情况。</p>
+<p>i) D 为左孩子的情况。调整的做法是先交换父节点 P 的和兄弟节点 B 的颜色，然后对兄弟节点执行一次左旋操作。</p>
+<p><img alt="情况 2A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case2A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case2A.png"></p>
+<p>ii) D 为右孩子的情况。调整的做法还是先交换父节点 P 的和兄弟节点 B 的颜色，只是对兄弟节点的旋转操作变为了右旋。</p>
+<p><img alt="情况 2B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case2B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case2B.png"></p>
+<p>调整后，待删除的节点 D 的兄弟节点 L 的颜色为黑色，所以这就变为了后面要讨论的情况。</p>
+</li>
+<li>
+<p>情况 3：待删除节点 D 的兄弟节点 B 为黑色，且远侄子节点为红色，这里的远侄子节点指的是离 D 较远的节点。同样，待删除节点 D 可能是根节点 P 的左(右)孩子，我们还是把它们分为两种情况：</p>
+<p>i) D 为左孩子的情况，远侄子节点为图中的 R，图中的白色父节点 P 表示可以为任意颜色。调整策略是交换父节点 P 和兄弟节点 B 的颜色，并将远侄子节点 R 的颜色改为黑色，最后再对 B 执行一次左旋操作。</p>
+<p><img alt="情况 3A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case3A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case3A.png"></p>
+<p>ii) D 为右孩子的情况，远侄子节点为图中的 L。调整策略还是先交换父节点 P 和兄弟节点 B 的颜色，将远侄子节点 L 的颜色变为黑色，最后对 B 执行一次右旋操作。</p>
+<p><img alt="情况 3B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case3B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case3B.png"></p>
+</li>
+<li>
+<p>情况 4：待删除节点 D 的兄弟节点 B 为黑色，且近侄子节点为红色。相反，近侄子节点指的是离 D 较近的节点。因为待删除节点 D 依然可能是根节点 P 的左(右)孩子，所以我们还是分为两种情况：</p>
+<p>i) D 为左孩子的情况，近侄子节点为图中的 L，图中的白色父节点 P 表示可以为任意颜色。调整方案是先交换兄弟节点 B 和近侄子节点 L 的颜色，然后对 B 执行一次右旋操作，旋转后我们发现情况变为了 3A，因此再调用一次 3A 的操作方法即可。</p>
+<p><img alt="情况 4A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case4A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case4A.png"></p>
+<p>ii) D 为右孩子的情况，近侄子节点为图中的 R。调整方案是先交换兄弟节点 B 和近侄子节点 R 的颜色，然后对 B 执行一次左旋操作，旋转后我们发现情况变为了 3B，因此再调用一次 3B 的操作方法即可。</p>
+<p><img alt="情况 4B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case4B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case4B.png"></p>
+</li>
+<li>
+<p>情况 5：兄弟节点 P 为红色，且它的左右孩子都为黑色。我们根据兄弟节点的颜色进一步分为两种情况。</p>
+<p>i) 父节点 B 为红色，我们只需要交换 P 和 B 的颜色即可。</p>
+<p><img alt="情况 5A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case5A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case5A.png"></p>
+<p>ii) 父节点 B 为黑色，这种情况下，我们需要将 B 的颜色改为红色，由于我们不能判断父节点 P 的父节点和兄弟节点是否都为黑色，所以我们需要在父节点 P 上递归地对情况 5 的进行检查，只是我们不再删除这里的父节点了，像这样一直往上递归，直到到达根节点。</p>
+<p><img alt="情况 5B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case5B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/delete-leaf-black-case5B.png"></p>
+</li>
+</ul>
+<p>将上述的情况全部打包成一个函数<code>remove_leaf</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def remove_leaf(self, node, flag):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    # 删除红色节点不做任何变化</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    if node.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.fix(node, self.NIL)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        return</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    # 为黑色节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    # 情况 1: 删除的节点为根节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    if node is self.root:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        if flag:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">            self.fix(node, None)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        return</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        parent &#x3D; node.parent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        brother &#x3D; node.brother()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        # 情况 2: 兄弟节点为红色</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        if brother.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            parent.color &#x3D; &#39;r&#39;; brother.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            # 情况 2A: 待删除节点为父节点的左孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">            if node.parent.left is node:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">                self.left_rotation(brother)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">            # 情况 2B: 待删除节点为父节点的右孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">            else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">                self.right_rotation(brother)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">            self.remove_leaf(node, True)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            nephew_left &#x3D; brother.left</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">            nephew_right &#x3D; brother.right</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">            # 情况 3A: 兄弟节点为黑色，右侄子节点为红色，待删除节点为父节点的左孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">            if node.parent.left is node and nephew_right.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">                brother.color &#x3D; parent.color; parent.color &#x3D; &#39;b&#39;; nephew_right.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">                self.left_rotation(brother)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">            # 情况 3B: 兄弟节点为黑色，左侄子节点为红色，待删除节点为父节点的右孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">            elif node.parent.right is node and nephew_left.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">                brother.color &#x3D; parent.color; parent.color &#x3D; &#39;b&#39;; nephew_left.color &#x3D; &#39;b&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">                self.right_rotation(brother)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">            # 情况 4A: 兄弟节点为黑色，左侄子节点为红色，待删除节点为父节点的左孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">            elif node.parent.left is node and nephew_left.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">                nephew_left.color &#x3D; &#39;b&#39;; brother.color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line">                self.right_rotation(nephew_left)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">                self.remove_leaf(node, True)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line">            # 情况 4B: 兄弟节点为黑色，右侄子节点为红色，待删除节点为父节点的右孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line">            elif node.parent.right is node and nephew_right.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">                nephew_right.color &#x3D; &#39;b&#39;; brother.color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line">                self.left_rotation(nephew_right)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line">                self.remove_leaf(node, True)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line">            # 情况 5: 兄弟节点为黑色，并且两个孩子都为黑色节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line">            elif brother.left.color &#x3D;&#x3D; &#39;b&#39; and brother.right.color &#x3D;&#x3D; &#39;b&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line">                # 情况 5A: 父节点为红色</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line">                if parent.color &#x3D;&#x3D; &#39;r&#39;:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line">                    parent.color &#x3D; &#39;b&#39;; brother.color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">51</span></pre></td><td class="code"><pre><span class="line">                # 情况 5B: 父节点为黑色</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">52</span></pre></td><td class="code"><pre><span class="line">                else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">53</span></pre></td><td class="code"><pre><span class="line">                    brother.color &#x3D; &#39;r&#39;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">54</span></pre></td><td class="code"><pre><span class="line">                    self.remove_leaf(parent, False)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">55</span></pre></td><td class="code"><pre><span class="line">    # 决定是否删除节点，flag 为 False 时实用于情况 5B</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">56</span></pre></td><td class="code"><pre><span class="line">    if flag:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">57</span></pre></td><td class="code"><pre><span class="line">        self.fix(node, self.NIL)</span></pre></td></tr></table></figure>
+<p>删除操作也包含了搜索，旋转和变色操作，因此时间复杂度也为 Θ(log n) + Θ(1) + Θ(1) = Θ(log n)。</p>
+<h2 id="例子"><a class="markdownIt-Anchor" href="#例子"></a> 例子</h2>
+<p>让我们来看一个具体的例子，假设从数组<code>[1, 3, 4, 2, 5, 7, 6]</code>构建红黑树。</p>
+<p>插入节点 1。由于是根节点，所以需要将颜色置为黑色。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example1.png"></p>
+<p>插入节点 3。没有违反任何性质，不做任何改变。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example2.png"></p>
+<p>插入节点 4。因为叔父节点为 NIL，祖父节点的右孩子为父节点，父节点的右孩子为新插入节点，为情况 3B。因此我们需要先交换父节点 3 和 其祖父节点 1 的颜色，最后再对节点 3 进行左旋。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example3.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example3.png"></p>
+<p>插入节点 2。其祖父节点为黑色，父节点和叔父节点均为红色，情况 2 满足。所以我们将祖父节点的颜色变为红色，将父节点和叔父节点变为黑色，然后递归地对祖父节点进行检查，发现祖父节点为树的根节点，且为红色，因此满足情况 1，故将颜色变为黑色。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example4.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example4.png"></p>
+<p>插入节点 5。没有违反任何性质，不做任何改变。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example5.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example5.png"></p>
+<p>插入节点 7。因为叔父节点为黑色，祖父节点的右孩子为父节点，父节点的右孩子为新插入节点，也为情况 3B。因此我们需要先交换父节点 5 和 其祖父节点 4 的颜色，最后再对节点 5 进行左旋。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example6.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example6.png"></p>
+<p>最后插入节点 6。发现也满足情况 2，所以需要将祖父节点的颜色变为红色，将父节点和叔父节点变为黑色，然后递归地对祖父节点进行检查，最终得到的红黑树如下图所示。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example7.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example7.png"></p>
+<p>然后我们在从这棵红黑树中依次删除 5, 1, 7。</p>
+<p>删除节点 5。节点 5 有两个孩子节点，所以需要在它的左子树中找到最大的节点（节点 4），然后交换两者的值，这样就等同于删除一个黑色的叶子节点。我们发现它的兄弟节点为黑色，左侄子节点为红色，待删除节点为父节点的左孩子，所以满足情况 4A。做出调整是先交换兄弟节点 7 和近侄子节点 6 的颜色，然后对节点 6 执行一次右旋，再次检查待删除节点，发现又满足条件 3A，所以先交换父节点 4 和兄弟节点 6 的颜色，并将远侄子节点 7 的颜色变为黑色，最后再对节点 6 执行一次左旋操作。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example8.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example8.png"></p>
+<p>删除节点 1。由于只有一个孩子节点，因此只需要将节点 1 的右节点 2 与父节点 3 连接起来，然后将节点 2 的颜色变为黑色即可。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example9.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example9.png"></p>
+<p>删除节点 7。节点 7 为黑色叶子节点，且兄弟节点 4 为黑色，父节点 6 为红色，故满足条件 5A。因此我们只需要交换父节点和兄弟节点的颜色即可。</p>
+<p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example10.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&amp;B-tree/images/example10.png"></p>
+<p>这样我们就讲完了一个完整例子了。红黑树的操作十分复杂，情况非常多，代码也非常难理解，所以需要大家多花点时间消化本节的内容啊～</p>
 
-                        <li>
-                            <a href="/" title="主页">主页</a>
-                        </li>
-
-                        <li>
-                            <a href="/study" title="技术篇">技术篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/life" title="生活篇">生活篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
-                        </li>
-
-                        <li>
-                            <a href="/about" title="about">about</a>
-                        </li>
-
-                    </ul>
                 </div>
-
-                <div class="search-button">
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-                </div>
-
-                <div class="site-nav-right">
-
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-
-
-                    <div class="social-links">
-
-                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
-                        </a>
-
-
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-
-    <main id="site-main" class="site-main outer" role="main">
-        <div class="inner">
-            <header class="post-full-header">
-                <h1 class="post-full-title">红黑树</h1>
-            </header>
-            <article class="post-full no-image">
-
-                <section class="post-full-content">
-                    <div id="lightgallery" class="markdown-body">
-                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>上一节的内容中，我们讨论了 AVL 这种自平衡的树，不知道各位小伙伴有没有真正理解这种神奇的操作呢？哈哈，在这一节中，你将会遇到更神奇，同时也更复杂的算法来帮助我们平衡二叉树。下面就让我们的红黑树浓重登场吧！</p>
-                        <p><img alt="红黑树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/demo.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/demo.png"></p>
-                        <p><strong>红黑树</strong>（<strong>red-black tree</strong>）也是自平衡的二叉树，在介绍它是如何做到自平衡之前，我们首先来了解一下它的性质。</p>
-                        <ul>
-                            <li>性质 1：所有节点必须为红色或黑色</li>
-                            <li>性质 2：根节点为黑色</li>
-                            <li>性质 3：所有叶子节点（NIL）为黑色</li>
-                            <li>性质 4：如果节点为红色，那么其孩子节点（包括 NIL）必须为黑色</li>
-                            <li>性质 5：任意一个节点到每个叶子节点所经过的路径包含相同的数目的黑色节点</li>
-                        </ul>
-                        <p>红黑树每插入或删除一个节点，都会检查是否违反了上述的性质。如违反，红黑树就做出相应的改变，但和 AVL 树不同的是，红黑树不但继承了 AVL 树的旋转操作，还可以通过节点的颜色变换使树达到平衡，下面我们就分别来介绍一下这两种操作。</p>
-                        <h2 id="旋转操作"><a href="#旋转操作" class="headerlink" title="旋转操作"></a>旋转操作</h2><p>红黑树的旋转操作与 AVL 树的旋转操作是基本上一样的，唯一的不同是每一个节点都对应自己的父节点，因此涉及指针的操作会有所不同。</p>
-                        <p>因此下面我们定义出 <code>Node</code> 类，其中包含了获取祖父节点，叔父节点和兄弟节点的操作。</p>
-                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="c1"># 获取祖父节点</span>
-    <span class="k">def</span> <span class="nf">grandparent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
-    <span class="c1"># 获取叔父节点</span>
-    <span class="k">def</span> <span class="nf">uncle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">grandparent</span><span class="p">():</span>
-            <span class="k">return</span> <span class="bp">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">right</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">left</span>
-    <span class="c1"># 获取兄弟节点</span>
-    <span class="k">def</span> <span class="nf">brother</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span>
-</pre></div>
-                        <h3 id="左旋"><a href="#左旋" class="headerlink" title="左旋"></a>左旋</h3><p>如下图所示，c 代表旋转节点，g 代表祖父节点，p 代表父节点，l 和 r 分别代表 c 的左孩子和右孩子。经过一次左旋后，原来的 c 节点成为了 g 的右孩子，原来的 p 节点成为了 c 节点的左孩子，并且成为 c 节点的左孩子的父节点。</p>
-                        <p><img alt="左旋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/left-rotation.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/left-rotation.png"></p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">left_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="c1"># node 为根节点</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span>
-        <span class="k">return</span>
-    <span class="n">grandparent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
-    <span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">t</span>
-
-    <span class="c1"># 判断 t 是否为叶子节点</span>
-    <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
-    <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">parent</span>
-    <span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
-
-    <span class="c1"># 判断父节点是否为根节点</span>
-    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span>
-    <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">grandparent</span>
-
-    <span class="c1"># 判断祖父节点是否为空</span>
-    <span class="k">if</span> <span class="n">grandparent</span><span class="p">:</span>
-        <span class="c1"># 父节点为祖父节点的左孩子</span>
-        <span class="k">if</span> <span class="n">grandparent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">parent</span><span class="p">:</span>
-            <span class="n">grandparent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
-        <span class="c1"># 父节点为祖父节点的右孩子</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">grandparent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
-</pre></div>
-                        <h3 id="右旋"><a href="#右旋" class="headerlink" title="右旋"></a>右旋</h3><p>同理，右旋的操作跟左旋几乎一模一样，只是与左旋互为镜像。下图展示了右旋的全过程。</p>
-                        <p><img alt="右旋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/right-rotation.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/right-rotation.png"></p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">right_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="c1"># node 为根节点</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span>
-        <span class="k">return</span>
-    <span class="n">grandparent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
-    <span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">t</span>
-
-    <span class="c1"># 判断 t 是否为叶子节点</span>
-    <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
-    <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">parent</span>
-    <span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
-
-    <span class="c1"># 判断父节点是否为根节点</span>
-    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span>
-    <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">grandparent</span>
-
-    <span class="c1"># 判断祖父节点是否为空</span>
-    <span class="k">if</span> <span class="n">grandparent</span><span class="p">:</span>
-        <span class="c1"># 父节点为祖父节点的左孩子</span>
-        <span class="k">if</span> <span class="n">grandparent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">parent</span><span class="p">:</span>
-            <span class="n">grandparent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
-        <span class="c1"># 父节点为祖父节点的右孩子</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">grandparent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
-</pre></div>
-                        <p>和 AVL 树一样，旋转操作只涉及了指针操作，因此不管是左旋还是右旋都是 Θ(1) 的复杂度。</p>
-                        <h2 id="颜色变换"><a href="#颜色变换" class="headerlink" title="颜色变换"></a>颜色变换</h2><p>当红黑树插入或删除一个节点时，免不了会违反前面 5 种性质中的一条或多条，在这种情况下，我们就不需要每次都像 AVL 树那样进行麻烦的旋转操作了，而是采取颜色变换的方式，以此来减小因旋转而带来的时间开销。</p>
-                        <p>例如，下图中违反了性质 4，我们只需要调整其中一些节点的颜色就能再次满足该性质。</p>
-                        <p><img alt="颜色变换" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/color-rearrange0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/color-rearrange0.png"></p>
-                        <p>再比如，下图中违反了性质 5，同样也只需调整节点的颜色就能保证再次满足该性质。</p>
-                        <p><img alt="颜色变换" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/color-rearrange1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/color-rearrange1.png"></p>
-                        <p>颜色变换不涉及任何的运算，因此时间复杂度为 Θ(1)。</p>
-                        <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>同二叉搜索树一样，红黑树的搜索也是从根节点出发，比较搜索元素与根节点值的大小，然后决定是直接返回该节点，还是从左(右)子树中继续搜索。如果一直搜索到 NIL 节点都还是搜索失败，那么就返回<code>None</code>。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="c1"># 树的根节点为空就抛出异常</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The tree is null&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">search_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>  <span class="c1"># 如果是叶子节点 NIL，则返回 None</span>
-        <span class="k">return</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>  <span class="c1"># 从左子树中查找</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>  <span class="c1"># 从右子树中查找</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">root</span>
-</pre></div>
-                        <p>由于红黑树是一棵近似的平衡二叉树，故搜索的时间复杂度为 Θ(log n)。</p>
-                        <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>插入操作的前序步骤也和二叉搜索树一样，先找到插入节点的位置，创建一个新的节点，最后使该节点指向其父节点，父节点指向新插入的节点。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="c1"># 每个新节点均有两个叶子节点 NIL</span>
-    <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="n">new_node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span>
-    <span class="n">new_node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">new_node</span>
-        <span class="n">new_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>  <span class="c1"># 根节点的颜色置为黑色</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">new_node</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">insert_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="c1"># 搜索</span>
-    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">root</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">insert_case</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">root</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">insert_case</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-</pre></div>
-                        <p>完成插入后，我们需要判断新的红黑树有没有违反上面的 5 种性质，如果违反了，就根据不同的情况，做出相应的旋转或变色操作。下面我们就分情况来讨论一下。</p>
-                        <ul>
-                            <li>情况 1：根节点为红色。由于违反了性质 2，所以当根节点的颜色为红色时，我们需要将颜色调整为黑色。</li>
-                        </ul>
-                        <p><img alt="情况 1" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case1.png"></p>
-                        <ul>
-                            <li>情况 2：父节点 P 和叔父节点 U 都为红色，祖父节点 G 为黑色，因为新加入的节点 N 为红色，所以违反了性质 4。因此做出的调整是交换父节点和叔父节点的颜色。因为我们不能保证祖父节点的父节点的颜色是否也为红色，所以我们需要在祖父节点 G 上递归地对情况 2 的进行检查。</li>
-                        </ul>
-                        <p><img alt="情况 2" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case2.png"></p>
-                        <ul>
-                            <li><p>情况 3：父节点 P 为红色，叔父节点 U 为黑色或 NIL，且新插入的节点 N 与父节点和祖父节点在同一侧（G 的左(右)孩子为 P，P 的左(右)孩子为 N）。故我们再把情况 3 分为两种情况：</p>
-                                <br>
-                                <p>  i) 祖父节点 G 的左孩子为父节点 P，父节点 P 的左孩子为新插入节点 N。此时，我们需要先交换父节点 P 和祖父节点 G 的颜色，然后对 P 进行右旋。</p>
-                                <p>  <img alt="情况 3A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3A.png"></p>
-                                <br>
-                                <p>  ii) 同理，如果祖父节点 G 的右孩子为父节点 P，父节点 P 的右孩子为新插入节点 N。我们还是要先交换父节点 P 和祖父节点 G 的颜色，然后对 P 进行左旋操作。</p>
-                                <p>  <img alt="情况 3B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case3B.png"></p>
-                            </li>
-                            <li><p>情况 4：父节点 P 为红色，叔父节点 U 为黑色或 NIL，且新插入的节点 N 与父节点和祖父节点不在同一侧（G 的左(右)孩子为 P，P 的右(左)孩子为 N）。故我们还是把情况 4 分为两种情况：</p>
-                                <br>
-                                <p>  i) 祖父节点 G 的左孩子为父节点 P，父节点 P 的右孩子为新插入节点 N。此时，我们先要对新插入节点 N 执行一次左旋操作，这样就变换为了跟情况 3A 一样的情形，接下来我们只需要再调用情况 3A 即可，只是旋转的节点从父节点 P 变为了新插入节点 N。</p>
-                                <br>
-                                <p>  <img alt="情况 4A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4A.png"></p>
-                                <br>
-                                <p>  ii) 同样，如果祖父节点 G 的右孩子为父节点 P，父节点 P 的左孩子为新插入节点 N。我们还是先要对新插入节点 N 执行一次旋转操作，只是这里变为了互为镜像的右旋。旋转后就变为了情况 3B，因此接下来我们只需要再调用一次 3B 即可，只是旋转的节点从父节点 P 变为了新插入节点 N。</p>
-                                <br>
-                                <p>  <img alt="情况 4B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/insert-case4B.png"></p>
-                            </li>
-                        </ul>
-                        <p>我们把所有的情况用一个函数<code>insert_case</code>来表示。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert_case</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="c1"># 情况 1: 根节点为红色</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-        <span class="k">return</span>
-    <span class="c1"># 情况 2: 父节点和叔父节点为红色，祖父节点为黑色。</span>
-    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">uncle</span><span class="p">()</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">;</span> <span class="n">node</span><span class="o">.</span><span class="n">uncle</span><span class="p">()</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">insert_case</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">())</span>  <span class="c1"># 对祖父节点递归地调用 insert_case()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># 情况 3A: 叔父节点为黑色或 NIL，祖父节点的左孩子为父节点，父节点的左孩子为新插入节点</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotation</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
-            <span class="c1"># 情况 3B: 叔父节点为黑色或 NIL，祖父节点的右孩子为父节点，父节点的右孩子为新插入节点</span>
-            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotation</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
-            <span class="c1"># 情况 4A: 叔父节点为黑色或 NIL，祖父节点的左孩子为父节点，父节点的右孩子为新插入节点</span>
-            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotation</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotation</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-            <span class="c1"># 情况 4B: 叔父节点为黑色或 NIL，祖父节点的右孩子为父节点，父节点的左孩子为新插入节点</span>
-            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">grandparent</span><span class="p">()</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotation</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotation</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-</pre></div>
-                        <p>插入只涉及到了搜索，旋转和变色操作，因此时间复杂度为 Θ(log n) + Θ(1) + Θ(1) = Θ(log n)。</p>
-                        <h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>红黑树的删除操作也和二叉搜索树相似，先找到删除的节点，然后根据待删除节点的孩子个数判断采取相应的删除方式。</p>
-                        <p>我们知道，如果待删除的节点有两个孩子节点，我们需要从它的左子树中找到最大的节点，或者从它的右子树中找到最小的节点，交换两者的值，然后再删除交换后的节点。因此，删除拥有两个孩子的节点实际上等同于删除叶子节点或只有一个孩子的节点。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="c1"># 树的根节点为空就抛出异常</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The tree is null&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-        <span class="k">return</span>
-    <span class="c1"># 搜索</span>
-    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># 左右孩子为空</span>
-        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_leaf</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-        <span class="c1"># 只有左孩子或右孩子</span>
-        <span class="k">elif</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span> <span class="ow">or</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_one_child</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-        <span class="c1"># 左右孩子都有</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>  <span class="c1"># 从左子树中找最大的节点</span>
-            <span class="n">root</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</pre></div>
-                        <h3 id="删除只有一个孩子的节点"><a href="#删除只有一个孩子的节点" class="headerlink" title="删除只有一个孩子的节点"></a>删除只有一个孩子的节点</h3><p>我们先来看看删除只有一个孩子的节点。如图所示，如果删除的是黑色节点 D，我们只需要将父节点 P 和待删除节点 D 的左(右)孩子相互连接起来即可。因为删除的是黑色节点，所以从父节点 P 出发到左侧任意叶子节点所经过的黑色节点的数目一定不等于到右侧任意叶子节点所经过的黑色节点的数目，也就是说删除后违反了性质 5。为了平衡，我们需要将待删除节点 D 的左(右)孩子的颜色调整为黑色。</p>
-                        <p><img alt="单孩子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-one-child0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-one-child0.png"></p>
-                        <p>删除的节点不可能为红色节点，因为违反了性质 5。如图所示，如果就从该红色节点出发，到达左子树的任意节点所经过的黑色节点的数目一定大于 1，而它的右侧仅为一个 NIL 节点，所以经过黑色节点的数目为 1，所以我们不需要考虑删除红色节点的情况。</p>
-                        <p><img alt="单孩子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-one-child1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-one-child1.png"></p>
-                        <p>用代码来实现这个过程是这样子的。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove_one_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">:</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
-</pre></div>
-                        <p>最后将待删除的节点删除掉，并用<code>fix</code>函数改变父节点和孩子节点的指针。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="c1"># p.parent 为空</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">n</span>
-    <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">p</span><span class="p">:</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">n</span>
-    <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="n">p</span><span class="p">:</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">n</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span> <span class="ow">and</span> <span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">n</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span>
-    <span class="k">del</span> <span class="n">p</span>
-</pre></div>
-                        <h3 id="删除叶子节点"><a href="#删除叶子节点" class="headerlink" title="删除叶子节点"></a>删除叶子节点</h3><p>下面来讨论一下删除叶子节点的情况，如果删除的是红色节点，由于删除后没有违反红黑树的任何性质，因此我们直接删除即可。</p>
-                        <p><img alt="红色叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-red.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-red.png"></p>
-                        <p>接下来是最最麻烦的删除黑色叶子节点的情况。前面看晕了的小伙伴可以先喘口气，下面的情况会更复杂。我们一共把删除黑色叶子节点分为 5 种情况。</p>
-                        <ul>
-                            <li><p>情况 1：删除的节点为根节点。</p>
-                                <p>  这种情况最简单，直接删除即可，然后将红黑树的根节点<code>self.root</code>置为<code>None</code>。</p>
-                                <p>  <img alt="情况 1" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case1.png"></p>
-                            </li>
-                            <li><p>情况 2：待删除节点 D 的兄弟节点 B 为红色。按照惯例，由于待删除节点 D 可以为父节点 P 的左孩子，也可以为右孩子。所以我们又可以分为两种情况。</p>
-                                <br>
-                                <p>  i) D 为左孩子的情况。调整的做法是先交换父节点 P 的和兄弟节点 B 的颜色，然后对兄弟节点执行一次左旋操作。</p>
-                                <p>  <img alt="情况 2A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2A.png"></p>
-                                <br>
-                                <p>  ii) D 为右孩子的情况。调整的做法还是先交换父节点 P 的和兄弟节点 B 的颜色，只是对兄弟节点的旋转操作变为了右旋。</p>
-                                <p>  <img alt="情况 2B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case2B.png"></p>
-                                <br>
-                                <p>  调整后，待删除的节点 D 的兄弟节点 L 的颜色为黑色，所以这就变为了后面要讨论的情况。</p>
-                            </li>
-                            <li><p>情况 3：待删除节点 D 的兄弟节点 B 为黑色，且远侄子节点为红色，这里的远侄子节点指的是离 D 较远的节点。同样，待删除节点 D 可能是根节点 P 的左(右)孩子，我们还是把它们分为两种情况：</p>
-                                <br>
-                                <p>  i) D 为左孩子的情况，远侄子节点为图中的 R，图中的白色父节点 P 表示可以为任意颜色。调整策略是交换父节点 P 和兄弟节点 B 的颜色，并将远侄子节点 R 的颜色改为黑色，最后再对 B 执行一次左旋操作。</p>
-                                <p>  <img alt="情况 3A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3A.png"></p>
-                                <p>  ii) D 为右孩子的情况，远侄子节点为图中的 L。调整策略还是先交换父节点 P 和兄弟节点 B 的颜色，将远侄子节点 L 的颜色变为黑色，最后对 B 执行一次右旋操作。</p>
-                                <p>  <img alt="情况 3B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case3B.png"></p>
-                            </li>
-                            <li><p>情况 4：待删除节点 D 的兄弟节点 B 为黑色，且近侄子节点为红色。相反，近侄子节点指的是离 D 较近的节点。因为待删除节点 D 依然可能是根节点 P 的左(右)孩子，所以我们还是分为两种情况：</p>
-                                <br>
-                                <p>  i) D 为左孩子的情况，近侄子节点为图中的 L，图中的白色父节点 P 表示可以为任意颜色。调整方案是先交换兄弟节点 B 和近侄子节点 L 的颜色，然后对 B 执行一次右旋操作，旋转后我们发现情况变为了 3A，因此再调用一次 3A 的操作方法即可。</p>
-                                <p>  <img alt="情况 4A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4A.png"></p>
-                                <br>
-                                <p>  ii) D 为右孩子的情况，近侄子节点为图中的 R。调整方案是先交换兄弟节点 B 和近侄子节点 R 的颜色，然后对 B 执行一次左旋操作，旋转后我们发现情况变为了 3B，因此再调用一次 3B 的操作方法即可。</p>
-                                <br>
-                                <p>  <img alt="情况 4B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case4B.png"></p>
-                                <br>
-                            </li>
-                            <li><p>情况 5：兄弟节点 P 为红色，且它的左右孩子都为黑色。我们根据兄弟节点的颜色进一步分为两种情况。</p>
-                                <br>
-                                <p>  i) 父节点 B 为红色，我们只需要交换 P 和 B 的颜色即可。</p>
-                                <p>  <img alt="情况 5A" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5A.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5A.png"></p>
-                                <p>  ii) 父节点 B 为黑色，这种情况下，我们需要将 B 的颜色改为红色，由于我们不能判断父节点 P 的父节点和兄弟节点是否都为黑色，所以我们需要在父节点 P 上递归地对情况 5 的进行检查，只是我们不再删除这里的父节点了，像这样一直往上递归，直到到达根节点。</p>
-                                <br>
-                                <p>  <img alt="情况 5B" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5B.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/delete-leaf-black-case5B.png"></p>
-                            </li>
-                        </ul>
-                        <p>将上述的情况全部打包成一个函数<code>remove_leaf</code>。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
-    <span class="c1"># 删除红色节点不做任何变化</span>
-    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="c1"># 为黑色节点</span>
-    <span class="c1"># 情况 1: 删除的节点为根节点</span>
-    <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
-        <span class="n">brother</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">brother</span><span class="p">()</span>
-        <span class="c1"># 情况 2: 兄弟节点为红色</span>
-        <span class="k">if</span> <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-            <span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">;</span> <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-            <span class="c1"># 情况 2A: 待删除节点为父节点的左孩子</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">node</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotation</span><span class="p">(</span><span class="n">brother</span><span class="p">)</span>
-            <span class="c1"># 情况 2B: 待删除节点为父节点的右孩子</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotation</span><span class="p">(</span><span class="n">brother</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">nephew_left</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
-            <span class="n">nephew_right</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span>
-            <span class="c1"># 情况 3A: 兄弟节点为黑色，右侄子节点为红色，待删除节点为父节点的左孩子</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">nephew_right</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">color</span><span class="p">;</span> <span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">;</span> <span class="n">nephew_right</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotation</span><span class="p">(</span><span class="n">brother</span><span class="p">)</span>
-            <span class="c1"># 情况 3B: 兄弟节点为黑色，左侄子节点为红色，待删除节点为父节点的右孩子</span>
-            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">nephew_left</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">color</span><span class="p">;</span> <span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">;</span> <span class="n">nephew_left</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotation</span><span class="p">(</span><span class="n">brother</span><span class="p">)</span>
-            <span class="c1"># 情况 4A: 兄弟节点为黑色，左侄子节点为红色，待删除节点为父节点的左孩子</span>
-            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">nephew_left</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-                <span class="n">nephew_left</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">;</span> <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotation</span><span class="p">(</span><span class="n">nephew_left</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">remove_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-            <span class="c1"># 情况 4B: 兄弟节点为黑色，右侄子节点为红色，待删除节点为父节点的右孩子</span>
-            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">nephew_right</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-                <span class="n">nephew_right</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">;</span> <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotation</span><span class="p">(</span><span class="n">nephew_right</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">remove_leaf</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-            <span class="c1"># 情况 5: 兄弟节点为黑色，并且两个孩子都为黑色节点</span>
-            <span class="k">elif</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span> <span class="ow">and</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span>
-                <span class="c1"># 情况 5A: 父节点为红色</span>
-                <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-                    <span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">;</span> <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                <span class="c1"># 情况 5B: 父节点为黑色</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">brother</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">remove_leaf</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-    <span class="c1"># 决定是否删除节点，flag 为 False 时实用于情况 5B</span>
-    <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NIL</span><span class="p">)</span>
-</pre></div>
-                        <p>删除操作也包含了搜索，旋转和变色操作，因此时间复杂度也为 Θ(log n) + Θ(1) + Θ(1) = Θ(log n)。</p>
-                        <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>让我们来看一个具体的例子，假设从数组<code>[1, 3, 4, 2, 5, 7, 6]</code>构建红黑树。</p>
-                        <p>插入节点 1。由于是根节点，所以需要将颜色置为黑色。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example1.png"></p>
-                        <p>插入节点 3。没有违反任何性质，不做任何改变。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example2.png"></p>
-                        <p>插入节点 4。因为叔父节点为 NIL，祖父节点的右孩子为父节点，父节点的右孩子为新插入节点，为情况 3B。因此我们需要先交换父节点 3 和 其祖父节点 1 的颜色，最后再对节点 3 进行左旋。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example3.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example3.png"></p>
-                        <p>插入节点 2。其祖父节点为黑色，父节点和叔父节点均为红色，情况 2 满足。所以我们将祖父节点的颜色变为红色，将父节点和叔父节点变为黑色，然后递归地对祖父节点进行检查，发现祖父节点为树的根节点，且为红色，因此满足情况 1，故将颜色变为黑色。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example4.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example4.png"></p>
-                        <p>插入节点 5。没有违反任何性质，不做任何改变。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example5.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example5.png"></p>
-                        <p>插入节点 7。因为叔父节点为黑色，祖父节点的右孩子为父节点，父节点的右孩子为新插入节点，也为情况 3B。因此我们需要先交换父节点 5 和 其祖父节点 4 的颜色，最后再对节点 5 进行左旋。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example6.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example6.png"></p>
-                        <p>最后插入节点 6。发现也满足情况 2，所以需要将祖父节点的颜色变为红色，将父节点和叔父节点变为黑色，然后递归地对祖父节点进行检查，最终得到的红黑树如下图所示。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example7.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example7.png"></p>
-                        <p>然后我们在从这棵红黑树中依次删除 5, 1, 7。</p>
-                        <p>删除节点 5。节点 5 有两个孩子节点，所以需要在它的左子树中找到最大的节点（节点 4），然后交换两者的值，这样就等同于删除一个黑色的叶子节点。我们发现它的兄弟节点为黑色，左侄子节点为红色，待删除节点为父节点的左孩子，所以满足情况 4A。做出调整是先交换兄弟节点 7 和近侄子节点 6 的颜色，然后对节点 6 执行一次右旋，再次检查待删除节点，发现又满足条件 3A，所以先交换父节点 4 和兄弟节点 6 的颜色，并将远侄子节点 7 的颜色变为黑色，最后再对节点 6 执行一次左旋操作。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example8.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example8.png"></p>
-                        <p>删除节点 1。由于只有一个孩子节点，因此只需要将节点 1 的右节点 2 与父节点 3 连接起来，然后将节点 2 的颜色变为黑色即可。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example9.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example9.png"></p>
-                        <p>删除节点 7。节点 7 为黑色叶子节点，且兄弟节点 4 为黑色，父节点 6 为红色，故满足条件 5A。因此我们只需要交换父节点和兄弟节点的颜色即可。</p>
-                        <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example10.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example10.png"></p>
-                        <p>这样我们就讲完了一个完整例子了。红黑树的操作十分复杂，情况非常多，代码也非常难理解，所以需要大家多花点时间消化本节的内容啊～</p>
-
-                        <br>
-                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Transform%20and%20Conquer/Red-Black%20Tree" target="_blank" rel="noopener">本节全部代码</a> ←</p>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <nav id="gobottom" class="pagination">
-
-                            <a class="prev-post" title="7.4 AVL树" href="/study/algorithm/transform-and-conquer/AVL-tree" style="color: #C0C0C0">
-                                ← 7.4 AVL树
-                            </a>
-
-                            <span class="prev-next-post">
-
-                            </span>
-                            <a class="next-post" title="7.6 2-3 树" href="/study/algorithm/transform-and-conquer/two-three-tree" style="color: #C0C0C0">
-                                7.6 2-3 树 →
-                            </a>
-                        </nav>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <!-- 来必力City版安装代码 -->
-                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
-                            <script type="text/javascript">
-                                (function(d, s) {
-                                    var j, e = d.getElementsByTagName(s)[0];
-
-                                    if (typeof LivereTower === 'function') { return; }
-
-                                    j = d.createElement(s);
-                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-                                    j.async = true;
-
-                                    e.parentNode.insertBefore(j, e);
-                                })(document, 'script');
-                            </script>
-                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-                        </div>
-                        <!-- City版安装代码已完成 -->
-                    </div>
-                </section>
-            </article>
-        </div>
-
-
-    </main>
-
-    <div class="toc-bar">
-        <div class="toc-btn-bar">
-            <a href="#site-main" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
-            </a>
-            <div class="toc-btn toc-switch">
-                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
-                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
-            </div>
-            <a href="#gobottom" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
-            </a>
-        </div>
-        <div class="toc-main">
-            <ol class="toc">
-                <li class="toc-item toc-level-1">
-                    <a class="toc-link" href="/study/algorithm/overview/">
-                        <span class="toc-text">
-                            算法与复杂度
-                        </span>
-                    </a>
-                    <ol class="toc-child">
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                介绍
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/introduction/">
-                                        <span class="toc-text">
-                                            1.1 什么是算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                基本知识
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
-                                        <span class="toc-text">
-                                            2.1 基本数据结构
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
-                                        <span class="toc-text">
-                                            2.2 算法的问题类型
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                复杂度分析
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
-                                        <span class="toc-text">
-                                            3.1 三种表示方法：O, Ω, Θ
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
-                                        <span class="toc-text">
-                                            3.2 复杂度分析（非递归）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
-                                        <span class="toc-text">
-                                            3.3 复杂度分析（递归）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                暴力求解
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
-                                        <span class="toc-text">
-                                            4.1 冒泡排序与选择排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
-                                        <span class="toc-text">
-                                            4.2 字符串匹配（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
-                                        <span class="toc-text">
-                                            4.3 图的两种遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            4.4 最近点对与凸包问题（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
-                                        <span class="toc-text">
-                                             4.5 暴力搜索
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                减治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
-                                        <span class="toc-text">
-                                            5.1 插入排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
-                                        <span class="toc-text">
-                                            5.2 拓扑排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
-                                        <span class="toc-text">
-                                            5.3 二分查找与二叉树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
-                                        <span class="toc-text">
-                                            5.4 插值查找
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                分治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
-                                        <span class="toc-text">
-                                            6.1 归并排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
-                                        <span class="toc-text">
-                                            6.2 快速排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
-                                        <span class="toc-text">
-                                            6.3 二叉树的遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            6.4 最近点对与凸包问题（DC）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                变治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
-                                        <span class="toc-text">
-                                            7.1 预排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
-                                        <span class="toc-text">
-                                            7.2 霍纳法则
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
-                                        <span class="toc-text">
-                                            7.3 堆与堆排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
-                                        <span class="toc-text">
-                                            7.4 AVL树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
-                                        <span class="toc-text">
-                                            7.5 红黑树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
-                                        <span class="toc-text">
-                                            7.6 2-3树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                时空权衡
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
-                                        <span class="toc-text">
-                                            8.1 计数排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
-                                        <span class="toc-text">
-                                            8.2 字符串匹配（TST）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
-                                        <span class="toc-text">
-                                            8.3 哈希
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                动态规划
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
-                                        <span class="toc-text">
-                                            9.1 关于钱的两个经典问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
-                                        <span class="toc-text">
-                                            9.2 背包问题（DP）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
-                                        <span class="toc-text">
-                                            9.3 弗洛伊德算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                贪心算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
-                                        <span class="toc-text">
-                                            10.1 普林姆算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
-                                        <span class="toc-text">
-                                            10.2 克鲁斯卡尔算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
-                                        <span class="toc-text">
-                                            10.3 迪克斯特拉算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
-                                        <span class="toc-text">
-                                            10.4 哈弗曼树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                *高阶算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
-                                        <span class="toc-text">
-                                            *回溯
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
-                                        <span class="toc-text">
-                                            *分支限界
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
-                                        <span class="toc-text">
-                                            *千禧问题：P = NP ?
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-
-        </div>
+            </section>
+        </article>
     </div>
 
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="计数排序" href="/study/algorithm/time-space-tradeoff/counting-sort/">
+            ← 计数排序
+        </a>
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="AVL树" href="/study/algorithm/transform-and-conquer/AVL-tree/">
+            AVL树 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-text"> 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转操作"><span class="toc-text"> 旋转操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#左旋"><span class="toc-text"> 左旋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#右旋"><span class="toc-text"> 右旋</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#颜色变换"><span class="toc-text"> 颜色变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-text"> 搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入"><span class="toc-text"> 插入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除"><span class="toc-text"> 删除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#删除只有一个孩子的节点"><span class="toc-text"> 删除只有一个孩子的节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除叶子节点"><span class="toc-text"> 删除叶子节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-text"> 例子</span></a></li></ol>
+    </div>
 </div>
 
+
+
+	</div>
+	
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">最近更新</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul>
-                        <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
-                        </li>
+            
+            
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
-                        </li>
+<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
+    <h3 class="read-next-card-header-title">Recent Posts</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/others/ss_v2ray/test/">test</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/branch-and-bound/">分支限界</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
-                        </li>
+            
+            
+            
 
-                    </ul>
-                </div>
-                <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
-                </footer>
-            </article>
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">分类</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul class="category-list">
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/series/">系列</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/tutorial/">教程</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/life/">生活</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
+            
+            
+            
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
-                </div>
-            </article>
+            
         </div>
     </div>
 </aside>
 
-
+	
 
 
 
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-
-        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
-
+        
+        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
+        
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -1087,35 +509,30 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            Email:
-        </strong>
-        heartbeats1216@gmail.com
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
-    </p>
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Hexo">Hexo</a>
+			&copy; 2020
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
+            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
+        </nav>
+    </div>
 </footer>
-
+	
 
 
 <script>
     if(window.navigator && navigator.serviceWorker) {
         navigator.serviceWorker.getRegistrations()
-            .then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
-            });
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
     }
 </script>
 
@@ -1126,16 +543,16 @@
 
 
 <div class="floating-header">
-    <div class="floating-header-logo">
-        <a href="/study/algorithm/transform-and-conquer/R&B-tree/" title="红黑树 - 算法与复杂度">
-
-            <img src="/static/icons&images/profile.jpg" alt="profile">
-
-            <span>红黑树 - 算法与复杂度</span>
+	<div class="floating-header-logo">
+        <a href="/" title="Hexo">
+			
+                <img src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo icon">
+			
+            <span>Hexo</span>
         </a>
     </div>
-    <span class="floating-header-divider"></span>
-    <div class="floating-header-title"></div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">红黑树</div>
     <progress class="progress" value="0">
         <div class="progress-container">
             <span class="progress-bar"></span>
@@ -1143,9 +560,16 @@
     </progress>
 </div>
 
+
+
+
+
 <script src="/js/mix/post-lazy-local.min.js"></script>
 
 <script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
 
 <script src="/js/lightgallery.min.js"></script>
 <link rel="stylesheet" href="/css/lightgallery.min.css">
@@ -1155,7 +579,51 @@
     });
 </script>
 
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'aBRltWkLKGNezPSGs1TBA0GE-gzGzoHsz',
+        appKey: 'Tg0cJFUAcAbzFVaO5hwaRXsx',
+        placeholder: '你是魔鬼吧，都不留言！',
+        pageSize: 10,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
 <script>searchFunc("/")</script>
+
+
+
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>

@@ -1,787 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
+
+
+
+
 <head>
+	
+	
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/allinone.min.css">
 
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-XXXXXXXXXX-1');
+	</script>
+	
 
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>迪克斯特拉算法 | Hexo</title>
 
-    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-    <link href="/css/default.css" rel="stylesheet">
-    <link href="/css/github.css" rel="stylesheet">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="John Doe">
+	<meta name="description" content>
 
-    <title>迪克斯特拉算法 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+	
+	<meta name="keywords" content>
+	
 
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="generator" content="hexo">
-    <meta name="author" content="Hongzhi, 鸿志">
-    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
-          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+	
+	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	
 
-    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
-    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta name="theme-color" content="#3c484e">
-    <meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta property="og:site_name" content="Hexo">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Hexo | ">
-    <meta property="og:description" content>
-    <meta property="og:url" content="https://infinityglow.github.io/about/">
+	
+	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
+	
 
+	<meta property="og:site_name" content="Hexo">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="迪克斯特拉算法 | Hexo">
+	<meta property="og:description" content>
+	<meta property="og:url" content="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/">
 
-    <meta property="article:author" content="Hongzhi Fu">
-    <link rel="stylesheet" href="../../../../../public/css/default.css">
-
+	
+	<meta property="article:published_time" content="2020-03-09T23:03:18+08:00"> 
+	<meta property="article:author" content="John Doe">
+	<meta property="article:published_first" content="Hexo, /study/algorithm/greedy-algorithm/Dijkstra/"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+	
 </head>
 <body class="post-template">
-<div class="site-wrapper">
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-wrapper">
+		
 
 
 
 
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                <a href="/" title="Home">HOME</a>
+                
+            </li>
+            
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
+    </a>
+    
+    
+    
+    
+    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
+    </a>
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
 
-    <header class="site-header outer" style="z-index: 999">
-        <div class="inner">
 
-            <nav class="site-nav">
-                <div class="site-nav-left">
-                    <ul class="nav">
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2020-03-09T15:10:44.184Z" itemprop="datePublished">
+                    2020-03-9
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                
+            </section>
+            <h1 class="post-full-title">迪克斯特拉算法</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
+<p>当我们在家中享受着互联网给我们带来的便利时，你是否想过你的电脑或手机是怎样把这些请求发送到服务器端，而服务器端又怎样把数据包发送到我们的设备的呢？要知道，互联网是由数以亿计的计算机相互连接而成，我们在发送一个数据包时，网络中的路由器会充当接收并转发的中转站，并且这些路由器总是会将数据发给最近的其他路由器，在网络中也就是路由器之间的延迟最小</p>
+<p><img alt="网络" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/network.jpg" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/network.jpg"></p>
+<p>在<a href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/">弗洛伊德算法</a>那一节里，我们提到过什么是最短路径问题，以及它的两种类别。假设在一个网络中有 10000 台计算机，它们彼此之间相互连接，如果我们采用弗洛伊德算法来解决互联网中路由的问题，就需要 Θ(n<sup>3</sup>), 也就是 10<sup>12</sup> 数量级的计算，以及 Θ(n<sup>2</sup>), 即 10<sup>8</sup> 量级的内存空间，这种时间和空间的开销是任何路由器都不能承受的。另外，通常每台设备每次只对一台设备发送信息，而弗洛伊德算法计算的是所有节点之间的最短路径，而我们并不需要这么多。因此就有了单源最短路径问题，即计算某个节点到其他节点的最短路径。接下来，我们就来看看迪克斯特拉算法是如何解决这类问题的。</p>
+<h2 id="迪克斯特拉算法"><a class="markdownIt-Anchor" href="#迪克斯特拉算法"></a> 迪克斯特拉算法</h2>
+<p>假如我们的图长下面这样：</p>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph0.png"></p>
+<p>首先，对于单源最短路径问题而言，我们自然要选一个节点来作为源节点（source vertex），这里我们选择节点<code>A</code>，然后，对每一个节点，我们分别用<code>min_dis</code>和<code>parent</code>来记录到源节点的最短距离和前驱节点（用于寻找最短路径）。在最开始，我们将源节点的<code>min_dis</code>初始化为 0，把其他节点初始化为 ∞。而将所有<code>parent</code>初始化为<code>None</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class Vertex(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__(self, name):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.name &#x3D; name</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.neighbours &#x3D; []</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        self.visited &#x3D; False</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        self.predecessor &#x3D; None  # 前驱节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        self.min_dis &#x3D; inf</span></pre></td></tr></table></figure>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph1.png"></p>
+<p>接下来我们要遍历与<code>A</code>相连的所有边，更新与之相连的所有节点的<code>min_dis</code>和<code>predecessor</code>，我们用<code>u</code>来表示当前节点，<code>v</code>表示相邻的节点，<code>edge(u, v)</code>来表示<code>u</code>和<code>v</code>相连的边。每一次遍历，我们都比较<code>u.min_dis</code>和<code>edge(u, v) + v.min_dis</code>的值，如果后者较小，我们就把<code>v.min_dis</code>更新为<code>edge(u, v) + v.min_dis</code>，并同时使<code>v.predecessor = u</code>。比如<code>A</code>到<code>B</code>的距离为 7，因为<code>B.min_dis = ∞</code>，<code>A.min_dis + edge(A, B) = 7</code>，所以我们需要更新更新<code>B.min_dis</code>和<code>B.predecessor</code>为 7 和 <code>A</code>，剩下的节点<code>E</code>和<code>F</code>也同样如此。</p>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph2.png"></p>
+<p>节点<code>A</code>被访问后，我们标记为<code>visited</code>。那么我们要怎样跳到下一个节点继续上述的过程呢？这里我们采用贪心策略，选择最小权值的边对应的节点来作为下一个节点。这里，我们选择节点<code>E</code>，然后再重复前面的步骤（更新节点参数，标记被访问，跳转到下个节点）即可。我们看到，节点<code>F</code>的最短距离从原来的 6 变为了 4，而前驱节点从原来的<code>A</code>变为了<code>E</code>。</p>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph3.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph3.png"></p>
+<p>我们一直重复上面的过程，直到所有节点均已被访问，我们将整个过程用一个动画来表示。</p>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/demo.gif"></p>
+<p>同样，我们可以用堆的数据结构来实现最小权值边的选择，每次有新的边被访问时我们就加入到堆中，并调整堆结构；而取最小权值边的过程就是删除堆顶元素的过程。因此下面的代码中，我们用<code>fix_up</code>和<code>fix_down</code>两个函数来分别实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def fix_up(queue):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    temp_idx &#x3D; len(queue) - 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    parent_idx &#x3D; (temp_idx - 1) &#x2F;&#x2F; 2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    heap &#x3D; False</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    while not heap and parent_idx &gt;&#x3D; 0:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        # 判断是否满足堆的性质</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        if queue[temp_idx].weight &lt; queue[parent_idx].weight:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            queue[temp_idx], queue[parent_idx] &#x3D; queue[parent_idx], queue[temp_idx]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">            heap &#x3D; True</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        # 更新索引值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        temp_idx &#x3D; parent_idx</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        parent_idx &#x3D; (temp_idx - 1) &#x2F;&#x2F; 2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">def fix_down(queue):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    temp_idx &#x3D; 0; size &#x3D; len(queue)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    temp_ver &#x3D; queue[temp_idx]  # 暂存当前节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    heap &#x3D; False</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    while not heap and 2 * temp_idx + 1 &lt; size:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        j &#x3D; 2 * temp_idx + 1  # 左孩子的索引</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        # 右孩子存在</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        if j &lt; size - 1:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">            # 比较两个节点的权重</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">            if queue[j].weight &gt; queue[j + 1].weight:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">                j &#x3D; j + 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        # 判断是否满足堆的性质</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">        if queue[j].weight &gt;&#x3D; temp_ver.weight:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">            heap &#x3D; True</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">            queue[temp_idx] &#x3D; queue[j]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">            temp_idx &#x3D; j  # 更新 temp_idx</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">    queue[temp_idx] &#x3D; temp_ver</span></pre></td></tr></table></figure>
+<p>接下来，我们用一个<code>get_next_ver</code>来实现给定边和当前节点，获取下一个节点的过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def get_next_ver(u, e):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    if e.pre is u:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        return e.next</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    return e.pre</span></pre></td></tr></table></figure>
+<p>最后一步就是迪克斯特拉算法的主函数了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def Dijkstra(G, source):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    V, _ &#x3D; G  # 从 G 中获取节点集合和边集合</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    v_set &#x3D; V </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    pqueue &#x3D; []  # 优先队列</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    source.visited &#x3D; True; v_set.remove(source)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    cur &#x3D; source; cur.min_dis &#x3D; 0  # 将源节点的&#96;min_dis&#96;初始化为 0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    while v_set:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        for e in cur.neighbours:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            if not e.visited:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">                e.visited &#x3D; True</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">                pqueue.append(e)  # 将 e 加入到堆</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">                fix_up(pqueue)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">                temp &#x3D; get_next_ver(cur, e)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">                # min(u.min_dis+edge(u, v), v.min_dis)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">                if cur.min_dis + e.weight &lt; temp.min_dis:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">                    temp.min_dis &#x3D; cur.min_dis + e.weight</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">                    temp.predecessor &#x3D; cur</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        pqueue[0], pqueue[-1] &#x3D; pqueue[-1], pqueue[0]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        temp &#x3D; pqueue.pop()  # 删除堆顶元素</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        fix_down(pqueue)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        if not temp.pre.visited:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">            cur &#x3D; temp.pre</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        elif not temp.next.visited:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">            cur &#x3D; temp.next</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        else:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            continue  # 下一个节点已被访问</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        cur.visited &#x3D; True</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">        v_set.remove(cur)</span></pre></td></tr></table></figure>
+<p>为了获取最短路径，我们定义一个<code>get_shortest_path</code>方法。该方法首先创建一个空的列表<code>path</code>，然后从目标节点开始，不停地将<code>v.parent</code>放入到列表中，直到<code>v.parent</code>为源节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def get_shortest_path(v):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    path&#x3D;[]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    while v is not None:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        path.insert(0, v.name)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        v &#x3D; v.predecessor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    return path</span></pre></td></tr></table></figure>
+<p>我们知道，每次调整堆结构的时间复杂度为 Θ(log|V|)，而构建堆需要 |E| 次，删除堆顶元素至少需要 |V| - 1 次。所以，迪克斯特拉算法的时间复杂度为 Θ((|V| - 1 + |E|)log|V|)。</p>
+<p>我们来验证一下算法的正确性。将目标节点设为<code>C</code>, <code>D</code>, <code>F</code>，最后的结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; python Dijkstra.py</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; 从 A 到 C 的最短路径为:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    A-&gt;E-&gt;C</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    最短距离为 4</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    从 A 到 D 的最短路径为: </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    A-&gt;E-&gt;C-&gt;B-&gt;D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    最短距离为 10</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    从 A 到 E 的最短路径为: </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    A-&gt;E-&gt;F</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    最短距离为 4</span></pre></td></tr></table></figure>
 
-                        <li>
-                            <a href="/" title="主页">主页</a>
-                        </li>
-
-                        <li>
-                            <a href="/study" title="技术篇">技术篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/life" title="生活篇">生活篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
-                        </li>
-
-                        <li>
-                            <a href="/about" title="about">about</a>
-                        </li>
-
-                    </ul>
                 </div>
-
-                <div class="search-button">
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-                </div>
-
-                <div class="site-nav-right">
-
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-
-
-                    <div class="social-links">
-
-                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
-                        </a>
-
-
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-
-    <main id="site-main" class="site-main outer" role="main">
-        <div class="inner">
-            <header class="post-full-header">
-                <h1 class="post-full-title">迪克斯特拉算法</h1>
-            </header>
-            <article class="post-full no-image">
-
-                <section class="post-full-content">
-                    <div id="lightgallery" class="markdown-body">
-                        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>当我们在家中享受着互联网给我们带来的便利时，你是否想过你的电脑或手机是怎样把这些请求发送到服务器端，而服务器端又怎样把数据包发送到我们的设备的呢？要知道，互联网是由数以亿计的计算机相互连接而成，我们在发送一个数据包时，网络中的路由器会充当接收并转发的中转站，并且这些路由器总是会将数据发给最近的其他路由器，在网络中也就是路由器之间的延迟最小</p>
-                        <p><img alt="网络" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/network.jpg" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/network.jpg"></p>
-                        <p>在<a href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/">弗洛伊德算法</a>那一节里，我们提到过什么是最短路径问题，以及它的两种类别。假设在一个网络中有 10000 台计算机，它们彼此之间相互连接，如果我们采用弗洛伊德算法来解决互联网中路由的问题，就需要 Θ(n<sup>3</sup>), 也就是 10<sup>12</sup> 数量级的计算，以及 Θ(n<sup>2</sup>), 即 10<sup>8</sup> 量级的内存空间，这种时间和空间的开销是任何路由器都不能承受的。另外，通常每台设备每次只对一台设备发送信息，而弗洛伊德算法计算的是所有节点之间的最短路径，而我们并不需要这么多。因此就有了单源最短路径问题，即计算某个节点到其他节点的最短路径。接下来，我们就来看看迪克斯特拉算法是如何解决这类问题的。</p>
-                        <h2 id="迪克斯特拉算法"><a href="#迪克斯特拉算法" class="headerlink" title="迪克斯特拉算法"></a>迪克斯特拉算法</h2><p>假如我们的图长下面这样：</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph0.png"></p>
-                        <p>首先，对于单源最短路径问题而言，我们自然要选一个节点来作为源节点（source vertex），这里我们选择节点<code>A</code>，然后，对每一个节点，我们分别用<code>min_dis</code>和<code>parent</code>来记录到源节点的最短距离和前驱节点（用于寻找最短路径）。在最开始，我们将源节点的<code>min_dis</code>初始化为 0，把其他节点初始化为 ∞。而将所有<code>parent</code>初始化为<code>None</code>。</p>
-                        <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">neighbours</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">predecessor</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 前驱节点</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min_dis</span> <span class="o">=</span> <span class="n">inf</span>
-</pre></div>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph1.png"></p>
-                        <p>接下来我们要遍历与<code>A</code>相连的所有边，更新与之相连的所有节点的<code>min_dis</code>和<code>predecessor</code>，我们用<code>u</code>来表示当前节点，<code>v</code>表示相邻的节点，<code>edge(u, v)</code>来表示<code>u</code>和<code>v</code>相连的边。每一次遍历，我们都比较<code>u.min_dis</code>和<code>edge(u, v) + v.min_dis</code>的值，如果后者较小，我们就把<code>v.min_dis</code>更新为<code>edge(u, v) + v.min_dis</code>，并同时使<code>v.predecessor = u</code>。比如<code>A</code>到<code>B</code>的距离为 7，因为<code>B.min_dis = ∞</code>，<code>A.min_dis + edge(A, B) = 7</code>，所以我们需要更新更新<code>B.min_dis</code>和<code>B.predecessor</code>为 7 和 <code>A</code>，剩下的节点<code>E</code>和<code>F</code>也同样如此。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph2.png"></p>
-                        <p>节点<code>A</code>被访问后，我们标记为<code>visited</code>。那么我们要怎样跳到下一个节点继续上述的过程呢？这里我们采用贪心策略，选择最小权值的边对应的节点来作为下一个节点。这里，我们选择节点<code>E</code>，然后再重复前面的步骤（更新节点参数，标记被访问，跳转到下个节点）即可。我们看到，节点<code>F</code>的最短距离从原来的 6 变为了 4，而前驱节点从原来的<code>A</code>变为了<code>E</code>。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph3.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/graph3.png"></p>
-                        <p>我们一直重复上面的过程，直到所有节点均已被访问，我们将整个过程用一个动画来表示。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/images/demo.gif"></p>
-                        <p>同样，我们可以用堆的数据结构来实现最小权值边的选择，每次有新的边被访问时我们就加入到堆中，并调整堆结构；而取最小权值边的过程就是删除堆顶元素的过程。因此下面的代码中，我们用<code>fix_up</code>和<code>fix_down</code>两个函数来分别实现。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fix_up</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
-    <span class="n">temp_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">parent_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-    <span class="n">heap</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">heap</span> <span class="ow">and</span> <span class="n">parent_idx</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="c1"># 判断是否满足堆的性质</span>
-        <span class="k">if</span> <span class="n">queue</span><span class="p">[</span><span class="n">temp_idx</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span> <span class="o">&lt;</span> <span class="n">queue</span><span class="p">[</span><span class="n">parent_idx</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span><span class="p">:</span>
-            <span class="n">queue</span><span class="p">[</span><span class="n">temp_idx</span><span class="p">],</span> <span class="n">queue</span><span class="p">[</span><span class="n">parent_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="n">parent_idx</span><span class="p">],</span> <span class="n">queue</span><span class="p">[</span><span class="n">temp_idx</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">heap</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="c1"># 更新索引值</span>
-        <span class="n">temp_idx</span> <span class="o">=</span> <span class="n">parent_idx</span>
-        <span class="n">parent_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-<span class="k">def</span> <span class="nf">fix_down</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
-    <span class="n">temp_idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
-    <span class="n">temp_ver</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="n">temp_idx</span><span class="p">]</span>  <span class="c1"># 暂存当前节点</span>
-    <span class="n">heap</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">heap</span> <span class="ow">and</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">temp_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">temp_idx</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 左孩子的索引</span>
-        <span class="c1"># 右孩子存在</span>
-        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c1"># 比较两个节点的权重</span>
-            <span class="k">if</span> <span class="n">queue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span> <span class="o">&gt;</span> <span class="n">queue</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span><span class="p">:</span>
-                <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="c1"># 判断是否满足堆的性质</span>
-        <span class="k">if</span> <span class="n">queue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span> <span class="o">&gt;=</span> <span class="n">temp_ver</span><span class="o">.</span><span class="n">weight</span><span class="p">:</span>
-            <span class="n">heap</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">queue</span><span class="p">[</span><span class="n">temp_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-            <span class="n">temp_idx</span> <span class="o">=</span> <span class="n">j</span>  <span class="c1"># 更新 temp_idx</span>
-    <span class="n">queue</span><span class="p">[</span><span class="n">temp_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_ver</span>
-</pre></div>
-                        <p>接下来，我们用一个<code>get_next_ver</code>来实现给定边和当前节点，获取下一个节点的过程。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_next_ver</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">pre</span> <span class="ow">is</span> <span class="n">u</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">e</span><span class="o">.</span><span class="n">next</span>
-    <span class="k">return</span> <span class="n">e</span><span class="o">.</span><span class="n">pre</span>
-</pre></div>
-                        <p>最后一步就是迪克斯特拉算法的主函数了：</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Dijkstra</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-    <span class="n">V</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">G</span>  <span class="c1"># 从 G 中获取节点集合和边集合</span>
-    <span class="n">v_set</span> <span class="o">=</span> <span class="n">V</span>
-    <span class="n">pqueue</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 优先队列</span>
-    <span class="n">source</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span><span class="p">;</span> <span class="n">v_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="n">cur</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span> <span class="n">cur</span><span class="o">.</span><span class="n">min_dis</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 将源节点的`min_dis`初始化为 0</span>
-    <span class="k">while</span> <span class="n">v_set</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">neighbours</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">e</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
-                <span class="n">e</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
-                <span class="n">pqueue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>  <span class="c1"># 将 e 加入到堆</span>
-                <span class="n">fix_up</span><span class="p">(</span><span class="n">pqueue</span><span class="p">)</span>
-                <span class="n">temp</span> <span class="o">=</span> <span class="n">get_next_ver</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-                <span class="c1"># min(u.min_dis+edge(u, v), v.min_dis)</span>
-                <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">min_dis</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">weight</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="o">.</span><span class="n">min_dis</span><span class="p">:</span>
-                    <span class="n">temp</span><span class="o">.</span><span class="n">min_dis</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">min_dis</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">weight</span>
-                    <span class="n">temp</span><span class="o">.</span><span class="n">predecessor</span> <span class="o">=</span> <span class="n">cur</span>
-        <span class="n">pqueue</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pqueue</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pqueue</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pqueue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">temp</span> <span class="o">=</span> <span class="n">pqueue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>  <span class="c1"># 删除堆顶元素</span>
-        <span class="n">fix_down</span><span class="p">(</span><span class="n">pqueue</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">temp</span><span class="o">.</span><span class="n">pre</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">pre</span>
-        <span class="k">elif</span> <span class="ow">not</span> <span class="n">temp</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">next</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">continue</span>  <span class="c1"># 下一个节点已被访问</span>
-        <span class="n">cur</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="n">v_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
-</pre></div>
-                        <p>为了获取最短路径，我们定义一个<code>get_shortest_path</code>方法。该方法首先创建一个空的列表<code>path</code>，然后从目标节点开始，不停地将<code>v.parent</code>放入到列表中，直到<code>v.parent</code>为源节点。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_shortest_path</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
-    <span class="n">path</span><span class="o">=</span><span class="p">[]</span>
-    <span class="k">while</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">predecessor</span>
-    <span class="k">return</span> <span class="n">path</span>
-</pre></div>
-                        <p>我们知道，每次调整堆结构的时间复杂度为 Θ(log|V|)，而构建堆需要 |E| 次，删除堆顶元素至少需要 |V| - 1 次。所以，迪克斯特拉算法的时间复杂度为 Θ((|V| - 1 + |E|)log|V|)。</p>
-                        <p>我们来验证一下算法的正确性。将目标节点设为<code>C</code>, <code>D</code>, <code>F</code>，最后的结果为：</p>
-                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">Dijkstra</span><span class="o">.</span><span class="n">py</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">从</span> <span class="n">A</span> <span class="n">到</span> <span class="n">C</span> <span class="n">的最短路径为</span><span class="n">:</span>
-    <span class="n">A</span><span class="n">-&gt;</span><span class="n">E</span><span class="n">-&gt;</span><span class="n">C</span>
-    <span class="n">最短距离为</span> <span class="mi">4</span>
-    <span class="n">从</span> <span class="n">A</span> <span class="n">到</span> <span class="n">D</span> <span class="n">的最短路径为</span><span class="n">:</span>
-    <span class="n">A</span><span class="n">-&gt;</span><span class="n">E</span><span class="n">-&gt;</span><span class="n">C</span><span class="n">-&gt;</span><span class="n">B</span><span class="n">-&gt;</span><span class="n">D</span>
-    <span class="n">最短距离为</span> <span class="mi">10</span>
-    <span class="n">从</span> <span class="n">A</span> <span class="n">到</span> <span class="n">E</span> <span class="n">的最短路径为</span><span class="n">:</span>
-    <span class="n">A</span><span class="n">-&gt;</span><span class="n">E</span><span class="n">-&gt;</span><span class="n">F</span>
-    <span class="n">最短距离为</span> <span class="mi">4</span>
-</pre></div>
-                        <br>
-                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Greedy%20Algorithm/Dijkstra's%20Algorithm" target="_blank" rel="noopener">本节全部代码</a> ←</p>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <nav id="gobottom" class="pagination">
-
-                            <a class="prev-post" title="10.2 克鲁斯卡尔算法" href="/study/algorithm/greedy-algorithm/Kruskal" style="color: #C0C0C0">
-                                ← 10.2 克鲁斯卡尔算法
-                            </a>
-
-                            <span class="prev-next-post">
-
-                            </span>
-                            <a class="next-post" title="10.4 哈弗曼树" href="/study/algorithm/greedy-algorithm/Huffman-tree" style="color: #C0C0C0">
-                                10.4 哈弗曼树 →
-                            </a>
-                        </nav>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <!-- 来必力City版安装代码 -->
-                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
-                            <script type="text/javascript">
-                                (function(d, s) {
-                                    var j, e = d.getElementsByTagName(s)[0];
-
-                                    if (typeof LivereTower === 'function') { return; }
-
-                                    j = d.createElement(s);
-                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-                                    j.async = true;
-
-                                    e.parentNode.insertBefore(j, e);
-                                })(document, 'script');
-                            </script>
-                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-                        </div>
-                        <!-- City版安装代码已完成 -->
-                    </div>
-                </section>
-            </article>
-        </div>
-
-
-    </main>
-
-    <div class="toc-bar">
-        <div class="toc-btn-bar">
-            <a href="#site-main" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
-            </a>
-            <div class="toc-btn toc-switch">
-                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
-                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
-            </div>
-            <a href="#gobottom" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
-            </a>
-        </div>
-        <div class="toc-main">
-            <ol class="toc">
-                <li class="toc-item toc-level-1">
-                    <a class="toc-link" href="/study/algorithm/overview/">
-                        <span class="toc-text">
-                            算法与复杂度
-                        </span>
-                    </a>
-                    <ol class="toc-child">
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                介绍
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/introduction/">
-                                        <span class="toc-text">
-                                            1.1 什么是算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                基本知识
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
-                                        <span class="toc-text">
-                                            2.1 基本数据结构
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
-                                        <span class="toc-text">
-                                            2.2 算法的问题类型
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                复杂度分析
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
-                                        <span class="toc-text">
-                                            3.1 三种表示方法：O, Ω, Θ
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
-                                        <span class="toc-text">
-                                            3.2 复杂度分析（非递归）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
-                                        <span class="toc-text">
-                                            3.3 复杂度分析（递归）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                暴力求解
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
-                                        <span class="toc-text">
-                                            4.1 冒泡排序与选择排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
-                                        <span class="toc-text">
-                                            4.2 字符串匹配（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
-                                        <span class="toc-text">
-                                            4.3 图的两种遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            4.4 最近点对与凸包问题（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
-                                        <span class="toc-text">
-                                             4.5 暴力搜索
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                减治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
-                                        <span class="toc-text">
-                                            5.1 插入排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
-                                        <span class="toc-text">
-                                            5.2 拓扑排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
-                                        <span class="toc-text">
-                                            5.3 二分查找与二叉树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
-                                        <span class="toc-text">
-                                            5.4 插值查找
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                分治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
-                                        <span class="toc-text">
-                                            6.1 归并排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
-                                        <span class="toc-text">
-                                            6.2 快速排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
-                                        <span class="toc-text">
-                                            6.3 二叉树的遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            6.4 最近点对与凸包问题（DC）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                变治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
-                                        <span class="toc-text">
-                                            7.1 预排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
-                                        <span class="toc-text">
-                                            7.2 霍纳法则
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
-                                        <span class="toc-text">
-                                            7.3 堆与堆排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
-                                        <span class="toc-text">
-                                            7.4 AVL树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
-                                        <span class="toc-text">
-                                            7.5 红黑树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
-                                        <span class="toc-text">
-                                            7.6 2-3树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                时空权衡
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
-                                        <span class="toc-text">
-                                            8.1 计数排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
-                                        <span class="toc-text">
-                                            8.2 字符串匹配（TST）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
-                                        <span class="toc-text">
-                                            8.3 哈希
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                动态规划
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
-                                        <span class="toc-text">
-                                            9.1 关于钱的两个经典问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
-                                        <span class="toc-text">
-                                            9.2 背包问题（DP）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
-                                        <span class="toc-text">
-                                            9.3 弗洛伊德算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                贪心算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
-                                        <span class="toc-text">
-                                            10.1 普林姆算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
-                                        <span class="toc-text">
-                                            10.2 克鲁斯卡尔算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
-                                        <span class="toc-text">
-                                            10.3 迪克斯特拉算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
-                                        <span class="toc-text">
-                                            10.4 哈弗曼树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                *高阶算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
-                                        <span class="toc-text">
-                                            *回溯
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
-                                        <span class="toc-text">
-                                            *分支限界
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
-                                        <span class="toc-text">
-                                            *千禧问题：P = NP ?
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-
-        </div>
+            </section>
+        </article>
     </div>
 
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="哈弗曼树" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
+            ← 哈弗曼树
+        </a>
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="克鲁斯卡尔算法" href="/study/algorithm/greedy-algorithm/Kruskal/">
+            克鲁斯卡尔算法 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-text"> 背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#迪克斯特拉算法"><span class="toc-text"> 迪克斯特拉算法</span></a></li></ol>
+    </div>
 </div>
 
+
+
+	</div>
+	
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">最近更新</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul>
-                        <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
-                        </li>
+            
+            
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
-                        </li>
+<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
+    <h3 class="read-next-card-header-title">Recent Posts</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/others/ss_v2ray/test/">test</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/branch-and-bound/">分支限界</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
-                        </li>
+            
+            
+            
 
-                    </ul>
-                </div>
-                <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
-                </footer>
-            </article>
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">分类</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul class="category-list">
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/series/">系列</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/tutorial/">教程</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/life/">生活</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
+            
+            
+            
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
-                </div>
-            </article>
+            
         </div>
     </div>
 </aside>
 
-
+	
 
 
 
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-
-        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
-
+        
+        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
+        
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -790,35 +389,30 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            Email:
-        </strong>
-        heartbeats1216@gmail.com
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
-    </p>
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Hexo">Hexo</a>
+			&copy; 2020
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
+            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
+        </nav>
+    </div>
 </footer>
-
+	
 
 
 <script>
     if(window.navigator && navigator.serviceWorker) {
         navigator.serviceWorker.getRegistrations()
-            .then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
-            });
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
     }
 </script>
 
@@ -829,16 +423,16 @@
 
 
 <div class="floating-header">
-    <div class="floating-header-logo">
-        <a href="/study/algorithm/greedy-algorithm/Dijkstra/" title="迪克斯特拉算法 - 算法与复杂度">
-
-            <img src="/static/icons&images/profile.jpg" alt="profile">
-
-            <span>迪克斯特拉算法 - 算法与复杂度</span>
+	<div class="floating-header-logo">
+        <a href="/" title="Hexo">
+			
+                <img src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo icon">
+			
+            <span>Hexo</span>
         </a>
     </div>
-    <span class="floating-header-divider"></span>
-    <div class="floating-header-title"></div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">迪克斯特拉算法</div>
     <progress class="progress" value="0">
         <div class="progress-container">
             <span class="progress-bar"></span>
@@ -846,9 +440,16 @@
     </progress>
 </div>
 
+
+
+
+
 <script src="/js/mix/post-lazy-local.min.js"></script>
 
 <script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
 
 <script src="/js/lightgallery.min.js"></script>
 <link rel="stylesheet" href="/css/lightgallery.min.css">
@@ -858,7 +459,51 @@
     });
 </script>
 
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'aBRltWkLKGNezPSGs1TBA0GE-gzGzoHsz',
+        appKey: 'Tg0cJFUAcAbzFVaO5hwaRXsx',
+        placeholder: '你是魔鬼吧，都不留言！',
+        pageSize: 10,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
 <script>searchFunc("/")</script>
+
+
+
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>

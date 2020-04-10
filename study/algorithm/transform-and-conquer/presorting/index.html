@@ -1,765 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
+
+
+
+
 <head>
+	
+	
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/allinone.min.css">
 
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-XXXXXXXXXX-1');
+	</script>
+	
 
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>预排序 | Hexo</title>
 
-    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-    <link href="/css/default.css" rel="stylesheet">
-    <link href="/css/github.css" rel="stylesheet">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="John Doe">
+	<meta name="description" content>
 
-    <title>预排序 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+	
+	<meta name="keywords" content>
+	
 
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="generator" content="hexo">
-    <meta name="author" content="Hongzhi, 鸿志">
-    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
-          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+	
+	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	
 
-    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
-    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta name="theme-color" content="#3c484e">
-    <meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta property="og:site_name" content="Hexo">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Hexo | ">
-    <meta property="og:description" content>
-    <meta property="og:url" content="https://infinityglow.github.io/about/">
+	
+	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
+	
 
+	<meta property="og:site_name" content="Hexo">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="预排序 | Hexo">
+	<meta property="og:description" content>
+	<meta property="og:url" content="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/">
 
-    <meta property="article:author" content="Hongzhi Fu">
-    <link rel="stylesheet" href="../../../../../public/css/default.css">
-
+	
+	<meta property="article:published_time" content="2020-02-02T23:02:50+08:00"> 
+	<meta property="article:author" content="John Doe">
+	<meta property="article:published_first" content="Hexo, /study/algorithm/transform-and-conquer/presorting/"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+	
 </head>
 <body class="post-template">
-<div class="site-wrapper">
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-wrapper">
+		
 
 
 
 
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                <a href="/" title="Home">HOME</a>
+                
+            </li>
+            
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
+    </a>
+    
+    
+    
+    
+    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
+    </a>
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
 
-    <header class="site-header outer" style="z-index: 999">
-        <div class="inner">
 
-            <nav class="site-nav">
-                <div class="site-nav-left">
-                    <ul class="nav">
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2020-02-02T15:48:11.501Z" itemprop="datePublished">
+                    2020-02-2
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                
+            </section>
+            <h1 class="post-full-title">预排序</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="变治"><a class="markdownIt-Anchor" href="#变治"></a> 变治</h2>
+<p><strong>变治</strong>（<strong>transform and conquer</strong>）也是一类解决问题的方法。前面的减治和分治都是针对问题本身进行求解，并没有对问题的实例做任何的变换。变治法就是将实例从一种形式转换为另外一种形式的方法。这样听起来还是太抽象了，咱们还是拿一个具体的例子吧。</p>
+<p>不知道大家有没有玩过一个叫做熄灯（英文叫 lights out）的游戏。规则很简单，以下面的图片（来源：<a href="https://en.wikipedia.org/wiki/Lights_Out_(game)#/media/File:LightsOutIllustration.svg" target="_blank" rel="noopener">维基百科</a>）为例，面板上分布着 5 × 5 的格子，每个格子的灯都是亮着的，且灯只有亮着和熄灭两种状态，每按一次格子，都会影响到该格子以及上、下、左、右四个相邻格子的灯的状态，即原来亮着的灯会熄灭，原来熄灭的灯会打开。游戏的目标是用最少的次数将面板上所有的灯都熄灭。</p>
+<p><img alt="lights out" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/lightsout.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/lightsout.png"></p>
+<p>我们可以把面板上这些灯的状态抽象为一个 5 × 5 的矩阵，其中 1 代表灯是亮着的，0 代表灯是熄灭的。现在，游戏的目标变为了怎样使全为 1 的矩阵变为全为 0 的矩阵。我们知道，对于每一个格子来讲，都有按下（1）和不按下（0）两种可能，所以我们可以用一个方程来表示它们：x<sub>1</sub> ⊕ x<sub>2</sub> ⊕ ··· ⊕ x<sub>25</sub> ⊕ 1 = 0。方程的含义是怎样按这 25 个格子最后使得其中一个格子的状态为熄灭（0）。其中 ‘⊕’ 表示异或，它是一种逻辑运算，只有当 A 和 B 不相同时为 1，相同时为 0。这正好满足了游戏的规则。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">A</th>
+<th style="text-align:center">B</th>
+<th style="text-align:center">A ⊕ B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<p>因为每一个格子都会收到相邻格子的影响，拿第一行第一列的格子来讲，它只会受到三个格子的影响，而其他格子不会对它造成任何影响，因此我们可以在每个 x<sub>i</sub> 的前面加一个系数 a<sub>i</sub>，受影响的为 1，不受影响的为 0，因此对于不受影响的格子来讲，无论 x 怎么变，其结果都为 0。如果对面板中每一个格子都列出相应方程式，我们就可以得到一个 25 元 1 次方程组，用一个矩阵来表示就是这样子的：</p>
+<p><img alt="矩阵" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/matrix.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/matrix.png"></p>
+<p>学过线性代数的你一定想到了用高斯消元法来解这样的线性方程组。的确如此，只是这里的 + 换成了 ⊕。我们将不再深究具体怎么去实现这一过程了。只想说明一点的是：原来的熄灯问题经过变换之后，变为了用高斯消元法解线性方程组的问题，这就是变治法的思想，也是这一章要重点讨论的问题。</p>
+<h2 id="判断数组元素是否重复"><a class="markdownIt-Anchor" href="#判断数组元素是否重复"></a> 判断数组元素是否重复</h2>
+<p>先来举一个最简单的例子，判断数组元素是否有重复数。我们可以用最简单的方式：取数组的每一个元素，然后在剩余的数组元素里查看有没有重复。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def is_unique_bf(array):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    length &#x3D; len(array)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    for i in range(length-1):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        element &#x3D; array[i]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        for j in range(i+1, length):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            if array[j] &#x3D;&#x3D; element:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">                return False</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    return True</span></pre></td></tr></table></figure>
+<p>这样做效率很低，复杂度为 Θ(n<sup>2</sup>)。假设我们先将数组进行排序，因为对于一个有序数组，我们只需要查看一个元素跟它的下一个元素是否相等即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def is_unique_presort(array):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    length &#x3D; len(array)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    array.sort()  # 排序</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    for i in range(length-1):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        if array[i] &#x3D;&#x3D; array[i+1]:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            return False</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    return True</span></pre></td></tr></table></figure>
+<p>由于算法由两部分构成（排序和主循环），所以该其复杂度也应该为两部分：Θ(nlog n) + Θ(n) = Θ(nlog n)。类似于这样的处理方式我们称为<strong>预排序</strong>（<strong>presorting</strong>）。</p>
+<h2 id="寻找众数"><a class="markdownIt-Anchor" href="#寻找众数"></a> 寻找众数</h2>
+<p><strong>众数</strong>（<strong>mode</strong>）是一组数据中出现次数最多的数。如果用暴力求解的算法寻找众数，我们需要统计数据中所有数字出现的次数，然后选择出现频率最高的数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def compute_mode_bf(array):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    counter &#x3D; &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    for i in range(len(array)):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        counter[array[i]] &#x3D; counter.get(array[i], 0) + 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    freq &#x3D; 0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    for key, value in counter.items():</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        if value &gt; freq:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            freq &#x3D; value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            mode &#x3D; key</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    return mode</span></pre></td></tr></table></figure>
+<p>在最坏的情况下，数组里每一个元素出现的次数都为 1，所以第 i 个元素需要跟字典里的 i - 1 个元素进行比较，复杂度就为 Θ(n<sup>2</sup>)。</p>
+<p><img alt="derivation" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/derivation.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/derivation.png"></p>
+<p>如果对数组进行预排序，我们就只需要统计数组中临近的相同元素的个数即可，因为相同的元素在有序数组里一定是相邻的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">def compute_mode_presort(array):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    array.sort()  # 排序</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    i &#x3D; 0; freq &#x3D; 0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    while i &lt; len(array):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        temp_freq &#x3D; 1; temp_mode &#x3D; array[i]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        while i + temp_freq &lt; len(array) and array[i+temp_freq] &#x3D;&#x3D; temp_mode:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            temp_freq +&#x3D; 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        if temp_freq &gt; freq:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            freq &#x3D; temp_freq; mode &#x3D; temp_mode</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        i +&#x3D; temp_freq</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    return mode</span></pre></td></tr></table></figure>
+<p>上述的算法只需要遍历一次数组，再加上排序算法，故复杂度为 Θ(nlog n) + Θ(n) = Θ(nlog n)。</p>
 
-                        <li>
-                            <a href="/" title="主页">主页</a>
-                        </li>
-
-                        <li>
-                            <a href="/study" title="技术篇">技术篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/life" title="生活篇">生活篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
-                        </li>
-
-                        <li>
-                            <a href="/about" title="about">about</a>
-                        </li>
-
-                    </ul>
                 </div>
-
-                <div class="search-button">
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-                </div>
-
-                <div class="site-nav-right">
-
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-
-
-                    <div class="social-links">
-
-                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
-                        </a>
-
-
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-
-    <main id="site-main" class="site-main outer" role="main">
-        <div class="inner">
-            <header class="post-full-header">
-                <h1 class="post-full-title">预排序</h1>
-            </header>
-            <article class="post-full no-image">
-
-                <section class="post-full-content">
-                    <div id="lightgallery" class="markdown-body">
-                        <h2 id="变治"><a href="#变治" class="headerlink" title="变治"></a>变治</h2><p><strong>变治</strong>（<strong>transform and conquer</strong>）也是一类解决问题的方法。前面的减治和分治都是针对问题本身进行求解，并没有对问题的实例做任何的变换。变治法就是将实例从一种形式转换为另外一种形式的方法。这样听起来还是太抽象了，咱们还是拿一个具体的例子吧。</p>
-                        <p>不知道大家有没有玩过一个叫做熄灯（英文叫 lights out）的游戏。规则很简单，以下面的图片（来源：<a href="https://en.wikipedia.org/wiki/Lights_Out_(game)#/media/File:LightsOutIllustration.svg" target="_blank" rel="noopener">维基百科</a>）为例，面板上分布着 5 × 5 的格子，每个格子的灯都是亮着的，且灯只有亮着和熄灭两种状态，每按一次格子，都会影响到该格子以及上、下、左、右四个相邻格子的灯的状态，即原来亮着的灯会熄灭，原来熄灭的灯会打开。游戏的目标是用最少的次数将面板上所有的灯都熄灭。</p>
-                        <p><img alt="lights out" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/lightsout.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/lightsout.png"></p>
-                        <p>我们可以把面板上这些灯的状态抽象为一个 5 × 5 的矩阵，其中 1 代表灯是亮着的，0 代表灯是熄灭的。现在，游戏的目标变为了怎样使全为 1 的矩阵变为全为 0 的矩阵。我们知道，对于每一个格子来讲，都有按下（1）和不按下（0）两种可能，所以我们可以用一个方程来表示它们：x<sub>1</sub> ⊕ x<sub>2</sub> ⊕ ··· ⊕ x<sub>25</sub> ⊕ 1 = 0。方程的含义是怎样按这 25 个格子最后使得其中一个格子的状态为熄灭（0）。其中 ‘⊕’ 表示异或，它是一种逻辑运算，只有当 A 和 B 不相同时为 1，相同时为 0。这正好满足了游戏的规则。</p>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th align="center">A</th>
-                                <th align="center">B</th>
-                                <th align="center">A ⊕ B</th>
-                            </tr>
-                            </thead>
-                            <tbody><tr>
-                                <td align="center">0</td>
-                                <td align="center">0</td>
-                                <td align="center">0</td>
-                            </tr>
-                            <tr>
-                                <td align="center">0</td>
-                                <td align="center">1</td>
-                                <td align="center">1</td>
-                            </tr>
-                            <tr>
-                                <td align="center">1</td>
-                                <td align="center">0</td>
-                                <td align="center">1</td>
-                            </tr>
-                            <tr>
-                                <td align="center">1</td>
-                                <td align="center">1</td>
-                                <td align="center">0</td>
-                            </tr>
-                            </tbody></table>
-                        <p>因为每一个格子都会收到相邻格子的影响，拿第一行第一列的格子来讲，它只会受到三个格子的影响，而其他格子不会对它造成任何影响，因此我们可以在每个 x<sub>i</sub> 的前面加一个系数 a<sub>i</sub>，受影响的为 1，不受影响的为 0，因此对于不受影响的格子来讲，无论 x 怎么变，其结果都为 0。如果对面板中每一个格子都列出相应方程式，我们就可以得到一个 25 元 1 次方程组，用一个矩阵来表示就是这样子的：</p>
-                        <p><img alt="矩阵" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/matrix.png"></p>
-                        <p>学过线性代数的你一定想到了用高斯消元法来解这样的线性方程组。的确如此，只是这里的 + 换成了 ⊕。我们将不再深究具体怎么去实现这一过程了。只想说明一点的是：原来的熄灯问题经过变换之后，变为了用高斯消元法解线性方程组的问题，这就是变治法的思想，也是这一章要重点讨论的问题。</p>
-                        <h2 id="判断数组元素是否重复"><a href="#判断数组元素是否重复" class="headerlink" title="判断数组元素是否重复"></a>判断数组元素是否重复</h2><p>先来举一个最简单的例子，判断数组元素是否有重复数。我们可以用最简单的方式：取数组的每一个元素，然后在剩余的数组元素里查看有没有重复。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_unique_bf</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">element</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">element</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">False</span>
-    <span class="k">return</span> <span class="bp">True</span>
-</pre></div>
-                        <br>
-                        <p>这样做效率很低，复杂度为 Θ(n<sup>2</sup>)。假设我们先将数组进行排序，因为对于一个有序数组，我们只需要查看一个元素跟它的下一个元素是否相等即可。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_unique_presort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="n">array</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># 排序</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="bp">False</span>
-    <span class="k">return</span> <span class="bp">True</span>
-</pre></div>
-                        <br>
-                        <p>由于算法由两部分构成（排序和主循环），所以该其复杂度也应该为两部分：Θ(nlog n) + Θ(n) = Θ(nlog n)。类似于这样的处理方式我们称为<strong>预排序</strong>（<strong>presorting</strong>）。</p>
-                        <h2 id="寻找众数"><a href="#寻找众数" class="headerlink" title="寻找众数"></a>寻找众数</h2><p><strong>众数</strong>（<strong>mode</strong>）是一组数据中出现次数最多的数。如果用暴力求解的算法寻找众数，我们需要统计数据中所有数字出现的次数，然后选择出现频率最高的数。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_mode_bf</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">counter</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)):</span>
-        <span class="n">counter</span><span class="p">[</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">freq</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">freq</span><span class="p">:</span>
-            <span class="n">freq</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="n">mode</span> <span class="o">=</span> <span class="n">key</span>
-    <span class="k">return</span> <span class="n">mode</span>
-</pre></div>
-                        <br>
-                        <p>在最坏的情况下，数组里每一个元素出现的次数都为 1，所以第 i 个元素需要跟字典里的 i - 1 个元素进行比较，复杂度就为 Θ(n<sup>2</sup>)。</p>
-                        <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/derivation.png"></p>
-                        <p>如果对数组进行预排序，我们就只需要统计数组中临近的相同元素的个数即可，因为相同的元素在有序数组里一定是相邻的。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_mode_presort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-    <span class="n">array</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># 排序</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">freq</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-        <span class="n">temp_freq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">temp_mode</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">while</span> <span class="n">i</span> <span class="o">+</span> <span class="n">temp_freq</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">temp_freq</span><span class="p">]</span> <span class="o">==</span> <span class="n">temp_mode</span><span class="p">:</span>
-            <span class="n">temp_freq</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">temp_freq</span> <span class="o">&gt;</span> <span class="n">freq</span><span class="p">:</span>
-            <span class="n">freq</span> <span class="o">=</span> <span class="n">temp_freq</span><span class="p">;</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">temp_mode</span>
-        <span class="n">i</span> <span class="o">+=</span> <span class="n">temp_freq</span>
-    <span class="k">return</span> <span class="n">mode</span>
-</pre></div>
-                        <br>
-                        <p>上述的算法只需要遍历一次数组，再加上排序算法，故复杂度为 Θ(nlog n) + Θ(n) = Θ(nlog n)。</p>
-
-                        <br>
-                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Transform%20and%20Conquer/Presorting" target="_blank" rel="noopener">本节全部代码</a> ←</p>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <nav id="gobottom" class="pagination">
-
-                            <a class="prev-post" title="6.4 最近点对与凸包问题（DC）" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull" style="color: #C0C0C0">
-                                ← 6.4 最近点对与凸包问题（DC）
-                            </a>
-
-                            <span class="prev-next-post">
-
-                            </span>
-                            <a class="next-post" title="7.2 霍纳法则" href="/study/algorithm/transform-and-conquer/horners-rule" style="color: #C0C0C0">
-                                7.2 霍纳法则 →
-                            </a>
-                        </nav>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <!-- 来必力City版安装代码 -->
-                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
-                            <script type="text/javascript">
-                                (function(d, s) {
-                                    var j, e = d.getElementsByTagName(s)[0];
-
-                                    if (typeof LivereTower === 'function') { return; }
-
-                                    j = d.createElement(s);
-                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-                                    j.async = true;
-
-                                    e.parentNode.insertBefore(j, e);
-                                })(document, 'script');
-                            </script>
-                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-                        </div>
-                        <!-- City版安装代码已完成 -->
-                    </div>
-                </section>
-            </article>
-        </div>
-
-
-    </main>
-
-    <div class="toc-bar">
-        <div class="toc-btn-bar">
-            <a href="#site-main" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
-            </a>
-            <div class="toc-btn toc-switch">
-                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
-                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
-            </div>
-            <a href="#gobottom" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
-            </a>
-        </div>
-        <div class="toc-main">
-            <ol class="toc">
-                <li class="toc-item toc-level-1">
-                    <a class="toc-link" href="/study/algorithm/overview/">
-                        <span class="toc-text">
-                            算法与复杂度
-                        </span>
-                    </a>
-                    <ol class="toc-child">
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                介绍
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/introduction/">
-                                        <span class="toc-text">
-                                            1.1 什么是算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                基本知识
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
-                                        <span class="toc-text">
-                                            2.1 基本数据结构
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
-                                        <span class="toc-text">
-                                            2.2 算法的问题类型
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                复杂度分析
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
-                                        <span class="toc-text">
-                                            3.1 三种表示方法：O, Ω, Θ
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
-                                        <span class="toc-text">
-                                            3.2 复杂度分析（非递归）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
-                                        <span class="toc-text">
-                                            3.3 复杂度分析（递归）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                暴力求解
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
-                                        <span class="toc-text">
-                                            4.1 冒泡排序与选择排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
-                                        <span class="toc-text">
-                                            4.2 字符串匹配（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
-                                        <span class="toc-text">
-                                            4.3 图的两种遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            4.4 最近点对与凸包问题（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
-                                        <span class="toc-text">
-                                             4.5 暴力搜索
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                减治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
-                                        <span class="toc-text">
-                                            5.1 插入排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
-                                        <span class="toc-text">
-                                            5.2 拓扑排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
-                                        <span class="toc-text">
-                                            5.3 二分查找与二叉树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
-                                        <span class="toc-text">
-                                            5.4 插值查找
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                分治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
-                                        <span class="toc-text">
-                                            6.1 归并排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
-                                        <span class="toc-text">
-                                            6.2 快速排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
-                                        <span class="toc-text">
-                                            6.3 二叉树的遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            6.4 最近点对与凸包问题（DC）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                变治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
-                                        <span class="toc-text">
-                                            7.1 预排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
-                                        <span class="toc-text">
-                                            7.2 霍纳法则
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
-                                        <span class="toc-text">
-                                            7.3 堆与堆排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
-                                        <span class="toc-text">
-                                            7.4 AVL树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
-                                        <span class="toc-text">
-                                            7.5 红黑树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
-                                        <span class="toc-text">
-                                            7.6 2-3树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                时空权衡
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
-                                        <span class="toc-text">
-                                            8.1 计数排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
-                                        <span class="toc-text">
-                                            8.2 字符串匹配（TST）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
-                                        <span class="toc-text">
-                                            8.3 哈希
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                动态规划
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
-                                        <span class="toc-text">
-                                            9.1 关于钱的两个经典问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
-                                        <span class="toc-text">
-                                            9.2 背包问题（DP）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
-                                        <span class="toc-text">
-                                            9.3 弗洛伊德算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                贪心算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
-                                        <span class="toc-text">
-                                            10.1 普林姆算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
-                                        <span class="toc-text">
-                                            10.2 克鲁斯卡尔算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
-                                        <span class="toc-text">
-                                            10.3 迪克斯特拉算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
-                                        <span class="toc-text">
-                                            10.4 哈弗曼树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                *高阶算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
-                                        <span class="toc-text">
-                                            *回溯
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
-                                        <span class="toc-text">
-                                            *分支限界
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
-                                        <span class="toc-text">
-                                            *千禧问题：P = NP ?
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-
-        </div>
+            </section>
+        </article>
     </div>
 
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="霍纳法则" href="/study/algorithm/transform-and-conquer/horners-rule/">
+            ← 霍纳法则
+        </a>
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="最近点对与凸包问题（DC）" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
+            最近点对与凸包问题（DC） →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#变治"><span class="toc-text"> 变治</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断数组元素是否重复"><span class="toc-text"> 判断数组元素是否重复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻找众数"><span class="toc-text"> 寻找众数</span></a></li></ol>
+    </div>
 </div>
 
+
+
+	</div>
+	
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">最近更新</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul>
-                        <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
-                        </li>
+            
+            
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
-                        </li>
+<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
+    <h3 class="read-next-card-header-title">Recent Posts</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/others/ss_v2ray/test/">test</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/branch-and-bound/">分支限界</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
-                        </li>
+            
+            
+            
 
-                    </ul>
-                </div>
-                <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
-                </footer>
-            </article>
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">分类</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul class="category-list">
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/series/">系列</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/tutorial/">教程</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/life/">生活</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
+            
+            
+            
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
-                </div>
-            </article>
+            
         </div>
     </div>
 </aside>
 
-
+	
 
 
 
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-
-        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
-
+        
+        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
+        
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -768,35 +415,30 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            Email:
-        </strong>
-        heartbeats1216@gmail.com
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
-    </p>
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Hexo">Hexo</a>
+			&copy; 2020
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
+            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
+        </nav>
+    </div>
 </footer>
-
+	
 
 
 <script>
     if(window.navigator && navigator.serviceWorker) {
         navigator.serviceWorker.getRegistrations()
-            .then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
-            });
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
     }
 </script>
 
@@ -807,16 +449,16 @@
 
 
 <div class="floating-header">
-    <div class="floating-header-logo">
-        <a href="/study/algorithm/transform-and-conquer/presorting/" title="预排序 - 算法与复杂度">
-
-            <img src="/static/icons&images/profile.jpg" alt="profile">
-
-            <span>预排序 - 算法与复杂度</span>
+	<div class="floating-header-logo">
+        <a href="/" title="Hexo">
+			
+                <img src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo icon">
+			
+            <span>Hexo</span>
         </a>
     </div>
-    <span class="floating-header-divider"></span>
-    <div class="floating-header-title"></div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">预排序</div>
     <progress class="progress" value="0">
         <div class="progress-container">
             <span class="progress-bar"></span>
@@ -824,9 +466,16 @@
     </progress>
 </div>
 
+
+
+
+
 <script src="/js/mix/post-lazy-local.min.js"></script>
 
 <script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
 
 <script src="/js/lightgallery.min.js"></script>
 <link rel="stylesheet" href="/css/lightgallery.min.css">
@@ -836,7 +485,51 @@
     });
 </script>
 
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'aBRltWkLKGNezPSGs1TBA0GE-gzGzoHsz',
+        appKey: 'Tg0cJFUAcAbzFVaO5hwaRXsx',
+        placeholder: '你是魔鬼吧，都不留言！',
+        pageSize: 10,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
 <script>searchFunc("/")</script>
+
+
+
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>

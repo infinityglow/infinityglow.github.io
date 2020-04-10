@@ -1,792 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
+
+
+
+
 <head>
+	
+	
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/allinone.min.css">
 
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXXX-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-XXXXXXXXXX-1');
+	</script>
+	
 
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/allinone.min.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>基本数据结构 | Hexo</title>
 
-    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-    <link href="/css/default.css" rel="stylesheet">
-    <link href="/css/github.css" rel="stylesheet">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="John Doe">
+	<meta name="description" content>
 
-    <title>基本数据结构 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+	
+	<meta name="keywords" content>
+	
 
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <meta name="generator" content="hexo">
-    <meta name="author" content="Hongzhi, 鸿志">
-    <meta name="description" 一个从生物狗转为程序猿的在读master。平时执着于技术，爱把学到的东西整理分享出来。
-          从这个网站中你可以学习各种算法知识，机器学习等系列内容，并用代码一步一步地实现，让你爱上程序员这个职业。content>
+	
+	<link rel="shortcut icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	<link rel="apple-touch-icon" href="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png">
+	
 
-    <link rel="icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
-    <link rel="apple-touch-icon" href="https://infinityglow.github.io/static/icons&images/neural.png">
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta name="theme-color" content="#3c484e">
-    <meta name="msapplication-TileColor" content="#3c484e">
+	
 
-    <meta property="og:site_name" content="Hexo">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Hexo | ">
-    <meta property="og:description" content>
-    <meta property="og:url" content="https://infinityglow.github.io/about/">
+	
+	<link rel="alternate" href="https://geekmubai.com/feed" title="Hexo">
+	
 
+	<meta property="og:site_name" content="Hexo">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="基本数据结构 | Hexo">
+	<meta property="og:description" content>
+	<meta property="og:url" content="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/">
 
-    <meta property="article:author" content="Hongzhi Fu">
-
+	
+	<meta property="article:published_time" content="2019-12-30T22:12:38+08:00"> 
+	<meta property="article:author" content="John Doe">
+	<meta property="article:published_first" content="Hexo, /study/algorithm/basic-knowledge/data-structure/"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+	
 </head>
 <body class="post-template">
-<div class="site-wrapper">
+	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-wrapper">
+		
 
 
 
 
+<header class="site-header outer" style="z-index: 999">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                <a href="/" title="Home">HOME</a>
+                
+            </li>
+            
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button">
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/geekmubai" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="facebook" href="https://blog.csdn.net/geekmubai" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1049 1024"><path d="M1141.351404 39.055942l-28.91333 218.474629c-126.144728-19.927251-251.601043-38.376709-377.75495-27.674187-115.460564 9.802996-227.405635 32.180995-309.124802 122.987208-150.018878 166.696821-68.391499 396.461416 158.252293 437.463272 141.115408 25.52634 283.919721 11.785624 425.448176-8.123269-5.452228 112.440727-5.764308 95.303843-10.674985 205.229569-1.073924 24.057726 4.277337 14.612705-161.648461 31.914809-176.004159 9.004437-351.879815 11.189-520.550085-52.888447C156.545029 905.721534 30.675666 809.16019 5.176863 630.815428c-26.251468-183.595056 48.803865-331.796524 192.516883-446.128091C413.36883 13.098197 790.802521-47.271 1141.351404 39.055942z" fill="#ffffff"/></svg>
+    </a>
+    
+    
+    
+    
+    <a class="social-link" title="bilibili" href="https://space.bilibili.com/167817331/#" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M360.896 183.968l-90.912-88.096s-14.208-17.472 9.824-37.248c24.16-19.648 25.376-10.912 33.504-5.472s135.2 130.816 135.2 130.816zm301.952 3.264l90.912-88.096s14.208-17.472-9.824-37.248c-24.032-19.648-25.376-10.912-33.504-5.472s-135.2 130.816-135.2 130.816zM1004 350.336c-3.264-137.984-123.168-164.192-123.168-164.192s-614.336-4.96-742.496 0C10.176 222.304 20 350.336 20 350.336s1.696 274.272-.128 413.12c13.824 138.848 120.864 160.928 120.864 160.928s42.72.864 73.92.864c3.264 8.992 5.696 52.544 54.24 52.544 48.416 0 54.24-52.544 54.24-52.544s354.88-1.696 384.352-1.696c1.696 14.816 8.992 54.976 57.536 54.24 48.416-.864 51.712-57.536 51.712-57.536s16.384-1.696 65.664 0C997.344 898.88 1004 764.192 1004 764.192s-1.568-275.872 0-413.856zm-98.912 439.232c0 21.728-17.248 39.456-38.464 39.456H167.2c-21.248 0-38.464-17.6-38.464-39.456V326.336c0-21.728 17.248-39.456 38.464-39.456h699.424c21.248 0 38.464 17.6 38.464 39.456zM202.4 457.152l205.344-39.456 15.52 77.184-203.648 39.456zm638.976 0l-205.344-39.456-15.648 77.184 203.776 39.456zm-418.08 191.392s45.152 81.312 95.264-26.336c48.416 105.088 101.824 27.904 101.824 27.904l30.336 19.776s-56.672 91.136-131.424 22.208c-63.232 68.928-129.728-21.952-129.728-21.952z"/></svg>
+    </a>
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
 
-    <header class="site-header outer" style="z-index: 999">
-        <div class="inner">
 
-            <nav class="site-nav">
-                <div class="site-nav-left">
-                    <ul class="nav">
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <section class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2019-12-30T14:31:09.387Z" itemprop="datePublished">
+                    2019-12-30
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                
+            </section>
+            <h1 class="post-full-title">基本数据结构</h1>
+        </header>
+        <article class="post-full no-image">
+            
+            <section class="post-full-content">
+                <div id="lightgallery" class="markdown-body">
+                    <h2 id="概念"><a class="markdownIt-Anchor" href="#概念"></a> 概念</h2>
+<p>如果说程序员是用代码编织这个世界的一群人，那么<strong>数据结构</strong>（<strong>data structure</strong>）就是编织所用到的各种工具了，它将计算机中各种各样的数据组织在一起。而我们的算法就是利用这些现有的工具将它们拼接成风格、功能各不相同的程序了。简单来说：算法 + 数据结构 = 程序。这一节就让我们来了解一些基本的数据结构吧。</p>
+<h2 id="数组与链表"><a class="markdownIt-Anchor" href="#数组与链表"></a> 数组与链表</h2>
+<p>我们从最简单的一维数据结构开始。数组大家应该都不陌生，它是将一组相同数据类型的数据存储在一起的数据结构。</p>
+<p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array0.png"></p>
+<p>这里我们分析一下最基本的三大操作：查找、插入和删除。</p>
+<p>拿上面的图为例，因为数组中每一个<strong>元素</strong>（<strong>element</strong>）都有自己的一个下标，称为<strong>索引</strong>（<strong>index</strong>），它们被存储在计算机的RAM中，所以查找的速度非常快。一般查找的时间不随数组长度而增加。</p>
+<p>插入和删除就要稍微麻烦一些。因为数组占用的是计算机内存的连续地址空间，所以在插入一个新元素时，所有在它后面的元素都要向后移动一个单位，为新元素“腾出”位置。同理，为了保持数组的完整性，删除一个元素后，所有在它后面的元素也要向前移动一个单位，以此来“填充”空位。</p>
+<p>以这里的数组为例，如果我们要删除 <code>index = 5</code> 的元素，那么在它后面的 <code>15</code>，<code>34</code> 和 <code>80</code> 都要向前移动一个单位，如下图中所示。</p>
+<p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array1.png"></p>
+<p>让我们用Python代码来实现一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"># 查找</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">def search(array, element):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    length &#x3D; len(array)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    for i in range(length):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        if array[i] &#x3D;&#x3D; element:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            return i</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    return -1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"># 插入</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">def insert(array, idx, element):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    new_array &#x3D; array.copy() + [None]  # 复制原数组到一个新数组</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    length &#x3D; len(new_array); i &#x3D; length - 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    # 所有idx之后的元素向右移动一个单位</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    while i &gt; idx:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        new_array[i] &#x3D; new_array[i-1]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        i -&#x3D; 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    new_array[idx] &#x3D; element</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    return new_array</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"># 删除</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">def remove(array, element):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    length &#x3D; len(array)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    idx &#x3D; search(array, element)  # 找到对应索引</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    if idx !&#x3D; -1:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        # 如果查找成功，所有在idx之前的元素向左移动一个单位</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">        while idx &lt; length - 1:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">            array[idx] &#x3D; array[idx+1]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">            idx +&#x3D; 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">        array &#x3D; array[: -1]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">    return array</span></pre></td></tr></table></figure>
+<p>再来说一说链表。与数组采取的顺序存储方式不同，链表中所有的元素的存储地址都是分散的，也就是说，它是靠一条链条（指针）把这些元素联系在一起的。所以我们把链表中每一个存储单元称为一个<strong>节点</strong>（<strong>node</strong>），在每个节点里有两个域：一个用来存储数据，一个是指针指向下一个节点，像这样：</p>
+<p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list0.png"></p>
+<p>在Python中我们用一个类来表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class Node(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__ (self, value, next):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.value &#x3D; value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.next &#x3D; None</span></pre></td></tr></table></figure>
+<p>如果将它们串联在一起，将会是这样：</p>
+<p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list1.png"></p>
+<p>其中的<code>header</code>指的是头结点，它一般记录第一个节点的地址和链表的长度，我们在查找的时候就是从头结点开始的，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class Linked_List(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__ (self):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.length &#x3D; 0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.header &#x3D; None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    def search(self, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        p &#x3D; self.header  # 获取第一个节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        while p !&#x3D; None:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            if p.value &#x3D;&#x3D; value:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">                return p</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">            p &#x3D; p.next</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        return None</span></pre></td></tr></table></figure>
+<p>和数组相比，链表的插入和删除就非常的简单，只需要改变一下指针即可。下面还是以插入元素<code>61</code>为例：</p>
+<p>首先需要新建一个节点p</p>
+<p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list2.png"></p>
+<p>然后，p的指针指向头结点所指的节点</p>
+<p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list3.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list3.png"></p>
+<p>最后，改变头结点的指针，使其指向p，同时更新链表的长度length。</p>
+<p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list4.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list4.png"></p>
+<p>插入和删除的Python实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class Linked_List(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__ (self):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.length &#x3D; 0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.header &#x3D; None</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    def insert(self, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        # 新建一个节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        p &#x3D; Node(value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        p.next &#x3D; self.header</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        self.header &#x3D; p</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        self.length +&#x3D; 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    def remove(self):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        p &#x3D; self.header  # 获取第一个节点</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        if p is not None:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">            self.header &#x3D; p.next</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            self.length -&#x3D; 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            del p  # 删除节点 p</span></pre></td></tr></table></figure>
+<h2 id="adt"><a class="markdownIt-Anchor" href="#adt"></a> ADT</h2>
+<p><strong>抽象数据类型</strong>（<strong>Abstract Data Type</strong>, 简称<strong>ADT</strong>）是数据结构中非常重要的一个部分。用最简单的理解方式就是：不仅限于编程语言中已经实现的一些数据类型，例如 Python 中 list，set，tuple，dictionary 等等。我们可以进一步的定义出属于我们自己数据结构，比如说增删只能在一侧进行，具有层状、环状的结构等等。那就让我们来看看几个最为常见的例子吧～</p>
+<h3 id="栈"><a class="markdownIt-Anchor" href="#栈"></a> 栈</h3>
+<p><strong>栈</strong>（<strong>stack</strong>）就是前面提到的只能在一侧进行元素的增加和删除的数据结构，这种过程分别称为<strong>入栈</strong>(<strong>push</strong>)和<strong>出栈</strong>(<strong>pop</strong>)。生活中最简单的类比就是叠盘子，新洗好的盘子总是放在最上面，而拿走的时候总是从最上面一个拿走。这种后进先出（<strong>last in, first out</strong>）的方式就体现了这种思想。</p>
+<p><img alt="栈" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpeg" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpeg"></p>
+<h3 id="队列"><a class="markdownIt-Anchor" href="#队列"></a> 队列</h3>
+<p>和栈相反，<strong>队列</strong>（<strong>queue</strong>）是遵循<strong>先进先出</strong>（<strong>first in, first out</strong>）的方式实现元素的增减，其过程分别叫做<strong>入队</strong>（<strong>enqueue</strong>）和<strong>出队</strong>（<strong>dequeue</strong>）。生活中的例子就是去超市收银台排队的时候，排到队伍后面的人要先等前面的人都结完账了自己才能结账，所以这就是先进先出啦。</p>
+<p><img alt="队列" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/queue.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/queue.png"></p>
+<p>因为和前面的数组和链表有相似性，所以这里就不再用Python代码做演示了，你可以去我的<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Basic%20Knowledge/Data%20Structure" target="_blank" rel="noopener">GitHub</a>主页查看本节的完整代码。</p>
+<h3 id="树"><a class="markdownIt-Anchor" href="#树"></a> 树</h3>
+<p>与前面的数据结构不同，<strong>树</strong>（<strong>tree</strong>）是典型的层状数据结构。直观上来看，它就像倒挂着的一颗树，每一个节点连接着多个子节点。这里为了方便，我们只讨论<strong>二叉树</strong>（<strong>binary tree</strong>），也就是每一个节点最多只有两个子节点的情况。</p>
+<p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree0.png"></p>
+<p>下面来简单介绍一下二叉树的性质。和所有树状结构一样，二叉树在非空的情况下一定有一个<strong>根节点</strong>（<strong>root node</strong>），如图中的节点26。它的两个子节点我们分别把它们叫做该节点的<strong>左孩子</strong>（<strong>left child</strong>）和<strong>右孩子</strong>（<strong>right child</strong>），而对于那些没有孩子的节点，我们把它称做<strong>叶子节点</strong>（<strong>leaf node</strong>）。前面只是针对节点的讨论，而对于树本身，我们要了解的是满二叉树和完全二叉树。</p>
+<p>满二叉树是指每一个节点孩子的个数只能为0或2，如下图所示，左边是一颗满二叉树，但右边由于节点48只有一个孩子，所以就不是满二叉树。</p>
+<p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png"></p>
+<p>再来看完全二叉树，它的性质是除了最后一层的节点没有排满以外，其他层的节点均已排满，并且最后一层节点都是从左往右依次排列。下图的两个例子分别代表了完全二叉树和非完全二叉树。后面的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/">堆</a>也会用到这种性质。</p>
+<p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png"></p>
+<p>在Python中我们可以用一个类来表示树的节点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">class Node(object):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    def __init__ (self, value):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        self.value &#x3D; value</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        self.left &#x3D; None  # 左孩子</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        self.right &#x3D; None  # 右孩子</span></pre></td></tr></table></figure>
+<h3 id="图"><a class="markdownIt-Anchor" href="#图"></a> 图</h3>
+<p><strong>图</strong>（<strong>graph</strong>）是 ADT 中用到的最多的结构，生活中的方方面面都会用到图。例如，高德地图就是把所有城市，所有道路通通抽象成了图这种数据结构来帮助我们导航的。哈哈，厉害吧！那我们就首先来了解一下图的基本结构。</p>
+<p>图也是由一个一个的<strong>节点</strong>（<strong>vertex</strong>）组成的。但与树不同的是，图的节点之间相连的叫做<strong>边</strong>（<strong>edge</strong>），所以我们用 G = &lt;V, E&gt; 来表示一张图，其中的 V 表示由 vertex 构成的集合，而 E 则表示由 edge 构成的集合。</p>
+<p>图的分类一般有好几种，如果一个节点到另一个节点是双向的我们把它叫做<strong>无向图</strong>（<strong>undirected graph</strong>），如果是单向的就叫<strong>有向图</strong>（<strong>undirected graph</strong>），下图中就分别代表了无向图和有向图。</p>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph0.png"></p>
+<p>假如从一个节点到另一个节点是要付出“代价”的，那么我们就可以在每一条边上把这种“代价”体现出来，称之为<strong>权重</strong>（<strong>weight</strong>），而构成这样的图当然就叫做<strong>有权图</strong>（<strong>weighted graph</strong>）了。</p>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph1.png"></p>
+<p>我们可以用两种方式来表示一张图，一种叫做<strong>邻接矩阵</strong>（<strong>adjacency matrix</strong>）和<strong>邻接表</strong>（<strong>adjacency list</strong>），后面的内容会详细讨论，先上图。</p>
+<p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph2.png"></p>
+<p>这样我们就完成所有基本数据结构的学习了，是不是对它们有了清晰的认识呢？</p>
+<p><a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Basic%20Knowledge/Data%20Structure" target="_blank" rel="noopener">本节全部代码</a></p>
 
-                        <li>
-                            <a href="/" title="主页">主页</a>
-                        </li>
-
-                        <li>
-                            <a href="/study" title="技术篇">技术篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/life" title="生活篇">生活篇</a>
-                        </li>
-
-                        <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
-                        </li>
-
-                        <li>
-                            <a href="/about" title="about">about</a>
-                        </li>
-
-                    </ul>
                 </div>
-
-                <div class="search-button">
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-                </div>
-
-                <div class="site-nav-right">
-
-                    <a href="#search" class="subscribe-button" style="margin: 0 10px;">Search ...</a>
-
-
-                    <div class="social-links">
-
-                        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
-                        </a>
-
-                        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
-                            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
-                        </a>
-
-
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-
-    <main id="site-main" class="site-main outer" role="main">
-        <div class="inner">
-            <header class="post-full-header">
-                <h1 class="post-full-title">基本数据结构</h1>
-            </header>
-            <article class="post-full no-image">
-
-                <section class="post-full-content">
-                    <div id="lightgallery" class="markdown-body">
-                        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>如果说程序员是用代码编织这个世界的一群人，那么<strong>数据结构</strong>（<strong>data structure</strong>）就是编织所用到的各种工具了，它将计算机中各种各样的数据组织在一起。而我们的算法就是利用这些现有的工具将它们拼接成风格、功能各不相同的程序了。简单来说：算法 + 数据结构 = 程序。这一节就让我们来了解一些基本的数据结构吧。</p>
-                        <h2 id="数组与链表"><a href="#数组与链表" class="headerlink" title="数组与链表"></a>数组与链表</h2><p>我们从最简单的一维数据结构开始。数组大家应该都不陌生，它是将一组相同数据类型的数据存储在一起的数据结构。</p>
-                        <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array0.png"></p>
-                        <p>这里我们分析一下最基本的三大操作：查找、插入和删除。</p>
-                        <p>拿上面的图为例，因为数组中每一个<strong>元素</strong>（<strong>element</strong>）都有自己的一个下标，称为<strong>索引</strong>（<strong>index</strong>），它们被存储在计算机的RAM中，所以查找的速度非常快。一般查找的时间不随数组长度而增加。</p>
-                        <p>插入和删除就要稍微麻烦一些。因为数组占用的是计算机内存的连续地址空间，所以在插入一个新元素时，所有在它后面的元素都要向后移动一个单位，为新元素“腾出”位置。同理，为了保持数组的完整性，删除一个元素后，所有在它后面的元素也要向前移动一个单位，以此来“填充”空位。</p>
-                        <p>以这里的数组为例，如果我们要删除 <code>index = 5</code> 的元素，那么在它后面的 <code>15</code>，<code>34</code> 和 <code>80</code> 都要向前移动一个单位，如下图中所示。</p>
-                        <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array1.png"></p>
-                        <p>让我们用Python代码来实现一下。</p>
-                    <div class="highlight"><pre><span></span><span class="c1"># 查找</span>
-<span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">element</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">i</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-
-<span class="c1"># 插入</span>
-<span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-    <span class="n">new_array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span>  <span class="c1"># 复制原数组到一个新数组</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_array</span><span class="p">);</span> <span class="n">i</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="c1"># 所有idx之后的元素向右移动一个单位</span>
-    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
-        <span class="n">new_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_array</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="n">new_array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
-    <span class="k">return</span> <span class="n">new_array</span>
-
-<span class="c1"># 删除</span>
-<span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">search</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>  <span class="c1"># 找到对应索引</span>
-    <span class="k">if</span> <span class="n">idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># 如果查找成功，所有在idx之前的元素向左移动一个单位</span>
-        <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">array</span>
-</pre></div>
-                    <p>再来说一说链表。与数组采取的顺序存储方式不同，链表中所有的元素的存储地址都是分散的，也就是说，它是靠一条链条（指针）把这些元素联系在一起的。所以我们把链表中每一个存储单元称为一个<strong>节点</strong>（<strong>node</strong>），在每个节点里有两个域：一个用来存储数据，一个是指针指向下一个节点，像这样：</p>
-                    <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list0.png"></p>
-                    <p>在Python中我们用一个类来表示：</p>
-                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</pre></div>
-                    <p>如果将它们串联在一起，将会是这样：</p>
-                    <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list1.png"></p>
-                    <p>其中的<code>header</code>指的是头结点，它一般记录第一个节点的地址和链表的长度，我们在查找的时候就是从头结点开始的，代码如下：</p>
-                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Linked_List</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>  <span class="c1"># 获取第一个节点</span>
-        <span class="k">while</span> <span class="n">p</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">p</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
-        <span class="k">return</span> <span class="bp">None</span>
-</pre></div>
-                    <p>和数组相比，链表的插入和删除就非常的简单，只需要改变一下指针即可。下面还是以插入元素<code>61</code>为例：</p>
-                    <p>首先需要新建一个节点p</p>
-                    <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list2.png"></p>
-                    <p>然后，p的指针指向头结点所指的节点</p>
-                    <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list3.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list3.png"></p>
-                    <p>最后，改变头结点的指针，使其指向p，同时更新链表的长度length。</p>
-                    <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list4.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list4.png"></p>
-                    <p>插入和删除的Python实现：</p>
-                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Linked_List</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="c1"># 新建一个节点</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">p</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span>  <span class="c1"># 获取第一个节点</span>
-        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="k">del</span> <span class="n">p</span>  <span class="c1"># 删除节点 p</span>
-</pre></div>
-                        <h2 id="ADT"><a href="#ADT" class="headerlink" title="ADT"></a>ADT</h2><p><strong>抽象数据类型</strong>（<strong>Abstract Data Type</strong>, 简称<strong>ADT</strong>）是数据结构中非常重要的一个部分。用最简单的理解方式就是：不仅限于编程语言中已经实现的一些数据类型，例如 Python 中 list，set，tuple，dictionary 等等。我们可以进一步的定义出属于我们自己数据结构，比如说增删只能在一侧进行，具有层状、环状的结构等等。那就让我们来看看几个最为常见的例子吧～</p>
-                        <h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p><strong>栈</strong>（<strong>stack</strong>）就是前面提到的只能在一侧进行元素的增加和删除的数据结构，这种过程分别称为<strong>入栈</strong>(<strong>push</strong>)和<strong>出栈</strong>(<strong>pop</strong>)。生活中最简单的类比就是叠盘子，新洗好的盘子总是放在最上面，而拿走的时候总是从最上面一个拿走。这种后进先出（<strong>last in, first out</strong>）的方式就体现了这种思想。</p>
-                        <p><img alt="栈" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpeg" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpeg"></p>
-                        <h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>和栈相反，<strong>队列</strong>（<strong>queue</strong>）是遵循<strong>先进先出</strong>（<strong>first in, first out</strong>）的方式实现元素的增减，其过程分别叫做<strong>入队</strong>（<strong>enqueue</strong>）和<strong>出队</strong>（<strong>dequeue</strong>）。生活中的例子就是去超市收银台排队的时候，排到队伍后面的人要先等前面的人都结完账了自己才能结账，所以这就是先进先出啦。</p>
-                        <p><img alt="队列" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/queue.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/queue.png"></p>
-                        <p>因为和前面的数组和链表有相似性，所以这里就不再用Python代码做演示了，你可以去我的<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Basic%20Knowledge/Data%20Structure" target="_blank" rel="noopener">GitHub</a>主页查看本节的完整代码。</p>
-                        <h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><p>与前面的数据结构不同，<strong>树</strong>（<strong>tree</strong>）是典型的层状数据结构。直观上来看，它就像倒挂着的一颗树，每一个节点连接着多个子节点。这里为了方便，我们只讨论<strong>二叉树</strong>（<strong>binary tree</strong>），也就是每一个节点最多只有两个子节点的情况。</p>
-                        <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree0.png"></p>
-                        <p>下面来简单介绍一下二叉树的性质。和所有树状结构一样，二叉树在非空的情况下一定有一个<strong>根节点</strong>（<strong>root node</strong>），如图中的节点26。它的两个子节点我们分别把它们叫做该节点的<strong>左孩子</strong>（<strong>left child</strong>）和<strong>右孩子</strong>（<strong>right child</strong>），而对于那些没有孩子的节点，我们把它称做<strong>叶子节点</strong>（<strong>leaf node</strong>）。前面只是针对节点的讨论，而对于树本身，我们要了解的是满二叉树和完全二叉树。</p>
-                        <p>满二叉树是指每一个节点孩子的个数只能为0或2，如下图所示，左边是一颗满二叉树，但右边由于节点48只有一个孩子，所以就不是满二叉树。</p>
-                        <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png"></p>
-                        <p>再来看完全二叉树，它的性质是除了最后一层的节点没有排满以外，其他层的节点均已排满，并且最后一层节点都是从左往右依次排列。下图的两个例子分别代表了完全二叉树和非完全二叉树。后面的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/">堆</a>也会用到这种性质。</p>
-                        <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png"></p>
-                        <p>在Python中我们可以用一个类来表示树的节点：</p>
-                    <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 左孩子</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 右孩子</span>
-</pre></div>
-                        <h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><p><strong>图</strong>（<strong>graph</strong>）是 ADT 中用到的最多的结构，生活中的方方面面都会用到图。例如，高德地图就是把所有城市，所有道路通通抽象成了图这种数据结构来帮助我们导航的。哈哈，厉害吧！那我们就首先来了解一下图的基本结构。</p>
-                        <p>图也是由一个一个的<strong>节点</strong>（<strong>vertex</strong>）组成的。但与树不同的是，图的节点之间相连的叫做<strong>边</strong>（<strong>edge</strong>），所以我们用 G = &lt;V, E&gt; 来表示一张图，其中的 V 表示由 vertex 构成的集合，而 E 则表示由 edge 构成的集合。</p>
-                        <p>图的分类一般有好几种，如果一个节点到另一个节点是双向的我们把它叫做<strong>无向图</strong>（<strong>undirected graph</strong>），如果是单向的就叫<strong>有向图</strong>（<strong>undirected graph</strong>），下图中就分别代表了无向图和有向图。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph0.png"></p>
-                        <p>假如从一个节点到另一个节点是要付出“代价”的，那么我们就可以在每一条边上把这种“代价”体现出来，称之为<strong>权重</strong>（<strong>weight</strong>），而构成这样的图当然就叫做<strong>有权图</strong>（<strong>weighted graph</strong>）了。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph1.png"></p>
-                        <p>我们可以用两种方式来表示一张图，一种叫做<strong>邻接矩阵</strong>（<strong>adjacency matrix</strong>）和<strong>邻接表</strong>（<strong>adjacency list</strong>），后面的内容会详细讨论，先上图。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph2.png"></p>
-                        <p>这样我们就完成所有基本数据结构的学习了，是不是对它们有了清晰的认识呢？</p>
-                        <br>
-                        <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Basic%20Knowledge/Data%20Structure" target="_blank" rel="noopener">本节全部代码</a> ←</p>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <nav id="gobottom" class="pagination">
-
-                            <a class="prev-post" title="什么是算法" href="/study/algorithm/introduction/" style="color: #C0C0C0">
-                                ← 1.1 什么是算法
-                            </a>
-
-                            <span class="prev-next-post">
-
-                            </span>
-                            <a class="next-post" title="算法的问题类型" href="/study/algorithm/basic-knowledge/problem-types/" style="color: #C0C0C0">
-                                2.2 算法的问题类型 →
-                            </a>
-                        </nav>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <!-- 来必力City版安装代码 -->
-                        <div id="lv-container" data-id="city" data-uid="MTAyMC80NzgwMi8yNDI5OQ==">
-                            <script type="text/javascript">
-                                (function(d, s) {
-                                    var j, e = d.getElementsByTagName(s)[0];
-
-                                    if (typeof LivereTower === 'function') { return; }
-
-                                    j = d.createElement(s);
-                                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-                                    j.async = true;
-
-                                    e.parentNode.insertBefore(j, e);
-                                })(document, 'script');
-                            </script>
-                            <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-                        </div>
-                        <!-- City版安装代码已完成 -->
-                    </div>
-                </section>
-            </article>
-        </div>
-
-
-    </main>
-
-    <div class="toc-bar">
-        <div class="toc-btn-bar">
-            <a href="#site-main" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
-            </a>
-            <div class="toc-btn toc-switch">
-                <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
-                <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
-            </div>
-            <a href="#gobottom" class="toc-btn">
-                <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
-            </a>
-        </div>
-        <div class="toc-main">
-            <ol class="toc">
-                <li class="toc-item toc-level-1">
-                    <a class="toc-link" href="/study/algorithm/overview/">
-                        <span class="toc-text">
-                            算法与复杂度
-                        </span>
-                    </a>
-                    <ol class="toc-child">
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                介绍
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/introduction/">
-                                        <span class="toc-text">
-                                            1.1 什么是算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                基本知识
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/data-structure/">
-                                        <span class="toc-text">
-                                            2.1 基本数据结构
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/basic-knowledge/problem-types/">
-                                        <span class="toc-text">
-                                            2.2 算法的问题类型
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                复杂度分析
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/three-notations/">
-                                        <span class="toc-text">
-                                            3.1 三种表示方法：O, Ω, Θ
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/non-recursive/">
-                                        <span class="toc-text">
-                                            3.2 复杂度分析（非递归）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/complexity-analysis/recursive/">
-                                        <span class="toc-text">
-                                            3.3 复杂度分析（递归）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                暴力求解
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/bubble-selection-sort/">
-                                        <span class="toc-text">
-                                            4.1 冒泡排序与选择排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/string-matching/">
-                                        <span class="toc-text">
-                                            4.2 字符串匹配（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/graph-traversal/">
-                                        <span class="toc-text">
-                                            4.3 图的两种遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            4.4 最近点对与凸包问题（BF）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/brute-force/exhaustive-search/">
-                                        <span class="toc-text">
-                                             4.5 暴力搜索
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                减治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/insertion-sort/">
-                                        <span class="toc-text">
-                                            5.1 插入排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/topo-sorting/">
-                                        <span class="toc-text">
-                                            5.2 拓扑排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/binary-search-tree/">
-                                        <span class="toc-text">
-                                            5.3 二分查找与二叉树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/decrease-and-conquer/interpolation-search/">
-                                        <span class="toc-text">
-                                            5.4 插值查找
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                分治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/merge-sort/">
-                                        <span class="toc-text">
-                                            6.1 归并排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/quick-sort/">
-                                        <span class="toc-text">
-                                            6.2 快速排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/bt-traversal/">
-                                        <span class="toc-text">
-                                            6.3 二叉树的遍历
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/divide-and-conquer/clo-pair-con-hull/">
-                                        <span class="toc-text">
-                                            6.4 最近点对与凸包问题（DC）
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                变治法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/presorting/">
-                                        <span class="toc-text">
-                                            7.1 预排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/horners-rule/">
-                                        <span class="toc-text">
-                                            7.2 霍纳法则
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/heap/">
-                                        <span class="toc-text">
-                                            7.3 堆与堆排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/AVL-tree/">
-                                        <span class="toc-text">
-                                            7.4 AVL树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/R&B-tree/">
-                                        <span class="toc-text">
-                                            7.5 红黑树
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/transform-and-conquer/two-three-tree/">
-                                        <span class="toc-text">
-                                            7.6 2-3树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                时空权衡
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/counting-sort/">
-                                        <span class="toc-text">
-                                            8.1 计数排序
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/string-matching/">
-                                        <span class="toc-text">
-                                            8.2 字符串匹配（TST）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/time-space-tradeoff/hashing/">
-                                        <span class="toc-text">
-                                            8.3 哈希
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                动态规划
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/classic-problems/">
-                                        <span class="toc-text">
-                                            9.1 关于钱的两个经典问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/knapsack-problem/">
-                                        <span class="toc-text">
-                                            9.2 背包问题（DP）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/dynamic-programming/Floyd-Warshall/">
-                                        <span class="toc-text">
-                                            9.3 弗洛伊德算法
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                贪心算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Prim/">
-                                        <span class="toc-text">
-                                            10.1 普林姆算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Kruskal/">
-                                        <span class="toc-text">
-                                            10.2 克鲁斯卡尔算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Dijkstra/">
-                                        <span class="toc-text">
-                                            10.3 迪克斯特拉算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/greedy-algorithm/Huffman-tree/">
-                                        <span class="toc-text">
-                                            10.4 哈弗曼树
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="toc-item toc-level-2">
-                            <span class="toc-text">
-                                *高阶算法
-                            </span>
-                            <ol class="toc-child">
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/backtracking/">
-                                        <span class="toc-text">
-                                            *回溯
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/branch-and-bound/">
-                                        <span class="toc-text">
-                                            *分支限界
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
-                                        <span class="toc-text">
-                                            *千禧问题：P = NP ?
-                                        </span>
-                                    </a>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-
-        </div>
+            </section>
+        </article>
     </div>
 
+    
+    <div style="height: 4vw;width: 100%"></div>
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="算法的问题类型" href="/study/algorithm/basic-knowledge/problem-types/">
+            ← 算法的问题类型
+        </a>
+        
+        <span class="prev-next-post">•</span>
+        
+        <a class="next-post" title="算法与复杂度" href="/study/algorithm/overview/">
+            算法与复杂度 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</main>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-text"> 概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组与链表"><span class="toc-text"> 数组与链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#adt"><span class="toc-text"> ADT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈"><span class="toc-text"> 栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#队列"><span class="toc-text"> 队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#树"><span class="toc-text"> 树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图"><span class="toc-text"> 图</span></a></li></ol></li></ol>
+    </div>
 </div>
 
+
+
+	</div>
+	
 
 
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">最近更新</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul>
-                        <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
-                        </li>
+            
+            
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
-                        </li>
+<article class="read-next-card" style="background-image: url(https://mubai.oss-cn-hangzhou.aliyuncs.com/background.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; Hexo &mdash;</small>
+    <h3 class="read-next-card-header-title">Recent Posts</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/others/ss_v2ray/test/">test</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/study/algorithm/advanced-algorithm/branch-and-bound/">分支限界</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
 
-                        <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
-                        </li>
+            
+            
+            
 
-                    </ul>
-                </div>
-                <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
-                </footer>
-            </article>
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header">
-                    <h3 class="read-next-card-header-title">分类</h3>
-                </header>
-                <div class="read-next-divider">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-                        <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
-                    </svg>
-                </div>
-                <div class="read-next-card-content">
-                    <ul class="category-list">
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/series/">系列</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/tutorial/">教程</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/life/">生活</a>
-                        </li>
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
+            
+            
+            
 
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
-                </div>
-            </article>
+            
         </div>
     </div>
 </aside>
 
-
+	
 
 
 
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
-
-        <img class="search-overlay-logo" src="/static/icons&images/profile.jpg" alt="Hexo">
-
+        
+        <img class="search-overlay-logo" src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo">
+        
         <input id="local-search-input" class="search-input" type="text" name="search" placeholder="Search ...">
         <a class="search-overlay-close" href="#"></a>
     </div>
@@ -795,35 +421,30 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            Email:
-        </strong>
-        heartbeats1216@gmail.com
-    </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
-    </p>
+	<div class="site-footer-content inner">
+		<section class="copyright">
+			<a href="/" title="Hexo">Hexo</a>
+			&copy; 2020
+		</section>
+		<nav class="site-footer-nav">
+			
+            <a href="http://www.miitbeian.gov.cn/" title="皖ICP备17018037号" target="_blank" rel="noopener">皖ICP备17018037号</a>
+            <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+            <a href="https://geekmubai.com/" title="GeekMubai" target="_blank" rel="noopener">GeekMubai</a>
+        </nav>
+    </div>
 </footer>
-
+	
 
 
 <script>
     if(window.navigator && navigator.serviceWorker) {
         navigator.serviceWorker.getRegistrations()
-            .then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
-            });
+        .then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+            }
+        });
     }
 </script>
 
@@ -834,16 +455,16 @@
 
 
 <div class="floating-header">
-    <div class="floating-header-logo">
-        <a href="/study/algorithm/basic-knowledge/data-structure/" title="基本数据结构 - 算法与复杂度">
-
-            <img src="/static/icons&images/profile.jpg" alt="profile">
-
-            <span>基本数据结构 - 算法与复杂度</span>
+	<div class="floating-header-logo">
+        <a href="/" title="Hexo">
+			
+                <img src="https://mubai.oss-cn-hangzhou.aliyuncs.com/icon.png" alt="Hexo icon">
+			
+            <span>Hexo</span>
         </a>
     </div>
-    <span class="floating-header-divider"></span>
-    <div class="floating-header-title"></div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">基本数据结构</div>
     <progress class="progress" value="0">
         <div class="progress-container">
             <span class="progress-bar"></span>
@@ -851,9 +472,16 @@
     </progress>
 </div>
 
+
+
+
+
 <script src="/js/mix/post-lazy-local.min.js"></script>
 
 <script>;(function() {var bLazy = new Blazy()})();</script>
+
+
+
 
 <script src="/js/lightgallery.min.js"></script>
 <link rel="stylesheet" href="/css/lightgallery.min.css">
@@ -863,7 +491,51 @@
     });
 </script>
 
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#comment' ,
+        verify: false,
+        notify: false,
+        appId: 'aBRltWkLKGNezPSGs1TBA0GE-gzGzoHsz',
+        appKey: 'Tg0cJFUAcAbzFVaO5hwaRXsx',
+        placeholder: '你是魔鬼吧，都不留言！',
+        pageSize: 10,
+        avatar: 'mm',
+        visitor: true,
+    });
+</script>
+
+
+
+
+
+
 <script>searchFunc("/")</script>
+
+
+
+
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    console.log("this theme is from https://github.com/xzhih/hexo-theme-casper")
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>
