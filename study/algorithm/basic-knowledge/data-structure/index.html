@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>基本数据结构 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>基本数据结构 - 算法与复杂度 | 小白·菜的空间 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -100,7 +104,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -128,12 +132,12 @@
                         <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>如果说程序员是用代码编织这个世界的一群人，那么<strong>数据结构</strong>（<strong>data structure</strong>）就是编织所用到的各种工具了，它将计算机中各种各样的数据组织在一起。而我们的算法就是利用这些现有的工具将它们拼接成风格、功能各不相同的程序了。简单来说：算法 + 数据结构 = 程序。这一节就让我们来了解一些基本的数据结构吧。</p>
                         <h2 id="数组与链表"><a href="#数组与链表" class="headerlink" title="数组与链表"></a>数组与链表</h2><p>我们从最简单的一维数据结构开始。数组大家应该都不陌生，它是将一组相同数据类型的数据存储在一起的数据结构。</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array0.png"></p>
-                        <p>这里我们分析一下最基本的三大操作：查找、插入和删除。</p>
-                        <p>拿上面的图为例，因为数组中每一个<strong>元素</strong>（<strong>element</strong>）都有自己的一个下标，称为<strong>索引</strong>（<strong>index</strong>），它们被存储在计算机的RAM中，所以查找的速度非常快。一般查找的时间不随数组长度而增加。</p>
-                        <p>插入和删除就要稍微麻烦一些。因为数组占用的是计算机内存的连续地址空间，所以在插入一个新元素时，所有在它后面的元素都要向后移动一个单位，为新元素“腾出”位置。同理，为了保持数组的完整性，删除一个元素后，所有在它后面的元素也要向前移动一个单位，以此来“填充”空位。</p>
-                        <p>以这里的数组为例，如果我们要删除 <code>index = 5</code> 的元素，那么在它后面的 <code>15</code>，<code>34</code> 和 <code>80</code> 都要向前移动一个单位，如下图中所示。</p>
+                        <p>一个数据结构都有它对应的操作（方法），这里我们分析一下最基本的三大操作：查找、插入和删除。</p>
+                        <p>拿上面的图为例，因为数组中每一个<strong>元素</strong>（<strong>element</strong>）都有自己的一个下标，称为<strong>索引</strong>（<strong>index</strong>），它们被存储在计算机的 RAM 中，所以查找的速度非常快。一般查找的时间不随数组长度而增加。</p>
+                        <p>插入和删除就要稍微麻烦一些。因为数组占用的是计算机内存的连续地址空间，所以在插入一个新元素时，所有在它后面的元素都要向后移动一个单位，为新元素“腾出”空位。同理，为了保持数组的连续性，删除一个元素后，所有在它后面的元素也要向前移动一个单位，以此来“填充”空位。</p>
+                        <p>以这里的数组为例，如果我们要删除 index = 5 的元素，那么在它后面的 15, 34 和 80 都要向前移动一个单位，如下图中所示。</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/array1.png"></p>
-                        <p>让我们用Python代码来实现一下。</p>
+                        <p>让我们用代码来实现一下这几个过程。</p>
                     <div class="highlight"><pre><span></span><span class="c1"># 查找</span>
 <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
@@ -165,9 +169,9 @@
         <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                    <p>再来说一说链表。与数组采取的顺序存储方式不同，链表中所有的元素的存储地址都是分散的，也就是说，它是靠一条链条（指针）把这些元素联系在一起的。所以我们把链表中每一个存储单元称为一个<strong>节点</strong>（<strong>node</strong>），在每个节点里有两个域：一个用来存储数据，一个是指针指向下一个节点，像这样：</p>
+                    <p>再来说一说链表。与数组采取的顺序存储方式不同，链表中所有的元素的存储地址都是分散的，虽然是分散的，但元素之间靠一条链条（指针）联系在一起。所以我们把链表中每一个存储单元称为一个<strong>节点</strong>（<strong>node</strong>），在每个节点里有两个域：一个用来存储数据，一个是指针用来指向下一个节点，像这样：</p>
                     <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list0.png"></p>
-                    <p>在Python中我们用一个类来表示：</p>
+                    <p>在 Python 中我们用一个类来表示：</p>
                     <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
@@ -175,7 +179,7 @@
 </pre></div>
                     <p>如果将它们串联在一起，将会是这样：</p>
                     <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list1.png"></p>
-                    <p>其中的<code>header</code>指的是头结点，它一般记录第一个节点的地址和链表的长度，我们在查找的时候就是从头结点开始的，代码如下：</p>
+                        <p>其中的<code>header</code>指的是头结点，它一般记录第一个节点的地址和链表的长度，我们在查找的时候就是从头结点开始，逐个访问节点，如果查找成功就返回该节点；如果失败就返回<code>None</code>。</p>
                     <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Linked_List</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
@@ -188,14 +192,14 @@
             <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
         <span class="k">return</span> <span class="bp">None</span>
 </pre></div>
-                    <p>和数组相比，链表的插入和删除就非常的简单，只需要改变一下指针即可。下面还是以插入元素<code>61</code>为例：</p>
-                    <p>首先需要新建一个节点p</p>
+                    <p>和数组相比，链表的插入和删除就非常的简单，只需要改变一下指针即可。下面还是以插入元素 61 为例：</p>
+                        <p>首先需要新建一个节点<code>p</code>。</p>
                     <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list2.png"></p>
-                    <p>然后，p的指针指向头结点所指的节点</p>
+                    <p>然后，<code>p</code>的指针指向头结点所指的节点</p>
                     <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list3.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list3.png"></p>
-                    <p>最后，改变头结点的指针，使其指向p，同时更新链表的长度length。</p>
+                    <p>最后，改变头结点的指针，使其指向<code>p</code>，同时更新链表的长度<code>length</code>。</p>
                     <p><img alt="链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list4.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/linked-list4.png"></p>
-                    <p>插入和删除的Python实现：</p>
+                    <p>插入和删除的实现：</p>
                     <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Linked_List</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
@@ -213,33 +217,33 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">del</span> <span class="n">p</span>  <span class="c1"># 删除节点 p</span>
 </pre></div>
-                        <h2 id="ADT"><a href="#ADT" class="headerlink" title="ADT"></a>ADT</h2><p><strong>抽象数据类型</strong>（<strong>Abstract Data Type</strong>, 简称<strong>ADT</strong>）是数据结构中非常重要的一个部分。用最简单的理解方式就是：不仅限于编程语言中已经实现的一些数据类型，例如 Python 中 list，set，tuple，dictionary 等等。我们可以进一步的定义出属于我们自己数据结构，比如说增删只能在一侧进行，具有层状、环状的结构等等。那就让我们来看看几个最为常见的例子吧～</p>
-                        <h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p><strong>栈</strong>（<strong>stack</strong>）就是前面提到的只能在一侧进行元素的增加和删除的数据结构，这种过程分别称为<strong>入栈</strong>(<strong>push</strong>)和<strong>出栈</strong>(<strong>pop</strong>)。生活中最简单的类比就是叠盘子，新洗好的盘子总是放在最上面，而拿走的时候总是从最上面一个拿走。这种后进先出（<strong>last in, first out</strong>）的方式就体现了这种思想。</p>
-                        <p><img alt="栈" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpeg" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpeg"></p>
+                        <h2 id="ADT"><a href="#ADT" class="headerlink" title="ADT"></a>ADT</h2><p><strong>抽象数据类型</strong>（<strong>Abstract Data Type</strong>, 简称<strong>ADT</strong>）是数据结构中非常重要的一个部分。用最简单的理解方式就是：不仅限于编程语言中已经实现的一些数据类型，例如 Python 中 <code>list</code>，<code>set</code>，<code>tuple</code>，<code>dictionary</code> 等等。我们可以进一步的定义出属于我们自己数据结构，比如说增删只能在一侧进行，具有层状、环状的结构等等，下面就列举了几个常见的抽象数据类型。</p>
+                        <h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p><strong>栈</strong>（<strong>stack</strong>）就是前面提到的只能在一侧进行元素的增加和删除的数据结构，这种过程分别叫做<strong>入栈</strong>(<strong>push</strong>)和<strong>出栈</strong>(<strong>pop</strong>)。生活中最简单的类比就是叠盘子，新洗好的盘子总是放在最上面，而拿走的时候总是从最上面一个拿走。这种后进先出（<strong>last in, first out</strong>）的方式就体现了这种思想。</p>
+                        <p><img alt="栈" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpg" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/stack.jpg"></p>
                         <h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>和栈相反，<strong>队列</strong>（<strong>queue</strong>）是遵循<strong>先进先出</strong>（<strong>first in, first out</strong>）的方式实现元素的增减，其过程分别叫做<strong>入队</strong>（<strong>enqueue</strong>）和<strong>出队</strong>（<strong>dequeue</strong>）。生活中的例子就是去超市收银台排队的时候，排到队伍后面的人要先等前面的人都结完账了自己才能结账，所以这就是先进先出啦。</p>
                         <p><img alt="队列" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/queue.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/queue.png"></p>
-                        <p>因为和前面的数组和链表有相似性，所以这里就不再用Python代码做演示了，你可以去我的<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Basic%20Knowledge/Data%20Structure" target="_blank" rel="noopener">GitHub</a>主页查看本节的完整代码。</p>
-                        <h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><p>与前面的数据结构不同，<strong>树</strong>（<strong>tree</strong>）是典型的层状数据结构。直观上来看，它就像倒挂着的一颗树，每一个节点连接着多个子节点。这里为了方便，我们只讨论<strong>二叉树</strong>（<strong>binary tree</strong>），也就是每一个节点最多只有两个子节点的情况。</p>
+                        <p>因为和前面的数组和链表有相似性，所以这里就不再用 Python 的代码做演示了，你可以去我的 <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Basic%20Knowledge/Data%20Structure" target="_blank" rel="noopener">GitHub</a> 主页查看本节的完整代码。</p>
+                        <h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><p>与前面的数据结构不同，<strong>树</strong>（<strong>tree</strong>）是典型的层状数据结构。直观上来看，它就像倒挂着的一颗树，每一个节点连接着多个子节点。这里为了方便，我们只讨论用得最多的<strong>二叉树</strong>（<strong>binary tree</strong>），也就是每一个节点最多只有两个子节点的情况。</p>
                         <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree0.png"></p>
-                        <p>下面来简单介绍一下二叉树的性质。和所有树状结构一样，二叉树在非空的情况下一定有一个<strong>根节点</strong>（<strong>root node</strong>），如图中的节点26。它的两个子节点我们分别把它们叫做该节点的<strong>左孩子</strong>（<strong>left child</strong>）和<strong>右孩子</strong>（<strong>right child</strong>），而对于那些没有孩子的节点，我们把它称做<strong>叶子节点</strong>（<strong>leaf node</strong>）。前面只是针对节点的讨论，而对于树本身，我们要了解的是满二叉树和完全二叉树。</p>
-                        <p>满二叉树是指每一个节点孩子的个数只能为0或2，如下图所示，左边是一颗满二叉树，但右边由于节点48只有一个孩子，所以就不是满二叉树。</p>
+                        <p>下面来简单介绍一下二叉树的性质，和所有树状结构一样，二叉树在非空的情况下一定有一个<strong>根节点</strong>（<strong>root node</strong>），如图中的节点 48。它的两个子节点我们分别把它们叫做该节点的<strong>左孩子</strong>（<strong>left child</strong>）和<strong>右孩子</strong>（<strong>right child</strong>），而对于那些没有孩子的节点，我们把它叫做<strong>叶子节点</strong>（<strong>leaf node</strong>）。前面只是针对节点的讨论，而对于树本身，我们要了解的是满二叉树和完全二叉树。</p>
+                        <p>满二叉树是指每一个节点孩子的个数只能为 0 或 2 ，如下图所示，左边是一颗满二叉树，但右边由于节点 81 只有一个孩子，所以就不是满二叉树。</p>
                         <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree1.png"></p>
-                        <p>再来看完全二叉树，它的性质是除了最后一层的节点没有排满以外，其他层的节点均已排满，并且最后一层节点都是从左往右依次排列。下图的两个例子分别代表了完全二叉树和非完全二叉树。后面的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/">堆</a>也会用到这种性质。</p>
+                        <p>再来看看完全二叉树，它的性质是除了最后一层的节点没有排满以外，其他层的节点均已排满，并且最后一层节点都是从左往右依次排列。下图的两个例子分别代表了完全二叉树和非完全二叉树。后面的<a href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/">堆</a>也会用到这种性质。</p>
                         <p><img alt="树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/tree2.png"></p>
-                        <p>在Python中我们可以用一个类来表示树的节点：</p>
+                        <p>在 Python 中我们可以用一个类来表示树的节点：</p>
                     <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 左孩子</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 右孩子</span>
 </pre></div>
-                        <h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><p><strong>图</strong>（<strong>graph</strong>）是 ADT 中用到的最多的结构，生活中的方方面面都会用到图。例如，高德地图就是把所有城市，所有道路通通抽象成了图这种数据结构来帮助我们导航的。哈哈，厉害吧！那我们就首先来了解一下图的基本结构。</p>
+                        <h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><p><strong>图</strong>（<strong>graph</strong>）是 ADT 中用到的最多的结构，生活中的方方面面都会用到图。例如，高德地图就是把所有城市，所有道路通通抽象成了图这种数据结构来帮助我们导航的。那我们就首先来了解一下图的基本结构。</p>
                         <p>图也是由一个一个的<strong>节点</strong>（<strong>vertex</strong>）组成的。但与树不同的是，图的节点之间相连的叫做<strong>边</strong>（<strong>edge</strong>），所以我们用 G = &lt;V, E&gt; 来表示一张图，其中的 V 表示由 vertex 构成的集合，而 E 则表示由 edge 构成的集合。</p>
-                        <p>图的分类一般有好几种，如果一个节点到另一个节点是双向的我们把它叫做<strong>无向图</strong>（<strong>undirected graph</strong>），如果是单向的就叫<strong>有向图</strong>（<strong>undirected graph</strong>），下图中就分别代表了无向图和有向图。</p>
+                        <p>图可以分为好几种，如果一个节点到另一个节点是双向的我们把它叫做<strong>无向图</strong>（<strong>undirected graph</strong>），如果是单向的就叫<strong>有向图</strong>（<strong>undirected graph</strong>），下图中就分别代表了无向图和有向图。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph0.png"></p>
-                        <p>假如从一个节点到另一个节点是要付出“代价”的，那么我们就可以在每一条边上把这种“代价”体现出来，称之为<strong>权重</strong>（<strong>weight</strong>），而构成这样的图当然就叫做<strong>有权图</strong>（<strong>weighted graph</strong>）了。</p>
+                        <p>假如从一个节点到另一个节点是要付出“代价”的，就像从一个城市到另外一个城市需要用距离来度量一样，那么我们就可以在每一条边上把这种“代价”体现出来，称之为<strong>权重</strong>（<strong>weight</strong>），而构成这样的图当然就叫做<strong>有权图</strong>（<strong>weighted graph</strong>）了。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph1.png"></p>
-                        <p>我们可以用两种方式来表示一张图，一种叫做<strong>邻接矩阵</strong>（<strong>adjacency matrix</strong>）和<strong>邻接表</strong>（<strong>adjacency list</strong>），后面的内容会详细讨论，先上图。</p>
+                        <p>我们可以用两种数据结构来表示一张图，一种叫做<strong>邻接矩阵</strong>（<strong>adjacency matrix</strong>）和<strong>邻接表</strong>（<strong>adjacency list</strong>），后面的内容会详细讨论，先上图。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/images/graph2.png"></p>
                         <p>这样我们就完成所有基本数据结构的学习了，是不是对它们有了清晰的认识呢？</p>
                         <br>
@@ -650,27 +654,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -693,6 +676,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -705,21 +689,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -744,43 +728,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -795,23 +750,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
