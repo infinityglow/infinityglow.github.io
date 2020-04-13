@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>三种表示方法：O, Ω, Θ - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>三种表示方法：O, Ω, Θ - 算法与复杂度 | 小白·菜的空间 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -100,7 +104,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -125,7 +129,7 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>前面我们讲到了求最大公约数的算法：欧几里得算法。我们先举一个具体的实例：24 和 16 的公约数。根据其公式 <code>gcd(m, n) = gcd(n, m mod n)</code>，我们可以得到：<code>gcd(24, 16) = gcd(16, 8) = gcd(8, 0)</code>，所以最大公约数是 8。除了这种方法以外，我们还可以从 16 开始一个一个地递减，如果存在两数都能够被整除，那么这个数就是最大公约数。写成代码的形式就是：</p>
+                        <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>前面我们讲到了求最大公约数的算法：欧几里得算法。我们先举一个具体的实例：24 和 16 的公约数。根据其公式<code>gcd(m, n) = gcd(n, m mod n)</code>，我们可以得到：<code>gcd(24, 16) = gcd(16, 8) = gcd(8, 0)</code>，所以最大公约数是 8。其实，除了用欧几里得算法以外，我们还可以采用更简单直接的方式，从 16 开始依次递减，如果存在两数都能够被整除，那么这个数就是最大公约数。写成代码的形式就是：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gcd</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="n">r</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># 选较小者</span>
     <span class="k">while</span> <span class="n">r</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -133,26 +137,26 @@
             <span class="k">return</span> <span class="n">r</span>
         <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
 </pre></div>
-                        <p>我们可以计算得出，该算法的 if 语句被执行了 9 次，而前面的方法只执行了 3 次，我们看两者出现了差异，换句话说就是算法的效率出现了不同。下面就引出<strong>时间复杂度</strong>（<strong>time complexity</strong>）的概念：当一个问题的规模 n 趋向于无穷大的时候，算法所需要的时间 t(n) 。当然，如果一个算法需要很大的运行空间，那么<strong>空间复杂度</strong>（<strong>space complexity</strong>）就是当 n 趋向于无穷大的时候，算法所需要的空间 s(n) 。</p>
-                        <h2 id="用于约束的-O-Ω-Θ"><a href="#用于约束的-O-Ω-Θ" class="headerlink" title="用于约束的 O, Ω, Θ"></a>用于约束的 O, Ω, Θ</h2><p>那么问题来了，t(n) 的单位是什么呢？如果是秒的话，不同的计算机，不同的运行环境，计算出的结果肯定是不一样的，难以达到统一，这就需要我们定性的去描述这个问题，所以就有了用另一个函数来约束 t(n)。其中大 O 符号约束了 t(n) 的<strong>上界</strong>（<strong>upper bound</strong>）。换句话说，当 n 在趋近无穷大的时候，t(n) 的大小总是小于等于某个函数。举个例子，前面用迭代法求最大公约数所耗费的时间跟问题的规模明显呈现的是一个线性关系，那么我们可以这样表示：t(n) ∈ O(g(n))，其中 g(n) = n。当然，t(n) 也满足 t(n) ∈ O(n<sup>2</sup>)。这里为了更好的理解，没有采用严格的数学定义，感兴趣的同学可以去<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" target="_blank" rel="noopener">维基百科</a>一探究竟，这里我们就不细讲了。</p>
-                        <p>同样，大 Ω 符号约束了 t(n) 的<strong>下界</strong>（<strong>lower bound</strong>），即 n 在趋近无穷大的时候，t(n) 总是大于等于某个函数。还是拿刚才的例子，t(n) 我们可以表示为 t(n) ∈ Ω(n)，代表其时间复杂度不会低于线性的复杂度，当然也不会低于常数的复杂度（不随 n 的变化而变化），所以也有：t(n) ∈ Ω(1)。</p>
-                        <p>剩下的 Θ 符号就代表的是 t(n) 的<strong>确界</strong>（<strong>tight</strong>）了，就是说 n 在趋近无穷大的时候跟它时间复杂度一样的一个函数。所以前面的例子就有：t(n) ∈ Θ(n)。最后用三张图来直观地感受一下吧！</p>
+                        <p>我们可以计算得出，该算法的<code>if</code>语句被执行了 9 次，而前面的方法只需要执行 3 次，我们可以看到两种方法在执行次数上出现了差异，换句话说就是算法的效率出现了不同。我们知道，当用一个算法解决问题的一个实例的时候，必然对应着算法运行的时间和所需空间（RAM），一般来讲，当问题的规模 n 增大的时候，对应的运行时间 T 和所需空间 S 也会增大，<strong>时间复杂度</strong>（<strong>time complexity</strong>）的概念：当一个问题的规模 n 趋向于无穷大的时候，算法所需要的时间 T(n) 。当然，如果一个算法需要很大的内存空间，那么<strong>空间复杂度</strong>（<strong>space complexity</strong>）就是指当 n 趋向于无穷大的时候，算法所需要的空间 S(n) 。</p>
+                        <h2 id="用于约束的-O-Ω-Θ"><a href="#用于约束的-O-Ω-Θ" class="headerlink" title="用于约束的 O, Ω, Θ"></a>用于约束的 O, Ω, Θ</h2><p>那么问题来了，T(n) 的单位是什么呢？如果是秒的话，不同的 CPU，不同的操作系统，不同的运行环境，计算出的结果肯定是不一样的，所以我们很难定量地去描述这个问题，最后人们想到了用一个函数来约束 t(n)。其中大 O 符号约束了 t(n) 的<strong>上界</strong>（<strong>upper bound</strong>）。也就是说，当 n 在趋近无穷大的时候，t(n) 的大小总是小于等于某个函数。举个例子，前面用迭代法求最大公约数所耗费的时间跟问题的规模明显呈现的是一个线性关系，那么我们可以这样表示：T(n) ∈ O(g(n))，其中 g(n) = n。当然，T(n) 也满足 t(n) ∈ O(n<sup>2</sup>)。这里为了更好的理解，没有采用严格的数学定义，感兴趣的同学可以去<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" target="_blank" rel="noopener">维基百科</a>一探究竟，这里我们就不细讲了。</p>
+                        <p>同理，大 Ω 符号约束了 T(n) 的<strong>下界</strong>（<strong>lower bound</strong>），即 n 在趋近无穷大的时候，T(n) 总是大于等于某个函数。还是拿刚才的例子，T(n) 我们可以表示为 t(n) ∈ Ω(n)，代表其时间复杂度不会低于线性的复杂度，当然也不会低于常数的复杂度（不随 n 的变化而变化），所以也有：T(n) ∈ Ω(1)。</p>
+                        <p>剩下的 Θ 符号就代表的是 T(n) 的<strong>确界</strong>（<strong>tight</strong>）了，就是说 n 在趋近无穷大的时候跟它时间复杂度一样的一个函数。所以前面的例子就有：t(n) ∈ Θ(n)。最后用三张图来直观地感受一下吧！</p>
                         <p><img alt="illustration" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/illustration.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/illustration.png"></p>
-                        <h2 id="复杂度的比较"><a href="#复杂度的比较" class="headerlink" title="复杂度的比较"></a>复杂度的比较</h2><p>如果给定两个时间复杂度 O(f(n)) 和 O(g(n))，怎样来判断哪个时间复杂度比较大呢？根据复杂度的定义我们知道，一个函数在趋向于无穷大时的变化情况决定了复杂度的大小，而要比较两者的大小，我们可以通过做商的方式，像这样：<img alt="limit0" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit0.png"> 这个极限可能会出现好几种情况，让我们分别来看看吧。</p>
+                        <h2 id="复杂度的比较"><a href="#复杂度的比较" class="headerlink" title="复杂度的比较"></a>复杂度的比较</h2><p>如果给定两个时间复杂度 O(f(n)) 和 O(g(n))，怎样来判断哪个时间复杂度比较大呢？根据复杂度的定义我们知道，一个函数在趋向于无穷大时的变化情况决定了复杂度的大小，而要比较两者的大小，我们可以通过做商的方式，像这样：<img alt="limit0" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit0.png"> 这个极限可能会出现好几种情况，让我们来分别讨论一下。</p>
                         <ul>
-                            <li><p>情况1 极限为 0</p>
-                                <p> 假设 f(n) = n，g(n) = n<sup>2</sup>。那么我们就可以得出极限为 0 <img alt="limit1" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit1.png"> 这样我们可以认为 f(n) 的增长慢于 g(n) 的增长，即 f(n) 的复杂度低于 g(n) 的复杂度。</p>
+                            <li><p>情况 1：极限为 0</p>
+                                <p> 假设 f(n) = n，g(n) = n<sup>2</sup>。那么我们就可以得出该极限为 0 <img alt="limit1" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit1.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长慢于 g(n) 的增长，即 f(n) 的复杂度低于 g(n) 的复杂度。</p>
                             </li>
                             <li><p>情况2 极限为 ∞</p>
-                                <p>   假设 f(n) = n，g(n) = log n。由于极限是无穷比无穷的未定式，所以我们可以借助洛必达法则，最后得出极限为 ∞ <img alt="limit2" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit2.png"> 这样我们可以认为 f(n) 的增长快于 g(n) 的增长，即 f(n) 的复杂度高于 g(n) 的复杂度。</p>
+                                <p>   假设 f(n) = n，g(n) = log n。由于极限是无穷比无穷的未定式，所以我们可以借助洛必达法则，最后得出极限为 ∞ <img alt="limit2" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit2.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快于 g(n) 的增长，即 f(n) 的复杂度高于 g(n) 的复杂度。</p>
                             </li>
                             <li><p>情况3 极限为 c</p>
-                                <p>   假设 f(n) = 3n<sup>2</sup> + 5，g(n) = 7n<sup>2</sup> + log n。同样借助洛必达法则，最后得出极限为一常数 c <img alt="limit3" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit3.png"> 这样我们可以认为 f(n) 的增长快慢和 g(n) 相同，即 f(n) 的复杂度和 g(n) 的复杂度相同。</p>
+                                <p>   假设 f(n) = 3n<sup>2</sup> + 5，g(n) = 7n<sup>2</sup> + log n。同样借助洛必达法则，最后得出极限为一常数 c <img alt="limit3" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit3.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快慢和 g(n) 相同，即 f(n) 的复杂度和 g(n) 的复杂度相同。</p>
                             </li>
                         </ul>
-                        <p>从情况 3 我们可以观察出，两个函数的复杂度都由前面的部分决定（3n 和 7n），这间接地说明了前面的部分占据了主要的地位，于是我们可以把一些常见的复杂度排个序，并用一张图展示出来。</p>
+                        <p>从情况 3 我们可以观察出，两个函数的复杂度都由前面的部分决定（3n<sup>2</sup> 和 7n<sup>2</sup>），这间接地说明了前面的部分占据了主要的地位。因此，不同复杂度之间一定存在大小关系，也就是说随着 n 增大，T(n) 的增长存在快慢差异，于是我们可以把一些常见的复杂度排个序，并用一张图展示出来。</p>
                         <p><img alt="comparison" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/comparison.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/comparison.png"></p>
-                        <p>从左上到右下，其大小排列依次是：O(2<sup>n</sup>) &gt; O(n<sup>3</sup>) &gt; O(n<sup>2</sup>) &gt; O(nlog n) &gt; O(n) &gt; O(log n) &gt; O(1)</p>
+                        <p>从左上到右下，其大小排列依次是：O(2<sup>n</sup>) &gt; O(n<sup>3</sup>) &gt; O(n<sup>2</sup>) &gt; O(nlog n) &gt; O(n) &gt; O(log n) &gt; O(1)。</p>
 
                         <br>
                         <br>
