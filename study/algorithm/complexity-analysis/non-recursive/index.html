@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>复杂度分析（非递归）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>复杂度分析（非递归）- 算法与复杂度 | 小白·菜的空间 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -100,7 +104,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -125,11 +129,11 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="最好，最坏和平均情况"><a href="#最好，最坏和平均情况" class="headerlink" title="最好，最坏和平均情况"></a>最好，最坏和平均情况</h2><p>一个算法的好坏并不是一成不变的，它会在不同的情况下有着不同的表现。先来看看一个生活中的场景，假设买彩票中奖的概率是1 / 10,000，那么在最好，最坏和平均的情况下需要买几注彩票才能够中奖呢？显然，如果你的运气够好，第一注你就直接中了，这是最好的情况；相反，如果你的手气够差，你买的彩票永远都中不了奖，这是最坏的情况；平均来讲，你需要买最少10,000注才能够中奖，其实就是这里的数学期望。</p>
+                        <h2 id="最好，最坏和平均情况"><a href="#最好，最坏和平均情况" class="headerlink" title="最好，最坏和平均情况"></a>最好，最坏和平均情况</h2><p>一个算法的效率并不是一成不变的，在不同的情况下它会有不同的表现。先来看看一个生活中的场景，假设买彩票中奖的概率是1 / 10,000，那么在最好，最坏和平均的情况下需要买几注彩票才能够中奖呢？显然，如果你的运气够好，第一注你就直接中了，这是最好的情况；相反，如果你的手气够差，你买的彩票永远都中不了奖，这是最坏的情况；平均来讲，你需要买最少 10,000 注才能够中奖，其实就是这里的数学期望。</p>
                         <p><img alt="彩票" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/lottery.jpg" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/lottery.jpg"></p>
-                        <p>这里的类比并不是想说明算法跟概率学有任何的关系，只是想告诉大家，算法的复杂度确实是有“运气”的成分，它取决于一个（类）问题的<strong>实例</strong>（<strong>instance</strong>）。这里的实例可以这样来理解：如果排序是我们要解决的问题，也就是对任意无序数组的有序化，那么一个实例就是一个具体的数组，比如 [3, 1, 2, 5, 4] 或 [1, 2, 3, 4, 5]。</p>
-                        <p>我们可以看到，后者的数组已经有序了，不需要再额外执行任何操作。对于有些排序算法来讲就可以利用这一点性质，减少执行的次数，让算法更有“远见”。像这样能使一个算法执行次数最少的情况我们把它称作<strong>最好情况</strong>（<strong>best case</strong>）。相反，使一个算法执行次数最多的情况叫做<strong>最坏情况</strong>（<strong>worst case</strong>）。最后剩下的<strong>平均情况</strong>（<strong>average case</strong>）指的是通常状态下算法的复杂度，它并不是等于（最好情况 + 最坏情况）/ 2 这么简单，而是要把所有的 instance 考虑在内，计算复杂度，然后再求一个平均值，后面的例子会详细讨论这个问题。</p>
-                        <h2 id="顺序查找"><a href="#顺序查找" class="headerlink" title="顺序查找"></a>顺序查找</h2><p>如果我们要查找数组里的某个元素，我们可以通过顺序查找的方式进行，也就是从左往右依次查找。代码如下：</p>
+                        <p>这里的类比并不是想说明算法跟概率学有任何的关系，只是想告诉大家，一个算法的复杂度是有最好，最坏和平均之分的，它取决于一个或一类问题的<strong>实例</strong>（<strong>instance</strong>）。这里的实例可以这样来理解：如果排序是我们要解决的问题，也就是对任意无序数组的有序化，那么一个实例就指的是一个具体的数组，比如 [3, 1, 2, 5, 4] 或 [1, 2, 3, 4, 5]。</p>
+                        <p>我们可以看到，数组 [1, 2, 3, 4, 5] 已经有序了，所以不需要再额外执行任何操作。对于有些排序算法来讲就可以利用这一点性质，减少执行的次数，让算法更有“远见”。像这样能使一个算法执行次数最少的情况我们把它叫做<strong>最好情况</strong>（<strong>best case</strong>）。相反，使一个算法执行次数最多的情况叫做<strong>最坏情况</strong>（<strong>worst case</strong>）。最后剩下的<strong>平均情况</strong>（<strong>average case</strong>）指的是一般情况下算法的复杂度，它并不是等于（最好情况 + 最坏情况）/ 2 这么简单，而是要把所有的 instance 考虑在内，计算复杂度，然后再求一个平均值，后面的例子我会详细说明这个问题。</p>
+                        <h2 id="顺序查找"><a href="#顺序查找" class="headerlink" title="顺序查找"></a>顺序查找</h2><p>如果我们要查找数组里的某个元素，首先想到的办法就是通过顺序查找的方式进行，也就是从数组的第一个元素开始，从左往右依次查找。实现代码如下：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
@@ -137,14 +141,14 @@
             <span class="k">return</span> <span class="n">i</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 </pre></div>
-                        <p>我们用一个<code>for</code>循环遍历整个数组，如果找到了<code>element</code>就返回相应的索引值，否则返回 -1。判断这一条件是否成立的语句显然是 <code>if array[i] == element</code>，并且它是被执行的最多的语句，我们将这种执行次数最多，耗时最长的操作叫做<strong>基本操作</strong>（<strong>basic operation</strong>）。一般这种操作出现在最内层的循环，或者出现<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/" target="_blank" rel="noopener">递归</a>的地方。</p>
-                        <p>然后，我们来分析一下最好和最坏情况的时间复杂度。首先，最好的情况是循环的第一个元素就是我们要找的，比如我们要从数组 [3, 1, 2, 5, 4] 中找元素 3，那么时间复杂度显然就为 O(1)；最坏的情况是最后一个元素才是我们要找的或者查找失败，比如像这样的数组 [1, 2, 4, 5, 3] 需要执行 5 次基本操作。一般的情况，如果数组的长度为 n，则需要 n - 1 次，所以复杂度为 O(n)。</p>
-                        <p>最后我们来说一说平均复杂度，如果我们考虑了所有的情况，即查找的元素 <code>element</code> 在数组 <code>array</code> 的每一个位置都会出现，且出现的概率是相等的，那么我们可以通过这样一个式子来计算：</p>
+                        <p>我们用一个<code>for</code>循环遍历整个数组，如果找到了<code>element</code>就返回相应的索引值，否则返回<code>-1</code>。判断这一条件是否成立的语句显然是<code>if array[i] == element</code>，同时它也是被执行的最多的语句，我们将一个算法中执行次数最多，耗时最长的操作叫做<strong>基本操作</strong>（<strong>basic operation</strong>）。一般这种操作出现在最内层的循环，或者出现在有<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/" target="_blank" rel="noopener">递归</a>的地方。</p>
+                        <p>然后，我们来分析一下在最好和最坏情况下的时间复杂度。首先，最好的情况是循环的第一个元素就是我们要找的，比如我们要从数组 [3, 1, 2, 5, 4] 中找元素 3，那么时间复杂度显然就为 O(1)；最坏的情况是最后一个元素才是我们要找的或者查找失败，比如在这样的数组 [1, 2, 4, 5, 3] 中寻找 3 则需要执行 4 次基本操作。假设数组的长度为 n，则需要 n 次，所以复杂度为 O(n)。</p>
+                        <p>最后我们来说一说平均复杂度，如果我们考虑了所有的情况，即查找的元素<code>element</code>在数组<code>array</code>的每一个位置都会出现，且它们出现的概率是相等的，那么我们可以通过这样一个式子来计算：</p>
                         <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula0.png"></p>
                         <p>其中分子项为每一种情况需要查找的次数，最后得到的复杂度也为 O(n)，表明了在一般情况下该算法的时间复杂度也为线性复杂度。</p>
-                        <h2 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h2><p>让我们再来看一个例子，相信学过线性代数的小伙伴对矩阵的乘法应该不陌生，假设有两个矩阵 A (m × n) 和 B (n × p)，最后得到的矩阵 C (m × p) 中每一项都是 A 中每一行的 n 个元素和 B中每一列的 n 个元素乘积之和。下面是一个动图的演示（摘自<a href="https://www.youtube.com/watch?v=XkY2DOUCWMU" target="_blank" rel="noopener">3Blue1Brown</a>里的视频）：</p>
+                        <h2 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h2><p>让我们再来看一个例子，相信学过线性代数的小伙伴对矩阵的乘法应该不陌生，假设有两个矩阵 A ∈ R<sup>m×n</sup>> 和 B ∈ R<sup>n×p</sup>>，最后得到的矩阵 C ∈ R<sup>m×p</sup>> 中每一项都是 A 中每一行的 n 个元素和 B 中每一列的 n 个元素依次相乘的和。下面是一个动图的演示（摘自<a href="https://www.youtube.com/watch?v=XkY2DOUCWMU" target="_blank" rel="noopener">3Blue1Brown</a>里的视频）：</p>
                         <p><img alt="矩阵乘法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/matmul.gif" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/matmul.gif"></p>
-                        <p>如果写成 Python 的代码就是这样子的：</p>
+                        <p>写成代码的形式就是这样子的：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
     <span class="n">C</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
@@ -154,10 +158,10 @@
                 <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">C</span>
 </pre></div>
-                        <p>这里为了计算方便，两个矩阵都采用了方阵的形式。很显然，这里的基本操作是 <code>C[i][j] + A[i][k] ∗ B[k][j]</code>。准确地来说，由于在计算机里做乘法比做加法所耗费的时间要多，所以 <code>A[i][k] ∗ B[k][j]</code> 才是我们的基本操作。</p>
-                        <p>分析完了基本操作，下面就来计算复杂度了。因为不管什么样的矩阵，它们执行的基本操作都是一样的，所以就不存在最好，最坏和平均情况的讨论了。于是根据循环我们可以得到：</p>
+                        <p>这里为了更好地表示问题的规模 n，两个矩阵都采用了方阵的形式。很显然，<code>C[i][j] + A[i][k] ∗ B[k][j]</code>位于循环的最内侧，所以作为这里的基本操作。更严格地来说，由于在计算机里做乘法所耗费的时间比做加法要多，所以 <code>A[i][k] ∗ B[k][j]</code> 才是我们的基本操作。</p>
+                        <p>分析完了基本操作，下面就来计算复杂度了。因为这里不管什么样的矩阵，它们执行的基本操作都是一样的，所以就不存在最好，最坏和平均情况的讨论了。于是根据代码中三重循环我们可以得到下面的式子：</p>
                         <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/images/formula1.png"></p>
-                        <p>其复杂度为 O(n<sup>3</sup>)。是不是很简单呢？类似的例子还有很多，但它们方法都是一样的。</p>
+                        <p>最后复杂度为 O(n<sup>3</sup>)。是不是很简单呢？类似的例子还有很多，这里就不一一列举了。</p>
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Complexity%20Analysis/Non-recursive" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
@@ -566,27 +570,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -609,6 +592,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -621,21 +605,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -660,43 +644,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -711,23 +666,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 

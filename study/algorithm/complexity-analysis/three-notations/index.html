@@ -137,7 +137,7 @@
             <span class="k">return</span> <span class="n">r</span>
         <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
 </pre></div>
-                        <p>我们可以计算得出，该算法的<code>if</code>语句被执行了 9 次，而前面的方法只需要执行 3 次，我们可以看到两种方法在执行次数上出现了差异，换句话说就是算法的效率出现了不同。我们知道，当用一个算法解决问题的一个实例的时候，必然对应着算法运行的时间和所需空间（RAM），一般来讲，当问题的规模 n 增大的时候，对应的运行时间 T 和所需空间 S 也会增大，<strong>时间复杂度</strong>（<strong>time complexity</strong>）的概念：当一个问题的规模 n 趋向于无穷大的时候，算法所需要的时间 T(n) 。当然，如果一个算法需要很大的内存空间，那么<strong>空间复杂度</strong>（<strong>space complexity</strong>）就是指当 n 趋向于无穷大的时候，算法所需要的空间 S(n) 。</p>
+                        <p>我们可以计算得出，该算法的<code>if</code>语句被执行了 9 次，而欧几里得算法只需要执行 3 次，我们可以看到两种方法在执行次数上出现了差异，换句话说就是算法的效率出现了不同。我们知道，当用一个算法解决问题的一个实例的时候，必然对应着算法运行的时间和所需空间（RAM）。一般来讲，当问题的规模 n 增大的时候，对应的运行时间 T 和所需空间 S 也会增大，于是<strong>时间复杂度</strong>（<strong>time complexity</strong>）的概念就是：当一个问题的规模 n 趋向于无穷大的时候，算法所需要的时间 T(n) 。当然，如果一个算法需要很大的内存空间，那么<strong>空间复杂度</strong>（<strong>space complexity</strong>）就是指当 n 趋向于无穷大的时候，算法所需要的空间 S(n) 。</p>
                         <h2 id="用于约束的-O-Ω-Θ"><a href="#用于约束的-O-Ω-Θ" class="headerlink" title="用于约束的 O, Ω, Θ"></a>用于约束的 O, Ω, Θ</h2><p>那么问题来了，T(n) 的单位是什么呢？如果是秒的话，不同的 CPU，不同的操作系统，不同的运行环境，计算出的结果肯定是不一样的，所以我们很难定量地去描述这个问题，最后人们想到了用一个函数来约束 T(n)。其中大 O 符号约束了 T(n) 的<strong>上界</strong>（<strong>upper bound</strong>）。也就是说，当 n 在趋近无穷大的时候，T(n) 的大小总是小于等于某个函数。举个例子，前面用迭代法求最大公约数所耗费的时间跟问题的规模明显呈现的是一个线性关系，那么我们可以这样表示：T(n) ∈ O(g(n))，其中 g(n) = n。当然，T(n) 也满足 T(n) ∈ O(n<sup>2</sup>)。这里为了更好的理解，没有采用严格的数学定义，感兴趣的同学可以去<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" target="_blank" rel="noopener">维基百科</a>一探究竟，这里我们就不细讲了。</p>
                         <p>同理，大 Ω 符号约束了 T(n) 的<strong>下界</strong>（<strong>lower bound</strong>），即 n 在趋近无穷大的时候，T(n) 总是大于等于某个函数。还是拿刚才的例子，T(n) 我们可以表示为 T(n) ∈ Ω(n)，代表其时间复杂度不会低于线性的复杂度，当然也不会低于常数的复杂度（不随 n 的变化而变化），所以也有：T(n) ∈ Ω(1)。</p>
                         <p>剩下的 Θ 符号就代表的是 T(n) 的<strong>确界</strong>（<strong>tight</strong>）了，就是说 n 在趋近无穷大的时候跟它时间复杂度一样的一个函数。所以前面的例子就有：T(n) ∈ Θ(n)。最后用三张图来直观地感受一下吧！</p>
@@ -147,10 +147,10 @@
                             <li><p>情况 1：极限为 0</p>
                                 <p> 假设 f(n) = n，g(n) = n<sup>2</sup>。那么我们就可以得出该极限为 0 <img alt="limit1" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit1.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长慢于 g(n) 的增长，即 f(n) 的复杂度低于 g(n) 的复杂度。</p>
                             </li>
-                            <li><p>情况2 极限为 ∞</p>
-                                <p>   假设 f(n) = n，g(n) = log n。由于极限是无穷比无穷的未定式，所以我们可以借助洛必达法则，最后得出极限为 ∞ <img alt="limit2" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit2.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快于 g(n) 的增长，即 f(n) 的复杂度高于 g(n) 的复杂度。</p>
+                            <li><p>情况 2 极限为 ∞</p>
+                                <p>   假设 f(n) = n，g(n) = log n。由于极限是无穷比无穷的未定式，所以我们可以借助<a href="https://zh.wikipedia.org/wiki/%E6%B4%9B%E5%BF%85%E8%BE%BE%E6%B3%95%E5%88%99">洛必达法则</a>，最后得出极限为 ∞ <img alt="limit2" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit2.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快于 g(n) 的增长，即 f(n) 的复杂度高于 g(n) 的复杂度。</p>
                             </li>
-                            <li><p>情况3 极限为 c</p>
+                            <li><p>情况 3 极限为常数</p>
                                 <p>   假设 f(n) = 3n<sup>2</sup> + 5，g(n) = 7n<sup>2</sup> + log n。同样借助洛必达法则，最后得出极限为一常数 c <img alt="limit3" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit3.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快慢和 g(n) 相同，即 f(n) 的复杂度和 g(n) 的复杂度相同。</p>
                             </li>
                         </ul>
@@ -561,28 +561,6 @@
                                             *分支限界
                                         </span>
                                     </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
                                 <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
@@ -606,6 +584,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -618,21 +597,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -657,43 +636,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -708,23 +658,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
