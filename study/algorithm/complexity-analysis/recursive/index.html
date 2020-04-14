@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>复杂度分析（递归）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>复杂度分析（递归）- 算法与复杂度 | 小白·菜的空间 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -100,7 +104,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -125,45 +129,45 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="什么是递归"><a href="#什么是递归" class="headerlink" title="什么是递归"></a>什么是递归</h2><p>前面我们对一些算法的复杂度进行了分析，但这些都是基于循环和迭代的，这一节我们会针对递归的算法进行复杂度分析。首先要需要知道什么是递归，<strong>递归</strong>（<strong>recursion</strong>）是函数调用自身的一个过程。举个例子，假设你是一个英语水平有限的人，你在读一段英文材料中遇到了某个生词，你需要查字典去了解这个单词的意思，但是字典只提供了英英字典，意味着你找到的单词下方的释义也有可能是你不认识的单词，于是你又继续查找那些单词的意思，而那些单词的释义有可能又出现你不认识的单词，你又继续查找直到你能够全部看懂为止。这样一个过程我们可以把它看做递归，因为查字典这个动作在不停地调用自身。</p>
+                        <h2 id="什么是递归"><a href="#什么是递归" class="headerlink" title="什么是递归"></a>什么是递归</h2><p>前面我们对一些算法的复杂度进行了分析，但这些都是基于循环和迭代的，这一节我们会对递归的算法进行复杂度分析。首先要需要知道什么是递归，<strong>递归</strong>（<strong>recursion</strong>）是函数调用自身的一个过程。举个例子，假设你是一个英语水平有限的人，你在读一段英文材料中遇到了某个生词，你需要查字典去了解这个单词的意思，但是只给你了英英字典，意味着你要查找的单词下方的释义也有可能是你不认识的单词，于是你又继续去查找那些你不认识的单词，而那些单词的释义有可能又出现你不认识的单词，你又继续查找，如此往复，直到你能够全部看懂为止。这样一个过程我们可以把它看做是一个递归的过程，因为查字典这个动作在不停地调用自身。</p>
                         <p><img alt="字典" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/dictionary.jpg" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/dictionary.jpg"></p>
-                        <p>试想如果你的英语水平很糟糕，你可能查了很久的字典还是没有弄明白这个生词是什么意思，甚至出现单词 A 用到了单词 B 做释义，单词 B 用到了单词 A 做释义这种情况，即无限循环。那么一次递归结束的条件是什么呢？显然，如果一个单词的释义你全都能看懂，当前递归就结束了，这种条件叫作<strong>初始条件</strong>（<strong>initial condition</strong>），也叫作递归的出口。</p>
-                        <h2 id="阶乘的计算"><a href="#阶乘的计算" class="headerlink" title="阶乘的计算"></a>阶乘的计算</h2><p>阶乘的计算大家应该都不陌生，一个数的阶乘 n ! = n × (n-1) × (n-2) × … × 2 × 1，所以我们自然而然想到的计算方法是从 1 到 n 把它们乘起来，但只要我们稍微观察一下便可以得到 n ! = n × ( n - 1) ! 这样的关系式。这个关系式也不是一直递归下去的，同样需要一个出口，根据定义，0 的阶乘等于 1，所以当 n = 0 时递归停止。我们可以用几行代码轻松地实现它：</p>
+                        <p>试想如果你的英语水平很糟糕，你可能查了很久的字典还是没有弄明白原来那个生词是什么意思，甚至出现单词 A 用到了单词 B 做释义，单词 B 又用到了单词 A 做释义这种情况，即出现死循环。那么递归结束的条件是什么呢？显然，如果一个单词的释义你全都能看懂，那就以为者当前递归就结束了，我们把这种条件叫做<strong>初始条件</strong>（<strong>initial condition</strong>），也叫递归出口。</p>
+                        <h2 id="阶乘的计算"><a href="#阶乘的计算" class="headerlink" title="阶乘的计算"></a>阶乘的计算</h2><p>阶乘大家应该都不陌生，一个数的阶乘 n ! = n × (n-1) × (n-2) × … × 2 × 1，所以我们自然而然想到的计算方法是从 1 到 n 把它们乘起来，但只要我们稍微观察一下便可以得到 n ! = n × ( n - 1) ! 这样的关系式。递归需要递归出口，因此这里我们规定 0 的阶乘等于 1，所以当 n = 0 时递归就停止了。用代码实现阶乘计算非常容易，只需要 4 行就可以搞定：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
                         <br>
-                        <p>如果用一个数学关系式是来表达是这样子的：</p>
+                        <p>用一个数学递推式是来表达上面的关系：</p>
                         <p><img alt="关系式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation0.png"></p>
-                        <p>我们观察可以得到这样的规律：问题的规模 n 在经过一次乘法运算 n × F(n - 1) 后变为了 n - 1，并且每经过一次乘法运算，问题的规模都减少了 1，所以要求这个算法的复杂度，我们可以推出如下的关系式：</p>
+                        <p>我们观察可以得到这样的规律：问题的规模由原来的 n 经过一次乘法运算 n × F(n - 1) 后变成了 n - 1，并且每经过一次乘法运算，问题的规模都会减少 1，所以要求计算阶乘的时间复杂度，我们可以推出如下的关系式：</p>
                         <p><img alt="关系式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation1.png"></p>
-                        <p>其中“+ 1”代表问题的规模每减少 1 就执行了一次乘法运算。这样的关系式叫作<strong>递归关系式</strong>（<strong>recurrence relation</strong>），要解出这个关系式，我们需要一步一步地推导，具体来讲就是先将 n - 1 代入式子中得到一个新的递归关系式，再将它代入到原式子中就可以得到 t(n) = t(n - 2) + 2，如此往复，直到出现递归出口。</p>
+                        <p>其中“+ 1”代表问题的规模每减少 1 就执行了一次乘法运算。我们把这样的关系式叫做<strong>递归关系式</strong>（<strong>recurrence relation</strong>），要解出这个关系式，我们需要一步一步地推导，具体来讲就是先将 n - 1 代入式子中得到一个新的递归关系式，再将它代入到原式子中就可以得到 t(n) = t(n - 2) + 2，一直重复这个过程，直到出现递归出口。</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation0.png"></p>
-                        <p>于是我们得出计算阶乘的时间复杂度为 O(n)。</p>
-                        <h2 id="汉诺塔"><a href="#汉诺塔" class="headerlink" title="汉诺塔"></a>汉诺塔</h2><p>汉诺塔大家肯定都玩过，规则也很简单：有 A, B, C 三根柱子，上面穿有从大到小排列的圆盘，现在你需要借助 B 柱把 A 柱上的圆盘挪到 C 柱上，一次只能挪一个，但大的圆盘不能放在小的圆盘之上。</p>
+                        <p>于是我们得出计算阶乘的时间复杂度为 Θ(n)。</p>
+                        <h2 id="汉诺塔"><a href="#汉诺塔" class="headerlink" title="汉诺塔"></a>汉诺塔</h2><p>汉诺塔大家肯定都玩过，规则也很简单：有 A, B, C 三根柱子，上面穿有从大到小排列的圆盘，现在你需要借助 B 柱把 A 柱上的圆盘挪到 C 柱上，一次只能挪一个，且大的圆盘不能放在小的圆盘的上面。</p>
                         <p> <img alt="演示" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/demo.gif"></p>
-                        <p>那么它跟递归有什么关系呢？如果你是一个细心观察的人，你就会发现，要想把 n 个圆盘从 A 柱挪到 C 柱上，你首先要通过某种方法把 n - 1 个柱子从 A 挪到 B 柱上，给 A 柱上最大的圆盘“腾个位置”出来，然后把最大的圆盘移到 C 柱上，最后在通过某种方法把 B 柱上 n - 1 个圆盘挪到 C 柱上。至于怎么移动这 n - 1 个柱子，我们可以再用某种方法移动 n - 2 个柱子，给第二大的圆盘“腾位置”，再将 n - 2 个柱子移动到相应的柱子上。这样我们便可以一直递归下去，直到只有一个圆盘，也就是这里的递归出口了。</p>
+                        <p>汉诺塔跟递归有什么关系呢？如果你是一个细心观察的人，你就会发现，要想把 n 个圆盘从 A 柱挪到 C 柱上，你首先要通过某种方法把 n - 1 个柱子从 A 挪到 B 柱上，给 A 柱上最大的圆盘“腾位置”，然后把最大的圆盘从 A 柱移动到 C 柱上，最后再通过某种方法把 B 柱上 n - 1 个圆盘挪到 C 柱上。至于怎么移动这 n - 1 个柱子，我们可以又用某种方法移动最上面的 n - 2 个柱子，给第二大的圆盘“腾位置”，再将 n - 2 个柱子移动到相应的柱子上。这样我们便可以一直递归下去，直到出现递归出口，也就是只有一个圆盘的情况。</p>
                         <p>我们用几张图来直观地理解一下，假设这里有 4 个圆盘，我们可以分为三个步骤：</p>
                         <p> <img alt="状态0" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state0.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state0.png"></p>
                         <ul>
-                            <li>步骤一：将 3 个圆盘从 A 柱移动到 B 柱</li>
+                            <li>步骤一：用某种方法将 3 个圆盘从 A 柱移动到 B 柱</li>
                         </ul>
                         <p><img alt="状态1" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state1.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state1.png"></p>
                         <ul>
-                            <li>步骤二：将 A 柱剩下的圆盘移动到 C 柱</li>
+                            <li>步骤二：将 A 柱的圆盘移动到 C 柱</li>
                         </ul>
                         <p><img alt="状态2" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state2.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state2.png"></p>
                         <ul>
-                            <li>步骤三：将 3 个圆盘从 B 柱移动到 C 柱</li>
+                            <li>步骤三：再用某种方法将 3 个圆盘从 B 柱移动到 C 柱</li>
                         </ul>
                         <p><img alt="状态3" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state3.png" data-src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/state3.png"></p>
                         <p>那么怎样来写递归关系式呢？我们看到，要解决 n 阶汉诺塔的问题，我们先要解决两个 n - 1 阶同样的问题，外加一个单次移动。所以我们的递归关系式应该这样写：</p>
                         <p><img alt="关系式" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/relation2.png"></p>
                         <p>我们还是采用回代的方式解出这个关系式：</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/recursive/images/derivation1.png"></p>
-                        <p>复杂度为 O(2<sup>n</sup>)，最后我们用代码来实现一下吧。</p>
+                        <p>复杂度为 Θ(2<sup>n</sup>)，最后我们用代码来实现一下吧。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hanoi</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{} -&gt; {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
@@ -172,18 +176,16 @@
     <span class="n">hanoi</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 将待移动的圆盘数设为 1</span>
     <span class="n">hanoi</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># a 柱为枢纽，将 b 柱中 n - 1 个圆盘移到 c 柱上</span>
 </pre></div>
-                        <br>
                         <p>让我们试试 <code>n = 3</code> 时输出的结果：</p>
-                        <div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">c</span>
-<span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span>
-<span class="n">c</span> <span class="o">-&gt;</span> <span class="n">b</span>
-<span class="n">a</span> <span class="o">-&gt;</span> <span class="n">c</span>
-<span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span>
-<span class="n">b</span> <span class="o">-&gt;</span> <span class="n">c</span>
-<span class="n">a</span> <span class="o">-&gt;</span> <span class="n">c</span>
+                        <div class="highlight"><pre><span></span><span class="hightlight">&gt;&gt;&gt;</span> <span class="hightlight">python</span> <span class="hightlight">hanoi</span><span class="hightlight">.</span><span class="hightlight">py</span>
+<span class="hightlight">...</span> <span class="hightlight">a</span> <span class="hightlight">-&gt;</span> <span class="hightlight">c</span>
+<span class="hightlight">...</span> <span class="hightlight">a</span> <span class="hightlight">-&gt;</span> <span class="hightlight">b</span>
+<span class="hightlight">...</span> <span class="hightlight">c</span> <span class="hightlight">-&gt;</span> <span class="hightlight">b</span>
+<span class="hightlight">...</span> <span class="hightlight">a</span> <span class="hightlight">-&gt;</span> <span class="hightlight">c</span>
+<span class="hightlight">...</span> <span class="hightlight">b</span> <span class="hightlight">-&gt;</span> <span class="hightlight">a</span>
+<span class="hightlight">...</span> <span class="hightlight">b</span> <span class="hightlight">-&gt;</span> <span class="hightlight">c</span>
+<span class="hightlight">...</span> <span class="hightlight">a</span> <span class="hightlight">-&gt;</span> <span class="hightlight">c</span>
 </pre></div>
-                        <br>
-                        <p>类似的例子还有很多，但它们的方法都是一样的。</p>
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Complexity%20Analysis/Recursive" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
@@ -592,27 +594,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -635,6 +616,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -647,21 +629,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -686,43 +668,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -737,23 +690,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 

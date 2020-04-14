@@ -145,13 +145,13 @@
                         <h2 id="复杂度的比较"><a href="#复杂度的比较" class="headerlink" title="复杂度的比较"></a>复杂度的比较</h2><p>如果给定两个时间复杂度 O(f(n)) 和 O(g(n))，怎样来判断哪个时间复杂度比较大呢？根据复杂度的定义我们知道，一个函数在趋向于无穷大时的变化情况决定了复杂度的大小，而要比较两者的大小，我们可以通过做商的方式，像这样：<img alt="limit0" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit0.png"> 这个极限可能会出现好几种情况，让我们来分别讨论一下。</p>
                         <ul>
                             <li><p>情况 1：极限为 0</p>
-                                <p> 假设 f(n) = n，g(n) = n<sup>2</sup>。那么我们就可以得出该极限为 0 <img alt="limit1" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit1.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长慢于 g(n) 的增长，即 f(n) 的复杂度低于 g(n) 的复杂度。</p>
+                                <p> 假设 f(n) = n，g(n) = n<sup>2</sup>。那么我们就可以得出该极限为 0。 <img alt="limit1" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit1.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长慢于 g(n) 的增长，即 f(n) 的复杂度低于 g(n) 的复杂度。</p>
                             </li>
                             <li><p>情况 2 极限为 ∞</p>
                                 <p>   假设 f(n) = n，g(n) = log n。由于极限是无穷比无穷的未定式，所以我们可以借助<a href="https://zh.wikipedia.org/wiki/%E6%B4%9B%E5%BF%85%E8%BE%BE%E6%B3%95%E5%88%99">洛必达法则</a>，最后得出极限为 ∞ <img alt="limit2" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit2.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快于 g(n) 的增长，即 f(n) 的复杂度高于 g(n) 的复杂度。</p>
                             </li>
                             <li><p>情况 3 极限为常数</p>
-                                <p>   假设 f(n) = 3n<sup>2</sup> + 5，g(n) = 7n<sup>2</sup> + log n。同样借助洛必达法则，最后得出极限为一常数 c <img alt="limit3" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit3.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快慢和 g(n) 相同，即 f(n) 的复杂度和 g(n) 的复杂度相同。</p>
+                                <p>   假设 f(n) = 3n + 5，g(n) = 7n + log n。同样借助洛必达法则，最后得出极限为一常数 c <img alt="limit3" src="https://infinityglow.github.io/study/algorithm/complexity-analysis/three-notations/images/limit3.png"> 这样我们可以认为当 n 趋近于无穷时，f(n) 的增长快慢和 g(n) 相同，即 f(n) 的复杂度和 g(n) 的复杂度相同。</p>
                             </li>
                         </ul>
                         <p>从情况 3 我们可以观察出，两个函数的复杂度都由前面的部分决定（3n<sup>2</sup> 和 7n<sup>2</sup>），这间接地说明了前面的部分占据了主要的地位。因此，不同复杂度之间一定存在大小关系，也就是说随着 n 增大，T(n) 的增长存在快慢差异，于是我们可以把一些常见的复杂度排个序，并用一张图展示出来。</p>
