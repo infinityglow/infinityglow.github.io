@@ -165,12 +165,12 @@
                         <p>从时间复杂度我们可以看出，这两种排序算法的效率都不高。为了间接的证明这个结论，我在这一节的<a href>完整代码</a>里用到了每次排序所需要的比较次数和排序时间这两个指标来间接反映这一结论。后面我们还会接触到一些更为高效的算法，大家也可以通过这两个指标来判断一个排序算法效率如何。</p>
                         <p>下面是运行后的结果：</p>
                         <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">bubble</span><span class="o">.</span><span class="o">py</span>
-<span class="o">...</span> <span class="o">average</span> <span class="o">number</span> <span class="o">of</span> <span class="o">comparison</span><span class="p">:</span> <span class="o">49995000</span>
-<span class="o">...</span> <span class="o">average</span> <span class="o">time</span> <span class="o">consumed</span><span class="p">:</span> <span class="o">9.3161</span> <span class="o">s</span>
+<span class="o">...</span> <span class="o">平均比较次数</span><span class="o">:</span> <span class="o">49995000</span>
+<span class="o">...</span> <span class="o">平均运行时间</span><span class="o">:</span> <span class="o">9.3161</span> <span class="o">s</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">selection</span><span class="o">.</span><span class="o">py</span>
-<span class="o">...</span> <span class="o">average</span> <span class="o">number</span> <span class="o">of</span> <span class="o">comparison</span><span class="p">:</span> <span class="o">49995000</span>
-<span class="o">...</span> <span class="o">average</span> <span class="o">time</span> <span class="o">consumed</span><span class="p">:</span> <span class="o">4.7869</span> <span class="o">s</span>
+<span class="o">...</span> <span class="o">平均比较次数</span><span class="o">:</span> <span class="o">49995000</span>
+<span class="o">...</span> <span class="o">平均运行时间</span><span class="o">:</span> <span class="o">4.7869</span> <span class="o">s</span>
 </pre></div>
                         <h2 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h2><p>下面来介绍一下排序算法的一个很重要的性质：<strong>稳定性</strong>（<strong>stability</strong>）。一个排序算法的稳定性在于原来具有相同大小的元素在排序后其相对顺序仍保持不变。</p>
                         <p>举个简单的例子，如下图所示，排序前数组中红色的 4 位于蓝色的 4 的前面，如果排序后红色的 4 还在蓝色的 4 的前面，则该排序算法是稳定的，反之则不稳定。</p>
