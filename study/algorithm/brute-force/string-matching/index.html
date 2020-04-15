@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>字符串匹配（BF） - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>字符串匹配（BF） - 算法与复杂度 | 小白·菜的空间 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -100,7 +104,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -125,27 +129,39 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>前面我们学习了两种低效的排序算法，这次我们来看看一个关于搜索的问题：<strong>字符串匹配</strong>（<strong>string matching</strong>）。在<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/problem-types/">算法的问题类型</a>那一节里面我们提到了这个问题，这好比你在浏览网页或者在看电子书的时候按下“Ctrl+F”键，然后你输入一个单词或一段话，它就在原文中自动帮你找到那些匹配的文字。</p>
+                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>上一节我们学习了两种低效的排序算法，这次我们来看看一个关于搜索的问题：<strong>字符串匹配</strong>（<strong>string matching</strong>）。在<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/problem-types/">算法的问题类型</a>那一节里面我们提到了这个问题，这好比你在浏览网页或者在看电子书的时候按下“Ctrl+F”键，然后你输入一个单词或一段话，算法就在原文中自动帮你找到那些匹配的文字。</p>
                         <p><img alt="matching" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/matching.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/matching.png"></p>
-                        <p>上图截自<a href="http://kddlab.zjgsu.edu.cn:7200/students/lipengcheng/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%EF%BC%88%E8%8B%B1%E6%96%87%E7%AC%AC%E4%B8%89%E7%89%88%EF%BC%89.pdf" target="_blank" rel="noopener">《算法导论》</a>的某一页，我在我自己的电脑里试了一下，搜索的是单词“algorithm”，几秒钟就全部搜出来了，可以说速度是相当快的，要知道这本书可是有 1000 多页的呀，这得益于一种高效的算法帮我们能够在短时间内完成复杂的工作。</p>
-                        <p>这类问题似乎很简单，但这也是困扰了科学家们多年，直到现在对于这种算法的探究都还没有停止，因为解决这个问题并不难，我们只需要用最“暴力”的办法就可以解决掉它，但要找到一种高效的算法却是难上加难。我们将在<a href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/">后面</a>的章节里简单介绍它们。</p>
-                        <h2 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h2><p>这里我们举一个更加有意思的例子。懂一点生物的小伙伴们肯定知道，DNA 探针（一段短的 DNA 序列）在与一段长的 DNA 分子杂交的时候，它们的碱基一定会遵循配对原则，即：A 跟 T 配对，C 跟 G 配对。对于这个问题，我们可以抽象成一个算法问题，也就是从一个含有“ATCG”的字符串中查找一个<strong>模式</strong>（<strong>patten</strong>）字符串，比如“GAATTC”。</p>
-                        <p>如果我们用暴力求解的方式，也就是从字符串的起始位置开始，与模式字符串的第一个字符对齐，进行比对。如果比对成功，就再比较下一个字符，直到全部比对成功。如果失败，模式字符串就向右移动一个单位，再从头与字符串比对，直到超出右边边界。用一张图来描述是这样子的：</p>
+                        <p>上图截自<a href="http://kddlab.zjgsu.edu.cn:7200/students/lipengcheng/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%EF%BC%88%E8%8B%B1%E6%96%87%E7%AC%AC%E4%B8%89%E7%89%88%EF%BC%89.pdf" target="_blank" rel="noopener">《算法导论》</a>的某一页，我在我自己的电脑里试了一下，搜索的是单词“algorithm”，几秒钟就全部搜出来了，可以说速度还是非常快的，要知道这本书可是有 1000 多页的呀，这得益于一种高效的算法帮我们能够在短时间内完成复杂的工作，本节内容只学习如何暴力法来求解。</p>
+                        <p>这类问题看似很简单，但这也是困扰了科学家们多年，直到现在对搜索算法的研究都还没有停止，因为解决这个问题并不难，我们只需要用最简单粗暴的办法就可以解决掉它，但要找到一种高效的算法却是难上加难。我会在<a href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/">后面</a>的内容中介绍一种更高效的算法。</p>
+                        <h2 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h2><p>这里我们举一个更加有意思的例子。懂一点生物的小伙伴们肯定知道，DNA 探针（一段短的单链 DNA 序列）在与一段长的 DNA 分子杂交的时候，它们的碱基一定会遵循配对原则，即：A 跟 T 配对，C 跟 G 配对。那么 DNA 探针如何从 DNA 分子中找到与自己互补的序列呢？其实我们完全可以抽象成一个字符串匹配问题。首先，我们把被配对的 DNA 分子对应的碱基序列叫做<strong>主串</strong>，英文叫<strong>plain text</strong>，而用于配对的探针 DNA 序列则叫做<strong>模式串</strong>（<strong>patten string</strong>）。</p>
+                        <p>暴力求解的方式很简单，从原串的起始位置开始，与模式串的第一个字符对齐，进行比对。如果比对成功，就比较模式串和原串下一个字符，如果全部比对成功，则返回比对成功的对应的索引；如果比对失败，模式串就整体向右移动一个单位，再从头与原串比对，如果发现模式串超出原串的右边边界，则查找失败，返回 -1。用一张图来描述就是这样子的：</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/DNA.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/string-matching/images/DNA.png"></p>
+                        <p>由于这是一个 DNA 配对的例子，所以模式串的每个碱基（字符）都需要转换为相应的互补碱基后再执行算法。比如说，模式串为“CTTAAG”需要先转换为“GAATTC”</p>
                         <p>将这个过程写成代码的形式：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">string_matching_bf</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">);</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>  <span class="c1"># 转换模式串</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">);</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>  <span class="c1"># 原串和模式串的长度</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 用于记录成功配对的字符个数</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 记录配对成功的字符数</span>
         <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">pattern</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]:</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>  <span class="c1"># 配对成功</span>
             <span class="k">return</span> <span class="n">i</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># 配对失败</span>
+
+<span class="c1"># 转换碱基对</span>
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">ori_text</span><span class="p">):</span>
+    <span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">}</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">ori_text</span><span class="p">:</span>
+        <span class="n">conv_char</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conv_char</span><span class="p">)</span>
+    <span class="n">conv_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">conv_text</span>
 </pre></div>
                         <br>
-                        <p>其中字符串的长度为 <code>n</code>，配对字符串长度为 <code>m</code>。接下来我们分析一下复杂度。先来看看最好的情况，最好的情况当然就是一次就成功啦，所以只需要比较 m 次，时间复杂度就为 Θ(m)。最坏的的情况就是，每当模式字符串向右移动一个单位，都需要比较 m 次，并且第 m 次的时候配对失败，所以最坏的情况总共需要比较 m(n-m+1) 次，时间复杂度就为 Θ(mn)。</p>
-                        <p>在自然语言中，通常第一个字符比对失败的概率很大，每次模式字符串移动的一个单位时候所需要比较的次数一般接近于 1，所以平均情况可以视为一个线性的复杂度：Θ(n)。</p>
+                        <p>其中原串的长度为 n，模式串长度为 m。接下来我们分析一下算法的复杂度。先来看看最好的情况，最好的情况当然就是一次就成功啦，所以只需要比较 m 次，时间复杂度就为 Θ(m)。最坏的的情况就是，模式串每向右移动一个单位，都需要比较 m 次，一共要移动 (n-m+1) 次。所以在最坏的情况下一共需要比较 m(n-m+1) 次，一般来讲，n 要远远大于 m，故时间复杂度就为 Θ(mn)。</p>
+                        <p>在自然语言中，通常原串和模式串的第一次比对失败的概率很大，所以每次模式串向右移动的一个单位时候所需要比较的次数接近于 1，因此在平均情况可以视为一个线性的复杂度：Θ(n)。</p>
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/String%20Matching" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
@@ -554,27 +570,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -597,6 +592,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -609,21 +605,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -648,43 +644,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -699,24 +666,45 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
+
 
 
 
