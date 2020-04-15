@@ -143,7 +143,7 @@
                 <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                        <p>其中 n 为数组的长度。那冒泡排序的效率如何呢？根据我们前面所学的<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/">复杂度分析</a>的内容，我们可以得到并推导出下面的式子：</p>
+                        <p>其中<code>n</code>为数组的长度。那冒泡排序的效率如何呢？根据我们前面所学的<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/">复杂度分析</a>的内容，我们可以得到并推导出下面的式子：</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation0.png"></p>
                         <p>最后我们得到冒泡排序的复杂度为 Θ(n<sup>2</sup>)。</p>
                         <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><strong>选择排序</strong>（<strong>selection sort</strong>）是暴力求解来解决排序问题的第二种方法，同样它也非常好理解，让我们先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）演示中来一探究竟吧。</p>
@@ -160,7 +160,7 @@
             <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                        <p>因为要暂存那些最小值的索引值，所以这里用到了一个变量<code>min</code>。最后来分析一下选择排序的复杂度，跟冒泡排序一样，根据循环结构找出 basic operation，在统计执行的次数即可，因而我们最后推导出选择排序的时间复杂度也为 Θ(n<sup>2</sup>)</p>
+                        <p>因为要暂存那些最小值的索引值，所以这里用到了一个变量<code>min</code>。最后来分析一下选择排序的复杂度，跟冒泡排序一样，根据循环结构找出 basic operation(<code>if array[min] > array[i]</code>)，在统计执行的次数即可，因而我们最后推导出选择排序的时间复杂度也为 Θ(n<sup>2</sup>)</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation1.png"></p>
                         <p>从时间复杂度我们可以看出，这两种排序算法的效率都不高。为了间接的证明这个结论，我在这一节的<a href>完整代码</a>里用到了每次排序所需要的比较次数和排序时间这两个指标来间接反映这一结论。后面我们还会接触到一些更为高效的算法，大家也可以通过这两个指标来判断一个排序算法效率如何。</p>
                         <p>下面是运行后的结果：</p>
