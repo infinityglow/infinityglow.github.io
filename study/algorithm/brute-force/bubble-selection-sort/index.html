@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>冒泡排序与选择排序 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>冒泡排序与选择排序 - 算法与复杂度 | 小白·菜的空间 </title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -56,19 +56,19 @@
                     <ul class="nav">
 
                         <li>
-                            <a href="/" title="主页">主页</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/life" title="生活">生活</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +101,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,14 +126,14 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="暴力求解"><a href="#暴力求解" class="headerlink" title="暴力求解"></a>暴力求解</h2><p>从这一章开始，我们就要正式地进入具体的算法问题了。别忘了，我们没有按照类别将这些算法问题分类（排序，搜索等），而是按照不同的解决方法来划分的。在我们还没有了解那些高(ling)深(ren)莫(tou)测(teng)的算法之前，我们先来学习一种最简单、最直接的解决方式：<strong>暴力求解</strong>（<strong>brute-force</strong>）。</p>
+                        <h2 id="暴力求解"><a href="#暴力求解" class="headerlink" title="暴力求解"></a>暴力求解</h2><p>从这一章开始，我们就要用算法去解决具体的问题了。别忘了前面我们提到过，我们并没有按照类别将这些算法问题分类（排序，搜索，等），而是按照不同的解决方法来划分的。在我们还没有了解那些高(ling)深(ren)莫(tou)测(teng)的算法之前，我们先来学习一种最简单也是最容易理解的解决方式：<strong>暴力求解</strong>（<strong>brute-force</strong>）。</p>
                         <p><img alt="step" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/step.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/step.jpg"></p>
-                        <p>所谓的暴力求解就是指：根据问题具体的描述直接写出相应的算法，从而忽略我们观察和分析问题的过程。举两个例子，前面提到的扔鸡蛋的问题，假如你从第一层开始一层一层地试，直到试出在哪一层鸡蛋刚好会碎，这种方法就是最简单，最直接的方法，也是你一开始就能够想到的方法。另一个例子就是假设让你猜一个 1-100 之间的整数，每次猜完之后会告诉你大了还是小了，你可能会想到从 1 开始一个一个递增地往上猜，但这样显然是最笨的方法，聪明的你肯定会从两个数的中间开始猜，像这样的方法我们在<a href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/">后面</a>还会再次提及。</p>
-                        <p>从两个简单的例子我们似乎可以提前得出结论：暴力求解的效率一定不会很高，但我们可以很方便的 coding。所以，对于一些规模很小的问题我们可以采用这种方式，但对于规模较大的问题，我们计算机的 CPU 可能就吃不消了。</p>
+                        <p>从字面上理解暴力求解就是利用计算机快速计算的优势，用蛮力的方法解决一切问题，也就是根据问题描述直接写出相应的算法，从而忽略我们观察和分析问题的过程。举两个例子，前面提到的扔鸡蛋的问题，假如你从第一层开始一层一层地试，直到试出在哪一层鸡蛋刚好会碎，这种方法就是最简单，最直接的方法，也是你一看问题便能想到的办法。另一个例子就是假设让你猜一个 1-100 之间的整数，每次猜完之后会告诉你大了还是小了，你可能会想到从 1 开始一个一个递增地往上猜，但这样显然不是最高效的方法，聪明的你肯定会从两个数的中间开始猜，这样会大大减小猜的次数，效率明显比一个一个才要高。像这样的方法我们在<a href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/">后面</a>还会再次提及。</p>
+                        <p>从两个简单的例子我们似乎可以提前得出结论：暴力求解的效率一定不会很高，但我们可以很方便的写出代码。因此，对于一些规模很小的问题我们可以采用这种方式，但对于规模较大的问题，暴力求解需要计算的次数可能随着问题的规模呈现指数级的增长，那时候我们计算机的 CPU 可能就吃不消了。</p>
                         <p><img alt="sick" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/sick.jpg"></p>
-                        <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>下面我们就从两种最简单的排序算法开始介绍。首先是<strong>冒泡排序</strong>（<strong>bubble sort</strong>），当你一听到这个名字的时候，你就可能认为它跟冒泡泡有一定关系，事实上的确如此，我们可以先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）直观地感受一下：</p>
+                        <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>下面我们就从两种最简单的排序算法开始介绍。首先是<strong>冒泡排序</strong>（<strong>bubble sort</strong>），当你一听到这个名字的时候，你就可能认为它跟冒泡泡有一定关系。哈哈，事实上的确如此，我们可以先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）直观地感受一下：</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/bubble.mp4"></video></p>
-                        <p>可以看到的是，每次循环，左边总有一些大的数会向右“浮动”到相应的位置，如果把它旋转 90 度，这些数就好像在“冒泡”了。实际上，冒泡排序是基于数组中相邻两个元素的比较，如果乱序就交换位置，一直重复这个过程直到数组有序。因为在每次循环中，那些较大的数总是要跟较小的数做交换，所以在直观上就好像这些较大的数在往右“浮动”了。</p>
+                        <p>可以看到的是，每次循环，左侧较大的元素会向右“浮动”到相应的位置，如果把它旋转 90 度，这些数就好像在“冒泡”了。实际上，冒泡排序做的事情很简单，<code>i</code>从 0 开始，每次处理的数组长度为<code>len(array)-i</code>，在每次的待处理的数组中，相邻的元素之间两两比较，如果乱序就交换位置，一直重复前面的过程直到数组有序。因为在每次循环中，那些较大的数总是要跟较小的数做交换，所以在直观上就好像这些较大的数在向一个方向“浮动”了。</p>
                         <p>冒泡排序的实现非常简单，几行代码就能够搞定：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
@@ -143,13 +143,12 @@
                 <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                        <br>
                         <p>其中 n 为数组的长度。那冒泡排序的效率如何呢？根据我们前面所学的<a href="https://infinityglow.github.io/study/algorithm/complexity-analysis/non-recursive/">复杂度分析</a>的内容，我们可以得到并推导出下面的式子：</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation0.png"></p>
-                        <p>最后我们推出冒泡排序的复杂度为 Θ(n<sup>2</sup>)。</p>
-                        <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><strong>选择排序</strong>（<strong>selection sort</strong>）是用暴力求解来解决排序问题的第二种方法，同样它也是一种简单、直接的方法，让我们先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）演示中来一探究竟吧。</p>
+                        <p>最后我们得到冒泡排序的复杂度为 Θ(n<sup>2</sup>)。</p>
+                        <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><strong>选择排序</strong>（<strong>selection sort</strong>）是暴力求解来解决排序问题的第二种方法，同样它也非常好理解，让我们先从一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）演示中来一探究竟吧。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/selection.mp4"></video></p>
-                        <p>从动画中可以看到，每次循环都会从右边未排序的序列中选择一个最小的数，与未排序的序列中的第一个元素交换，然后反复这个过程，直到循环结束。</p>
+                        <p>从动画中可以看到，每次循环都会从右侧未排序的序列中选择一个最小的数，与未排序的序列中的第一个元素交换，然后反复这个过程，直到循环结束。</p>
                         <p>选择排序用 Python 实现也很容易，也只需要几行代码：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
@@ -161,11 +160,24 @@
             <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="nb">min</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                        <br>
-                        <p>因为要暂存那些最小值的索引值，所以这里用到了一个变量<code>min</code>。最后来分析一下选择排序的复杂度，跟冒泡排序一样，根据循环结构，可以推导出最终的复杂度也为 Θ(n<sup>2</sup>)</p>
+                        <p>因为要暂存那些最小值的索引值，所以这里用到了一个变量<code>min</code>。最后来分析一下选择排序的复杂度，跟冒泡排序一样，根据循环结构找出 basic operation，在统计执行的次数即可，因而我们最后推导出选择排序的时间复杂度也为 Θ(n<sup>2</sup>)</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/derivation1.png"></p>
-                        <p>从时间复杂度我们可以看出，这两种排序算法的效率都不高。为了间接的证明这个结论，我在这一节的<a href>完整代码</a>里用到了每次排序所需要的比较次数和排序时间这两个指标来间接反映这一结论。后面我们还会接触到一些更为高效的算法，大家也可以通过这两个指标来判断一个排序算法快慢与否。</p>
+                        <p>从时间复杂度我们可以看出，这两种排序算法的效率都不高。为了间接的证明这个结论，我在这一节的<a href>完整代码</a>里用到了每次排序所需要的比较次数和排序时间这两个指标来间接反映这一结论。后面我们还会接触到一些更为高效的算法，大家也可以通过这两个指标来判断一个排序算法效率如何。</p>
+                        <p>下面是运行后的结果：</p>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">bubble</span><span class="o">.</span><span class="o">py</span>
+<span class="o">...</span> <span class="o">average</span> <span class="o">number</span> <span class="o">of</span> <span class="o">comparison</span><span class="p">:</span> <span class="o">49995000</span>
+<span class="o">...</span> <span class="o">average</span> <span class="o">time</span> <span class="o">consumed</span><span class="p">:</span> <span class="o">9.3161</span> <span class="o">s</span>
 
+<span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">selection</span><span class="o">.</span><span class="o">py</span>
+<span class="o">...</span> <span class="o">average</span> <span class="o">number</span> <span class="o">of</span> <span class="o">comparison</span><span class="p">:</span> <span class="o">49995000</span>
+<span class="o">...</span> <span class="o">average</span> <span class="o">time</span> <span class="o">consumed</span><span class="p">:</span> <span class="o">4.7869</span> <span class="o">s</span>
+</pre></div>
+                        <h2 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h2><p>下面来介绍一下排序算法的一个很重要的性质：<strong>稳定性</strong>（<strong>stability</strong>）。一个排序算法的稳定性在于原来具有相同大小的元素在排序后其相对顺序仍保持不变。</p>
+                        <p>举个简单的例子，如下图所示，排序前数组中红色的 4 位于蓝色的 4 的前面，如果排序后红色的 4 还在蓝色的 4 的前面，则该排序算法是稳定的，反之则不稳定。</p>
+                        <p><img alt="稳定性" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/stable0.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/stable0.png"></p>
+                        <p>我们先来看看冒泡排序的稳定性如何，我们知道，冒泡排序是数组的相邻元素进行大小比较，每次比较元素只能跟相邻的元素发生交换，所以相同大小的元素的相对顺序不可能发生变化，所以冒泡排序是一个稳定的排序算法。</p>
+                        <p>再来说一说选择排序，我们不太能从算法本身分析出稳定性，所以这里我们直接举出选择排序不稳定的例子，下图的数组选出最小元素 2 并与第一个元素 4 交换顺序后，红色的 4 的和蓝色的 4 的顺序发生了变化，所以选择排序是一个不稳定的排序算法。</p>
+                        <p><img alt="稳定性" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/stable1.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/images/stable1.png"></p>
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Bubble%20Selection%20Sort" target="_blank" rel="noopener">本节全部代码</a> ←</p>
 
@@ -574,27 +586,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -617,6 +608,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -629,21 +621,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -668,43 +660,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -719,23 +682,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
