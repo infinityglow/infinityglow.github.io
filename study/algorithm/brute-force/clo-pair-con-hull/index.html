@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>最近点对与凸包问题（BF）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>最近点对与凸包问题（BF）- 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -100,7 +104,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -125,32 +129,33 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="最近点对问题"><a href="#最近点对问题" class="headerlink" title="最近点对问题"></a>最近点对问题</h2><p>这一节内容，我们来看看两个经典的几何学问题。首先是<strong>最近点对问题</strong>（<strong>closest-pair problem</strong>）。问题的描述是在一个二维平面上有一些随机分布的散点，要求我们在这些散点里找到两个点，使得它们的距离最小。</p>
+                        <h2 id="最近点对问题"><a href="#最近点对问题" class="headerlink" title="最近点对问题"></a>最近点对问题</h2><p>这一节内容，我们来看两个经典的几何学问题。首先是<strong>最近点对问题</strong>（<strong>closest-pair problem</strong>）。问题的描述是在一个二维平面上有一些随机分布的散点，要求我们在这些散点里找到两个点，使得它们的距离最小。</p>
                         <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair0.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair0.png"></p>
-                        <p>有解决这个问题很简单，只需要把所有的情况都列举出来，即每一个点与其他所有节点的距离都计算出来，然后取最小的值。所以，这里我们再次用到了暴力求解的方法。</p>
-                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">closest_pair_bf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+                        <p>用暴力求解的方式解决这个问题很简单，只需要把所有的情况都列举出来，即计算出每一个点与其他所有节点的距离，然后取最小的值。如果平面上有 n 个点，那么要考虑的点对数就为 n(n-1)/2。比如下面的图中一共有 16 个点，我们就要考虑 120 种情况。
+                        <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair1.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair1.png"></p>
+                        <p>要实现这个过程也很容易，几行代码就可以搞定。</p>
+                        <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">closest_pair_bf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>  <span class="c1"># 初始化 d 为无穷</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
             <span class="n">d</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">Y</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">d</span>
 </pre></div>
-                        <br>
                         <p>其中参数 <code>X</code> 和 <code>Y</code> 分别表示所有散点的横纵坐标的集合。在主程序中，我们用 <a href="https://docs.scipy.org/doc/numpy-1.15.0/reference/generated/numpy.random.normal.html" target="_blank" rel="noopener"><code>numpy.random.normal</code></a> 方法生成随机数，并且用<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.column_stack.html" target="_blank" rel="noopener"><code>np.column_stack</code></a>方法将它们打包。</p>
                         <div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>  <span class="c1"># 为了代码的可复现性</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="n">XY_pair</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
 </pre></div>
-                        <br>
-                        <p>如果平面上有 n 个点，那么要考虑的点对数就为 n(n-1)/2。比如这里一共有 16 个点，我们就要考虑 120 种情况。</p>
-                        <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair1.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair1.png"></p>
-                        <p>关于算法的复杂度，我们很容易就能推导得出为 Θ(n<sup>2</sup>)。最后我们标注出最近点对在图中的位置。</p>
+                        <p>最后将得到的最近点对在图中标注出来。</p>
                         <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair2.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/clo-pair2.png"></p>
-                        <h2 id="凸包问题"><a href="#凸包问题" class="headerlink" title="凸包问题"></a>凸包问题</h2><p><strong>凸包问题</strong>（<strong>convex-hull problem</strong>）是这里要讨论的第二个问题。首先我们先要弄明白什么是凸包，在生活中，你一定见过在一个扎满钉子的木头上套上一圈橡皮筋的场景，像下面这张图那样。哈哈，实际上在这里橡皮筋围成的多边形就是一个凸包了。</p>
+                        <p>由于有两重循环，所以我们得到算法的时间复杂度为 Θ(n<sup>2</sup>)。</p>
+                        <h2 id="凸包问题"><a href="#凸包问题" class="headerlink" title="凸包问题"></a>凸包问题</h2><p><strong>凸包问题</strong>（<strong>convex-hull problem</strong>）是这里我们要讨论的第二个问题。首先要弄明白什么是凸包，在生活中，你一定见过在一个扎满钉子的木头上套上一圈橡皮筋的场景，像下面这张图那样。哈哈，实际上橡皮筋围成的多边形就是一个凸包了。</p>
                         <p><img alt="橡皮筋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/rubber.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/rubber.png"></p>
-                        <p>从严格意义上来讲，凸包指的是由数个点构成的凸多边形（每个内角都小于180度），并且这个多边形能够把这个平面上所有的点都囊括在内。就像上面那张图中被橡皮筋围住的钉子一样。所以，我们怎么来解决这个问题呢？答案当然还是采用最“暴力”的手段。穷举所有的情况，找到我们所需要的多边形。</p>
-                        <p>从形成的凸包多边形我们可以观察到，对于多边形的边所形成的直线，其他所有的节点都在这条直线的同一侧。于是我们可以根据这个特点写出代码：</p>
+                        <p>从严格意义上来讲，凸包指的是由多个点构成的凸多边形（所有内角都小于180度），并且凸包还有一点性质是平面上所有的点都位于该多边形的内部。就像上面那张图中橡皮筋把所有钉子都围住一样。所以，我们要怎么来解决这个问题呢？答案当然还是采用最“暴力”的手段，穷举所有的情况，找到我们所需要的多边形。</p>
+                        <p>从构成凸包的边中我们可以观察到，除了构成边本身的两个点以外，其他所有的点都位于边的同一侧。于是我们可以根据这个性质写出代码：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convex_hull_bf</span><span class="p">(</span><span class="n">XY_pair</span><span class="p">):</span>
     <span class="n">pairs</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 用于存储满足条件的点</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">XY_pair</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
@@ -175,7 +180,7 @@
                         <br>
                         <p>对于判断一个点是在一条直线的左侧还是右侧，我们会用到了下面的公式：</p>
                         <p><img alt="公式" src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/formula.png"></p>
-                        <p>其中 a = y<sub>2</sub> - y<sub>1</sub>, b = x<sub>1</sub> - x<sub>2</sub>, c = x<sub>1</sub>y<sub>2</sub> - y<sub>1</sub>x<sub>2</sub>，x 和 y 分别为需代入的点。如果值大于 0，那么该点在直线的左侧；如果小于 0，那么该点在直线的右侧。</p>
+                        <p>其中 a = y<sub>2</sub> - y<sub>1</sub>, b = x<sub>1</sub> - x<sub>2</sub>, c = x<sub>1</sub>y<sub>2</sub> - y<sub>1</sub>x<sub>2</sub>，构成边的两个点的坐标分别为 (x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>)，而 x 和 y 分别待判定的点。如果值大于 0，说明该点在直线的左侧；如果小于 0，说明该点在直线的右侧。</p>
                         <p>最后我们将满足条件的点通过收尾相连的方式显示出来，这样我们就能画出多边形了。</p>
                         <p><img alt="凸包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/con-hull.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/con-hull.png"></p>
                         <p>作图的代码如下：</p>
@@ -186,9 +191,9 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np_point_stack</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np_point_stack</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-                        <br>
-                        <p>最后来分析一下复杂度。我们知道，如果平面上有 n 个点，那么一共就有 $ \frac{n(n-1)}{2} $ 个点对，也就是直线的条数。对于每一条直线，又要从剩下 n - 2 个点中判断是否在直线的同一侧。这样一来，只要我们列出求和公式，再经过推导就能够得到复杂度为 Θ(n<sup>3</sup>)。这里我就偷个懒，不详细写出来了～</p>
-                        <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们可以看到，用暴力求解的办法解决几何问题依然是那么简单、直接，但效率也是依然的低。所以这两种算法也只能解决小规模的问题。面对 n &gt; 10<sup>6</sup> 这种大规模的问题时，我们就要求助<a href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/">其他算法</a>了。</p>
+                        <p>最后来分析一下复杂度。我们知道，如果平面上有 n 个点，那么一共就有 n(n-1) / 2 个点对，也就是直线的条数。对于每一条直线，又要从剩下 n - 2 个点中判断是否在直线的同一侧。这样一来，只要我们列出求和公式，再经过推导就能够得到复杂度为 Θ(n<sup>3</sup>)，具体推导过程如下：</p>
+                        <p><img alt="derivation" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/derivation.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/images/derivation.png"></p>
+                        <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们可以看到，用暴力求解的方式解决这两个几何问题非常简单，但效率却是低，都是平方级和立方级的复杂度，所以这两种算法也只能解决小规模的问题。面对 n &gt; 10<sup>6</sup> 这种大规模的问题时，我们就要求助<a href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/">其他算法</a>了。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Closest-Pair%20%26%20Convex-Hull%20Problem" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -598,27 +603,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -641,6 +625,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -653,21 +638,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -692,43 +677,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -743,23 +699,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
