@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>图的两种遍历 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>图的两种遍历 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -59,15 +59,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -100,7 +104,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -125,26 +129,31 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="邻接矩阵和邻接表"><a href="#邻接矩阵和邻接表" class="headerlink" title="邻接矩阵和邻接表"></a>邻接矩阵和邻接表</h2><p>在讲<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/">数据结构</a>的那一节里我们提到了图这种数据结构，并且介绍了两种表示方法：邻接矩阵和邻接表。接下来我们来分别看看这两种方法是如何表示一张图的吧。</p>
-                        <p>和树这种数据结构不同，图的节点之间的连接是自由的，即一个节点可以连接其他任意节点（包括自身），并且是具有方向性的。所以我们可以根据这样的特性，用 0 和 1 来表示一个节点 u 是否能够到达另一个节点 v。假设一个图由 n 个节点组成，那么我们就有 n<sup>2</sup> 种可能的连接。为了方便，我们用一个 n × n 的矩阵来表示：</p>
+                        <h2 id="邻接矩阵和邻接表"><a href="#邻接矩阵和邻接表" class="headerlink" title="邻接矩阵和邻接表"></a>邻接矩阵和邻接表</h2><p>在讲<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/">数据结构</a>的那一节里我们提到了图这种数据结构，并且介绍了两种用来表示图的方法：邻接矩阵和邻接表。接下来我们来分别看看它们是如何表示一张图的吧。</p>
+                        <p>对于图而言，节点之间的连接是不受限制的，即一个节点可以连接任意节点（包括自身），并且还具有方向性。所以，我们可以用 0 和 1 两种状态来表示一个节点 u 是否能够连接到另一个节点 v。假设一个图由 n 个节点组成，那么我们就有 n<sup>2</sup> 种可能的连接。为了更直观地展现出来，我们用一个 n × n 的矩阵来表示：</p>
                         <p><img alt="邻接矩阵" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/matrix.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/matrix.png"></p>
-                        <p>根据上面的矩阵，我们可以得知节点 a 可以到达节点 c，而节点 d 却不能到达节点 c。如果我们考虑矩阵中的每一项，根据其连接关系，我们就可以画出这个图：</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph0.png"></p>
-                        <p>如果我们用一个链表的形式来表示一个节点到与之相连的节点，那么我们就可以得到一个由多个链表构成的数组。举个例子，上面的图中，节点 b 对应的链表中含有节点 c 和 f，所以节点 b 是可以直接到达节点 c 和节点 f 的。同样，由于我们的图是一个无向图，所以节点 c 和节点 f 分别对应的链表也是含有节点 b 的。根据整个邻接表，我们也可以画出和上面相同的图。</p>
+                        <p>根据上面的矩阵，我们可以得知节点 a 与节点 c 连接，而节点 d 却没有直接与节点 c 相连。如果我们将矩阵中的每一项都考虑在内，构建节点与节点的连接关系，并直观地展现出来就会和下面一样：</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph.png"></p>
+                        <p>如果我们用一个链表的形式来表示一个节点到与之相连的全部节点，那么我们就可以得到一个由多个链表构成的数组。举个例子，上面的图中，节点 b 对应的链表中含有节点 c 和 f，说明节点 b 是直接连接到节点 c 和节点 f 的。同样，由于我们的图是一个无向图，所以节点 c 和节点 f 分别对应的链表也是含有节点 b 的。根据整个邻接表，我们也可以画出和上面一样的图。</p>
                         <p><img alt="邻接表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/list.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/list.png"></p>
-                        <h2 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h2><p>在了解两种遍历算法之前，我们先要知道什么是遍历？<strong>遍历</strong>（<strong>traversal</strong>）是对树（图）这种相对复杂的数据结构中的每一个节点进行逐一访问的过程。换句话说就是我们能够找到一条路，将所有节点都“走”过一遍。</p>
-                        <p><strong>深度优先遍历</strong>（<strong>depth-first search</strong>）是图的一种遍历方式。既然是深度优先遍历当然是跟深度有关系啦。具体过程：假设从一个节点出发，我们需要尽可能远地探索其他分支，直到遇到“<strong>死胡同</strong>”（<strong>dead end</strong>）。例如下面的图，我们从节点 a 开始遍历，由于算法是尽可能远地探索那些节点，所以当我们探索到“死胡同”的时候，走过的节点就为 a-b-d-c-f (分支节点按照字母表顺序进行优先选择)。</p>
+                        <h2 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h2><p>在了解两种遍历算法之前，我们先要知道什么是遍历。<strong>遍历</strong>（<strong>traversal</strong>）是对树或图这种相对复杂的数据结构中的每一个节点进行逐一访问的过程。</p>
+                        <p>先来介绍一下<strong>深度优先遍历</strong>（<strong>depth-first search</strong>），顾名思义它与深度有关系。其主要思想是：假设从一个节点出发，我们需要尽可能远地探索未访问的节点，直到不能继续探索为止，也就是遇到了“<strong>死胡同</strong>”（<strong>dead end</strong>），举个例子，我们要对下面的图进行遍历。
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph0.png"></p>
+                        <p>假设从节点 a 出发，我们首先将节点 a 标记为已访问。
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph1.png"></p>
-                        <p>节点 e 被遍历后，我们需要退回到节点 d，再尽可能地往更远的地方走，直到再次遇到“死胡同”。所以节点 c 和节点 f 是下一次被遍历的两个节点。</p>
+                        <p>访问完节点 a 之后，我们要尽可能地远的探索其他节点，直到遇到“死胡同”。因此，在遇到“死胡同”之前，我们会访问节点 b, d, c, f (如出现分支则按照字母表顺序进行优先选择)。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph2.png"></p>
-                        <p>然后重复这个过程，直到退回到了节点 a。显然，这个过程需要用递归或者栈来实现的（因为后来的节点先离开），要实现这个代码，首先我们先要用一个类来表示图中的节点。</p>
+                        <p>当节点 f 被访问后，我们需要先退回到节点 c，然后再继续探索，这时我们发现节点 c 已经没有可探索的节点了，因此我们要再退到节点 d，然后再尽可能地探索其他节点，直到再次遇到“死胡同”。因此节点 e 是下一个被访问的节点。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph3.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph3.png"></p>
+                        <p>然后重复上述的过程，直到我们退回到了节点 a。
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph4.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph4.png"></p>
+                        <p>从上面的过程我们可以看出，深度优先遍历是需要用递归或者栈来实现的（因为后加入的节点要先离开），要实现这个代码，首先我们先要用一个类来表示图中的节点。</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">visited</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">neighbours</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 记录所有与之相邻的节点</span>
 </pre></div>
-                        <br>
                         <p>然后实现一下深度优先遍历的过程：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
     <span class="n">v</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
@@ -153,8 +162,7 @@
             <span class="n">w</span><span class="o">.</span><span class="n">visited</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="n">dfs</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 </pre></div>
-                        <br>
-                        <p>我们看到，由于节点 g 和节点 h 没有与左边的图连通，所以我们需要再构建一个函数用来遍历所有节点是否被访问过，如果没有，我们就从该节点开始再进行遍历。</p>
+                        <p>我们看到，由于节点 g 和节点 h 没有与左边的图连通，所以我们需要再构建一个函数用来遍历所有节点，来看这些节点是否被访问过，如果没有，我们就从该节点开始继续遍历。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">DFS</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
     <span class="n">V</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
@@ -162,11 +170,20 @@
             <span class="n">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 </pre></div>
                         <br>
-                        <p>最后我们遍历完全部的节点。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph3.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph3.png"></p>
-                        <h2 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h2><p>和深度优先遍历一样，<strong>广度优先遍历</strong>（<strong>breadth-first search</strong>）也是从一个节点出发，遍历所有节点。但不一样的是，我们这次是尽可能广地遍历其他邻近的节点。还是拿刚刚的图来做例子，当节点 a 被访问后，节点 b 和节点 c 会紧接着被访问。</p>
-                        <p>此时节点 a 的所有邻近节点全部被访问了，所以这里只需要考虑节点 b 和节点 c 的邻近节点，因此下一次被访问的节点就会有 d 和 f，然后我们反复这个过程，最终遍历全部节点。</p>
-                        <p>这种先进来的节点先离开的形式我们可以用一个队列来实现：</p>
+                        <p>因此，我们要从节点 g 出发，再遍历剩下的节点，直到所有的节点都被遍历。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph5.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph5.png"></p>
+                        <h2 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h2><p>和深度优先遍历不同的是，<strong>广度优先遍历</strong>（<strong>breadth-first search</strong>）尽可能广地遍历其他邻近的节点，也就是节点是一层一层遍历的。</p>
+                        <p>还是那上面的图为例，要实现广度优先遍历，需要用到队列这种数据结构。
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph6.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph6.png"></p>
+                        <p>首先是节点 a 入队，并标记 a 已被访问。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph7.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph7.png"></p>
+                        <p>接下来访问 a 的相邻节点 b 和 c 入队，a 出队，同时标记节点 b 和 c 已被访问。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph8.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph8.png"></p>
+                        <p>此时节点 a 的所有相邻节点全部被访问了，所以此时只需要考虑节点 b 和节点 c 的相邻节点，因此下一次被访问的节点就是 d 和 f，
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph9.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph9.png"></p>
+                        <p>然后我们重复这个过程，最后得到：</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph10.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph10.png"></p>
+                        <p>下面是代码实现过程：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bfs</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
     <span class="n">v</span><span class="o">.</span><span class="n">visted</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 初始化一个空队列</span>
@@ -178,32 +195,20 @@
                 <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
         <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># v 出队</span>
 </pre></div>
-                        <br>
-                        <p>同样，对于那些没有相互连接的图，我们处理的方式是一样的：</p>
+                        <p>同样，对于那些没有相互连接的图，我们处理的方式跟上面是一样的。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">BFS</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
     <span class="n">V</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">visited</span><span class="p">:</span>
             <span class="n">bfs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 </pre></div>
-                        <br>
-                        <p>完整的图解如下：</p>
-                        <p>节点 a 入队</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph4.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph4.png"></p>
-                        <p>节点 b, c 入队，节点 a 出队</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph5.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph5.png"></p>
-                        <p>节点 d, f 入队，节点 b, c 出队</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph6.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph6.png"></p>
-                        <p>节点 e 入队，节点 d, f 出队</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph7.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph7.png"></p>
-                        <p>节点 g 入队</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph8.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph8.png"></p>
-                        <p>节点 h 入队，节点 g 出队。再经过一次 <code>while</code> 循环后节点 h 出队，最后遍历完成。</p>
-                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph9.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph9.png"></p>
-                        <p>那么图的遍历跟暴力求解有什么关系呢？事实上，不管是深度优先遍历还是广度优先遍历，我们可以发现，其实每一个节点在被访问的过程中都执行了一次遍历算法，我们正是通过这种方式，才保证了图的每一个节点能够被访问，达到遍历的效果。后面我们讲到的<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhausitive-search/">暴力搜索</a>也是运用到了这么一点性质。</p>
-                        <p>图的复杂度怎么计算呢？我们知道图可以由邻接矩阵或邻接表来表示，所以我们要分别来讨论：</p>
-                        <p>如果我们用邻接矩阵来表示，在执行遍历算法的过程中，由于每个节点都要查看其他节点是否与自己相连，即矩阵中每一行的 0 和 1，所以对于一个有 |V| 个节点的图来讲，就要查看 |V|<sup>2</sup> 次，所以用邻接矩阵来表示的图，其两种遍历的复杂度均为 Θ(|V|<sup>2</sup>)。</p>
-                        <p>邻接表由于只记录了每个节点和与之相连节点的信息，即每条边的信息。所以在遍历的过程中，我们需要 |V| + |E| 次，其中 |V| 表示判断节点是否已经被访问过的次数，|E| 表示一个图里边的条数（具有两个方向的边算作两次）。所以用邻接表表示的图，其两种遍历的复杂度均为 Θ(|V|+|E|)。</p>
+                        <p>因此我们要再从节点 g 开始，遍历剩下的图。</p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph11.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph11.png"></p>
+                        <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph12.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/images/graph12.png"></p>
+                        <p>那么图的遍历跟暴力求解有什么关系呢？事实上，不管是深度优先遍历还是广度优先遍历，我们可以发现，每一个节点都执行了一次遍历算法，正是通过这种方式，才保证了图的每一个节点能够被访问，达到遍历的效果。后面我们讲到的<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhausitive-search/">暴力搜索</a>也是同样的思想。</p>
+                        <p>下面来谈谈遍历图的复杂度。我们知道图可以由邻接矩阵或邻接表来表示，因此我们要分别来讨论：</p>
+                        <p>如果我们用邻接矩阵来表示，在执行遍历算法的过程中，由于每个节点都要查看其他节点是否与自己相连，即矩阵中每一行的 0 和 1，所以对于一个有 |V| 个节点的图来讲，就要查看 |V|<sup>2</sup> 次，其中 |V| 表示判断节点是否已经被访问过的次数。因而用邻接矩阵来表示的图的两种遍历的复杂度均为 Θ(|V|<sup>2</sup>)。</p>
+                        <p>邻接表由于只记录了每个节点和与之相连节点的信息，即每条边的信息。所以在遍历的过程中，我们需要 |V| + |E| 次，其中 |E| 表示一个图里边的条数（具有两个方向的边算作两次）。因此用邻接表表示的图的两种遍历的复杂度均为 Θ(|V|+|E|)。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Graph%20Traversal" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -613,27 +618,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -656,6 +640,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -668,21 +653,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -707,43 +692,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -758,23 +714,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
