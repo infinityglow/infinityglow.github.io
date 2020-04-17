@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>插入排序- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>插入排序- 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,17 +130,17 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="减治"><a href="#减治" class="headerlink" title="减治"></a>减治</h2><p>在这一章里面，我们会讨论一种解决问题的新方案。<strong>减治</strong>（<strong>decrease and conquer</strong>），全称叫做减而治之，是通过逐步缩小问题规模的方式来解决一个问题。可能你还不是很明白，别急，我们先上一个例子：假设 9 枚金币中有一枚是假的（假币的重量会比真币轻），现在给你一个天平，你需要用最少的次数找出假币，该怎么做呢？</p>
+                        <h2 id="减治"><a href="#减治" class="headerlink" title="减治"></a>减治</h2><p>在这一章里面，我们会讨论一种解决算法问题的新方案。<strong>减治</strong>（<strong>decrease and conquer</strong>），全称叫做减而治之，是通过逐步缩小问题规模的方式来解决一个问题。可能你还不是很明白，别急，我们先上一个例子：假设 9 枚金币中有一枚是假的（假币的重量会比真币轻），现在给你一个天平，你需要用最少的次数找出这枚假币。</p>
                         <p><img alt="天平" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/balance.jpg" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/balance.jpg"></p>
-                        <p>你可以一枚一枚地称，但最多你可能要称 8 次才能称出来，不是很高效。其实我们可以将这些金币对半分，即 9 枚金币分为 4 枚和 5 枚。因为天平两边的金币数要是相同的我们才能判断哪边轻，所以这里需要从 5 枚里取出 1 枚。这样如果拿出的那一枚不是假币的话，我们只需要从较轻的 4 枚中找到假币，于是又可以对半分，称量之后，再从其中较轻的两枚中选择。这样以此类推，直到找出假币。</p>
-                        <p>我们可以看到，原问题是从 9 枚金币中找出假币，经过一次称量之后，问题变为了从 4 枚金币中找出假币，再次称量后问题的规模变为了 2，最后变为 1，即找到假币。这就是减治法的精髓了：一个大问题被一次又一次地拆分成了更小的问题，直到我们能够直接解决小问题。</p>
-                        <h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>小时候你一定玩过扑克牌，当你在整理那些乱序的牌的时候，你脑海里想到的第一种方法一定是将这些新摸到的牌插入到对应的位置，以此来达到手牌有序。</p>
+                        <p>你可以一枚一枚地称，但最多你可能要称 8 次才能称出来，不是非常高效。其实我们可以将这些金币对半分，也就是将 9 枚金币分为 4 枚和 5 枚。因为只有当天平两边的金币数要是相同的情况下我们才能判断哪边轻哪边重，所以这里需要从 5 枚里取出 1 枚。这样如果拿出的那一枚不是假币的话，经过一次称量后，我们只需要从较轻的 4 枚中找到假币，于是又可以对半分，称量之后，再从其中较轻的两枚中选择。这样以此类推，直到我们找出假币。</p>
+                        <p>我们可以看到，原问题是从 9 枚金币中找出假币，经过一次称量之后，问题变为了从 4 枚金币中找出假币，再次称量后问题的规模变为了 2，最后变为 1，即找到假币。这就是减治法的思想：一个大问题被一次又一次地拆分成了更小的问题，直到我们能够直接解决小问题。</p>
+                        <h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>小时候你一定玩过扑克牌，当你在整理那些乱序的牌的时候，你想到的第一种方法一定是将这些新摸到的牌插入到对应的位置，以此来达到手牌有序。</p>
                         <p><img alt="扑克" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/poker.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/poker.png"></p>
                         <p>让我们以数组为例，假设有下面的数组：</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array0.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array0.png"></p>
                         <p>我们可以看到，前面 3 个元素已经有序，后面 7 个元素还是无序状态，这时候我们需要将第 4 个元素插入到相应的位置，这样有序序列就从 3 增加到 4，无序序列就从 7 减小到 6。</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array1.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array1.png"></p>
-                        <p>如果对于一个含有 n 个元素的完全无序的数组，我们可以把第一个元素视作有序，其余 n - 1 个元素视为无序，因为只有一个元素的数组肯定是有序的，所以每次将无序序列的第一个元素插入到相应位置后，问题的规模就减少 1。这样我们重复 n - 1 次，数组就从无序变为有序了。</p>
+                        <p>如果对于一个含有 n 个元素的完全无序的数组，我们可以把第一个元素视作有序，其余 n - 1 个元素视为无序，因为只有一个元素的数组肯定是有序的，所以每次将无序序列的第一个元素插入到相应位置后，问题的规模就减少 1。如果我们重复 n - 1 次，数组就从无序变为有序了。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/insertion-avg.mp4"></video></p>
                         <p>最后我们用代码实现一下插入排序。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insertion_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
@@ -150,30 +154,30 @@
         <span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>  <span class="c1"># 循环结束后，将 v 插入到相应位置</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                        <br>
                         <h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><h3 id="最好情况"><a href="#最好情况" class="headerlink" title="最好情况"></a>最好情况</h3><p>插入排序的复杂度分析不同于之前讲到冒泡和选择排序，我们需要考虑不同实例下的数组。假设一个数组已经有序，在每次的 <code>for</code> 循环里，每个待插入的元素只需要跟自己前面的元素比较后就完成一次插入操作，即每个元素只比较一次。所以，对于一个含有 n 个元素的数组来讲，我们只需要比较 n - 1 次。</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/derivation0.png"></p>
                         <p>所以复杂度就为 Θ(n)。我们用一个动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）来直观地感受一下。</p>
-                        <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/insertion-best.mp4"></video></p>                        <h3 id="最坏情况"><a href="#最坏情况" class="headerlink" title="最坏情况"></a>最坏情况</h3><p>如果数组是倒序排列的，那么每次待插入的元素都要插入到第一个位置（假设数组每个元素是唯一的）。也就是说，<code>for</code> 循环每执行一次，需要比较的次数就为 <code>i</code> 次，所以根据这个关系我们可以得出下面的式子：</p>
+                        <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/insertion-best.mp4"></video></p>                        <h3 id="最坏情况"><a href="#最坏情况" class="headerlink" title="最坏情况"></a>最坏情况</h3><p>如果数组是倒序排列的，那么每次待插入的元素都要插入到第一个位置（假设数组元素不重复），也就是说，<code>for</code> 循环每执行一次，需要比较的次数就为 <code>i</code> 次，所以根据这个关系我们可以得出下面的式子：</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/derivation1.png"></p>
-                        <p>复杂度为 Θ(n<sup>2</sup>)，从动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）时间的长短我们就可以看出，这种情况下算法的效率是比较低的。</p>
+                        <p>复杂度为 Θ(n<sup>2</sup>)，从动画（来源于<a href="https://visualgo.net/en/sorting" target="_blank" rel="noopener">网络</a>）时间的长短我们就可以看出，最坏的情况下算法的效率是比较低的。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/insertion-worst.mp4"></video></p>                        <h3 id="平均情况"><a href="#平均情况" class="headerlink" title="平均情况"></a>平均情况</h3><p>平均情况的复杂度分析相对来说就要稍微困难一点了，这里我们用基于概率的方式计算，对于第 <code>i</code> 个元素，它能够插入的位点有 <code>i</code> 处，每一处需要比较的次数分别为 1, 2, …, i。像下面这张图一样：</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array2.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/array2.png"></p>
                         <p>假设每个位点插入的概率相同，我们就可以得到下面的式子：</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/derivation2.png"></p>
                         <p>这说明了对于一个随机数组，第 <code>i</code> 个元素插入到相应位置所需要的平均比较次数为 (i+1)/2 次。对于整个数组而言，待插入的元素是从第 2 个开始，一直遍历到 n，所以只要把它们全部加起来，就能得到平均复杂度了。</p>
                         <p><img alt="推导" src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/insertion-sort/images/derivation3.png"></p>
-                        <p>我们看到，虽然时间复杂度也为 Θ(n<sup>2</sup>)，但是前面的系数变为了 1/4，说明平均情况的时间开销要低于最坏情况。为了证明这一结论，我在<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Decrease%20and%20Conquer/Insertion%20Sort" target="_blank" rel="noopener">本节的代码</a>里分别模拟了最好、最坏和平均情况所需要的比较次数和运行时间。下面给出部分结果：</p>
-                        <div class="highlight"><pre><span></span><span class="n">最好情况：</span>
-    <span class="n">平均比较次数：</span> <span class="mi">9999</span>
-    <span class="n">平均运行时间：</span><span class="mf">0.0024</span> <span class="n">s</span>
-<span class="n">最坏情况：</span>
-    <span class="n">平均比较次数：</span> <span class="mi">24927061</span>
-    <span class="n">平均运行时间：</span><span class="mf">4.4334</span> <span class="n">s</span>
-<span class="n">平均情况：</span>
-    <span class="n">平均比较次数：</span> <span class="mi">49999962</span>
-    <span class="n">平均运行时间：</span><span class="mf">8.6132</span> <span class="n">s</span>
+                        <p>我们看到，虽然时间复杂度也为 Θ(n<sup>2</sup>)，但是前面的系数变为了 1/4，说明插入排序在平均情况下的时间开销要低于最坏情况。为了证明这一结论，我在<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Decrease%20and%20Conquer/Insertion%20Sort" target="_blank" rel="noopener">本节的代码</a>里分别模拟了最好、最坏和平均情况所需要的比较次数和运行时间。下面给出部分结果：</p>
+                        <div class="highlight"><pre><span></span><span class="o">最好情况：</span>
+    <span class="o">平均比较次数：</span> <span class="o">9999</span>
+    <span class="o">平均运行时间：</span><span class="o">0.0024</span> <span class="o">s</span>
+<span class="o">最坏情况：</span>
+    <span class="o">平均比较次数：</span> <span class="o">49999962</span>
+    <span class="o">平均运行时间：</span><span class="o">8.6132</span> <span class="o">s</span>
+<span class="o">平均情况：</span>
+    <span class="o">平均比较次数：</span> <span class="o">24927061</span>
+    <span class="o">平均运行时间：</span><span class="o">4.4334</span> <span class="o">s</span>
 </pre></div>
+                        <p>最后来看看插入排序的稳定性，我们知道，将元素插入到正确位置后，只有那些比待插入元素大的元素会位于待插入元素的右侧，所以大小相同元素的顺序在排序后不会被打乱。因此，插入排序是稳定的排序算法。</p>
                         <br>
                         <p>从上面的结果来看，不论是比较次数还是运行时间，最好情况都要远远优于后面两种情况。所以如果数组是有序的或几乎有序的，采用插入排序会大大降低排序的时间，甚至比后面要讲到的排序算法还要快。</p>
 
@@ -585,27 +589,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -628,6 +611,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -640,21 +624,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -679,43 +663,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -730,23 +685,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 

@@ -255,7 +255,7 @@
                         <p>关于复杂度的问题，只要你知道一个含有 n 个元素的集合的子集数为 2<sup>n</sup>，就能轻松得出复杂度为 Θ(2<sup>n</sup>)了。</p>
                         <h2 id="分配问题"><a href="#分配问题" class="headerlink" title="分配问题"></a>分配问题</h2><p>分配问题是另一道经典的组合问题，问题的描述为一家公司有 n 名员工，现在有 n 件任务需要分配给这些员工，一件任务只能分配给一名员工，每名员工完成每件任务都有对应的时间，现在要我们来分配这些任务，最后使总时间最短。</p>
                         <p><img alt="分配问题" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/images/assignment.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/images/assignment.png"></p>
-                        <p>我们将上面的图用一个表格来表示：</p>
+                        <p>来看一个具体的例子，我们将每名员工完成每件任务所需要的时间用一张表格表示出来：</p>
                         <table>
                             <thead>
                             <tr>
@@ -325,11 +325,11 @@
             <span class="n">min_cost</span> <span class="o">=</span> <span class="n">temp_cost</span>
     <span class="k">return</span> <span class="n">combination</span><span class="p">,</span> <span class="n">min_cost</span>
 </pre></div>
-                        <p>最后输出结果。</p>
-                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">assignment</span><span class="o">.</span><span class="n">py</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">最佳分配方案为：</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">员工</span> <span class="mi">1</span> <span class="n">做任务</span> <span class="mi">2</span><span class="n">，员工</span> <span class="mi">2</span> <span class="n">做任务</span> <span class="mi">1</span><span class="n">，员工</span> <span class="mi">3</span> <span class="n">做任务</span> <span class="mi">3</span><span class="n">，员工</span> <span class="mi">1</span> <span class="n">做任务</span> <span class="mi">4</span><span class="n">。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">最短时间为</span> <span class="mi">13</span>
+                        <p>最后输出结果：</p>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">assignment</span><span class="o">.</span><span class="o">py</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">最佳分配方案为：</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">员工</span> <span class="o">1</span> <span class="o">做任务</span> <span class="o">2</span><span class="o">，员工</span> <span class="o">2</span> <span class="o">做任务</span> <span class="o">1</span><span class="o">，员工</span> <span class="o">3</span> <span class="o">做任务</span> <span class="o">3</span><span class="o">，员工</span> <span class="o">1</span> <span class="o">做任务</span> <span class="o">4</span><span class="o">。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">最短时间为</span> <span class="o">13</span>
 </pre></div>
                         <p>如果我们把上面问题的规模扩大到 n，按照上面的方式，我们可以列举出的情况有 n! 种，所以用暴力搜索的方式解决分配问题的复杂度自然就为 Θ(n!) 了。</p>
                         <p>我们可以看到，用暴力搜索的方式解决这两类问题，复杂度分别达到了指数级和阶乘级。千万别小看指数和阶乘，要知道，就算当问题的规模很小（n = 20）时，计算机都不能在有限的时间内将它们计算出来，尤其是阶乘级的复杂度，因为 20! 就已经达到了 2.4 × 10<sup>18</sup> 这么大，更何况在现实中的问题规模都是 10<sup>6</sup> 起步的。所以，用暴力搜索解决组合问题显然是不切实际的。后面的<a href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/">动态规划</a>和<a href="https://infinityglow.github.io/study/algorithm/branch-and-bound/">分支限界法</a>会给出更为优质的算法来解决这类问题。</p>
