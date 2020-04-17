@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>暴力搜索- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>暴力搜索- 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,11 +130,11 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>在<a href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/">图的遍历</a>那一节里面我们知道，不管是深度优先遍历还是广度优先遍历，本质上都是对图中的每一个节点执行一次遍历算法，即穷尽所有的情况。这次要讲到的<strong>暴力搜索</strong>（<strong>exhaustive search</strong>）就是专门为了解决这类问题而产生的。除了图的遍历，暴力搜索还以解决<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/problem-types/">组合问题</a>为主。下面我们一起来看看吧～</p>
-                        <h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>背包问题是一道典型的组合问题，问题可以这样来描述它：给定一些物品，这些物品都有它自己的重量 w<sub>i</sub> 和价格 v<sub>i</sub> ，并且每个物品只能选择一次。现在有一个能装 W 重量的背包，你需要尽可能多的使背包内物品的价格最大。</p>
+                        <h2 id="暴力搜索"><a href="#暴力搜索" class="headerlink" title="暴力搜索"></a>暴力搜索</h2><p>在<a href="https://infinityglow.github.io/study/algorithm/brute-force/graph-traversal/">图的遍历</a>那一节的最后我们提到，不管是深度优先遍历还是广度优先遍历，本质上都是对图中的每一个节点执行一次遍历算法，即穷尽所有的情况，来达到遍历整个图的目的。本节会讲到的<strong>暴力搜索</strong>（<strong>exhaustive search</strong>）就是专门为了解决这类问题而产生的。暴力搜索以解决<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/problem-types/">组合问题</a>这类复杂的问题为主，下面我们一起来看两个经典的例子。</p>
+                        <h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>背包问题是一道典型的组合问题，我们可以这样来描述它：给你一些物品，这些物品都有它对应的重量 w<sub>i</sub> 和价格 v<sub>i</sub> ，并且每个物品只能选择一次。现在有一个最多能装 W 重量的背包，你要怎样来组合这些物品来使得背包里物品的价格最大。</p>
                         <p><img alt="背包问题" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/images/knapsack.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/images/knapsack.png"></p>
                         <p>暴力搜索的方式就是将这个问题的全部组合一一列举出来，即穷举集合 {w<sub>1</sub>, w<sub>2</sub>, …, w<sub>i</sub>, …, w<sub>n</sub> } 中所有的子集，然后判断重量是否超过了背包上限，如果没有，就分别计算它们的价格，最后选出最高价格的组合。</p>
-                        <p>下面来举一个具体的例子。假设这里的 W = 10，w<sub>1</sub> = 7, v<sub>1</sub> = 42; w<sub>2</sub> = 3, v<sub>2</sub> = 12; w<sub>3</sub> = 4, v<sub>3</sub> = 40; w<sub>4</sub> = 5, v<sub>4</sub> = 25。那么我们根据实例，列举出所有的情况：</p>
+                        <p>下面来举一个具体的例子。假设这里的 W = 10，w<sub>1</sub> = 7, v<sub>1</sub> = 42; w<sub>2</sub> = 3, v<sub>2</sub> = 12; w<sub>3</sub> = 4, v<sub>3</sub> = 40; w<sub>4</sub> = 5, v<sub>4</sub> = 25。那么根据我们的实例，列举出所有的情况：</p>
                         <table>
                             <thead>
                             <tr>
@@ -145,77 +149,77 @@
                                 <td align="center">0</td>
                             </tr>
                             <tr>
-                                <td align="center">{1}</td>
+                                <td align="center">{w<sub>1</sub>}</td>
                                 <td align="center">7</td>
                                 <td align="center">42</td>
                             </tr>
                             <tr>
-                                <td align="center">{2}</td>
+                                <td align="center">{w<sub>2</sub>}</td>
                                 <td align="center">3</td>
                                 <td align="center">12</td>
                             </tr>
                             <tr>
-                                <td align="center">{3}</td>
+                                <td align="center">{w<sub>3</sub>}</td>
                                 <td align="center">4</td>
                                 <td align="center">40</td>
                             </tr>
                             <tr>
-                                <td align="center">{4}</td>
+                                <td align="center">{w<sub>4</sub>}</td>
                                 <td align="center">5</td>
                                 <td align="center">25</td>
                             </tr>
                             <tr>
-                                <td align="center">{1, 2}</td>
+                                <td align="center">{w<sub>1</sub>, w<sub>2</sub>}</td>
                                 <td align="center">10</td>
                                 <td align="center">54</td>
                             </tr>
                             <tr>
-                                <td align="center">{1, 3}</td>
+                                <td align="center">{w<sub>1</sub>, w<sub>3</sub>}</td>
                                 <td align="center">11</td>
                                 <td align="center">不符合要求</td>
                             </tr>
                             <tr>
-                                <td align="center">{1, 4}</td>
+                                <td align="center">{w<sub>1</sub>, w<sub>4</sub>}</td>
                                 <td align="center">12</td>
                                 <td align="center">不符合要求</td>
                             </tr>
                             <tr>
-                                <td align="center">{2, 3}</td>
+                                <td align="center">{w<sub>2</sub>, w<sub>3</sub>}</td>
                                 <td align="center">7</td>
                                 <td align="center">52</td>
                             </tr>
                             <tr>
-                                <td align="center">{2, 4}</td>
+                                <td align="center">{w<sub>2</sub>, w<sub>4</sub>}</td>
                                 <td align="center">8</td>
                                 <td align="center">37</td>
                             </tr>
                             <tr>
-                                <td align="center">{3, 4}</td>
+                                <td align="center">{w<sub>3</sub>, w<sub>4</sub>}</td>
                                 <td align="center">9</td>
                                 <td align="center">65</td>
                             </tr>
                             <tr>
-                                <td align="center">{1, 2, 3}</td>
+                                <td align="center">{w<sub>1</sub>, w<sub>2</sub>, w<sub>3</sub>}</td>
                                 <td align="center">14</td>
                                 <td align="center">不符合要求</td>
                             </tr>
                             <tr>
-                                <td align="center">{1, 2, 4}</td>
+                                <td align="center">{w<sub>1</sub>, w<sub>2</sub>, w<sub>4</sub>}</td>
                                 <td align="center">15</td>
                                 <td align="center">不符合要求</td>
                             </tr>
                             <tr>
-                                <td align="center">{1, 3, 4}</td>
+                                <td align="center">{w<sub>1</sub>, w<sub>3</sub>, w<sub>4</sub>}</td>
                                 <td align="center">16</td>
                                 <td align="center">不符合要求</td>
                             </tr>
                             <tr>
-                                <td align="center">{2, 3, 4}</td>
+                                <td align="center">{w<sub>2</sub>, w<sub>3</sub>, w<sub>4</sub>}</td>
                                 <td align="center">12</td>
                                 <td align="center">不符合要求</td>
                             </tr>
                             <tr>
-                                <td align="center">{1, 2, 3, 4}</td>
+                                <td align="center">{w<sub>1</sub>, w<sub>2</sub>, w<sub>3</sub>, w<sub>4</sub>}</td>
                                 <td align="center">19</td>
                                 <td align="center">不符合要求</td>
                             </tr>
@@ -232,8 +236,7 @@
         <span class="n">p_set</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">temp_set</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">p_set</span>
 </pre></div>
-                        <br>
-                        <p>构建好超集后，就可以在 <code>knapsack</code> 函数里面枚举所有的情况啦。</p>
+                        <p>写好构建好超集的函数后，我们就可以在主函数<code>knapsack</code>函数里面枚举所有的情况啦。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knapsack</span><span class="p">(</span><span class="n">w_v</span><span class="p">,</span> <span class="n">p_set</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
     <span class="n">w_combination</span> <span class="o">=</span> <span class="bp">None</span><span class="p">;</span> <span class="n">max_value</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 分别用来记录最优情况的组合和最大值</span>
     <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">p_set</span><span class="p">:</span>
@@ -245,12 +248,10 @@
             <span class="n">max_value</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">return</span> <span class="n">w_combination</span><span class="p">,</span> <span class="n">max_value</span>
 </pre></div>
-                        <br>
-                        <p>最后求得的结果跟上面的一模一样。</p>
+                        <p>最后求得的结果和我们分析的一样。</p>
                         <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">knapsack</span><span class="o">.</span><span class="n">py</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">最佳组合为物品</span> <span class="mi">3</span> <span class="n">和物品</span> <span class="mi">4</span><span class="n">，其价格为</span> <span class="mi">65</span><span class="n">。</span>
 </pre></div>
-                        <br>
                         <p>关于复杂度的问题，只要你知道一个含有 n 个元素的集合的子集数为 2<sup>n</sup>，就能轻松得出复杂度为 Θ(2<sup>n</sup>)了。</p>
                         <h2 id="分配问题"><a href="#分配问题" class="headerlink" title="分配问题"></a>分配问题</h2><p>分配问题是另一道经典的组合问题，问题的描述为一家公司有 n 名员工，现在有 n 件任务需要分配给这些员工，一件任务只能分配给一名员工，每名员工完成每件任务都有对应的时间，现在要我们来分配这些任务，最后使总时间最短。</p>
                         <p><img alt="分配问题" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/images/assignment.png" data-src="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/images/assignment.png"></p>
@@ -294,7 +295,7 @@
                                 <td align="center">4</td>
                             </tr>
                             </tbody></table>
-                        <p>下面我们看看具体该如何来分配。任务 1 可以分配给 4 名员工中的任意一位，当任务 1 分配给一名员工之后，任务 2 就只能分配给剩下的 3 名员工中的一位了，然后任务 3 分配给剩下两名中的一位，最后任务 4 交给最后未分配的员工。所以我们可以根据前边的描述，穷尽所有的情况，将最优情况用“暴力”的手段搜索出来。于是我们可以写出相应的代码。</p>
+                        <p>下面我们看看具体该如何来分配。任务 1 可以分配给 4 名员工中的任意一位，当任务 1 分配给一名员工之后，任务 2 就只能分配给剩下的 3 名员工中的一位了，然后任务 3 分配给剩下两名中的一位，最后任务 4 交给最后未分配的员工。因此根据前面的描述，我们枚举出所有的情况，将最优情况用“暴力”的手段搜索出来，于是我们写出相应的代码。</p>
                         <p>首先需要有一个生成全排列的函数，来指定每个员工对应的任务序号。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">perm_gen</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
     <span class="n">permutation</span> <span class="o">=</span> <span class="p">[[</span><span class="n">source</span><span class="p">[</span><span class="mi">0</span><span class="p">]]]</span>
@@ -308,12 +309,11 @@
         <span class="n">permutation</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">permutation</span>
 </pre></div>
-                        <br>
+                        <p>让我们来试一试<code>123</code>的全排列。</p>
                         <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">perm_gen</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
 </pre></div>
-                        <br>
-                        <p>然后是我们的主函数：</p>
+                        <p>然后写出我们的主函数：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">assignment_bf</span><span class="p">(</span><span class="n">perm</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
     <span class="n">combination</span> <span class="o">=</span> <span class="bp">None</span><span class="p">;</span> <span class="n">min_cost</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>  <span class="c1"># 分别用来记录最有情况的组合和最小值</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">perm</span><span class="p">)):</span>
@@ -325,16 +325,14 @@
             <span class="n">min_cost</span> <span class="o">=</span> <span class="n">temp_cost</span>
     <span class="k">return</span> <span class="n">combination</span><span class="p">,</span> <span class="n">min_cost</span>
 </pre></div>
-                        <br>
                         <p>最后输出结果。</p>
                         <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">assignment</span><span class="o">.</span><span class="n">py</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">最佳分配方案为：</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">员工</span> <span class="mi">1</span> <span class="n">做任务</span> <span class="mi">2</span><span class="n">，员工</span> <span class="mi">2</span> <span class="n">做任务</span> <span class="mi">1</span><span class="n">，员工</span> <span class="mi">3</span> <span class="n">做任务</span> <span class="mi">3</span><span class="n">，员工</span> <span class="mi">1</span> <span class="n">做任务</span> <span class="mi">4</span><span class="n">。</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">最短时间为</span> <span class="mi">13</span>
 </pre></div>
-                        <br>
-                        <p>如果我们把上面问题的规模扩大到 n，按照上面的方式，我们就很容易得出一共有 n! 种情况，所以暴力求解分配问题的复杂度自然就为 Θ(n!) 了。</p>
-                        <p>我们可以看到，用暴力搜索的方式解决这两类问题，复杂度分别达到了指数级和阶乘级。要知道，就算当问题的规模很小（n = 20）时，计算机都不能在有限的时间内将它们计算出来，尤其是阶乘级的复杂度，因为 20! 就已经达到了 2.4 × 10<sup>18</sup> 这么大，更何况在现实中，n 都是 10<sup>6</sup> 起步的。所以，用暴力搜索解决组合问题显然是不切实际的。后面的<a href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/">动态规划</a>和<a href="https://infinityglow.github.io/study/algorithm/hungarian-algorithm/">匈牙利算法</a>会给出更为优质的算法来解决这类问题。</p>
+                        <p>如果我们把上面问题的规模扩大到 n，按照上面的方式，我们可以列举出的情况有 n! 种，所以用暴力搜索的方式解决分配问题的复杂度自然就为 Θ(n!) 了。</p>
+                        <p>我们可以看到，用暴力搜索的方式解决这两类问题，复杂度分别达到了指数级和阶乘级。千万别小看指数和阶乘，要知道，就算当问题的规模很小（n = 20）时，计算机都不能在有限的时间内将它们计算出来，尤其是阶乘级的复杂度，因为 20! 就已经达到了 2.4 × 10<sup>18</sup> 这么大，更何况在现实中的问题规模都是 10<sup>6</sup> 起步的。所以，用暴力搜索解决组合问题显然是不切实际的。后面的<a href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/">动态规划</a>和<a href="https://infinityglow.github.io/study/algorithm/branch-and-bound/">分支限界法</a>会给出更为优质的算法来解决这类问题。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Brute%20Force/Exhaustive%20Search" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -744,27 +742,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -787,6 +764,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -799,21 +777,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -838,43 +816,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -889,23 +838,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
