@@ -130,15 +130,15 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="有序表的查找"><a href="#有序表的查找" class="headerlink" title="有序表的查找"></a>有序表的查找</h2><p>我们已经讨论过如何从数组中查找一个元素，采用的是最简单，最直接的顺序查找的方式，即从第一个元素开始，从左往右依次查找，直到查找到该元素或查找失败。顺序查找的在平均情况下的复杂度我们也讨论为 Θ(n)。那么还有没有更快的算法呢？这一节我们就来讨论一下吧～</p>
+                        <h2 id="有序表的查找"><a href="#有序表的查找" class="headerlink" title="有序表的查找"></a>有序表的查找</h2><p>我们已经讨论过如何从数组中查找一个元素，采用的是最简单，最直接的顺序查找的方式，即从第一个元素开始，从左往右依次查找，直到查找到该元素或查找失败。我们知道顺序查找的在平均情况下的复杂度为 Θ(n)，那么还有没有更快的算法呢？这一节我们就来讨论一下吧～</p>
                         <p>如果一个数组本身是有序的，查找一个元素就类似于在前面提到的<a href="https://infinityglow.github.io/study/algorithm/brute-force/bubble-selection-sort/">猜数问题</a>，只是这里要猜的数变成了查找的元素。如果我们从数组的中间位置开始查找，在每轮查找过后，我们只需要在剩下的长度为原来一半的数组中再继续查找，这样以此类推，直到查找到该元素，或查找失败。</p>
                         <p>来举一个具体的例子，假设我们有数组：</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array0.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array0.png"></p>
                         <p>下面查找元素 61，经过一轮查找过后，待查找数组的长度变为原来的一半：</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array1.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array1.png"></p>
-                        <p>然后反复前面的过程，最终找到 61：</p>
+                        <p>然后重复前面的过程，最终找到 61：</p>
                         <p><img alt="数组" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array2.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/images/array2.png"></p>
-                        <p>我们只需要十行左右的代码就能轻松实现：</p>
+                        <p>我们只需要十行左右的代码就能轻松实现二分查找：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">binary_search</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">r</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">:</span>
@@ -219,7 +219,7 @@
                         <br>
                         <h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>删除节点相对来说就要麻烦一些，除了要找到删除的节点以外，我们还要对不同情况的节点执行不同的操作。</p>
                         <ul>
-                            <li><p>情况 1：删除的为叶子节点</p>
+                            <li><p>情况 1：删除的节点为叶子节点</p>
                                 <p>  这种情况最简单，只需要找到该节点，然后删除即可，例如删除这里的节点 10。</p>
                             </li>
                         </ul>
