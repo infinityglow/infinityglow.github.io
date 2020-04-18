@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>拓扑排序- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>拓扑排序- 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,13 +130,13 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在大学里，每当到了期末的时候，你一定会头疼于各种选课给你带来的困扰。其中一项就是先修课，每次你高高兴兴地选了自己心仪的选修课，却发现自己不满足先修课的要求，只好默默地退掉。这一次，我们就来讨论一下这个问题。</p>
+                        <h2 id="一个场景"><a href="#一个场景" class="headerlink" title="一个场景"></a>一个场景</h2><p>在大学里，每当到了期末的时候，你一定会头疼于选课给你带来的困扰。其中一项就是先修课，每次你高高兴兴地选了自己心仪的选修课，却发现自己不满足先修课的要求，只好默默地退掉。这一次，我们就来讨论一下选课背后的问题。</p>
                         <p><img alt="选课" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/enrol.jpg" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/enrol.jpg"></p>
-                        <p>假设大学里开设了这些课程：高等数学，线性代数，概率论，数据结构，机器学习和计算机视觉。它们存在这样的先修关系：线性代数的先修课为高等数学；概率论的先修课是线性代数；机器学习的先修课为线性代数、概率论和数据结构；最后计算机视觉的先修课是机器学习。</p>
-                        <p>下面我们需要把这些课程和关系做一个抽象化的处理，说白了就是能够让计算机读懂这些关系。这里我们用到了图这种数据结构，把每门课程当做图的节点，两门课的先修关系抽象为图的边，并且还是有向边。要是把它画出来就是这样子的：</p>
+                        <p>假设大学里开设了这些课程：高等数学，线性代数，概率论，数据结构，机器学习和计算机视觉。它们存在这样的先修关系：线性代数的先修课为高等数学；概率论的先修课是线性代数；机器学习的先修课为线性代数，概率论和数据结构；最后计算机视觉的先修课是机器学习。</p>
+                        <p>下面我们需要把这些课程和关系做一个抽象化的处理，说白了就是能够让计算机读懂这些关系。这里我们用图来表示这些关系，把每门课程当做图的节点，两门课的先修关系抽象为图的边，并且是带有方向的边，从一个节点 a 指向另一个节点 b 表示 a 是 b 的先修课。要是我们把这些关系用图表示出来就是下面这样：</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/graph0.png"></p>
-                        <p>这里，我们对上图进行类似“排序”的操作，也就是怎样安排这些课程而不会因为没有修满先修课而不能选上，我们把这种操作叫做<strong>拓扑排序</strong>（<strong>topological sorting</strong>）。</p>
-                        <h2 id="卡恩算法"><a href="#卡恩算法" class="headerlink" title="卡恩算法"></a>卡恩算法</h2><p>下面就是来解决这个问题了，它跟我们前面提到的减治有什么关系呢？假如我们要在某一个学期修计算机视觉这门课，我们首先要保证修了机器学习这门课，而要达到修机器学习这门课的条件，我们又要修三门前置课，这样问题的规模在逐渐减小，直到这门课没有任何先修条件，也就是我们可以在最开始选择的课。</p>
+                        <p>这里，我们对上图进行类似“排序”的操作，也就是怎样安排这些课程使得一些课程不会因为先修课的原因而没有被选上，我们把这种操作叫做<strong>拓扑排序</strong>（<strong>topological sorting</strong>）。</p>
+                        <h2 id="卡恩算法"><a href="#卡恩算法" class="headerlink" title="卡恩算法"></a>卡恩算法</h2><p>下面我们来分析一下这个问题，它跟我们前面提到的减治有什么关系呢？假如我们要在某一个学期修计算机视觉这门课，我们首先要保证修了机器学习这门课，而要达到修机器学习这门课的条件，我们又要修三门前置课，这样问题的规模在逐渐减小，直到这门课没有任何先修条件，我们就可以直接修这门课。</p>
                         <p>卡恩算法为我们提供了具体的步骤。</p>
                         <ul>
                             <li>步骤 1：在图中找到没有被其它节点所指向的节点，即入度（在图论中，入度指的是所有进入该节点的节点个数）为 0 的节点。</li>
@@ -143,17 +147,17 @@
                         </ul>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/graph2.png"></p>
                         <ul>
-                            <li>步骤 3：重复步骤 1 和步骤 2，直到图中没有入度为 0 的节点。</li>
+                            <li>步骤 3：重复步骤 1 和步骤 2，直到图中没有节点为止。</li>
                         </ul>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/graph-demo.gif" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/graph-demo.gif"></p>
                         <p>最后我们用代码来实现一下：</p>
-                        <p>首先还是构建 Vertex 类：</p>
+                        <p>首先还是构建节点 Vertex 类：</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subject</span>
 </pre></div>
                         <br>
-                        <p>然后找到入度为 0 的节点：</p>
+                        <p>然后写出寻找入度为 0 的节点的函数：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_source</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
     <span class="n">source</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">V</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">keys</span><span class="p">();</span> <span class="n">E</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
@@ -172,24 +176,24 @@
     <span class="k">return</span> <span class="n">source</span>
 </pre></div>
                         <br>
-                        <p>最后是我们的主函数：</p>
+                        <p>最后写出我们的主函数，我们用<code>pop</code>方法从图<code>G</code>中每次 pop 出入度为 0 的节点，但如果发现没有入度为 0 的节点，就说明这样的拓扑排序不存在，因此我们就提前终止程序。：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">topo_main</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">find_source</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;不存在拓扑排序.&quot;</span>
-        <span class="n">order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">subject</span><span class="p">)</span>
         <span class="n">G</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">order</span>
 </pre></div>
                         <br>
-                        <p>在主程序中，我们先构建一个图 <code>G</code>，然后执行 <code>topo_main</code> 函数，最后得到排序后的结果：</p>
+                        <p>在主程序中，我们先构建一个图<code>G</code>，然后执行<code>topo_main</code>函数，最后得到排序后的结果：</p>
                         <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">topo_main</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">排序结果为</span> <span class="n">[</span><span class="n">&quot;高等数学&quot;</span><span class="n">,</span> <span class="n">&quot;线性代数&quot;</span><span class="p">,</span> <span class="n">&quot;概率论&quot;</span><span class="n">,</span> <span class="n">&quot;数据结构&quot;</span><span class="n">,</span> <span class="n">&quot;机器学习&quot;</span><span class="n">,</span> <span class="n">&quot;计算机视觉&quot;</span><span class="n">]</span>
 </pre></div>
                         <br>
-                        <p>其实，除了卡恩算法之外，我们还可以用 DFS 的方法。由于它跟减治的关系不是很大，这里就不做深入的讨论了，感兴趣的同学可以去<a href="https://www.geeksforgeeks.org/topological-sorting/" target="_blank" rel="noopener">网上</a>搜一搜这方面的内容。</p>
+                        <p>其实，除了卡恩算法之外，我们还可以用 DFS 的方法。由于它跟减治的关系不是很大，这里我们就不做讨论了，感兴趣的同学可以去<a href="https://www.geeksforgeeks.org/topological-sorting/" target="_blank" rel="noopener">网上</a>搜一搜这方面的内容。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Decrease%20and%20Conquer/Topological%20Sorting" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -599,27 +603,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -642,6 +625,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -654,21 +638,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -693,43 +677,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -744,23 +699,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
