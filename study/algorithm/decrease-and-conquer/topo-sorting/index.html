@@ -130,7 +130,7 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="一个场景"><a href="#一个场景" class="headerlink" title="一个场景"></a>一个场景</h2><p>在大学里，每当到了期末的时候，你一定会头疼于选课给你带来的困扰。其中一项就是先修课，每次你高高兴兴地选了自己心仪的选修课，却发现自己不满足先修课的要求，只好默默地退掉。这一次，我们就来讨论一下选课背后的问题。</p>
+                        <h2 id="一个场景"><a href="#一个场景" class="headerlink" title="一个场景"></a>一个场景</h2><p>在大学里，每当到了期末的时候，你一定会头疼于选课给你带来的困扰。其中一项就是先修课的问题，每次你高高兴兴地选了自己心仪的选修课时，却发现自己不满足先修课的要求，只好默默地退掉。到底怎样安排我们的课才能保证不会有这种麻烦呢？这一次，我们就来讨论一下这个问题。</p>
                         <p><img alt="选课" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/enrol.jpg" data-src="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/topo-sorting/images/enrol.jpg"></p>
                         <p>假设大学里开设了这些课程：高等数学，线性代数，概率论，数据结构，机器学习和计算机视觉。它们存在这样的先修关系：线性代数的先修课为高等数学；概率论的先修课是线性代数；机器学习的先修课为线性代数，概率论和数据结构；最后计算机视觉的先修课是机器学习。</p>
                         <p>下面我们需要把这些课程和关系做一个抽象化的处理，说白了就是能够让计算机读懂这些关系。这里我们用图来表示这些关系，把每门课程当做图的节点，两门课的先修关系抽象为图的边，并且是带有方向的边，从一个节点 a 指向另一个节点 b 表示 a 是 b 的先修课。要是我们把这些关系用图表示出来就是下面这样：</p>
@@ -176,7 +176,7 @@
     <span class="k">return</span> <span class="n">source</span>
 </pre></div>
                         <br>
-                        <p>最后写出我们的主函数，我们用<code>pop</code>方法从图<code>G</code>中每次 pop 出入度为 0 的节点，但如果发现没有入度为 0 的节点，就说明这样的拓扑排序不存在，因此我们就提前终止程序。：</p>
+                        <p>最后写出我们的主函数，我们用<code>pop</code>方法从图<code>G</code>中每次 pop 出入度为 0 的节点，但如果发现没有入度为 0 的节点，就说明这样的拓扑排序不存在，因此我们就提前终止程序。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">topo_main</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
