@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>归并排序 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>归并排序 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,42 +130,42 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h2><p><strong>分治</strong>（<strong>divide and conquer</strong>）是算法里面的一种经典思想。与减治的通过缩小问题规模来解决问题而有所不同的是，分治采用的是，将一个大问题分成若干个小问题，然后逐一解决小问题，最后将小问题的解合并为原来大问题的解。听起来很抽象？没关系，下面的一个例子你马上就能明白。</p>
-                        <p>小的时候我们一定都玩过类似乐高的玩具，当你花了几天的时间拼出一件作品时，你一定是满满的成就感吧。其实，我们在整个拼接的过程中都用到了分治的思想。要想拼出一栋房子，我们肯定不会一个零件一个零件地拼，而是先将这些零件组合成一个个的小部件（例如屋顶，窗户等），然后把这些小部件拼接起来，组成更大的部件，然后这些大部件再相互拼接，最后拼出一件完整的作品。</p>
+                        <h2 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h2><p><strong>分治</strong>（<strong>divide and conquer</strong>）是算法的五大经典思想之一。我们知道减治是通过缩小问题规模来解决问题，而分治法是先将一个大问题分成若干个小问题，然后逐一解决小问题，最后将小问题的解合并成原来大问题的解。听起来一定很抽象吧，没关系，下面的一个例子你马上就能明白。</p>
+                        <p>小的时候我们一定都玩过类似乐高的玩具，当你花了几天的时间拼出一件作品时，你一定是满满的成就感吧。其实，我们在整个拼接的过程中就用到了分治的思想。以拼一栋房子为例，我们肯定不会一个零件一个零件地拼，而是先将这些零件组合成一个一个的小部件（例如屋顶，窗户等），然后把这些小部件拼接起来，组成更大的部件，然后这些大部件再相互拼接，最后拼出整栋房子。</p>
                         <p><img alt="玩具" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/toy.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/toy.png"></p>
-                        <p>假设整个作品由 n 个零件组成，它由 b 个规模相等的小部件拼接而成，拼接需要 a 次完成，一次拼接的时间为 f(n)。所以，根据这个关系，我们可以写出下面的关系式：</p>
+                        <p>假设整个作品由 n 个零件组成，它由 b 个规模相等的小部件拼接而成，一次需要拼接 a 次，每次拼接的时间为 f(n)。所以，根据这个关系，我们可以写出下面的关系式：</p>
                         <p><img alt="formula" src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/formula0.png"></p>
-                        <p>其中，f(n) 是关于 n 的一个函数，这里我们可以把它视作一次拼接所需要的时间复杂度，Θ(n<sup>d</sup>)，d 代表复杂度的阶数。我们根据 a, b, d 的取值，再借助下面的公式，就可以计算出不同情况下的复杂度了：</p>
+                        <p>其中，f(n) 是关于 n 的一个函数，这里我们可以把它视作一次拼接所需要的时间复杂度，Θ(n<sup>d</sup>)，d 代表复杂度的阶数。根据 a, b, d 不同的取值，我们可以借助 <a href="https://zh.wikipedia.org/wiki/%E4%B8%BB%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">Master Theorem</a> 来求得不同情况下的复杂度：</p>
                         <p><img alt="formula" src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/formula1.png"></p>
                         <p>公式具体的证明过程在 <a href="https://doc.lagout.org/science/0_Computer%20Science/2_Algorithms/Introduction%20to%20the%20Design%20and%20Analysis%20of%20Algorithms%20%283rd%20ed.%29%20%5BLevitin%202011-10-09%5D.pdf" target="_blank" rel="noopener">Levitin</a> 算法书的附录里，大家感兴趣可以去自己研究研究，后面的例子在计算复杂度的过程中会直接套用这里的公式。</p>
-                        <h2 id="有序数组的合并"><a href="#有序数组的合并" class="headerlink" title="有序数组的合并"></a>有序数组的合并</h2><p>将两个有序的数组合并成一个有序的数组就类似于将两个小部件的拼接过程，那具体该怎么实现呢？让我们来举一个例子吧。</p>
+                        <h2 id="有序数组的合并"><a href="#有序数组的合并" class="headerlink" title="有序数组的合并"></a>有序数组的合并</h2><p>我们可以将两个有序的数组合并成一个有序的数组看做是两个小部件的拼接过程，那具体要怎么来实现呢？让我们来举一个例子吧。</p>
                         <p>假设下面两个数组 a 和 b 要合并，我们需要一个空数组 c 来存放 a 和 b 中的元素。</p>
                         <p><img alt="array" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array0.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array0.png"></p>
                         <p>具体步骤如下：</p>
                         <ul>
-                            <li>第一步：用三个变量 i, j, k 来分别记录数组 a，数组 b 和空数组 c 的索引值。</li>
+                            <li>第一步：用三个变量 i, j, k 来分别记录数组 a，数组 b 和空数组 c 的索引值，并将它们都初始化为 0。</li>
                         </ul>
                         <p><img alt="array" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array1.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array1.png"></p>
                         <ul>
-                            <li>第二步：比较 a[i] 和 b[j] 的大小，将小的元素存入到空数组 c 中。</li>
+                            <li>第二步：比较 a[i] 和 b[j] 的大小，将较小的元素存入到空数组 c 中。</li>
                         </ul>
                         <p><img alt="array" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array2.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array2.png"></p>
                         <ul>
-                            <li>第三步：较小元素的数组索引值和数组 c 的索引值加 1。</li>
+                            <li>第三步：较小元素的数组索引值和数组 c 的索引值分别加 1。</li>
                         </ul>
                         <p><img alt="array" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array3.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array3.png"></p>
                         <ul>
-                            <li>第四步：如果数组 a 和 b 的其中一个还未完全比较，执行第二步和第三步，否则执行第五步。</li>
+                            <li>第四步：如果索引 i 和 j 都没有超出数组 a 和 b 的边界，执行第二步和第三步，否则执行第五步。</li>
                         </ul>
                         <p><img alt="array" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array4.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array4.png"></p>
                         <ul>
-                            <li>第五步：将剩余数组的元素全部存入到数组 c 中。</li>
+                            <li>第五步：将含有剩余元素的数组全部存入到数组 c 中。</li>
                         </ul>
                         <p><img alt="array" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array5.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array5.png"></p>
                         <p>假设数组 a 和 b 分别有 n / 2 个元素，最好的情况要比较 n / 2 次，最坏的情况要比较 n - 1 次，所以合并有序数组的时间复杂度为 Θ(n)。</p>
-                        <h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>我们知道，只有一个元素的数组一定是有序的，所以归并排序的第一步操作就是将数组对半分割，直到分割到只有一个元素为止。然后再将这些元素两两归并，最后使整个数组有序。因此，归并排序可以像下面这张图那样描述：</p>
+                        <h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>归并排序的第一步操作就是递归地将数组等分，直到分割到只有一个元素为止，因为只有一个元素的数组一定是有序的，所以接下来我们再将这些元素两两归并，最后使整个数组有序。因此，归并排序可以像下面这张图那样描述：</p>
                         <p><img alt="归并排序" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/merge-sort.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/merge-sort.png"></p>
-                        <p>代码由两个函数实现，一个是我们前面提到的合并有序数组。</p>
+                        <p>代码由两个函数实现，一个是我们前面提到的合并有序数组的函数<code>merge</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>  <span class="c1"># 初始化变量</span>
     <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
@@ -180,8 +184,7 @@
         <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">c</span>
 </pre></div>
-                        <br>
-                        <p>另一个是我们的主函数 <code>merge_sort</code>。</p>
+                        <p>另一个是我们的主函数<code>merge_sort</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merge_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">array</span>
@@ -191,11 +194,12 @@
     <span class="n">C</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">C</span>
 </pre></div>
-                        <br>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/merge.mp4"></video></p>
-                        <p>最后来分析一下归并排序的复杂度。前面我们知道归并的复杂度为 Θ(n)，由于分割过程只执行一次基本操作，所以分割的复杂度为 Θ(1)，可以忽略不计。故我们可以得出下面的递归关系式：</p>
+                        <h2 id="复杂度和稳定性"><a href="#复杂度和稳定性" class="headerlink" title="复杂度和稳定性"></a>复杂度和稳定性</h2><p>最后来分析一下归并排序的复杂度和稳定性。前面我们知道归并的复杂度为 Θ(n)，由于等分数组过程只执行一次基本操作，所以的等分的复杂度为 Θ(1)，可以忽略不计。故我们可以得出下面的递归关系式：</p>
                         <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/relation.png"></p>
                         <p>这个关系式的含义是，对长度为 n 的数组进行排序的时间复杂度等于对两个长度为 n / 2 的数组排序的时间复杂度，再加上分割和归并的时间复杂度 Θ(n)。根据前面的公式，我们可以得到归并排序的时间复杂度为 Θ(nlog n)。由于归并过程需要长度为 n 的空数组，所以归并排序的空间复杂度为 Θ(n)。</p>
+                        <p>下面来分析一下稳定性，假设我们有数组 [4, 4, 2, 6], 按照上面的过程排序过后，我们发现相同的元素之间的顺序并没有发生变化，所以我们可以判定归并排序是一个稳定的排序算法。</p>
+                        <p><img alt="array" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array6.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/merge-sort/images/array6.png"></p>
                         <p>归并排序的时间复杂度已经超越了前面讲到的所有排序算法，但它需要牺牲存储空间来实现。后面要讲到的<a href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/counting-sort/">计数排序</a>也体现了这种思想。</p>
 
                         <br>
@@ -606,27 +610,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -649,6 +632,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -661,21 +645,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -700,43 +684,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -751,23 +706,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
