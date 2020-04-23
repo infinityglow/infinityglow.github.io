@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>最近点对与凸包问题（DC）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>最近点对与凸包问题（DC）- 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,16 +130,16 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="最近点对问题"><a href="#最近点对问题" class="headerlink" title="最近点对问题"></a>最近点对问题</h2><p>在<a href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/">前面</a>的章节里，我们分别讨论了最近点对和凸包问题，但采用的都是列举其所有情况的暴力解法，效率非常低。这节的内容，我们会用到两种更为高效的方法。</p>
-                        <p>既然这章都在讲分治法，在解决最近点对问题的时候自然也离不开将这些散点进行分组。所以这里我们用一条垂直分界线 L，将散点分成两部分，S<sub>L</sub> 和 S<sub>R</sub>。</p>
+                        <h2 id="最近点对问题"><a href="#最近点对问题" class="headerlink" title="最近点对问题"></a>最近点对问题</h2><p>在<a href="https://infinityglow.github.io/study/algorithm/brute-force/clo-pair-con-hull/">前面</a>的章节里，我们分别讨论了最近点对和凸包问题，但采用的都是暴力解法，即枚举出所有情况，因此算法的效率非常低。这节的内容，我们就来讨论一下如何用分治法来解决这两个问题。</p>
+                        <p>既然是分治法，在解决最近点对问题的时候自然就离不开将这些散点进行分组，所以这里我们用一条垂直分界线 L，将散点分成两部分，S<sub>L</sub> 和 S<sub>R</sub>。</p>
                         <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair0.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair0.png"></p>
                         <p>其中，S<sub>L</sub> 包含 ⌈n/2⌉ 个点，而 S<sub>R</sub> 包含 ⌊n/2⌋ 个点。</p>
-                        <p>接下来，我们要分别计算出左右两部分的最近点对距离 d<sub>L</sub> 和 d<sub>R</sub>。</p>
+                        <p>接下来，我们分别计算出左右两部分的最近点对距离 d<sub>L</sub> 和 d<sub>R</sub>。</p>
                         <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair1.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair1.png"></p>
-                        <p>然后我们取其最小值 d = min{d<sub>L</sub>, d<sub>R</sub>}。但是这里的 d 不一定就是最后的最小值，因为分别位于分界线 L 左右两边的点可能存在更短的点对。这时，我们需要在分界线左右宽度均为 d 的区域内寻找有没有更短的点对。</p>
+                        <p>然后我们取它们的最小值 d = min{d<sub>L</sub>, d<sub>R</sub>}。但是这里的 d 不一定就是全局的最小值，因为分别位于分界线 L 的左右两边的点可能存在更短的点对。因此，我们需要在分界线左右宽度均为 d 的区域内寻找出更短的点对。</p>
                         <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair2.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair2.png"></p>
-                        <p>在这个区域中，我们只需要把所有的点对全部列举出来，然后选择最小的，最后与前边计算得到的 d 进行比较取较小者即可。但为了计算方便，我们可以先对这些区域内的点的 y 坐标进行排序，然后再逐个查看每个点对。这样做的好处是一旦我们发现 y<sub>i</sub> - y<sub>j</sub> 的值大于 d，我们就查看下一个点，以减少不必要的比较次数。</p>
-                        <p>左右两半部分各自最近点对要怎样计算出来呢？我们可以利用前面提到的方法，将这些散点再分为左右两部分，像这样一直递归下去，当散点个数小于等于 3 个时，我们再利用直接求解的方式将最近点对计算出来。</p>
+                        <p>在这个区域中，我们只需要把所有的点对全部列举出来，然后选择最小的那对，最后与前边计算得到的 d 进行比较取较小者即可。这里为了计算方便，我们可以先对这些区域内的点的 y 坐标进行排序，然后再逐个查看每个点对。这样做的好处是一旦我们发现点对的纵坐标之差 y<sub>i</sub> - y<sub>j</sub> 大于 d，我们就可以直接跳过这种情况，因为点对的距离 ((x<sub>i</sub> - x<sub>j</sub>) + (y<sub>i</sub> - y<sub>j</sub>))<sup>1/2</sup> 一定大于 y<sub>i</sub> - y<sub>j</sub> 的值，因此可以减少不必要的计算。</p>
+                        <p>那么左右两半部分各自最近点对要怎样计算出来呢？我们可以用前面提到的方法，再将这些散点分为左右两部分，然后再分别做计算，像这样一直递归下去，直到当散点个数小于等于 3 个时，我们就用直接求解的方式将最近点对计算出来。</p>
                         <p><img alt="最近点对" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair3.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/clo-pair3.png"></p>
                         <p>代码实现：</p>
                         <p>当 n &lt;= 3 时：</p>
@@ -149,7 +153,7 @@
     <span class="k">return</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">coordinates</span>
 </pre></div>
                         <br>
-                        <p>主函数：</p>
+                        <p>主函数<code>cloest_pair_dc</code>：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">closest_pair_dc</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">brute_force</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
@@ -179,18 +183,18 @@
     <span class="k">return</span> <span class="n">d</span><span class="p">,</span> <span class="n">temp_pair</span>
 </pre></div>
                         <br>
-                        <p>根据前面的讲解和代码，我们可以写出下面的递归关系式：</p>
+                        <p>结合前面的讲解和代码，我们可以写出下面的递归关系式：</p>
                         <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/relation0.png"></p>
-                        <p>最后得到复杂度为 Θ(nlog n)。这可比暴力求解算法的 Θ(n<sup>2</sup>) 有了明显的改善呐。</p>
+                        <p>最后得到算法的复杂度为 Θ(nlog n)。我们发现比暴力求解算法的 Θ(n<sup>2</sup>) 有了明显的进步。</p>
                         <h2 id="凸包问题"><a href="#凸包问题" class="headerlink" title="凸包问题"></a>凸包问题</h2><p>跟前面一样，用分治法解决凸包问题也需要将所有散点分为两部分，然后分别从这两部分中找出构成凸多边形的点。</p>
                         <p><img alt="凸包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull0.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull0.png"></p>
-                        <p>具体步骤是取横坐标最小和最大的两个点 p<sub>1</sub> 和 p<sub>n</sub>，我们很容易证明 p<sub>1</sub> 和 p<sub>n</sub> 就是构成凸多边形的点，于是将这两个点连接起来构成向量 p<sub>1</sub>p<sub>n</sub>。现在问题就变为了从向量左右两侧的散点中分别找出构成凸包的点。</p>
+                        <p>具体步骤是分别选取横坐标中最小和最大的两个点 p<sub>1</sub> 和 p<sub>n</sub>，我们很容易证明 p<sub>1</sub> 和 p<sub>n</sub> 就是构成凸多边形的点，于是将这两个点连接起来构成向量 p<sub>1</sub>p<sub>n</sub>。现在问题就变为了从向量左右两侧的散点中分别找出构成凸包的点。</p>
                         <p><img alt="凸包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull1.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull1.png"></p>
                         <p>接下来我们需要从左右两侧的点中找出距离向量 p<sub>1</sub>p<sub>n</sub> 最远的点 p<sub>max</sub>，该点即可作为构成凸多边形的点。</p>
                         <p><img alt="凸包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull2.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull2.png"></p>
                         <p>找出距离最远点其实就是使 △p<sub>1</sub>p<sub>max</sub>p<sub>n</sub> 的面积最大，如果你熟悉线性代数，计算三角形的面积即计算下面行列式的值。</p>
                         <p><img alt="determinant" src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/determinant.png"></p>
-                        <p>其中 (x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), (x<sub>3</sub>, y<sub>3</sub>) 分别表示 p<sub>1</sub>, p<sub>n</sub> 和 p<sub>max</sub> 的横纵坐标。如果行列式为正，代表 p<sub>max</sub> 的值在向量 p<sub>1</sub>p<sub>n</sub> 的左侧；如果为负值，则代表 p<sub>max</sub> 在向量 p<sub>1</sub>p<sub>n</sub>。于是可以写出代码： </p>
+                        <p>其中 (x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), (x<sub>3</sub>, y<sub>3</sub>) 分别表示 p<sub>1</sub>, p<sub>n</sub> 和 p<sub>max</sub> 的横纵坐标。如果行列式为正，代表 p<sub>max</sub> 的值在向量 p<sub>1</sub>p<sub>n</sub> 的左侧；如果为负值，则代表 p<sub>max</sub> 在向量 p<sub>1</sub>p<sub>n</sub>。于是我们写出相应的代码： </p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_area</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">):</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">x1</span><span class="o">*</span><span class="n">y2</span> <span class="o">+</span> <span class="n">x3</span><span class="o">*</span><span class="n">y1</span> <span class="o">+</span> <span class="n">x2</span><span class="o">*</span><span class="n">y3</span> <span class="o">-</span> <span class="n">x3</span><span class="o">*</span><span class="n">y2</span> <span class="o">-</span> <span class="n">x2</span><span class="o">*</span><span class="n">y1</span> <span class="o">-</span> <span class="n">x1</span><span class="o">*</span><span class="n">y3</span>
     <span class="k">return</span> <span class="n">area</span>
@@ -226,7 +230,7 @@
     <span class="k">return</span> <span class="n">subset</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 </pre></div>
                         <br>
-                        <p>我们从点集合 <code>subset</code> 中寻找距离向量最远的点。其中 <code>subset</code> 表示向量 p1pn 划分出的两部分点集合，我们用下面两个函数来生成它们：</p>
+                        <p>我们从点集合<code>subset</code>中寻找距离向量最远的点。其中<code>subset</code>表示向量 p1pn 划分出的两部分点集合，我们用下面两个函数来生成它们：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_in_set</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">p_left</span><span class="p">,</span> <span class="n">p_right</span><span class="p">):</span>
     <span class="c1"># 去掉 p1 and pn</span>
     <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">p_left</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">p_left</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">p_right</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">p_right</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
@@ -247,7 +251,7 @@
     <span class="k">return</span> <span class="n">subset</span>
 </pre></div>
                         <br>
-                        <p>找到 p<sub>max</sub> 后，我们连接 p<sub>1</sub>p<sub>max</sub> 和 p<sub>max</sub>p<sub>n</sub>（这里以上半部分的 p<sub>max</sub> 为例）。此时，我们再从 p<sub>1</sub>p<sub>max</sub> 和 p<sub>max</sub>p<sub>n</sub> 的左侧中分别寻找距离最远的点，来作为构成凸包的点。如果我们递归地执行上述的操作，所有构成凸包的点就都能够找到啦～</p>
+                        <p>找到 p<sub>max</sub> 后，我们连接 p<sub>1</sub>p<sub>max</sub> 和 p<sub>max</sub>p<sub>n</sub>（这里以上半部分的 p<sub>max</sub> 为例）。此时，我们再从 p<sub>1</sub>p<sub>max</sub> 和 p<sub>max</sub>p<sub>n</sub> 的左侧中分别寻找距离最远的点，来作为构成凸包的点。如果我们递归地执行上述的操作，所有构成凸包的点就都能够找到了。最后将这些得到的点首尾相连，就得到下面这张图啦～</p>
                         <p><img alt="凸包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull3.png" data-src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/con-hull3.png"></p>
                         <p>因此，我们写出主函数 <code>quick_hull</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quick_hull</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">p_left</span><span class="p">,</span> <span class="n">p_right</span><span class="p">):</span>
@@ -279,7 +283,7 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
                         <br>
-                        <p>假设散点是随机分布在平面上，每次都要把点集划分为相等的两部分，所以每一次问题的规模都会减半。划分好之后，我们需要遍历整个点集，以寻找距离最远的点，这个过程是一个线性的复杂度。因而，我们可以写出下面的递归关系式：</p>
+                        <p>假设散点是随机分布在平面上，每次都要把点集划分为相等的两部分，所以每一次问题的规模都会减半。划分好以后，我们需要遍历整个点集，以寻找距离最远的点，这个过程是一个线性的复杂度。因而，我们可以写出下面的递归关系式：</p>
                         <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/divide-and-conquer/clo-pair-con-hull/images/relation1.png"></p>
                         <p>故平均复杂度为 Θ(nlog n)。</p>
                         <p>相比暴力求解的 Θ(n<sup>3</sup>) 复杂度，分治法解决凸包问题在效率上有了更明显的进步。</p>
@@ -692,27 +696,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -735,6 +718,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -747,21 +731,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -786,43 +770,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -837,23 +792,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
