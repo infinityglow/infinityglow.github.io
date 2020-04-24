@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>预排序 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>预排序 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,10 +130,10 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="变治"><a href="#变治" class="headerlink" title="变治"></a>变治</h2><p><strong>变治</strong>（<strong>transform and conquer</strong>）也是一类解决问题的方法。前面的减治和分治都是针对问题本身进行求解，并没有对问题的实例做任何的变换。变治法就是将实例从一种形式转换为另外一种形式的方法。这样听起来还是太抽象了，咱们还是拿一个具体的例子吧。</p>
-                        <p>不知道大家有没有玩过一个叫做熄灯（英文叫 lights out）的游戏。规则很简单，以下面的图片（来源：<a href="https://en.wikipedia.org/wiki/Lights_Out_(game)#/media/File:LightsOutIllustration.svg" target="_blank" rel="noopener">维基百科</a>）为例，面板上分布着 5 × 5 的格子，每个格子的灯都是亮着的，且灯只有亮着和熄灭两种状态，每按一次格子，都会影响到该格子以及上、下、左、右四个相邻格子的灯的状态，即原来亮着的灯会熄灭，原来熄灭的灯会打开。游戏的目标是用最少的次数将面板上所有的灯都熄灭。</p>
+                        <h2 id="变治"><a href="#变治" class="headerlink" title="变治"></a>变治</h2><p><strong>变治</strong>（<strong>transform and conquer</strong>）也是一种解决问题的方式。用减治和分治解决问题时，我们只在原有问题的基础上求解，并没有对问题的实例做任何的变换，而变治法就是将实例从一种形式转换为另外一种形式的方法。这样听起来还是太抽象了，咱们还是拿一个具体的例子吧。</p>
+                        <p>不知道大家有没有玩过一个叫做熄灯（英文叫 lights out）的游戏。规则很简单，以下面的图片（来源：<a href="https://en.wikipedia.org/wiki/Lights_Out_(game)#/media/File:LightsOutIllustration.svg" target="_blank" rel="noopener">维基百科</a>）为例，面板上分布着 5 × 5 的格子，每个格子的对应一盏灯，且灯只有打开和熄灭两种状态。一开始所有的灯都是打开的，每按一次格子，当前的格子都会影响到该格子以及上、下、左、右四个相邻格子的灯的状态，即原来亮着的灯会熄灭，原来熄灭的灯会打开。游戏的目标是用最少的次数将面板上所有的灯都熄灭。</p>
                         <p><img alt="lights out" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/lightsout.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/lightsout.png"></p>
-                        <p>我们可以把面板上这些灯的状态抽象为一个 5 × 5 的矩阵，其中 1 代表灯是亮着的，0 代表灯是熄灭的。现在，游戏的目标变为了怎样使全为 1 的矩阵变为全为 0 的矩阵。我们知道，对于每一个格子来讲，都有按下（1）和不按下（0）两种可能，所以我们可以用一个方程来表示它们：x<sub>1</sub> ⊕ x<sub>2</sub> ⊕ ··· ⊕ x<sub>25</sub> ⊕ 1 = 0。方程的含义是怎样按这 25 个格子最后使得其中一个格子的状态为熄灭（0）。其中 ‘⊕’ 表示异或，它是一种逻辑运算，只有当 A 和 B 不相同时为 1，相同时为 0。这正好满足了游戏的规则。</p>
+                        <p>我们可以把面板上这些灯的状态抽象为一个 5 × 5 的矩阵，其中 1 表示打开的状态，0 表示熄灭的状态。现在，游戏的目标变为了怎样使全为 1 的矩阵变为全为 0 的矩阵。我们知道，对于每一个格子来讲，都有按下（1）和不按下（0）两种可能，所以对任意一个格子来讲，我们可以用一个方程来表示它的明暗状态：x<sub>1</sub> ⊕ x<sub>2</sub> ⊕ ··· ⊕ x<sub>25</sub> ⊕ 1 = 0。方程的含义是怎样按这 25 个格子最后使得一个格子的状态为熄灭（0）。其中 ‘⊕’ 表示异或，它是一种逻辑运算，只有当 A 和 B 不相同时为 1，相同时为 0，因此恰好满足了游戏的规则。</p>
                         <table>
                             <thead>
                             <tr>
@@ -159,10 +163,10 @@
                                 <td align="center">0</td>
                             </tr>
                             </tbody></table>
-                        <p>因为每一个格子都会收到相邻格子的影响，拿第一行第一列的格子来讲，它只会受到三个格子的影响，而其他格子不会对它造成任何影响，因此我们可以在每个 x<sub>i</sub> 的前面加一个系数 a<sub>i</sub>，受影响的为 1，不受影响的为 0，因此对于不受影响的格子来讲，无论 x 怎么变，其结果都为 0。如果对面板中每一个格子都列出相应方程式，我们就可以得到一个 25 元 1 次方程组，用一个矩阵来表示就是这样子的：</p>
+                        <p>因为每一个格子都会收到自身和相邻格子的影响，拿第一行第一列的格子来讲，它只会受到三个格子的影响，而其他格子不会对它造成任何影响，因此我们可以在每个 x<sub>i</sub> 的前面加一个系数 a<sub>i</sub>，受影响的为 1，不受影响的为 0。对于不受影响的格子来讲，无论 x 怎么变，其结果都为 0。如果对面板中每一个格子都列出相应方程式，我们就可以得到一个有 25 个等式 25 个未知数的方程组，如果用一个矩阵来表示其系数就是下面这样：</p>
                         <p><img alt="矩阵" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/matrix.png"></p>
-                        <p>学过线性代数的你一定想到了用高斯消元法来解这样的线性方程组。的确如此，只是这里的 + 换成了 ⊕。我们将不再深究具体怎么去实现这一过程了。只想说明一点的是：原来的熄灯问题经过变换之后，变为了用高斯消元法解线性方程组的问题，这就是变治法的思想，也是这一章要重点讨论的问题。</p>
-                        <h2 id="判断数组元素是否重复"><a href="#判断数组元素是否重复" class="headerlink" title="判断数组元素是否重复"></a>判断数组元素是否重复</h2><p>先来举一个最简单的例子，判断数组元素是否有重复数。我们可以用最简单的方式：取数组的每一个元素，然后在剩余的数组元素里查看有没有重复。</p>
+                        <p>这样的矩阵我们可以采用用高斯消元法来解出每个 x 的值。但与一般的高斯消元不同的是，这里的运算符从 + 变成了 ⊕。具体的求解过程我们这里不再细究了，只想说明一点的是：原来的熄灯问题经过变换之后，变为了用高斯消元法求解线性方程组的问题，这就是变治法，这一章会我们会重点地讨论这个问题。</p>
+                        <h2 id="判断数组元素是否重复"><a href="#判断数组元素是否重复" class="headerlink" title="判断数组元素是否重复"></a>判断数组元素是否重复</h2><p>先来举一个最简单的例子，判断数组元素是否有重复数。我们可以用最简单的方式：取数组的每一个元素，然后在剩余的数组元素里查看有没有重复。因此我们的代码就可以改写为：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_unique_bf</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -172,7 +176,6 @@
                 <span class="k">return</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="bp">True</span>
 </pre></div>
-                        <br>
                         <p>这样做效率很低，复杂度为 Θ(n<sup>2</sup>)。假设我们先将数组进行排序，因为对于一个有序数组，我们只需要查看一个元素跟它的下一个元素是否相等即可。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_unique_presort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
@@ -182,7 +185,6 @@
             <span class="k">return</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="bp">True</span>
 </pre></div>
-                        <br>
                         <p>由于算法由两部分构成（排序和主循环），所以该其复杂度也应该为两部分：Θ(nlog n) + Θ(n) = Θ(nlog n)。类似于这样的处理方式我们称为<strong>预排序</strong>（<strong>presorting</strong>）。</p>
                         <h2 id="寻找众数"><a href="#寻找众数" class="headerlink" title="寻找众数"></a>寻找众数</h2><p><strong>众数</strong>（<strong>mode</strong>）是一组数据中出现次数最多的数。如果用暴力求解的算法寻找众数，我们需要统计数据中所有数字出现的次数，然后选择出现频率最高的数。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_mode_bf</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
@@ -196,10 +198,9 @@
             <span class="n">mode</span> <span class="o">=</span> <span class="n">key</span>
     <span class="k">return</span> <span class="n">mode</span>
 </pre></div>
-                        <br>
                         <p>在最坏的情况下，数组里每一个元素出现的次数都为 1，所以第 i 个元素需要跟字典里的 i - 1 个元素进行比较，复杂度就为 Θ(n<sup>2</sup>)。</p>
                         <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/derivation.png"></p>
-                        <p>如果对数组进行预排序，我们就只需要统计数组中临近的相同元素的个数即可，因为相同的元素在有序数组里一定是相邻的。</p>
+                        <p>如果对数组进行预排序，我们用一个循环就可以找出数组的众数，因为相同的元素在有序数组里一定是相邻的。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_mode_presort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">array</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># 排序</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">freq</span> <span class="o">=</span> <span class="mi">0</span>
@@ -212,7 +213,6 @@
         <span class="n">i</span> <span class="o">+=</span> <span class="n">temp_freq</span>
     <span class="k">return</span> <span class="n">mode</span>
 </pre></div>
-                        <br>
                         <p>上述的算法只需要遍历一次数组，再加上排序算法，故复杂度为 Θ(nlog n) + Θ(n) = Θ(nlog n)。</p>
 
                         <br>
@@ -623,27 +623,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -666,6 +645,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -678,21 +658,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -717,43 +697,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -768,23 +719,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
