@@ -166,7 +166,7 @@
                         <p>因为每一个格子都会收到自身和相邻格子的影响，拿第一行第一列的格子来讲，它只会受到三个格子的影响，而其他格子不会对它造成任何影响，因此我们可以在每个 x<sub>i</sub> 的前面加一个系数 a<sub>i</sub>，受影响的为 1，不受影响的为 0。对于不受影响的格子来讲，无论 x 怎么变，其结果都为 0。如果对面板中每一个格子都列出相应方程式，我们就可以得到一个有 25 个等式 25 个未知数的方程组，如果用一个矩阵来表示其系数就是下面这样：</p>
                         <p><img alt="矩阵" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/presorting/images/matrix.png"></p>
                         <p>这样的矩阵我们可以采用用高斯消元法来解出每个 x 的值。但与一般的高斯消元不同的是，这里的运算符从 + 变成了 ⊕。具体的求解过程我们这里不再细究了，只想说明一点的是：原来的熄灯问题经过变换之后，变为了用高斯消元法求解线性方程组的问题，这就是变治法，这一章会我们会重点地讨论这个问题。</p>
-                        <h2 id="判断数组元素是否重复"><a href="#判断数组元素是否重复" class="headerlink" title="判断数组元素是否重复"></a>判断数组元素是否重复</h2><p>先来举一个最简单的例子，判断数组元素是否有重复数。我们可以用最简单的方式：取数组的每一个元素，然后在剩余的数组元素里查看有没有重复。因此我们的代码就可以改写为：</p>
+                        <h2 id="判断数组元素是否重复"><a href="#判断数组元素是否重复" class="headerlink" title="判断数组元素是否重复"></a>判断数组元素是否重复</h2><p>先来举一个最简单的例子，判断数组元素是否有重复数。我们可以用最简单的方式：取数组的每一个元素，然后在剩余的数组元素里查看有没有重复。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_unique_bf</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -176,7 +176,7 @@
                 <span class="k">return</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="bp">True</span>
 </pre></div>
-                        <p>这样做效率很低，复杂度为 Θ(n<sup>2</sup>)。假设我们先将数组进行排序，因为对于一个有序数组，我们只需要查看一个元素跟它的下一个元素是否相等即可。</p>
+                        <p>这样做效率很低，复杂度为 Θ(n<sup>2</sup>)。假设我们先将数组进行排序，因为对于一个有序数组，我们只需要查看一个元素跟它的下一个元素是否相等即可。因此我们的代码就可以改写为：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_unique_presort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
     <span class="n">array</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># 排序</span>

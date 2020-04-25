@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>堆与堆排序 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>堆与堆排序 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,21 +130,21 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h2><p>乘坐过飞机时你一定清楚这样一个场景，在候机厅排队登机的过程中，拥有头等舱的乘客总是能够有“特权”，不用排队就能直接登机。</p>
+                        <h2 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h2><p>在学习堆和堆排序之前，我们需要了解什么是优先队列。乘坐飞机前你一定清楚这样一个场景，在候机厅排队登机时，我们会看到有专门的头等舱通道，持有头等舱机票的乘客可以不用排队就能直接登机，就好像他们有“特权”一样。</p>
                         <p><img alt="登机" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/boarding.jpg" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/boarding.jpg"></p>
-                        <p>我们看到，坐头等舱的乘客的优先级比坐普通经济舱的乘客要高。如果用计算机里的队列来描述的话，头等舱的乘客在出队时总是先于经济舱的乘客。于是，我们可以定义出一种新的抽象数据类型，<strong>优先队列</strong>（<strong>priority queue</strong>），即所有元素都按照优先级的大小出队。举个例子，假设一个数组为 [34, 12, 56, 98, 49]，优先级的顺序为 [4, 2, 1, 3, 5]，那么出队的顺序就为 56-&gt;12-&gt;98-&gt;34-&gt;49。</p>
-                        <h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>当创建一个优先队列（假设全由数字构成）时，我们需要两个数组，一个用于存储数据，一个用于存储各个元素的优先级。所需要的存储量是一般数组的两倍，显然是不可行的。另外，因为队列的出队操作只能严格在队尾执行，所以每次出队的过程中，出队的元素必须要和队尾元素进行交换，然后再出队，但这样操作后的问题是，存储优先级的数组也要做出相同的变化才能够维持优先队列的性质，非常的麻烦。因此，我们还需要另寻他法，使优先队列的数据结构更简单。</p>
+                        <p>我们可以认为，坐头等舱的乘客的优先级比坐普通经济舱的乘客要高。如果用计算机里的队列来描述的话，头等舱的乘客在出队时总是先于经济舱的乘客。于是，我们可以定义出一种新的抽象数据类型，<strong>优先队列</strong>（<strong>priority queue</strong>），即所有元素都按照优先级的大小出队。举个例子，假设一个数组为 [34, 12, 56, 98, 49]，优先级的顺序为 [4, 2, 1, 3, 5]，那么出队的顺序就为 56→12→98→34→49。</p>
+                        <h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>假设一个优先队列全由数字组成时，我们需要两个数组，一个用于存储数据，一个用于存储各个元素的优先级。所需要的存储量是普通数组的两倍，这显然是不可行的。另外，因为队列的出队操作只能严格地在队尾执行，所以每次出队的过程中，出队的元素必须要和队尾元素进行交换，然后再出队，并且每次出队后存储优先级的数组也要做出相应的变化才能够保证优先队列的性质，所以操作会非常麻烦。因此，我们还需要另寻他法，使优先队列的数据结构在操作上更简单。</p>
                         <p><img alt="优先队列" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/pqueue.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/pqueue.png"></p>
-                        <p>我们可以借助二叉树的性质，将优先级越高的元素放置在越靠近根   节点的位置，换句话说就是位于层数越低的地方。<strong>堆</strong>（<strong>heap</strong>）就是将优先队列变换为了二叉树的形式。下面来介绍一下它的性质：</p>
-                        <h3 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h3><p>堆是一棵完全二叉树。在将<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/">数据结构</a>那一节里，我们简单地提到了它。区分完全二叉树和非完全二叉树就是，完全二叉树除了最后一层的节点没有排满以外，其他所有层均已排满。并且在构建完全二叉树的时候，新加入的节点在最后一层从左往右依次排列，直至排满。如当前层已排满就从下一层开始排。</p>
+                        <p>我们可以借助二叉树的性质，将优先级越高的元素放置在越靠近根节点的位置，换句话说就是位于层数越低的地方。<strong>堆</strong>（<strong>heap</strong>）就是一种将优先队列变换为了二叉树的数据结构。下面来介绍一下它的性质：</p>
+                        <h3 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h3><p>堆是一棵完全二叉树。在<a href="https://infinityglow.github.io/study/algorithm/basic-knowledge/data-structure/">数据结构</a>那一节里，我们简单地提到了它。区分完全二叉树和非完全二叉树在于完全二叉树除了最后一层的节点没有排满以外，其他所有层均已排满。并且在构建完全二叉树的时候，新加入的节点在最后一层从左往右依次排列，直到排满为止。</p>
                         <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/tree.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/tree.png"></p>
-                        <h3 id="堆的构建"><a href="#堆的构建" class="headerlink" title="堆的构建"></a>堆的构建</h3><p>下面来说一说堆的第二个性质，这里我们以数字为例，数字越大的优先级越高。由于优先级越高的元素放置在越靠近根节点的位置，所以我们定义，所有父节点的值均大于等于其孩子节点的值，这样根节点的值一定是堆中最大的。例如下图中根节点 95 是最大值，它大于它的两个孩子节点 86 和 74，而节点 86 又大于节点 47 和 52。</p>
+                        <h3 id="堆的构建"><a href="#堆的构建" class="headerlink" title="堆的构建"></a>堆的构建</h3><p>下面来说一说如何构建一个堆，如果数字越大的优先级越高，我们把这种堆称为大顶堆，数字越小，优先级越大的堆叫做小顶堆，这里以大顶堆为例，由于优先级越高的元素放置在越靠近根节点的位置，所以我们定义，所有父节点的值均大于等于其孩子节点的值，而孩子节点之间的大小我们不做要求，因此在大顶堆中根节点的值一定是最大值。例如下图中根节点 95 是最大值，它大于它的两个孩子节点 86 和 74，而节点 86 又大于节点 47 和 52。</p>
                         <p><img alt="堆" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/heap.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/heap.png"></p>
-                        <p>有了堆的第二个性质，我们就可以构建出一个堆了。首先将数组元素以堆的形式来表示，然后调整堆内元素的排列，直到满足堆的第二个性质。</p>
-                        <p>构建堆的具体过程在下面的视频中已经显示出来。首先从最后一个具有孩子节点的父节点（节点 36）开始，与孩子节点中值较大的节点（节点 72）比较，如果该节点比父节点要大，就交换这两个节点的值，然后被交换的孩子节点又与它的子节点进行比较，直到没有子节点为止。对所有的父节点，我们都执行上述的操作，最后就能构建出一个堆了。</p>
+                        <p>有了堆的性质，下面我们就来构建一个堆。首先将数组元素以二叉树的形式表示出来，然后不断调整堆内元素的排列，直到满足堆的性质。</p>
+                        <p>构建堆的具体过程在下面的视频中已经显示出来。具体来说就是先从最后一个具有孩子节点的父节点（节点 36）开始，然后选孩子节点较大的节点（节点 72）比较，并与父节点比较大小，如果该节点比父节点要大，说明不满足堆的性质，因此就要交换这两个节点的值。交换后，被交换的父节点又与它的孩子节点进行比较，如果不满足堆的性质就交换两个节点的值，满足就完成当前循环，如此往复直到父节点没有子节点为止。对上述所有的父节点，我们都执行一遍比较操作，最后就能构建出一个堆了。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/build.mp4"></video></p>
-                        <p>如果用数组来体现这一性质，那么数组元素就应该满足：e<sub>i</sub> ≥ e<sub>2i+1</sub> 并且 e<sub>i</sub> ≥ e<sub>2i+2</sub>。其中 e<sub>i</sub> 代表第 i 个元素的值。至于循环中 i 的取值，假设有 n 个元素，i 就从 ⌊(n-2)/2⌋ 开始逐渐递减到 0。</p>
-                        <p>因此我们写出代码：</p>
+                        <p>如果用数组来体现这一性质，那么数组元素就应该满足：e<sub>i</sub> ≥ e<sub>2i+1</sub> 并且 e<sub>i</sub> ≥ e<sub>2i+2</sub>。其中 e<sub>i</sub> 代表第 i 个元素的值。那么 i 的取值如何呢？假设数组中有 n 个元素，i 就从 ⌊(n-2)/2⌋ 开始递减到 0。</p>
+                        <p>因此我们写出构建堆的代码：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">heaplify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">temp_idx</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
     <span class="n">temp_val</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">temp_idx</span><span class="p">]</span>
     <span class="n">heap</span> <span class="o">=</span> <span class="bp">False</span>
@@ -164,21 +168,21 @@
                         <div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">arrary</span> <span class="o">=</span> <span class="n">heaplify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
 </pre></div>
-                        <p>最后来分析一下构建堆的复杂度。假设堆有 h 层，且每一层均已填满。在构建时，我们需要从第 h - 1 层开始调整堆的结构，直至调整到第 1 层。在最坏的情况下，第 i 层的元素最多需要比较 2(h - i) 次，而每一层最多有 2<sup>i-1</sup> 个节点，所以用一个求和公式来表示就是这样的：</p>
+                        <p>最后来分析一下构建堆的时间复杂度。假设堆有 h 层，且每一层均已填满。在构建时，我们需要从第 h - 1 层开始调整堆的结构，直到调整到堆的第 1 层。在最坏的情况下，第 i 层的元素最多需要比较 2(h - i) 次，而每一层最多有 2<sup>i-1</sup> 个节点，所以用一个求和公式来表示就是这样的：</p>
                         <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/derivation0.png"></p>
-                        <p>最后求出复杂度为 Θ(n)。</p>
-                        <h3 id="堆的删除"><a href="#堆的删除" class="headerlink" title="堆的删除"></a>堆的删除</h3><p>与队列一样，堆的删除只能在堆顶处执行。为了删除堆顶后仍能保持堆的性质，我们实际的操作是将堆的最后一个元素的值赋给堆顶元素，然后堆顶元素从上而下调整，如遇到父节点比孩子节点大就停止。</p>
+                        <p>最后求得复杂度为 Θ(n)。</p>
+                        <h3 id="堆的删除"><a href="#堆的删除" class="headerlink" title="堆的删除"></a>堆的删除</h3><p>与普通队列一样，堆的删除只能在一侧（堆顶）进行。为了删除堆顶后仍能保持堆的性质，我们实际的操作是交换堆尾和堆顶的值，然后删除堆尾，最后堆顶元素从上到下调整堆的结构，如果不满足堆的性质就交换两个节点的值，满足性质后便不再调整。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/delete.mp4"></video></p>
-                        <p>上面的动画（来源于<a href="http://btv.melezinek.cz/binary-heap.html" target="_blank" rel="noopener">网络</a>）展示了删除堆顶元素 95 的全过程。首先需要与最后一个节点的元素 60 交换位置，然后删除 95，最后从上到下调整节点 60 的位置。</p>
+                        <p>上面的动画（来源于<a href="http://btv.melezinek.cz/binary-heap.html" target="_blank" rel="noopener">网络</a>）展示了删除堆顶元素 95 的全过程。首先需要堆尾元素 60 交换位置，然后删除 95，最后从上到下调整节点 60 的位置。</p>
                         <p>在最坏的情况下，堆删除的复杂度取决于堆的层数 h。如果堆内有 n 个元素，那么堆的层数 h = ⌊log<sub>2</sub>n⌋ + 1，故复杂度为 Θ(log n)。</p>
                         <h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p><strong>堆排序</strong>（<strong>heap sort</strong>）是基于堆的一种排序，整个过程分为四步：</p>
                         <ul>
-                            <li>构建堆</li>
-                            <li>输出并删除堆顶元素，用堆中最后一个元素替换堆顶元素</li>
-                            <li>调整堆结构</li>
-                            <li>重复上述过程，直至堆内没有任何元素</li>
+                            <li>第一步：构建堆</li>
+                            <li>第二步：堆顶和堆尾的值交换顺序，并删除交换后的堆尾元素</li>
+                            <li>第三步：调整堆结构</li>
+                            <li>第四步：重复第二步和第三步，直到堆为空</li>
                         </ul>
-                        <p>事实上，我们利用了堆顶元素总是最大这一性质，然后依次取出最大的元素，同时调整堆的结构使得下一个堆顶元素又是堆中剩下元素中的最大值，如果一直重复这个过程，数组就从大到小依次排列啦。</p>
+                        <p>事实上，我们利用了堆顶元素在堆中总是为最大值的性质，然后取出最大值，同时调整堆的结构使得下一个堆顶元素又是堆的最大值，如果一直重复这个过程，数组就从大到小依次排列了。下面给出了堆排序的代码：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">heap_sort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">array</span> <span class="o">=</span> <span class="n">heaplify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
@@ -187,24 +191,24 @@
         <span class="n">array</span> <span class="o">=</span> <span class="n">heaplify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">array</span>
 </pre></div>
-                        <p>我们再用一个动画（来源于<a href="http://btv.melezinek.cz/binary-heap.html" target="_blank" rel="noopener">网络</a>）来直观地感受一下这个过程。</p>
+                        <p>我们再用一个动画（来源于<a href="http://btv.melezinek.cz/binary-heap.html" target="_blank" rel="noopener">网络</a>）来感受一下这个过程。</p>
                         <p><video controls="controls" autoplay="autoplay" loop="loop" class="post-img b-lazy"> <source src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/heap.mp4"></video></p>
-                        <p>堆排序结合了构建堆和删除堆顶元素两个过程。对于构建堆，复杂度即为 Θ(n)；而删除堆的操作需要执行 n 次，每次删除的复杂度均取决于当前堆的层数，所以我们列出下列的关系式：</p>
+                        <p>堆排序结合了构建堆和删除堆顶元素两个过程。构建堆的过程我们知道是一个 Θ(n) 的复杂度；删除堆的操作一共需要执行 n 次，而每次的删除操作复杂度均取决于当前堆的层数，所以我们需要列出下面的关系式来计算它：</p>
                         <p><img alt="derivation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/heap/images/derivation1.png"></p>
-                        <p>计算出堆的删除操作在最坏的情况下不会高于 Θ(nlog n) 的复杂度。</p>
-                        <p>所以我们可以得到堆排序的复杂度，即将两者的复杂度相加 Θ(n) + Θ(nlog n) = Θ(nlog n)。</p>
-                        <p>堆排序在任何情况下复杂度都保持在 Θ(nlog n)，并且不需要额外的存储空间。但计算的时候我们发现堆排序的比较次数前面有一个常数 2，所以在通常情况下会稍逊色于快速排序和归并排序。如果你分别运行 GitHub 里我写的这三种排序的代码，你会发现堆排序的平均比较次数会多于快速排序和归并排序，所消耗的时间也比这两者要长。</p>
-                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;heap sort.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">平均比较次数：</span><span class="mi">235346</span>
-    <span class="n">平均运行时间：</span><span class="mf">0.0616</span> <span class="n">s</span>
+                        <p>最后计算出堆的删除操作在最坏的情况下不会高于 Θ(nlog n) 的复杂度。</p>
+                        <p>所以我们可以得到堆排序的复杂度，即两者相加后的复杂度： Θ(n) + Θ(nlog n) = Θ(nlog n)。</p>
+                        <p>堆排序在任何情况下复杂度都保持在 Θ(nlog n)，不需要额外的存储空间，但堆排序是一个不稳定的排序。在计算的时候我们发现堆排序的比较次数前面有一个常数 2，所以在通常情况下会稍逊色于快速排序和归并排序。如果你分别运行 GitHub 里我写的这三种排序的代码，你会发现堆排序的平均比较次数会高于快速排序和归并排序，消耗的时间也比这两者要多，下面给出了在我的电脑上运行的结果。</p>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">&quot;heap sort.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">平均比较次数：</span><span class="o">235346</span>
+    <span class="o">平均运行时间：</span><span class="o">0.0616</span> <span class="o">s</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;merge sort.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">平均比较次数：</span><span class="mi">120467</span>
-    <span class="n">平均运行时间：</span><span class="mf">0.0569</span> <span class="n">s</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">&quot;merge sort.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">平均比较次数：</span><span class="o">120467</span>
+    <span class="o">平均运行时间：</span><span class="o">0.0569</span> <span class="o">s</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;quick sort.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">平均比较次数：</span><span class="mi">156098</span>
-    <span class="n">平均运行时间：</span><span class="mf">0.0348</span> <span class="n">s</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">&quot;quick sort.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">平均比较次数：</span><span class="o">156098</span>
+    <span class="o">平均运行时间：</span><span class="o">0.0348</span> <span class="o">s</span>
 </pre></div>
                         <br>
                         <br>
@@ -615,27 +619,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -658,6 +641,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -670,21 +654,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -709,43 +693,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -760,23 +715,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
