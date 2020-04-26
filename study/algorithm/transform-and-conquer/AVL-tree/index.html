@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>AVL树 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>AVL树 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,14 +130,14 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在二叉搜索树那一节里，我们在最后分析复杂度的时候提到了如果二叉树严重不平衡，那么它的时间复杂度会退化到线性的复杂度，例如从有序数组[1, 2, 3, 4, 5]中构建出的二叉树，就会成为一个线性表，如下图所示。</p>
+                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在二叉搜索树的那一节里，我们在最后提到了如果二叉树严重不平衡，其时间复杂度会退化到线性的复杂度，例如从有序数组[1, 2, 3, 4, 5]中构建出的二叉树，就会成为一个线性表，如下图所示。</p>
                         <p><img alt="二叉树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/binary-tree.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/binary-tree.png"></p>
-                        <p>因此，我们需要有一棵能够自动平衡的二叉树，使得每次插入、删除和查找的复杂度都接近 Θ(nlog n) 的复杂度。AVL 树就是最早被提出的自平衡二叉搜索树，它的名字来自于两名俄国的科学家 G. M. Adelson-Velsky 和 E. M. Landis。下面，我们就来看看它是如何做到自平衡的吧。</p>
-                        <h2 id="平衡因子"><a href="#平衡因子" class="headerlink" title="平衡因子"></a>平衡因子</h2><p>AVL 树最核心的思想就是对每个节点计算<strong>平衡因子</strong>（<strong>balance factor</strong>），平衡因子的定义是一个节点的左孩子的高度减去其右孩子的高度。这里所谓的<strong>高度</strong>（<strong>height</strong>）就是指从一个节点出发到达最远叶子节点所经过的最长路径，例如下面的例子中节点 3 到达最远的叶子节点 1 需要经过的路径长度为 2（从节点 3 到节点 2 和 从节点 2 到节点 1）。</p>
+                        <p>因此，我们需要有一棵能够自动平衡的二叉树，使得每次插入、删除和查找的复杂度都接近 Θ(nlog n) 的复杂度。AVL 树就是最早被提出的自平衡二叉搜索树，它是由两名俄国的科学家（G. M. Adelson-Velsky 和 E. M. Landis）提出。下面，我们就来看看它是如何做到自平衡的吧。</p>
+                        <h2 id="平衡因子"><a href="#平衡因子" class="headerlink" title="平衡因子"></a>平衡因子</h2><p>AVL 树最核心的思想就是计算每个节点的<strong>平衡因子</strong>（<strong>balance factor</strong>），平衡因子的定义是一个节点的左孩子的高度减去其右孩子的高度。这里的<strong>高度</strong>（<strong>height</strong>）就是指从一个节点出发到达最远叶子节点所经过的最长路径，例如下图的例子中节点 3 到达最远的叶子节点 2 所需要经过的路径长度为 2（从节点 3 到节点 1 和 从节点 1 到节点 2）。</p>
                         <p><img alt="高度" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/height.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/height.png"></p>
-                        <p>我们规定空节点的高度为 -1，所以求任意一个节点的高度我们就可以分别计算左右孩子的高度，然后取较大者，最后加 1。于是，我们写出以下递归关系式：</p>
+                        <p>如果是空节点，我们规定其高度为 -1，所以求任意一个节点的高度我们就可以先分别计算出左右孩子的高度，然后取较大者，最后加 1。于是，我们写出以下递归关系式：</p>
                         <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/relation.png"></p>
-                        <p>在写出计算节点高度的代码时，我们首先还是需要构建一个<code>Node</code>类。</p>
+                        <p>在写出计算节点高度的代码时，我们首先需要构建树的节点<code>Node</code>类。</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
@@ -141,7 +145,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 初始化为 0</span>
 </pre></div>
-                        <p>然后才是我们的<code>calc_height</code>函数。</p>
+                        <p>然后是用于计算高度的<code>calc_height</code>函数。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
@@ -155,16 +159,16 @@
 </pre></div>
                         <p>例如，下图中的两个例子，根节点的平衡因子分别为 2 和 -2。</p>
                         <p><img alt="平衡因子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/balance.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/balance.png"></p>
-                        <h2 id="旋转操作"><a href="#旋转操作" class="headerlink" title="旋转操作"></a>旋转操作</h2><p>从前面的例子中，我们发现当一个节点的平衡因子的绝对值大于等于 2 时，树已经表现出不平衡。这里，AVL 树提供了一种旋转的机制，使得旋转过后的树不仅能保持二叉搜索树的性质，同时能够使节点的平衡因子的绝对值小于 2，接下来我们就分别来讨论一下不同情况下的旋转操作。</p>
+                        <h2 id="旋转操作"><a href="#旋转操作" class="headerlink" title="旋转操作"></a>旋转操作</h2><p>从前面的例子中，我们发现当一个节点的平衡因子的绝对值大于等于 2 时，树就不再平衡。这里，AVL 树提供了一种旋转机制，使得旋转过后的树不仅能保持二叉搜索树的性质，同时能够使节点的平衡因子的绝对值小于 2，接下来我们就分别来讨论一下不同情况下的旋转操作。</p>
                         <h3 id="LL-型"><a href="#LL-型" class="headerlink" title="LL 型"></a>LL 型</h3><p>下图表示的是 LL 型的情况，在根节点的左孩子的左侧添加新节点 1 后，平衡因子从原来的 1 变为了 2，这时我们只需要对根节点 3 执行一次右旋操作树就平衡了。</p>
                         <p><img alt="LL" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/LL.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/LL.png"></p>
-                        <h3 id="LR-型"><a href="#LR-型" class="headerlink" title="LR 型"></a>LR 型</h3><p>如果往根节点的左孩子的右侧添加新节点（这里的节点 2），平衡因子也会从 1 变为 2，但这里我们不能采用单次右旋，而是要先对根节点的左孩子执行一次左旋操作，使之变为 LL 型，然后再对根节点进行右旋。</p>
+                        <h3 id="LR-型"><a href="#LR-型" class="headerlink" title="LR 型"></a>LR 型</h3><p>如果往根节点的左孩子的右侧添加新节点（下图中的节点 2），平衡因子也会从 1 变为 2，但这里我们不能采用单次右旋，而是要先对根节点的左孩子执行一次左旋操作，使之变为 LL 型，然后再对根节点进行右旋。</p>
                         <p><img alt="LR" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/LR.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/LR.png"></p>
-                        <h3 id="RR-型"><a href="#RR-型" class="headerlink" title="RR 型"></a>RR 型</h3><p>RR 型正好与 LL 型的互为镜像，如果向根节点的右孩子的右侧添加一个新节点（这里的节点 3）后，平衡因子由 -1 变为 -2，导致树的不平衡，这时我们需要对根节点执行一次左旋操作。</p>
+                        <h3 id="RR-型"><a href="#RR-型" class="headerlink" title="RR 型"></a>RR 型</h3><p>RR 型正好与 LL 型的互为镜像，如果向根节点的右孩子的右侧添加一个新节点（下图中的节点 3）后，平衡因子由 -1 变为 -2，导致树的不平衡，这时我们需要对根节点执行一次左旋操作。</p>
                         <p><img alt="RR" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/RR.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/RR.png"></p>
-                        <h3 id="RL-型"><a href="#RL-型" class="headerlink" title="RL 型"></a>RL 型</h3><p>RL 型与 LR 型也互为镜像，即如果将新节点（这里为节点 2）插入到根节点的右孩子的左侧，平衡因子由 -1 变为 -2。同样，我们不能用一次左旋来使树重新平衡，而是先对根节点的右孩子执行一次右旋，变为 RR 型，然后再对根节点进行左旋。</p>
+                        <h3 id="RL-型"><a href="#RL-型" class="headerlink" title="RL 型"></a>RL 型</h3><p>RL 型与 LR 型也互为镜像，即如果将新节点（下图中的节点 2）插入到根节点的右孩子的左侧，平衡因子由 -1 变为 -2。同样，我们不能用一次左旋来使树重新平衡，而是先对根节点的右孩子执行一次右旋，变为 RR 型，然后再对根节点进行左旋。</p>
                         <p><img alt="RL" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/RL.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/RL.png"></p>
-                        <h3 id="一般情况"><a href="#一般情况" class="headerlink" title="一般情况"></a>一般情况</h3><p>我们看到，上述的四种情况都是基于两种基本操作：左旋和右旋。然而，我们讨论的并不是一般的情况。举个例子，如果要对下图中的根节点进行右旋，我们会发现根节点的左孩子的右侧不为空，这时该怎么办呢？我们知道，旋转之后的树必须保持二叉树的性质，所以我们可以让多余的右子树作为原根节点的左子树，使得原根节点的值还是大于被调整子树的全部节点的值。</p>
+                        <h3 id="一般情况"><a href="#一般情况" class="headerlink" title="一般情况"></a>一般情况</h3><p>我们看到，上述的四种情况都是基于两种基本操作：左旋和右旋。然而，我们讨论的并不是一般的情况。举个例子，如果要对下图中的根节点进行右旋，我们会发现根节点的左孩子的右子树不为空，这时该怎么办呢？我们知道，旋转之后的树必须保持二叉树的性质，所以我们可以让多余的右子树作为原根节点的左子树，使得原根节点的值还是大于被调整子树的所有节点的值。</p>
                         <p><img alt="右旋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/right-rotation.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/right-rotation.png"></p>
                         <p>同理，下图也展示了左旋的一般情况，只是与右旋互为镜像操作。</p>
                         <p><img alt="左旋" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/left-rotation.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/AVL-tree/images/left-rotation.png"></p>
@@ -210,7 +214,7 @@
     <span class="k">return</span> <span class="n">root</span>
 </pre></div>
                         <p>旋转操作由于只涉及到了指针的变动，因而该过程的时间复杂度不随树的节点个数的增加而增加，即为 Θ(1)。</p>
-                        <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>和二叉搜索树一样，AVL 树也是从根节点开始搜索，如果搜索的元素比根节点小，那么就从根节点的左子树中继续搜索，如果比根节点大，那么就从右子树中继续搜索，如果相等，则返回该节点，要是搜索到了叶子节点发现还不是我们要找的元素，则搜索失败，返回<code>None</code>。</p>
+                        <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>和二叉搜索树一样，AVL 树也是从根节点开始搜索，如果搜索的元素比根节点小，那么就从根节点的左子树中继续搜索，如果比根节点大，那么就从右子树中继续搜索，如果相等，则返回该节点，要是搜索到了叶子节点发现还是搜索失败，我们就返回<code>None</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="c1"># 树的根节点为空就抛出异常</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
@@ -227,7 +231,7 @@
         <span class="k">return</span> <span class="n">root</span>
 </pre></div>
                         <p>由于 AVL 树是平衡的，所以查找的时间复杂度接近 Θ(log n)。</p>
-                        <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>AVL 树的插入操作也跟二叉搜索树一样，先找到插入的位置，即通过搜索操作找到插入位点，然后创建一个新节点，最后父节点指向该新节点。但由于 AVL 树是一棵自平衡的树，所以每插入一个节点都会更新搜索过程中所经过节点的高度，如发现有节点的高度的绝对值大于等于 2，则采取相应的旋转操作使之保持平衡。这里调用了前面写好的<code>settle_violation</code>函数，整个过程均采用递归的方式（这是最难理解的地方，尤其是代码，需要各位小伙伴多花时间研究研究啊～）实现。</p>
+                        <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>AVL 树的插入操作也跟二叉搜索树一样，先找到插入的位置，即通过搜索操作找到插入位点，然后创建一个新节点，最后父节点指向该新节点。但由于 AVL 树是一棵自平衡的树，所以每插入一个节点都会更新搜索过程中所经过节点的高度，如发现有节点的高度的绝对值大于等于 2，则采取相应的旋转操作使之保持平衡。这里调用了前面写好的<code>settle_violation</code>函数，整个过程均采用递归的方式实现（这是最难理解的地方，尤其是代码，需要各位小伙伴多花时间研究研究啊～）。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># 创建新节点</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">insert_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
@@ -241,7 +245,7 @@
     <span class="n">root</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc_height</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_height</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 更新根节点的高度</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">settle_violation</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>  <span class="c1"># 查看是否满足 AVL 树的性质</span>
 </pre></div>
-                        <h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>同样，AVL 树的删除操作也类似于二叉搜索树，找到删除的节点，然后根据待删除节点的孩子的个数，判断出该采取哪一种删除方式，由于它跟二叉搜索树一样，这里就不再赘述了，忘记了的小伙伴可以乘坐这里的<a href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/" target="_blank" rel="noopener">传送门</a>，找到删除操作的那一部分再看一看。与插入操作一样，删除操作也会检查搜索过程中所经过的所有节点的高度，如果其绝对值大于等于 2，我们也调用<code>settle_violation</code>函数来使树保持平衡，整个删除操作也是一个递归的过程（理解代码也是需要一个漫长的过程哦 ◠‿◠）。</p>
+                        <h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>同样，AVL 树的删除操作也类似于二叉搜索树，找到删除的节点，然后根据待删除节点的孩子节点个数，判断出该采取哪一种删除方式，由于它跟二叉搜索树一样，这里就不再赘述了，忘记了的小伙伴可以乘坐这里的<a href="https://infinityglow.github.io/study/algorithm/decrease-and-conquer/binary-search-tree/" target="_blank" rel="noopener">传送门</a>，找到删除操作的那一部分再看一看。与插入操作一样，删除操作也会检查搜索过程中所经过的所有节点的高度，如果其绝对值大于等于 2，我们也调用<code>settle_violation</code>函数来使树保持平衡，整个删除操作也是一个递归的过程（理解代码也是需要一个漫长的过程哦 ◠‿◠）。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
@@ -697,27 +701,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -740,6 +723,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -752,21 +736,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -791,43 +775,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -842,23 +797,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
