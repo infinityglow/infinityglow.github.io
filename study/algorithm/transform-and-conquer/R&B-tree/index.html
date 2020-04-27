@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>红黑树 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>红黑树 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -136,7 +140,7 @@
                             <li>性质 4：如果节点为红色，那么其孩子节点（包括 NIL）必须为黑色</li>
                             <li>性质 5：任意一个节点到每个叶子节点所经过的路径包含相同的数目的黑色节点</li>
                         </ul>
-                        <p>红黑树每插入或删除一个节点，都会检查是否违反了上述的性质。如违反，红黑树就做出相应的改变，但和 AVL 树不同的是，红黑树不但继承了 AVL 树的旋转操作，还可以通过节点的颜色变换使树达到平衡，下面我们就分别来介绍一下这两种操作。</p>
+                        <p>红黑树每插入或删除一个节点，都会检查是否违反了上述的性质。如果违反，红黑树就做出相应的操作使树保持平衡，但和 AVL 树不同的是，红黑树不但继承了 AVL 树的旋转操作，还可以通过节点的颜色变换使之不违反上述的五条性质，下面我们就分别来介绍一下这两种操作。</p>
                         <h2 id="旋转操作"><a href="#旋转操作" class="headerlink" title="旋转操作"></a>旋转操作</h2><p>红黑树的旋转操作与 AVL 树的旋转操作是基本上一样的，唯一的不同是每一个节点都对应自己的父节点，因此涉及指针的操作会有所不同。</p>
                         <p>因此下面我们定义出 <code>Node</code> 类，其中包含了获取祖父节点，叔父节点和兄弟节点的操作。</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -231,7 +235,7 @@
             <span class="n">grandparent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
 </pre></div>
                         <p>和 AVL 树一样，旋转操作只涉及了指针操作，因此不管是左旋还是右旋都是 Θ(1) 的复杂度。</p>
-                        <h2 id="颜色变换"><a href="#颜色变换" class="headerlink" title="颜色变换"></a>颜色变换</h2><p>当红黑树插入或删除一个节点时，免不了会违反前面 5 种性质中的一条或多条，在这种情况下，我们就不需要每次都像 AVL 树那样进行麻烦的旋转操作了，而是采取颜色变换的方式，以此来减小因旋转而带来的时间开销。</p>
+                        <h2 id="颜色变换"><a href="#颜色变换" class="headerlink" title="颜色变换"></a>颜色变换</h2><p>当红黑树插入或删除一个节点时，难免会违反前面五种性质中的一条或多条，在这种情况下，我们就不需要每次都像 AVL 树那样进行麻烦的旋转操作了，而是采取颜色变换的方式，以此来减小因旋转而带来的时间开销。</p>
                         <p>例如，下图中违反了性质 4，我们只需要调整其中一些节点的颜色就能再次满足该性质。</p>
                         <p><img alt="颜色变换" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/color-rearrange0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/color-rearrange0.png"></p>
                         <p>再比如，下图中违反了性质 5，同样也只需调整节点的颜色就能保证再次满足该性质。</p>
@@ -533,6 +537,7 @@
                         <p>删除节点 7。节点 7 为黑色叶子节点，且兄弟节点 4 为黑色，父节点 6 为红色，故满足条件 5A。因此我们只需要交换父节点和兄弟节点的颜色即可。</p>
                         <p><img alt="例子" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example10.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/R&B-tree/images/example10.png"></p>
                         <p>这样我们就讲完了一个完整例子了。红黑树的操作十分复杂，情况非常多，代码也非常难理解，所以需要大家多花点时间消化本节的内容啊～</p>
+                        <h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><p>如果你觉得上面的代码很难理解，不妨去这个可视化<a href="https://www.cs.usfca.edu/~galles/visualization/RedBlack.html" target="_blank" rel="noopener">网站</a>，里面有各种数据结构和算法的可视化，可以帮助我们很好地理解那些复杂的数据结构。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Transform%20and%20Conquer/Red-Black%20Tree" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -942,27 +947,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -985,6 +969,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -997,21 +982,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -1036,43 +1021,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -1087,23 +1043,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
