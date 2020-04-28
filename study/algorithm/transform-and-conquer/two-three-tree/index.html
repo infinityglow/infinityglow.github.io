@@ -388,39 +388,39 @@
                         </ul>
                         <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf2.png"></p>
                         <p>例子中，如果我们要删除 2，删除后我们向父节点借来一个值 5，然后与兄弟节点 6 结合就得到上图的结果。</p>
-                        <div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">leaf_case2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">brother</span><span class="p">):</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 叶子节点的值置为空</span>
-        <span class="c1"># 叶子节点为父节点的左孩子</span>
-        <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
-            <span class="c1"># 叶子节点有中间孩子</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">brother</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
-        <span class="c1"># 叶子节点为父节点的右孩子</span>
-        <span class="k">elif</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
-            <span class="c1"># 叶子节点有中间孩子</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">brother</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
-        <span class="c1"># 叶子节点为父节点的中间孩子</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
-            <span class="c1"># 叶子节点有中间孩子</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
-                <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">del</span> <span class="n">node</span>
+                        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">leaf_case2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">brother</span><span class="p">):</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">value1</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 叶子节点的值置为空</span>
+    <span class="c1"># 叶子节点为父节点的左孩子</span>
+    <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
+        <span class="c1"># 叶子节点有中间孩子</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">brother</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value1</span><span class="p">)</span>
+    <span class="c1"># 叶子节点为父节点的右孩子</span>
+    <span class="k">elif</span> <span class="n">node</span> <span class="ow">is</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+        <span class="c1"># 叶子节点有中间孩子</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">right</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">brother</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+    <span class="c1"># 叶子节点为父节点的中间孩子</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">brother</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+        <span class="c1"># 叶子节点有中间孩子</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="p">:</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="n">brother</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">brother</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">mid</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">mid</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">brother</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">del</span> <span class="n">node</span>
 </pre></div>
                         <ul>
                             <li>情况 3：父节点和兄弟节点都为 2-节点。这种情况是最麻烦的，首先我们要让父节点和兄弟节点合并。例如下方如要删除 1，则 2 和 3 进行合并。</li>
