@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>2-3树 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>2-3树 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,15 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/life" title="生活">生活</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +101,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -128,7 +128,7 @@
                     <div id="lightgallery" class="markdown-body">
                         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>无论是 AVL 树还是红黑树，它们都有个共同的特点：每个节点最多只能存放一个值，并且最多只有两个子节点。我们知道，AVL 树和红黑树的查找效率接近于 Θ(log n)，这得益于我们将树的结构做了调整，使得树的高度尽可能的减小，来达到平均搜索的次数减少。因此，从这一点可以启发我们，要想使查找效率高，我们就要尽可能的减小树的高度，于是就有了多路查找的树，就好比树根有多条分叉一样，这里我们只说最经典的 2-3 树。</p>
                         <p><img alt="树根" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/root.jpg" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/root.jpg"></p>
-                        <h2 id="两种节点"><a href="#两种节点" class="headerlink" title="两种节点"></a>两种节点</h2><p>2-3 树从字面上很难理解它要传达出的意思，因此我们要首先明白一个概念，所有二叉树的节点最多只有 2 个子节点，我们把这种节点称作 2-节点，它跟二叉树的节点一样，左孩子的值小于根节点的值，右孩子的值大于等于根节点的值，同理，3-节点就是指最多只有 3 个子节点的节点，而每个节点最多可以存放两个值。假设根节点的两个值分别为 v1, v2，左中右 3 个孩子节点的值分别为 l, m, r，那么它们之间的关系就为 l ≤ v1 ≤ m ≤ v2 ≤ r 。所以，2-3 树就是指由 2-节点和（或） 3-节点共同构成的树。</p>
+                        <h2 id="两种节点"><a href="#两种节点" class="headerlink" title="两种节点"></a>两种节点</h2><p>2-3 树从字面上很难理解它要传达出的意思，因此我们要首先明白一个概念，所有二叉树的节点最多只有 2 个子节点，我们把这种节点称作 2-节点，它跟二叉树的节点一样，左孩子的值小于根节点的值，右孩子的值大于等于根节点的值，同理，3-节点就是指最多只有 3 个子节点的节点，而每个节点最多可以存放两个值。假设根节点的两个值分别为 v1, v2，左中右 3 个孩子节点的值分别为 l, m, r，那么它们之间的关系就为 l < v1 ≤ m ≤ v2 ≤ r 。所以，2-3 树就是指由 2-节点和（或） 3-节点共同构成的树。</p>
                         <p><img alt="节点比较" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/comparison.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/comparison.png"></p>
                         <p>这里为了方便用代码来实现 2-3 树，我们将所有的节点都看做 3-节点，在表示 2-节点时候只需稍微做一下调整就好。另外，为了更方便后面的插入和删除操作，我们定义了判断节点是否为叶子节点的方法<code>is_leaf</code>，判断节点是否是 3-节点的方法<code>is_full</code>，以及获取孩子节点和兄弟节点的方法<code>get_child</code>和<code>brother</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -177,7 +177,7 @@
                     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mid</span>
 </pre></div>
-                        <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>还是和二叉搜索树一样，2-3 树也是从根节点出发，只是每次可能需要跟两个值进行比较，如果和值<code>value</code>相等，我们就返回该节点；否则就调用前面<code>Node</code>类的<code>get_child</code>方法，获得子节点，然后再在子节点中继续搜索，如查找失败则返回<code>None</code>。</p>
+                        <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>和二叉搜索树一样，2-3 树也是从根节点出发，只是每次可能需要跟两个值进行比较，如果和值<code>value</code>相等，我们就返回该节点；否则就调用前面<code>Node</code>类的<code>get_child</code>方法，获取子节点，然后再在子节点中继续搜索，如查找失败则返回<code>None</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TwoThreeTree</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">None</span>
@@ -193,10 +193,10 @@
             <span class="k">return</span> <span class="n">root</span>  <span class="c1"># 查找成功</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">get_child</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># 从对应的孩子节点中继续查找</span>
 </pre></div>
-                        <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>2-3 树的插入操作跟二叉树既有相似的地方又有不同的地方。相似之处在于两者都要通过搜索先找到插入的位点；不同之处在于这个插入的位点总是位于叶子节点，而非任意节点，另外，2-3 树的插入操作是将插入值<code>value</code>直接放进待插入的节点，而不是新建一个节点。</p>
+                        <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>2-3 树的插入操作跟二叉树既有相似的地方又有不同的地方。相似之处在于两者都要先通过搜索，找到插入的位点；不同之处在于这个插入的位点总是位于叶子节点，而非一个任意节点，另外，2-3 树的插入操作是将插入值<code>value</code>直接放进待插入的节点，而不是新建一个节点。</p>
                         <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion0.png"></p>
                         <p>但是，2-3 树存在两种类型的节点（2-节点和 3-节点），因此我们要分为两种情况讨论：</p>
-                        <h3 id="插入到-2-节点"><a href="#插入到-2-节点" class="headerlink" title="插入到 2-节点"></a>插入到 2-节点</h3><p>将一个值<code>value</code>插入到 2-节点的情况很简单，只需要将<code>value</code>放入正确的位置即可。因此，我们用一个函数<code>put_item</code>来实现它。</p>
+                        <h3 id="插入到-2-节点"><a href="#插入到-2-节点" class="headerlink" title="插入到 2-节点"></a>插入到 2-节点</h3><p>将一个值<code>value</code>插入到 2-节点的情况很简单，只需要将<code>value</code>放入正确的位置使之变为 3-节点即可。因此，我们用一个函数<code>put_item</code>来实现它。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">put_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span><span class="p">:</span>
         <span class="n">leaf</span><span class="o">.</span><span class="n">value2</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">value1</span>
@@ -207,9 +207,9 @@
                         <p>例如我们把 4 插入到下面的树中，将会得到：</p>
                         <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion1.png"></p>
                         <h3 id="插入到-3-节点"><a href="#插入到-3-节点" class="headerlink" title="插入到 3-节点"></a>插入到 3-节点</h3><p>插入到 3-节点的情况会比较麻烦，因为节点已经满了，在这种情况下，2-3 树采用的策略是分裂成两个节点，下面就来介绍一下节点是如何分裂的。</p>
-                        <h4 id="分裂"><a href="#分裂" class="headerlink" title="分裂"></a>分裂</h4><p>分裂的过程可以概括为，原节点保留 3 个值（新来的值以及节点中原有的两个值）中的最小值，新分裂出的节点用来存放最大值，而将中间值向上传递到父节点中，换句话说就是将中间值插入到父节点中，因为父节点是 2-节点还是 3-节点未知，所以我们又要分情况讨论：</p>
+                        <h4 id="分裂"><a href="#分裂" class="headerlink" title="分裂"></a>分裂</h4><p>分裂的过程可以概括为，原节点保留三个值（新来的值以及节点中原有的两个值）中的最小值，新分裂出的节点用来存放最大值，而将中间值向上传递到父节点中，换句话说就是将中间值插入到父节点中，因为父节点是 2-节点还是 3-节点未知，所以我们要分情况讨论：</p>
                         <ul>
-                            <li>情况 1：父节点存在，且为 2-节点。这种情况下只需将中间值插入到父节点即可。下面中的例子中，如果要在向 2-3 树中插入 9，插入后原节点分裂成两个节点，并将 8 传递到父节点，最后父节点变为 3-节点。</li>
+                            <li>情况 1：父节点存在，且为 2-节点。这种情况下只需将中间值插入到父节点即可。下面中的例子中，如果要在向 2-3 树中插入 1，插入后原节点分裂成两个节点，并将 2 传递到父节点，最后父节点变为 3-节点。</li>
                         </ul>
                         <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion2.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion2.png"></p>
                         <ul>
@@ -217,7 +217,7 @@
                         </ul>
                         <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion3.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion3.png"></p>
                         <ul>
-                            <li>情况 3：父节点不存在，也就是当情况 2 中递归到根节点时，我们要新建一个节点，用来保存由下一层分裂出的中间值，并使分裂出的两个节点成为新节点的左右孩子，最后让新建节点成为树的根节点，此时树的高度加 1。紧接着上面的例子来看，此时中间值 6 传递的上一层为空。因而，我们需要用一个新节点来存放 6，并将其左右孩子指针指向分裂的两个节点。</li>
+                            <li>情况 3：父节点不存在，也就是当情况 2 中递归到根节点时，我们要新建一个节点，用来保存由下一层分裂出的中间值，并使分裂出的两个节点成为新节点的左右孩子，最后让新节点成为树的根节点，此时树的高度加 1。紧接着上面的例子来看，此时中间值 6 传递的上一层为空。因而，我们需要用一个新节点来存放 6，并将其左右孩子指针指向分裂的两个节点。</li>
                         </ul>
                         <p><img alt="插入" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion4.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/insertion4.png"></p>
                         <p>这个过程我们用两个函数来实现，其中<code>split</code>表示一次分裂的过程，返回中间值以及新分裂出的节点。另一个函数<code>put_item_full</code>用来实现上述的 3 种情况。</p>
@@ -301,7 +301,7 @@
 </pre></div>
                         <h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>删除操作会更加麻烦，网上的 2-3 树教程通常到插入操作就结束了，就算有也没有代码的实现，因此，这一部分全都是我自己慢慢写出来的，如果有什么不对或者需要完善的地方，请各位大佬批评指正。</p>
                         <p>和二叉树一样，首先我们通过调用<code>search</code>找到待删除的节点，然后删除里面的值即可。但是不同的是，2-3 树有两种节点，并且 2-3 树的其中一条性质是所有叶子节点的高度均相等。因此，我们的删除操作要分为主要 5 种情况，下面就来分别看看：</p>
-                        <h3 id="待删除的值在父节点"><a href="#待删除的值在父节点" class="headerlink" title="待删除的值在父节点"></a>待删除的值在父节点</h3><p>如果待删除的值在父节点，我们还是和二叉树一样先在父节点中找到前驱，也就是在对应子树中找到最大值，然后交换它们的值，这样删除父节点的问题就被转换为了删除叶子节点的问题。</p>
+                        <h3 id="待删除的值在父节点"><a href="#待删除的值在父节点" class="headerlink" title="待删除的值在父节点"></a>待删除的值在父节点</h3><p>如果待删除的值在父节点，我们还是和二叉树一样先在父节点中找到前驱，也就是在对应子树中找到最大值，然后交换它们的值，因为 2-3 树的最大值一定出现在叶子节点，所以删除父节点的问题就被转换为了删除叶子节点的问题。</p>
                         <p>那么前驱怎么找呢？当父节点为 2-节点时，我们从父节点的左子树中找最大值，例如在下面的图中，我们要找 5 的前驱，我们就从 5 的左子树中找最大值，然后交换它们的值。</p>
                         <p><img alt="前驱" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/predecessor0.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/predecessor0.png"></p>
                         <p>当父节点为 3-节点，待删除的值为较小者时，我们还是从父节点的左子树找最大值；而如果待删除的值为较大者，我们就从父节点的中间子树中找最大值。例如下图中，3 和 6 的前驱分别为 2 和 5。</p>
@@ -324,7 +324,7 @@
 </pre></div>
                         <h4 id="叶子节点为-2-节点"><a href="#叶子节点为-2-节点" class="headerlink" title="叶子节点为 2-节点"></a>叶子节点为 2-节点</h4><p>当叶子节点为 2-节点时，我们要分别查看兄弟节点和父节点的类型，因此，我们再将它们分为三种情况：</p>
                         <ul>
-                            <li>情况 1：兄弟节点为 3-节点。这种情况下，我们需要向兄弟节点借一个最近的值，来补充删除后的叶子节点。下面的例子中，如果删除的值为 6，我们需要向兄弟节点借一个值 8，但借来后发现不满足大小关系（7 ≯ 8），所以我们需要再交换一下父节点和叶子节点的值。</li>
+                            <li>情况 1：兄弟节点为 3-节点。这种情况下，我们需要向兄弟节点借一个最近的值，来补充删除后空的叶子节点。下面的例子中，如果删除的值为 6，我们需要向兄弟节点借一个值 8，但借来后发现不满足大小关系（7 ≯ 8），所以我们需要再交换一下父节点和叶子节点的值。</li>
                         </ul>
                         <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf1.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf1.png"></p>
                         <p>上面的图中只呈现了父节点为 3-节点的情况，事实上，父节点也可以为 2-节点，但处理的方式都一样，这里就不一一画图演示了，在代码中都有详尽的列举。</p>
@@ -426,13 +426,13 @@
                             <li>情况 3：父节点和兄弟节点都为 2-节点。这种情况是最麻烦的，首先我们要让父节点和兄弟节点合并。例如下方如要删除 1，则 2 和 3 进行合并。</li>
                         </ul>
                         <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf3.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf3.png"></p>
-                        <p>我们发现原来的父节点内值为空，为了填补这个空节点，我们要再对父节点执行一次删除操作，注意这里我们仅仅只是调整树的结构，而非删除某个值。接下来我们查看这个节点的兄弟节点和父节点，如果它的兄弟节点是 3-节点，我们就向兄弟节点借一个值来填补这个空值，最后调整节点之间的值使之满足大小关系。</p>
+                        <p>我们发现原来的父节点内值为空，为了填补这个空节点，我们要再对父节点执行一次删除操作，注意这里我们仅仅只是调整树的结构，而非删除任何值。接下来我们查看这个节点的兄弟节点和父节点，如果它的兄弟节点是 3-节点，我们就向兄弟节点借一个值来填补这个空值，最后调整节点之间的值使之满足大小关系就好了。</p>
                         <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf4.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf4.png"></p>
                         <p>如果父节点是 3-节点，那么我们就向其父节点中借一个值来补充这个空值。</p>
                         <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf5.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf5.png"></p>
                         <p>假如父节点和兄弟节点都不是 3-节点，我们就再次合并父节点和兄弟节点，并把空节点传递到上一层，然后再看前面的情况是否满足，这就变成了一个递归的过程，当这个空节点是这棵 2-3 树的根节点时，我们就删除这个节点，并且它的孩子节点为树的根节点，此时树的高度减 1。</p>
                         <p><img alt="叶子节点" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf6.png" data-src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/leaf6.png"></p>
-                        <p>这样我们就讨论完情况 3 的所有内容了，代码的实现并不难，我们只需要创建一个<code>while</code>循环，然后反复查看兄弟节点和父节点是否为 3-节点，满足就执行对应的函数（<code>leaf_case1</code>和<code>leaf_case2</code>），执行后退出循环，如果<code>while</code>循环正常退出，我们就认为空节点为根节点，因此在<code>else</code>语句中我们将调整<code>self.root</code>为<code>node</code>的子节点，调整后删除<code>node</code>。</p>
+                        <p>这样我们就讨论完情况 3 的所有内容了，代码的实现并不难，我们只需要创建一个<code>while</code>循环，然后反复查看兄弟节点和父节点是否为 3-节点，满足就执行对应的函数（<code>leaf_case1</code>或<code>leaf_case2</code>），执行后退出循环，如果<code>while</code>循环正常退出，我们就认为空节点为根节点，因此在<code>else</code>语句中我们将调整<code>self.root</code>为<code>node</code>的子节点，调整后删除<code>node</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="c1"># 直接删除，无需调整</span>
     <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_full</span><span class="p">():</span>
@@ -492,7 +492,7 @@
                         <p>根据上式得到关于 h 的不等式，于是得到：</p>
                         <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/transform-and-conquer/two-three-tree/images/relation1.png"></p>
                         <p>最后得到复杂度为 Θ(log n)。 </p>
-                        <h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><p>理解 2-3 树的原理并不难，但用代码实现整个过程会非常的复杂，我花了至少三个晚上的时间才从头到尾地写了出来，所以如果你看不懂代码也没有关系，理解它的原理就好。另外这里有一个非常好的算法可视化网站，它用动画的形式呈现出了各种算法的过程，使我们更好地理解 2-3 树插入和删除过程。话不多说，先奉上<a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html" target="_blank" rel="noopener">网站地址</a>。</p>
+                        <h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><p>理解 2-3 树的原理并不难，但用代码实现整个过程会非常的复杂，我花了至少三个晚上的时间才从头到尾地写了出来，所以如果你看不懂代码也没有关系，理解它的原理就好。另外这里有一个非常好的算法可视化<a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html" target="_blank" rel="noopener">网站</a>，它用动画的形式呈现出了各种算法的过程，使我们更好地理解 2-3 树插入和删除过程。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Transform%20and%20Conquer/Two-Three%20Tree" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -902,27 +902,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -945,6 +924,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -957,21 +937,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -996,43 +976,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -1047,23 +998,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
