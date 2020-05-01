@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>字符串匹配（TST）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>字符串匹配（TST）- 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,25 +130,25 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>这一节我们再来讨论一下字符串匹配问题。在前面的学习中我们已经知道了字符串匹配就是在文本字符串中找到模式字符串，以及它第一次出现的位置。如使用暴力求解的方法，我们将文本字符串和模式字符串对齐，然后从左往右依次比对，如果全部比对成功就返回模式字符串出现的位置；如果失败就向右移动一个单位，然后再进行比较，如果超出文本字符串的右边界就返回匹配失败。这种方式在最坏的情况下复杂度为 Θ(mn)，其中 m 和 n 分别代表模式字符串和文本字符串的长度，而在一般情况下则是线性的复杂度 Θ(n)。那么有没有更高效的算法能够替代它呢？下面我们就来一探究竟吧。</p>
-                        <h2 id="一种猜想"><a href="#一种猜想" class="headerlink" title="一种猜想"></a>一种猜想</h2><p>暴力求解虽然能够实现这一过程，但是每次比对失败后模式字符串只向右移动了一个单位，并造成了一些重复的比对。我们可以尝试从右往左进行比对，如果比较失败，我们就移动整个模式字符串的长度。听起来这将会大大缩短比较的次数，可是事实上真是如此吗？我们还是以 DNA 配对来作为我们的例子。</p>
-                        <p>首先，我们需要将 DNA 链和探针的第一个碱基对齐，然后从右往左依次比对，最后发现比对失败。</p>
+                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>这一节我们再来讨论一下字符串匹配问题。在前面的章节中我们已经知道了字符串匹配问题就是在一个文本字符串中找到模式串，返回它第一次出现的位置。如果采用暴力求解的方式，我们需要先将原串和模式串对齐，然后从左往右依次比对，如果全部比对成功就返回模式字符串出现的位置；如果失败，模式串就向右移动一个单位，然后再进行比较，如果超出原串的右边界，则匹配失败，返回 -1。这种算法在最坏的情况下的复杂度为 Θ(mn)，其中 m 和 n 分别代表模式串和原串的长度，而在一般情况下则是线性的复杂度 Θ(n)。那么有没有更高效的算法能够替代它呢？接下面我们就来一探究竟吧。</p>
+                        <h2 id="一种猜想"><a href="#一种猜想" class="headerlink" title="一种猜想"></a>一种猜想</h2><p>暴力求解虽然能够实现这一过程，但是每次比对失败后模式字符串只向右移动了一个单位，并造成了一些重复的比对。我们可以尝试一下从右往左进行比对，如果比较失败，我们就移动整个模式串的长度。听起来这将会大大缩短比较的次数，可是事实上真是如此吗？我们还是以 DNA 配对来作为我们的例子。</p>
+                        <p>首先，我们需要将 DNA 链和探针的第一个碱基对齐，然后从右往左依次比对，最后发现 A 和 G 不是互补碱基对，所以比对失败。</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-0.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-0.png"></p>
-                        <p>于是我们将探针向右移动跟它长度一样的单位，在这里就是移动 6 个单位。</p>
+                        <p>于是我们将探针向右移动跟它长度一样的单位，这里就是向右移动 6 个单位。</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-1.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-1.png"></p>
-                        <p>移动后发现，我们已经错过了 DNA 链和探针的匹配的位置。因此，直接移动一整个探针长度的方法并不可行。</p>
+                        <p>移动后发现，我们已经错过了 DNA 链和探针的匹配的位置（图中的红色长方框）。因此，直接移动一整个探针长度的方法并不可行，因此我们要对上面的猜想做一个更正。</p>
                         <h2 id="Horspool-算法"><a href="#Horspool-算法" class="headerlink" title="Horspool 算法"></a>Horspool 算法</h2><p>既然移动整个探针长度可能会直接错过与 DNA 链的匹配，那么我们可以根据探针的最后一个碱基匹配到的不同碱基，来判断我们的探针到底要往右移动多少个单位。</p>
-                        <p>举个例子，下图中探针的最后一个碱基匹配到的为 C，如果前面的碱基匹配失败，由于探针中没有与 C 匹配的碱基，所以我们移动整个探针的长度是安全的，因此在这种情况下我们的探针需要向右移动 6 个单位。</p>
+                        <p>举个例子，下图中探针的最后一个碱基匹配到的碱基为 C，如果在一次匹配中失败，由于探针除了最后一个碱基能够与 C 配对以外，前面的碱基中没有与 C 配对的碱基，所以我们移动整个探针的长度是安全的，不会造成错过的情况，因此在这种情况下我们的探针需要向右移动 6 个单位。</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-2.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-2.png"></p>
-                        <p>如果探针中存在与之匹配的碱基，那么在移动的过程中，我们要使探针的与之相匹配的最右侧碱基与之前探针的最后一个碱基所对应的碱基对齐。听起来很拗口，让我们来举一个具体的例子，假设探针的最后一个碱基匹配到的为 A，由于探针中存在两个与 A 配对的 T，根据规则，我们需要将最右侧的 T 与 A 对齐，因此探针需要向右移动 3 个单位。</p>
+                        <p>如果探针中存在与之配对的碱基，那么在匹配失败之后，探针最右侧的与之配对的碱基需要跟原碱基对齐。听起来很拗口，让我们来举一个具体的例子，假设探针的最后一个碱基匹配到的是 A，由于探针中存在两个与 A 配对的 T，根据规则，我们需要将最右侧的 T 与 A 对齐，因此探针需要向右移动 3 个单位。</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-3.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-3.png"></p>
-                        <p>同理，如果匹配到的为 T，探针中存在两个 A，取其最右者，因而这种情况下探针需要向右移动 1 个单位。</p>
+                        <p>同理，如果匹配到的为 T，由于探针中存在两个 A，所以使其最右者与之对齐，因而这种情况下探针需要向右移动 1 个单位。</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-4.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-4.png"></p>
                         <p>如果匹配到的为 G，则需要向右移动 5 个单位。</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-5.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-5.png"></p>
                         <p>这样我们就把所有的情况都讨论完了，为了表示方便，我们可以用一个表<code>shift table</code>来表示在不同的匹配情况下探针需要向右移动几个单位。</p>
                         <p><img alt="table" src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/table.png"></p>
-                        <p>用代码来实现这个过程就是这个样子的：</p>
+                        <p>用代码来实现这个过程就是下面这个样子：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shift_table</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
     <span class="n">table</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
@@ -153,7 +157,7 @@
         <span class="n">table</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">j</span>
     <span class="k">return</span> <span class="n">table</span>
 </pre></div>
-                        <p>Horspool 算法的核心思想就是构建一张查询表，然后从右往左进行比对，如果比对失败，就根据模式字符串的最后一个字符所对应的字符，查询前面的<code>shift table</code>，决定需要移动的单位长度。移动后再从右往左依次比对，直到全部比对成功，或超出右边界，匹配失败。</p>
+                        <p>Horspool 算法的核心思想就是构建一张查询表，然后从右往左进行比对，如果比对失败，就根据模式串的最后一个字符所对应的字符，查询<code>shift table</code>，决定需要向右移动的单位长度。移动后再从右往左依次比对，直到全部比对成功，或超出右边界，匹配失败。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Horspool</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">);</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">shift_table</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
@@ -170,7 +174,7 @@
 </pre></div>
                         <p>我们用一张图来完整地表示一下上述过程。</p>
                         <p><img alt="DNA" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-complete.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/string-matching/images/DNA-complete.png"></p>
-                        <h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>因为每次比对失败后模式字符串会移动大于等于 1 个单位，所以平均情况下会优于暴力求解算法，达到线性的复杂度 Θ(n)。但是 Horspool 算法在有些极端的情况下甚至比暴力求解还要糟糕。举个最简单的例子，假设文本字符串为“000000000000”，模式字符串为“1000”。由于从左往右和从右往左的区别，加上<code>shift table</code>针对 ‘0’ 只移动 1 个单位，所以暴力求解只需要比较 9 次，而 Horspool 算法则需要比较 36 次之多，因此最坏情况下 Horspool 算法的时间复杂度也会达到 Θ(mn)。由于需要额外空间来存储查询表，所以空间复杂度为 Θ(k)，其中 k 代表查询表的长度。</p>
+                        <h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>因为每次比对失败后模式字符串会移动大于等于 1 个单位，所以平均情况下会优于暴力求解算法，达到线性的复杂度 Θ(n)。但是在有些极端的情况下 Horspool 算法甚至比暴力求解还要糟糕。举个最简单的例子，假设原串为“000000000000”，模式字符串为“1000”。由于从左往右和从右往左的区别，加上<code>shift table</code>对 0 的情况每次只移动 1 个单位，所以暴力求解只需要比较 9 次，而 Horspool 算法则需要比较 36 次之多，因此最坏情况下 Horspool 算法的时间复杂度也会达到 Θ(mn)。由于需要额外空间来存储查询表，所以空间复杂度为 Θ(k)，其中 k 代表查询表的长度。</p>
 
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Time-Space%20Tradeoff/String%20Matching" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -580,27 +584,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -623,6 +606,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -635,21 +619,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -674,43 +658,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -725,23 +680,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
