@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>哈希 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>哈希 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,20 +130,20 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这一节我们会介绍一种新的概念：<strong>哈希</strong>（<strong>hashing</strong>）。一提到它，你可能就想到了在比特币交易中的区块链技术，不管你是挖矿还是单纯的交易，都离不开哈希算法。事实上，哈希算法还广泛地运用在银行、通讯、商业等领域，目的只有一个，那就是加密，并且加密后几乎不能被破解。</p>
+                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在这一节内容里，我们会介绍一种新的概念：<strong>哈希</strong>（<strong>hashing</strong>）。或许你对哈希这个概念还不是很了解，但你一定听说了在比特币交易中所用到的区块链技术，不管你是挖矿还是简单的交易，都离不开哈希算法。事实上，哈希算法还广泛地运用在银行、通讯、商业等领域，它们的目的只有一个，那就是加密，因为经过一些基于哈希加密的算法几乎不能够被破解。</p>
                         <p><img alt="比特币" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/bitcoin.jpg" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/bitcoin.jpg"></p>
-                        <p>除了加密，哈希还被运用在快速查找的领域，因为它的高效性，一些主流的编程语言都采用了这种方式来做数据之间的映射。比如 Python 中的字典类型<code>dict</code>，以及 Java 中的<code>HashMap</code>。它们都能够在很短的时间内从上百万条记录中找到我们所需要的内容。这么厉害～下面我们就来探究一下它的原理吧。</p>
+                        <p>除了加密之外，哈希还被广泛运用在快速查找领域，因为它查找的高效性，一些主流的编程语言都采用了这种方式来做数据之间的映射。比如 Python 中的字典类型<code>dict</code>，Java 中的<code>HashMap</code>等等。它们都能够在很短的时间内从上百万条记录中找到我们所需要的内容。这么厉害～下面我们就来探究一下它的原理吧。</p>
                         <h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><p>我们知道，查找可以通过两种数据结构来实现：数组和链表。两者的主要区别在于数据是否存储在连续的地址空间中，但无论是哪一种，我们从外部访问的时候，都是访问的第一个元素或节点的地址，这就造成了如果需要查找一个值或记录，我们要从头开始，遍历整个数组或链表，直到找到该值或查找失败。因此无论是数组还是链表，查找的平均时间复杂度都为 Θ(n)。</p>
                         <p><img alt="数组 链表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/array-linked-list.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/array-linked-list.png"></p>
-                        <p>既然查找一个元素都需要先获取该数据结构头部的地址，那么我们可不可以直接获取一个元素对应的存储地址呢？答案肯定的，这里需要用到一种特殊的数据结构：哈希表。</p>
-                        <p><strong>哈希表</strong>（<strong>hash table</strong>）也叫散列表。它是用来存储我们经过哈希操作后的数据，每一个数据都对应一个地址，供外部程序来访问。如果你想查找一个值<code>key</code>，我们需要用一个函数<code>H(key)</code>将<code>key</code>映射到一个特定的地址<code>address</code>上，然后比较该地址上的值来判断是否查找成功。</p>
+                        <p>既然查找一个元素都需要先获取该数据结构头部的地址，那么我们可不可以直接获取一个元素对应的存储地址呢？这样我每输入一个要查找的元素就会对应输出该元素对应的地址，查找效率不就上去了吗？答案肯定的，但这我们里需要用到一种特殊的数据结构：哈希表。</p>
+                        <p><strong>哈希表</strong>（<strong>hash table</strong>）也叫散列表。它是用来存储经过哈希操作后的数据，每一个数据都对应一个地址，供外部程序来访问。当需要查找一个值<code>key</code>时，我们需要用一个函数<code>H(key)</code>将<code>key</code>映射到一个特定的地址<code>address</code>上，然后比较该地址上的值来判断是否查找成功。</p>
                         <p><img alt="哈希表" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-table.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-table.png"></p>
-                        <h2 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h2><p>要想实现<code>key</code>到<code>address</code>之间的映射关系，我们需要借助一个特殊的函数，<strong>哈希函数</strong>（<strong>hash function</strong>）。哈希函数多种多样，但它们的功能只有一个，那就是将不同的<code>key</code>均匀地分布在哈希表中，以达到便于查找的目的。最常见的，也是最简单的哈希函数就是取余操作，即<code>H(key) = key mod m</code>，其中<code>m</code>表示哈希表的长度。</p>
-                        <p>举个例子，假设哈希函数<code>H(key) = key mod 7</code>，当<code>key</code>为 32 时，计算出的结果等于 4，这里的 4 就代表由哈希函数计算出的哈希地址<code>address</code>，当然这里的地址不是计算机的物理地址，只是为了方便而举的例子而已。在哈希表中我们就在索引为 4 的位置记录 32。下次查找的时候，我们就可以通过哈希函数计算出的地址然后直接访问表里的值了。</p>
+                        <h2 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h2><p>要想实现<code>key</code>到<code>address</code>之间的映射关系，我们需要借助一个特殊的函数，<strong>哈希函数</strong>（<strong>hash function</strong>）。哈希函数多种多样，但它们的功能都只有一个，那就是将不同的<code>key</code>均匀分散地分布在哈希表中，以达到便于查找的目的。最常见的，也是最简单的哈希函数就是取余操作，即<code>H(key) = key mod m</code>，其中<code>m</code>表示哈希表的长度。</p>
+                        <p>举个例子，假设哈希函数<code>H(key) = key mod 7</code>，当<code>key</code>为 32 时，计算出的结果等于 4，这里的 4 就代表由哈希函数计算出的哈希地址<code>address</code>，当然这里的地址并非计算机的物理地址，只是为了方便而举的例子而已。在哈希表中我们就在索引为 4 的位置记录下 32。下次查找的时候，我们就可以通过哈希函数计算出的地址然后直接访问表里的值了。</p>
                         <p><img alt="哈希函数" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function0.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function0.png"></p>
                         <p>但是，如果其他值<code>key&#39;</code>通过哈希函数计算得到了相同的地址，这就会造成一种现象叫做<strong>冲突</strong>（<strong>collision</strong>），比如 25 mod 7 也等于 4，造成了 25 不能够直接存储在索引为 4 的位置。为了解决冲突的问题，我们需要采用一些机制来保证那些冲突的元素能够存储在正确的位置，下面就来分别介绍一下几种主要的处理冲突的方法。</p>
                         <p><img alt="哈希函数" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function1.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/hash-function1.png"></p>
-                        <h2 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a>冲突处理</h2><p>我们将用三种处理冲突的方法来构建哈希表。元素从数组<code>[58, 19, 75, 38, 29, 4, 60, 94, 84]</code>中获取，哈希表的长度为 13，哈希函数为<code>H(key) = key mod 13</code>。</p>
+                        <h2 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a>冲突处理</h2><p>我们将用三种处理冲突的方法来构建哈希表。元素从数组<code>[58, 19, 75, 38, 29, 4, 60, 94, 84]</code>中获取，因为哈希表的长度为 13，所以哈希函数为<code>H(key) = key mod 13</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HashTable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
@@ -161,7 +165,7 @@
                         <p><img alt="链地址法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/separate-chaining.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/separate-chaining.png"></p>
                         <p>查找的时候，我们先计算查找元素的哈希值，然后从哈希表中找到对应的元素的值，如果值为空（None），那么就查找失败，如果不为空，那么就从链表里查找该元素。</p>
                         <p>假设查找的值为 84，计算出哈希值为 6，由于索引 6 的位置不为空，所以我们从链表中查找，最后查找成功。如果查找元素 22，计算出哈希值为 9，发现索引 9 的位置为空，因此查找失败。</p>
-                        <p>代码实现：</p>
+                        <p>链地址法的代码实现：</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
@@ -200,8 +204,8 @@
                         <p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，探测索引 7，发现还是不为空，继续探测索引 8，也不为空，继续探测索引 9，发现位置为空，所以元素 84 就放入到索引 9 的位置。</p>
                         <p><img alt="线性探测法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/linear-probing.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/linear-probing.png"></p>
                         <p>查找跟链地址法相似，也是先计算哈希值，找到对应元素，如果值相等，就查找成功；如果不相等，就按照线性探测的方式看下一个索引值对应的元素的值是否相等，这样一直探测下去，直到探测到的值为 None，即查找失败。</p>
-                        <p>假设还是查找 84 和 22，查找 84 时，先计算出哈希值为 6，而索引 6 对应元素的值为 58，不等于 84，所以继续探测下一个索引值，发现还是不相等，直到最后我们在索引 9 的位置探测到 84 = 84，故查找成功。如果查找值为 22，其哈希值计算得到为 9，发现 22 不等于对应元素的值 89，所以要继续探测，探测两轮后发现索引 11 为空，所以查找失败。</p>
-                        <p>代码实现：</p>
+                        <p>假设还是查找 84 和 22，查找 84 时，先计算出哈希值为 6，而索引 6 对应元素的值为 58，不等于 84，所以继续探测下一个索引值，发现还是不相等，于是继续探测，直到最后我们在索引 9 的位置探测到 84 = 84，故查找成功。如果查找值为 22，其哈希值计算得到为 9，发现 22 不等于对应元素的值 89，所以要继续探测，探测两轮后发现索引 11 为空，所以查找失败。</p>
+                        <p>线性探测法的代码实现：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="c1"># 表中对应值为 None</span>
@@ -217,7 +221,7 @@
     <span class="k">return</span> <span class="bp">False</span>
 </pre></div>
                         <h3 id="再哈希法"><a href="#再哈希法" class="headerlink" title="再哈希法"></a>再哈希法</h3><p><strong>再哈希法</strong>（<strong>rehashing</strong>）是通过用另外一个哈希函数的方式来处理冲突。具体来讲，我们将原哈希值<code>l = H(key)</code>加上另外一个哈希函数的值<code>s(key)</code>，再把相加后的结果放到原哈希函数里计算哈希值<code>H(l + s(key))</code>，然后看是否冲突，如不冲突就把元素存储到对应索引值的下方；如果还是冲突，就计算<code>H(l + 2s(key))</code>的值然后再判断，这样以此类推，直到不冲突为止。</p>
-                        <p>还是来看具体的例子，这里<code>s(key) = m - 2 - key mod (m - 2) = 11 - key mod 11</code>。</p>
+                        <p>还是来看具体的例子，这里的再哈希函数为<code>s(key) = m - 2 - key mod (m - 2) = 11 - key mod 11</code>。</p>
                         <p>H(58) = 58 mod 13 = 6，索引为 6 的位置为空，所以元素 58 直接放入到哈希表中。</p>
                         <p>H(19) = 19 mod 13 = 6，索引为 6 的位置不为空，再哈希后 H(l + s(key)) = 9，发现位置为空，所以元素 19 就放入到索引 9 的位置。</p>
                         <p>H(75) = 75 mod 13 = 10，索引为 10 的位置为空，所以元素 75 直接放入到哈希表中。</p>
@@ -261,20 +265,20 @@
                         <p>再哈希法</p>
                         <ul>
                             <li>优点：再哈希后的值分散不聚集</li>
-                            <li>缺点：需要做额外计算，如选择不好再哈希的函数，可能会造成一直冲突。</li>
+                            <li>缺点：需要做额外计算，如果再哈希的函数选择不好，可能会造成一直冲突。</li>
                         </ul>
-                        <p>为了客观地反应这三者的查找效率，我在这节的<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Time-Space%20Tradeoff/Hashing" target="_blank" rel="noopener">代码</a>中分别模拟了查找成功和查找失败的情况下的平均查找次数，最后的结论是：链地址法 &gt; 再哈希法 &gt; 线性探测法。当然，这个结果只是作为参考，真实的情况比这个要复杂得多，所以三种处理冲突的方法都是有它的用武之地的。</p>
-                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;separate chaining.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">平均查找次数（查找成功）</span><span class="o">=</span> <span class="mf">1.44</span>
-    <span class="n">平均查找次数（查找失败）</span><span class="o">=</span> <span class="mf">1.62</span>
+                        <p>为了客观地反应这三者的查找效率，我在这节的<a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Time-Space%20Tradeoff/Hashing" target="_blank" rel="noopener">代码</a>中分别模拟了查找成功和查找失败的情况下的平均查找次数，最后的结论是：链地址法 &gt; 再哈希法 &gt; 线性探测法。当然，这个结果只是作为参考，真实的情况比这个要复杂得多，下面给出代码运行后的结果。</p>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">&quot;separate chaining.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">平均查找次数（查找成功）</span><span class="o">=</span> <span class="o">1.44</span>
+    <span class="o">平均查找次数（查找失败）</span><span class="o">=</span> <span class="o">1.62</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;linear probing.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">平均查找次数（查找成功）</span><span class="o">=</span> <span class="mf">1.67</span>
-    <span class="n">平均查找次数（查找失败）</span><span class="o">=</span> <span class="mf">3.77</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">&quot;linear probing.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">平均查找次数（查找成功）</span><span class="o">=</span> <span class="o">1.67</span>
+    <span class="o">平均查找次数（查找失败）</span><span class="o">=</span> <span class="o">3.77</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="s2">&quot;double hashing.py&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">平均查找次数（查找成功）</span><span class="o">=</span> <span class="mf">1.56</span>
-    <span class="n">平均查找次数（查找失败）</span><span class="o">=</span> <span class="mf">2.77</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">&quot;double hashing.py&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">平均查找次数（查找成功）</span><span class="o">=</span> <span class="o">1.56</span>
+    <span class="o">平均查找次数（查找失败）</span><span class="o">=</span> <span class="o">2.77</span>
 </pre></div>
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Time-Space%20Tradeoff/Hashing" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -684,27 +688,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -727,6 +710,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -739,21 +723,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -778,43 +762,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -829,23 +784,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
