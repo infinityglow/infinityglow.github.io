@@ -233,6 +233,7 @@
                         <p>H(84) = 84 mod 13 = 6，索引为 6 的位置不为空，再哈希后 H(l + s(key)) = 10，发现还是不为空，继续再哈希，H(l + 2s(key)) = 1，发现位置为空，所以元素 84 就放入到索引 1 的位置。</p>
                         <p><img alt="再哈希法" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/double-hashing.png" data-src="https://infinityglow.github.io/study/algorithm/time-space-tradeoff/hashing/images/double-hashing.png"></p>
                         <p>查找也跟线性探测法相似，先计算哈希值，如果对应元素的值相等就查找成功，否则就再哈希，直到对应元素的值为 None，即查找失败。例如要查找 22，计算得到哈希值为 9，发现 22 不等于对应元素的值 89，于是我们再哈希，得到的哈希值为 7，对应值为 None，所以查找失败。</p>
+                        <p>再哈希法的代码实现：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rehash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
     <span class="k">return</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">key</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
