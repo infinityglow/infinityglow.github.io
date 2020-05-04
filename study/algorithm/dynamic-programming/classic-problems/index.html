@@ -145,7 +145,7 @@
                         <p><img alt="硬币" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/classic-problems/images/coin1.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/classic-problems/images/coin1.png"></p>
                         <p>但不能这样选择：</p>
                         <p><img alt="硬币" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/classic-problems/images/coin2.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/classic-problems/images/coin2.png"></p>
-                        <p>我们首先来讨论一下用暴力求解的方式。很简单，从 n 枚硬币中选择最大金额的问题 F(n) 可以分为两个子问题，取决于我们选不选第 n 枚硬币，如果不选，子问题变为从剩下 n - 1 枚硬币中选择最大金额 F(n-1)；如果选了，子问题变为从剩下 n - 2 枚硬币中选择最大金额并加上第 n 枚硬币的面值 F(n-2) + C<sub>n</sub> ，最后两者中取其较大者，所以就有关系式 F(n) = max(F(n-1), F(n-2)+C<sub>n</sub>)。因此我们写出用递归求解的代码：</p>
+                        <p>我们首先来讨论一下用递归求解的方式。很简单，从 n 枚硬币中选择最大金额的问题 F(n) 可以分为两个子问题，取决于我们选不选第 n 枚硬币，如果不选，子问题变为从剩下 n - 1 枚硬币中选择最大金额 F(n-1)；如果选了，子问题变为从剩下 n - 2 枚硬币中选择最大金额并加上第 n 枚硬币的面值 F(n-2) + C<sub>n</sub> ，最后两者中取其较大者，所以就有关系式 F(n) = max(F(n-1), F(n-2)+C<sub>n</sub>)。因此我们写出用递归求解的代码：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">coin_row_bf</span><span class="p">(</span><span class="n">coins</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
