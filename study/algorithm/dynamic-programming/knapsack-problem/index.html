@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>背包问题（DP）- 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>背包问题（DP）- 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,12 +130,12 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>再来回顾一下背包问题，背包问题是一个典型的组合问题，目标是让我们在容量为 W 的背包中尽可能装价值越高的物品，其中每件物品都对应自己的重量 w<sub>i</sub> 和价值 v<sub>i</sub> 。前面我们通过<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/">暴力求解</a>的方式将所有可能的组合一一列举出来，然后找到价值最高的组合。但是这样做的效率非常低，时间复杂度是指数级 Θ(2<sup>n</sup>) ，因此不能成为一种可以接受的算法。</p>
+                        <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>再来回顾一下背包问题，背包问题是一个典型的组合问题，目标是让我们在容量为 W 的背包中尽可能装价值越高的物品，其中每件物品都对应自己的重量 w<sub>i</sub> 和价值 v<sub>i</sub> 。前面我们通过<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/">暴力求解</a>的方式将所有可能的组合一一列举出来，然后找到价值最高的组合。但是这样做的效率非常低，时间复杂度达到了指数级的 Θ(2<sup>n</sup>) ，因此它不能成为一种我们可以接受的算法。</p>
                         <p><img alt="背包" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/knapsack.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/knapsack.png"></p>
                         <p>如用动态规划来解决背包问题，事情就会变得简单得多。这里我们用两种方式来实现：<strong>自底向上</strong>（<strong>bottom-up</strong>）和<strong>自顶向下</strong>（<strong>top-down</strong>）。两者的区别可以这样来理解，假设我们需要用一些零件来拼接一件工艺品，自底向上就好比一名技术精湛的工人，虽然他不知道最后这些零件要拼出一件什么东西，但他深知这些零件的构造，熟悉拼接过程中的顺序，因此如果他一直重复拼接的过程就能最终拼出一件工艺品；而自顶向下则好似一名工程师，他有一张该工艺品的设计图纸，懂得每一部分的具体功能，并且细分至零件，最后根据这张图纸将它们拼接起来。有同学就会问了，这和分治有什么区别？答案是当然有，工程师很聪明，因为他从来没有接触过零件的组装，因此每当有一部分零件组装好了之后，它都会拿笔记录下来组装的过程，下次组装相同的零件的时候就会大大缩短所需要的时间。下面我们就来看看这两种方式是如何在背包问题中实现的吧！</p>
                         <p><img alt="图例" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/illustration.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/illustration.png"></p>
                         <h2 id="自底向上"><a href="#自底向上" class="headerlink" title="自底向上"></a>自底向上</h2><p>我们先来考虑一下背包问题的子问题。假设物品数为 n，背包容量为 W。子问题可以首先分为如何挑选这些物品，使得组合的价值最大，同时保证总重量小于等于 x，其中 1 ≤ x ≤ W；当然，在挑选物品时，我们也可以只考虑前 i 个物品（1 ≤ i ≤ n），因此，子问题可以被进一步细分为如何挑选前 i 个物品，使得组合的价值最大，同时保证总重量小于等于 x。</p>
-                        <p>再来说说子问题之间的关系，我们用 S(i, x) 来表示任意一个子问题，对于第 i 个物品，我们有两种可能，选或不选。如不选，我们就从前 i - 1 件物品中找最大的组合，总重量不超过 x。如选了，那么还是从前 i - 1 件物品中找最大的组合，只是总重量变为了不超过 x - w<sub>i</sub> ，如果 x - w<sub>i</sub> &lt; 0，我们就从前 i - 1 件物品中选择。因此我们从这两种情况中取较大者作为 S(i, x) 的最优解，表示为：</p>
+                        <p>再来说说子问题之间的关系，我们用 S(i, x) 来表示任意一个子问题，对于第 i 个物品，我们有两种可能，选或不选。如果不选，我们就从前 i - 1 件物品中找最大的组合，总重量不超过 x。如果选了，那么还是从前 i - 1 件物品中找最大的组合，只是总重量变为了不超过 x - w<sub>i</sub> ，如果 x - w<sub>i</sub> &lt; 0，我们就从前 i - 1 件物品中选择。因此我们从这两种情况中取较大者作为 S(i, x) 的最优解，表示为：</p>
                         <p><img alt="relation" src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/relation1.png"></p>
                         <p>这里我们规定 S(0, x) 和 S(i, 0) 都等于 0，这样我们就用一张 n × W 的二维表来记录每一个子问题的解，并用 0 补全 S(0, x) 和 S(i, 0)。</p>
                         <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table0.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table0.png"></p>
@@ -143,7 +147,7 @@
                         <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table3.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table3.png"></p>
                         <p>同理，第二行也是从 x = 1 开始，逐渐增加 x 的值，直到 x = 3 时我们得到 S(2, 3) = 12。</p>
                         <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table4.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table4.png"></p>
-                        <p>剩下的列同样也是通过关系式求得。</p>
+                        <p>剩下的列同样也是通过关系式 S(i, x) = max(S(i - 1, x), S(i - 1, x - w<sub>i</sub>) + v<sub>i</sub>) 求得。</p>
                         <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table5.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table5.png"></p>
                         <p>下面的行和列以此类推，直到把整张表填满，最后原问题的最优解为 65。</p>
                         <p><img alt="table" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table6.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/knapsack-problem/images/table6.png"></p>
@@ -596,27 +600,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -639,6 +622,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -651,21 +635,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -690,43 +674,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -741,23 +696,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
