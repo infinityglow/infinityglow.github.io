@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>弗洛伊德算法 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>弗洛伊德算法 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,20 +130,20 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="图的最短路径"><a href="#图的最短路径" class="headerlink" title="图的最短路径"></a>图的最短路径</h2><p>生活中，当我们在使用高德地图导航的时候，系统总是为我们选择最近的路。我们知道从一个地方到另一个地方可能有很多条路可以选择，而高德地图是怎样做到为我们选择更近的路呢？这就要用到图的最短路径了。</p>
+                        <h2 id="图的最短路径"><a href="#图的最短路径" class="headerlink" title="图的最短路径"></a>图的最短路径</h2><p>高德地图相信大家一定都用过，每当我们输入一个目的地时，系统总是会帮助我们寻找一条最近的路。我们知道出发地到目的地可能有很多条路可以选择，而高德地图是怎样做到为我们选择更近的路呢？这一节的内容，我们就会来讨论关于图的最短路径的问题。</p>
                         <p><img alt="地图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/map.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/map.png"></p>
                         <p>在计算机里，我们用有权图来表示城市的路网，其中每个节点代表一个地点，每条边代表从一个地方到另一个地方的距离，数据结构我们使用邻接矩阵的形式。</p>
                         <p>计算最短路径分成两种情况，一种是一次计算所有点对的最短路径，就是下面我们要讲到的弗洛伊德算法；另一种是单源最短路径，也就是计算某一个节点到其他所有节点的最短距离，后面的<a href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Dijkstra/">迪克斯特拉算法</a>采用的就是这种方式。</p>
-                        <h2 id="弗洛伊德算法"><a href="#弗洛伊德算法" class="headerlink" title="弗洛伊德算法"></a>弗洛伊德算法</h2><p>我们从一个地方出发，在到达目的地之前可能还会经过其他的地方。例如下面的图中，假设 AB，BC 之间的距离分别为 7 和 2。我们看到，A 和 C 之间不能直接通达，因此，要计算 A 和 C 之间的距离，我们就要借助 B 来作为中转站。</p>
+                        <h2 id="弗洛伊德算法"><a href="#弗洛伊德算法" class="headerlink" title="弗洛伊德算法"></a>弗洛伊德算法</h2><p>从出发地到目的地的过程中，我们并不是一下子就到达目的地，而是要经过很多的中转站来帮助我们一步一步地到达目的地。例如下面的图中，假设 AB，BC 之间的距离分别为 7 和 2。我们看到，A 和 C 之间不能直接通达，因此，要计算 A 和 C 之间的距离，我们就要借助 B 来作为中转站，因此 A 到 C 的距离为 7 + 2 = 9。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph0.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph0.png"></p>
                         <p>但是，单凭一个中转站在有些情况下也是不行的，比如从 D 到 F 就不能只通过一个中转站。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph1.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph1.png"></p>
-                        <p>因此，计算所有节点之间的最短距离这个大问题可以分为借助<code>k</code>个中转站的情况下计算各节点之间的最短路径，其中 0 ≤ k ≤ |V|。</p>
-                        <p>下面来谈一下具体的求解过程，我们首先用邻接矩阵来表示这张图，其中 ∞ 表示两个节点之间不是相互直达的，矩阵中每一项的数字代表边的权重。</p>
+                        <p>因此，计算所有节点之间的最短距离这个大问题可以分为借助 k 个中转站的情况下计算各节点之间的最短路径，其中 0 ≤ k ≤ |V|。</p>
+                        <p>下面来谈一下具体的求解过程，我们首先用邻接矩阵来表示这张图，其中 ∞ 表示两个节点之间不能相互直达，矩阵中每一项的数字代表边的权重，也就是节点之间的距离。</p>
                         <p><img alt="矩阵" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/matrix.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/matrix.png"></p>
-                        <p>上面的矩阵也可以代表在不借助中转站的情况下（<code>k = 0</code>）各节点之间的最短路径。接下来，我们只让节点 A 作为中转站，然后计算各节点的最短路径，在矩阵中我们比较<code>d[i][j]</code>和<code>d[i][1]+d[1][j]</code>的大小，然后取最小者作为<code>d[i][j]</code>的值。</p>
+                        <p>上面的矩阵也可以代表在不借助中转站的情况下（<code>k = 0</code>）各节点之间的最短路径。接下来，我们只让节点 A 作为中转站，然后计算各节点的最短路径，然后对于矩阵的每一项，我们比较<code>d[i][j]</code>和<code>d[i][1]+d[1][j]</code>的大小，然后取最小者作为<code>d[i][j]</code>的值。其中<code>i</code>和<code>j</code>分别代表矩阵的行和列</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph2.png"></p>
-                        <p>计算后我们发现矩阵中的第 2 行第 5 列从原来的 ∞ 变为了 8，说明从节点 B 到节点 E 的最短距离在当前状态下为 8。接下来，我们逐渐增加中转站的个数，每增加一个中转站的个数，矩阵就更新一次。假设中转站的个数为<code>k</code>，它与上一个状态<code>k-1</code>之间存在这样的关系<code>d[i][j] = min(d[i][j], d[i][k] + d[k][j])</code>，我们根据这个公式计算出矩阵中每一项的值。</p>
+                        <p>计算后我们发现矩阵中的第 2 行第 5 列从原来的 ∞ 变为了 8，说明从节点 B 到节点 E 的最短距离在当前状态下为 8。接下来，我们逐渐增加中转站的个数，每增加一个中转站的个数，矩阵就更新一次。假设中转站的个数为<code>k</code>，那么它与上一个状态<code>k-1</code>之间存在这样的关系<code>d[i][j] = min(d[i][j], d[i][k] + d[k][j])</code>，于是<code>k</code>从 1 递增到 n，每递增一次，矩阵的值就更新一次，最后我们就得到所有点对的最短距离了。</p>
                         <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/demo.gif"></p>
                         <p>用代码表示这个过程非常简单，只需要几行就能实现：</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Floyd</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
@@ -570,27 +574,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -613,6 +596,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -625,21 +609,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -664,43 +648,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -715,23 +670,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
