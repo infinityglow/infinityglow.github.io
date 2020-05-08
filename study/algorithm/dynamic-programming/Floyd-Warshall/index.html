@@ -141,7 +141,7 @@
                         <p>因此，计算所有节点之间的最短距离这个大问题可以分为借助 k 个中转站的情况下计算各节点之间的最短路径，其中 0 ≤ k ≤ |V|。</p>
                         <p>下面来谈一下具体的求解过程，我们首先用邻接矩阵来表示这张图，其中 ∞ 表示两个节点之间不能相互直达，矩阵中每一项的数字代表边的权重，也就是节点之间的距离。</p>
                         <p><img alt="矩阵" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/matrix.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/matrix.png"></p>
-                        <p>上面的矩阵也可以代表在不借助中转站的情况下（<code>k = 0</code>）各节点之间的最短路径。接下来，我们只让节点 A 作为中转站，然后计算各节点的最短路径，然后对于矩阵的每一项，我们比较<code>d[i][j]</code>和<code>d[i][1]+d[1][j]</code>的大小，然后取最小者作为<code>d[i][j]</code>的值。其中<code>i</code>和<code>j</code>分别代表矩阵的行和列</p>
+                        <p>上面的矩阵也可以代表在不借助中转站的情况下（<code>k = 0</code>）各节点之间的最短路径。接下来，我们只让节点 A 作为中转站，然后计算各节点的最短路径，然后对于矩阵的每一项，我们比较<code>d[i][j]</code>和<code>d[i][1]+d[1][j]</code>的大小，然后取最小者作为<code>d[i][j]</code>的值。其中<code>i</code>和<code>j</code>分别代表矩阵的行和列。</p>
                         <p><img alt="图" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph2.png" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/graph2.png"></p>
                         <p>计算后我们发现矩阵中的第 2 行第 5 列从原来的 ∞ 变为了 8，说明从节点 B 到节点 E 的最短距离在当前状态下为 8。接下来，我们逐渐增加中转站的个数，每增加一个中转站的个数，矩阵就更新一次。假设中转站的个数为<code>k</code>，那么它与上一个状态<code>k-1</code>之间存在这样的关系<code>d[i][j] = min(d[i][j], d[i][k] + d[k][j])</code>，于是<code>k</code>从 1 递增到 n，每递增一次，矩阵的值就更新一次，最后我们就得到所有点对的最短距离了。</p>
                         <p><img alt="demo" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/demo.gif" data-src="https://infinityglow.github.io/study/algorithm/dynamic-programming/Floyd-Warshall/images/demo.gif"></p>
@@ -155,13 +155,13 @@
     <span class="k">return</span> <span class="n">d</span>
 </pre></div>
                         <p>最后打印出循环过后的矩阵。</p>
-                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">Floyd</span><span class="o">.</span><span class="n">py</span>
-<span class="o">&gt;&gt;&gt;</span>  <span class="n">[[</span> <span class="n">0.</span>  <span class="n">6.</span>  <span class="n">4.</span> <span class="n">10.</span>  <span class="n">1.</span>  <span class="n">4.</span><span class="n">]</span>
-     <span class="n">[</span> <span class="n">6.</span>  <span class="n">0.</span>  <span class="n">2.</span>  <span class="n">4.</span>  <span class="n">5.</span>  <span class="n">8.</span><span class="n">]</span>
-     <span class="n">[</span> <span class="n">4.</span>  <span class="n">2.</span>  <span class="n">0.</span>  <span class="n">6.</span>  <span class="n">3.</span>  <span class="n">6.</span><span class="n">]</span>
-     <span class="n">[</span><span class="n">10.</span>  <span class="n">4.</span>  <span class="n">6.</span>  <span class="n">0.</span>  <span class="n">9.</span> <span class="n">12.</span><span class="n">]</span>
-     <span class="n">[</span> <span class="n">1.</span>  <span class="n">5.</span>  <span class="n">3.</span>  <span class="n">9.</span>  <span class="n">0.</span>  <span class="n">3.</span><span class="n">]</span>
-     <span class="n">[</span> <span class="n">4.</span>  <span class="n">8.</span>  <span class="n">6.</span> <span class="n">12.</span>  <span class="n">3.</span>  <span class="n">0.</span><span class="n">]]</span>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">Floyd</span><span class="o">.</span><span class="o">py</span>
+<span class="o">&gt;&gt;&gt;</span>  <span class="o">[[</span> <span class="o">0.</span>  <span class="o">6.</span>  <span class="o">4.</span> <span class="o">10.</span>  <span class="o">1.</span>  <span class="o">4.</span><span class="o">]</span>
+     <span class="o">[</span> <span class="o">6.</span>  <span class="o">0.</span>  <span class="o">2.</span>  <span class="o">4.</span>  <span class="o">5.</span>  <span class="o">8.</span><span class="o">]</span>
+     <span class="o">[</span> <span class="o">4.</span>  <span class="o">2.</span>  <span class="o">0.</span>  <span class="o">6.</span>  <span class="o">3.</span>  <span class="o">6.</span><span class="o">]</span>
+     <span class="o">[</span><span class="o">10.</span>  <span class="o">4.</span>  <span class="o">6.</span>  <span class="o">0.</span>  <span class="o">9.</span> <span class="o">12.</span><span class="o">]</span>
+     <span class="o">[</span> <span class="o">1.</span>  <span class="o">5.</span>  <span class="o">3.</span>  <span class="o">9.</span>  <span class="o">0.</span>  <span class="o">3.</span><span class="o">]</span>
+     <span class="o">[</span> <span class="o">4.</span>  <span class="o">8.</span>  <span class="o">6.</span> <span class="o">12.</span>  <span class="o">3.</span>  <span class="o">0.</span><span class="o">]]</span>
 </pre></div>
                         <p>例如，第 1 行第 4 列代表从 A 到 E 的最短路径为 10。</p>
                         <p>由于程序中存在三重循环，所以弗洛伊德算法的时间复杂度为 Θ(n<sup>3</sup>)，而邻接矩阵有 n<sup>2</sup> 项，因此空间复杂度自然就为 Θ(n<sup>2</sup>)。</p>
