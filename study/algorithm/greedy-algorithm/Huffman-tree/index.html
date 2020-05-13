@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>哈弗曼树 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>哈弗曼树 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,10 +130,10 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>我们知道，计算机只能读懂由 0 和 1 构成的二进制编码。因此，我们每天看到的汉字或英文字符都会被编码成二进制的形式，如果你熟悉一些常用的编码方式，你会发现无论是<a href="https://en.wikipedia.org/wiki/ASCII" target="_blank" rel="noopener">ASCII</a>码还是<a href="https://en.wikipedia.org/wiki/Unicode" target="_blank" rel="noopener">Unicode</a>，每个字符都占用都是等长的的编码位，也就是说，无论是 A, B, C, D 还是 + - × ÷，它们都是有 m 个 0 和 1 的二进制来编码。</p>
+                        <h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>我们知道，计算机只能读懂由 0 和 1 构成的二进制编码。因此，我们每天看到的汉字或英文字符都会被编码成二进制的形式，如果你熟悉一些常用的编码方式，你会发现无论是 <a href="https://en.wikipedia.org/wiki/ASCII" target="_blank" rel="noopener">ASCII</a> 码还是 <a href="https://en.wikipedia.org/wiki/Unicode" target="_blank" rel="noopener">Unicode</a>，每个字符都占用都是等长的的编码位，也就是说，无论是 A, B, C, D 还是 + - × ÷，它们都是由等长的二进制来编码。</p>
                         <p><img alt="编码" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/code.png" data-src="https://infinityglow.github.io/study/algorithm/greedy-algorithm/Huffman-tree/images/code.png"></p>
                         <p>但这样的编码会出现一些问题，我们先假设 A, B, C, D, E 对应的编码分别为 000, 001, 010, 011, 100, 如果我们要对“ADCEBDABCCADEDBCACBD” 进行编码，得到的结果就是 000011010100001011000001010010000011100011001010000010001011，我们发现一些经常出现的字符，如 A 和 B 的编码长度始终是 3，对于这部分字符来讲，我们完全可以用更短的编码长度来进行编码，所以就有了变长的编码方式，而哈弗曼编码就是其中的一种。</p>
-                        <h2 id="哈弗曼树和哈弗曼编码"><a href="#哈弗曼树和哈弗曼编码" class="headerlink" title="哈弗曼树和哈弗曼编码"></a>哈弗曼树和哈弗曼编码</h2><p>下面就来介绍一下哈弗曼树以及哈弗曼编码，它的发明者 David Huffman，在 MIT 攻读博士学位期间提出了这种基于树形结构的编码方式。首先，我们将每一个符号（字符）用节点的形式来表示。每个节点包含了字符、出现的频率、对应编码、以及后面构建哈弗曼树时的左右孩子的信息。</p>
+                        <h2 id="哈弗曼树和哈弗曼编码"><a href="#哈弗曼树和哈弗曼编码" class="headerlink" title="哈弗曼树和哈弗曼编码"></a>哈弗曼树和哈弗曼编码</h2><p>下面就来介绍一下哈弗曼树以及哈弗曼编码，它是由 David Huffman 提出的这种基于树形结构的编码方式，所以以他的名字来命名的。首先，我们将每一个符号（字符）用节点的形式来表示。每个节点包含了字符、出现的频率、对应编码、以及后面构建哈弗曼树时的左右孩子的信息。</p>
                         <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="n">char</span>  <span class="c1"># 字符</span>
@@ -231,13 +235,13 @@
     <span class="k">return</span> <span class="n">string</span>
 </pre></div>
                         <p>下面来运行一下程序，我们的字符串为<code>ADCEBDABCCADEDBCACBD</code>，运行后结果为：</p>
-                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">Huffman</span><span class="n">.</span><span class="n">py</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">原字符串</span><span class="n">:</span> <span class="n">ADCEBDABCCADEDBCACBD</span>
-    <span class="n">每个字符的频率</span><span class="n">:</span>  <span class="n">[(</span><span class="n">&#39;E&#39;</span><span class="n">,</span> <span class="n">2</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;A&#39;</span><span class="n">,</span> <span class="n">4</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;B&#39;</span><span class="n">,</span> <span class="n">4</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;D&#39;</span><span class="n">,</span> <span class="n">5</span><span class="n">),</span> <span class="n">(</span><span class="n">&#39;C&#39;</span><span class="n">,</span> <span class="n">5</span><span class="n">)]</span>
-    <span class="n">字符到编码的映射</span><span class="n">:</span>  <span class="n">{</span><span class="n">&#39;B&#39;</span><span class="n">:</span> <span class="n">&#39;00&#39;</span><span class="n">,</span> <span class="n">&#39;D&#39;</span><span class="n">:</span> <span class="n">&#39;01&#39;</span><span class="n">,</span> <span class="n">&#39;C&#39;</span><span class="n">:</span> <span class="n">&#39;10&#39;</span><span class="n">,</span> <span class="n">&#39;E&#39;</span><span class="n">:</span> <span class="n">&#39;110&#39;</span><span class="n">,</span> <span class="n">&#39;A&#39;</span><span class="n">:</span> <span class="n">&#39;111&#39;</span><span class="n">}</span>
-    <span class="n">编码到字符的映射</span><span class="n">:</span>  <span class="n">{</span><span class="n">&#39;00&#39;</span><span class="n">:</span> <span class="n">&#39;B&#39;</span><span class="n">,</span> <span class="n">&#39;01&#39;</span><span class="n">:</span> <span class="n">&#39;D&#39;</span><span class="n">,</span> <span class="n">&#39;10&#39;</span><span class="n">:</span> <span class="n">&#39;C&#39;</span><span class="n">,</span> <span class="n">&#39;110&#39;</span><span class="n">:</span> <span class="n">&#39;E&#39;</span><span class="n">,</span> <span class="n">&#39;111&#39;</span><span class="n">:</span> <span class="n">&#39;A&#39;</span><span class="n">}</span>
-    <span class="n">编码后</span><span class="n">:</span> <span class="n">1110110110000111100101011101110010010111100001</span>
-    <span class="n">解码后</span><span class="n">:</span> <span class="n">ADCEBDABCCADEDBCACBD</span>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">Huffman</span><span class="o">.</span><span class="o">py</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">原字符串</span><span class="o">:</span> <span class="o">ADCEBDABCCADEDBCACBD</span>
+    <span class="o">每个字符的频率</span><span class="o">:</span>  <span class="o">[(</span><span class="o">&#39;E&#39;</span><span class="o">,</span> <span class="o">2</span><span class="o">),</span> <span class="o">(</span><span class="o">&#39;A&#39;</span><span class="o">,</span> <span class="o">4</span><span class="o">),</span> <span class="o">(</span><span class="o">&#39;B&#39;</span><span class="o">,</span> <span class="o">4</span><span class="o">),</span> <span class="o">(</span><span class="o">&#39;D&#39;</span><span class="o">,</span> <span class="o">5</span><span class="o">),</span> <span class="o">(</span><span class="o">&#39;C&#39;</span><span class="o">,</span> <span class="o">5</span><span class="o">)]</span>
+    <span class="o">字符到编码的映射</span><span class="o">:</span>  <span class="o">{</span><span class="o">&#39;B&#39;</span><span class="o">:</span> <span class="o">&#39;00&#39;</span><span class="o">,</span> <span class="o">&#39;D&#39;</span><span class="o">:</span> <span class="o">&#39;01&#39;</span><span class="o">,</span> <span class="o">&#39;C&#39;</span><span class="o">:</span> <span class="o">&#39;10&#39;</span><span class="o">,</span> <span class="o">&#39;E&#39;</span><span class="o">:</span> <span class="o">&#39;110&#39;</span><span class="o">,</span> <span class="o">&#39;A&#39;</span><span class="o">:</span> <span class="o">&#39;111&#39;</span><span class="o">}</span>
+    <span class="o">编码到字符的映射</span><span class="o">:</span>  <span class="o">{</span><span class="o">&#39;00&#39;</span><span class="o">:</span> <span class="o">&#39;B&#39;</span><span class="o">,</span> <span class="o">&#39;01&#39;</span><span class="o">:</span> <span class="o">&#39;D&#39;</span><span class="o">,</span> <span class="o">&#39;10&#39;</span><span class="o">:</span> <span class="o">&#39;C&#39;</span><span class="o">,</span> <span class="o">&#39;110&#39;</span><span class="o">:</span> <span class="o">&#39;E&#39;</span><span class="o">,</span> <span class="o">&#39;111&#39;</span><span class="o">:</span> <span class="o">&#39;A&#39;</span><span class="o">}</span>
+    <span class="o">编码后</span><span class="o">:</span> <span class="o">1110110110000111100101011101110010010111100001</span>
+    <span class="o">解码后</span><span class="o">:</span> <span class="o">ADCEBDABCCADEDBCACBD</span>
 </pre></div>
                         <p>我们看到，出现频率较高的 B, C, D 都是由两位二进制来编码，而较低的 A 和 E 则需要三位二进制来编码，这样我们在编码一个字符串的时候就会降低编码所占的储存空间，这也就是哈弗曼编码这么受欢迎的原因了。</p>
 
@@ -649,27 +653,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -692,6 +675,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -704,21 +688,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -743,43 +727,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -794,23 +749,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
