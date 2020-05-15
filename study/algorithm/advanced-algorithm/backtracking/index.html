@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>*回溯 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>*回溯 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -127,14 +131,14 @@
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
                         <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>从这一节开始，我们就要讨论一些更复杂的算法问题了。对于之前的内容，如果还有不是特别明白的小伙伴呢，建议你们先理解前面所学的内容，再来看这一部分。因为这一整章的内容都是打了星号的，属于算法的较为高阶的部分，所以你也可以选择直接跳过这一部分内容。</p>
-                        <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>我们知道，组合问题的求解是最耗时也是最难解决的问题之一，如果用暴力求解的方式来解决它，我们需要将这个问题的所有组合情况，也就是穷举出所有的子集，然后从子集中选择满足条件者。例如，从集合 {1, 2, 5, 6} 中选出元素之和为 d = 8 的子集，我们需要把所有子集列举出来，求出每一个子集的元素之和，然后找出总和为 8 的组合来作为最后的解。</p>
+                        <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>我们知道，组合问题的求解是最耗时也是最难解决的问题之一，如果用暴力求解的方式来解决它，我们需要列举出这个问题的所有情况，也就是穷举出所有的子集，然后从子集中选择满足条件的一种来作为最后的解。例如，如果从集合 {1, 2, 5, 6} 中选出元素之和为 d = 8 的子集，我们就需要先把所有子集列举出来，求出每一个子集的元素之和，然后找出总和为 8 的组合来作为最后的解。</p>
                         <p><img alt="问题" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/subset.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/subset.png"></p>
-                        <p>当我们的子集为 {5, 6} 时，元素之和为 11，已经不满足问题中要求的 s = 8。这时候，如果判断含有 {5, 6} 的子集 {5, 6, 1} 之和是否等于 8 就会显得有些多此一举，因为 {5, 6} 之和就已经大于 8 了，此时再加入一个非负的数肯定也是大于 8 的。我们可以看到，枚举中的一些情况是多余的，无需再求和判断。因此，我们需要设计出一种算法来帮助我们及时发现这些多余的情况。</p>
+                        <p>下面来看看其中的一种情况，当我们的子集为 {5, 6} 时，元素之和为 11，已经不满足问题中要求的 s = 8。这时候，如果再判断含有 {5, 6} 的子集 {5, 6, 1} 之和是否等于 8 就会显得有些多此一举，因为 {5, 6} 之和已经都大于 8 了，此时如果再加入一个非负的数肯定也是大于 8 的。我们可以看到，有一些情况是多余的，无需再求和判断。因此，我们需要设计出一种算法来帮助我们及时发现这些多余的情况。</p>
                         <h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><p><strong>回溯</strong>（<strong>backtracking</strong>）是一种类似枚举的搜索尝试过程，在搜索尝试的过程中寻找问题的解，如果在搜索的过程中发现不满足条件，到了“死胡同”（dead end），我们就回溯，回归到上一个状态，然后继续搜索下一个可能的解，如果满足要求就返回问题的解。</p>
                         <p>继续来看前面的问题，假设我们搜索到了状态 {5, 6}，由于 5 + 6 &gt; 8 不满足条件，所以我们要回溯到上一个状态 {5}，而不是继续搜索下一个状态 {5, 6, 1}，回到状态 {5} 之后，我们到下一个状态 {5, 1}，发现小于 8，然后我们继续搜索下一个状态 {5, 1, 2}，其元素之和等于 8，于是返回问题的解。</p>
                         <p>回溯的过程就有点像走迷宫，我们从起点出发，向上下左右四个方向探索路径，一旦遇到了死胡同，我们就退回，然后继续探索其他的路径，直到我们最后走出迷宫。</p>
                         <p><img alt="迷宫" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/maze.gif" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/maze.gif"></p>
-                        <h2 id="八皇后问题"><a href="#八皇后问题" class="headerlink" title="八皇后问题"></a>八皇后问题</h2><p>八皇后问题也是回溯算法的一道经典的例子，下过国际象棋的同学一定知道，皇后在棋盘中可以横着、竖着、斜着三个方向走，就像下面图中展示的那样。</p>
+                        <h2 id="八皇后问题"><a href="#八皇后问题" class="headerlink" title="八皇后问题"></a>八皇后问题</h2><p>了解了回溯的基本概念之后，我们来看看一个例子吧。八皇后问题就是回溯算法的一道经典的例子，下过国际象棋的同学一定知道，皇后在棋盘中可以横着、竖着、斜着三个方向走，下面的图就展示了其中的一种解法。</p>
                         <p><img alt="棋盘" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/chessboard0.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/chessboard0.png"></p>
                         <p>八皇后问题的描述是这样子的：我们需要在 8 × 8 的棋盘中放置 8 个皇后，使得所有皇后之间不能相互攻击，也就是每一横行、竖行、斜行只能放一个皇后。就像下面那样。</p>
                         <p><img alt="棋盘" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/chessboard1.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/chessboard1.png"></p>
@@ -145,7 +149,7 @@
                         <p>当 n = 4 时，我们采用回溯的方式来求解这个问题。首先，我们在将皇后 1 放置在棋盘 (1, 1) 的位置，然后将皇后 2 放置在 (2, 1) 的位置，发现两个皇后处于同一列，不满足规则，所以回溯到只有皇后 1 的状态那里，然后再将皇后 2 尝试放到 (2, 2) 处，发现还是不满足规则，于是再回溯，然后再探索棋盘的下一个位置 (2, 3)，放完之后发现无论皇后 3 放置在第三行哪一列都不满足条件，因此我们再要回溯然后把皇后 2 放置在 (2, 4) 处。再通过同样的方式，我们将皇后 3 放置在棋盘的 (3, 2) 处，结果发现我们不能在第四行放最后一个皇后，然后我们回溯到状态 (3, 2)，当皇后 3 尝试完剩下的 (3, 3) 和 (3, 4) 发现也不满足要求后，我们回溯到最初的状态（棋盘为空），然后将皇后 1 放在第二列 (1, 2) 处，然后我们再按照前面的方法探索，不满足题目要求就回溯，否则就继续探索，最后得到问题的解。</p>
                         <p>我们可以用一个树形结构来表示这一过程，树的每一个节点代表一个状态，每到一个节点，我们就判断一下是否满足要求，如满足就在树的下一层新建节点，如不满足就返回到父节点。我们把这种树称作状态空间树（state-space tree）。</p>
                         <p><img alt="状态树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/space-tree.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/backtracking/images/space-tree.png"></p>
-                        <p>最后就是用代码实现这个过程了，我们用一个<code>table</code>来存储每一行皇后放置的列，回溯的过程用递归来实现，如果<code>is_promising</code>为<code>True</code>，我们就向下递归，同时<code>row</code>加一。当<code>row = n</code>时，我们就认为已经找到了问题的解，所以我们用<code>display</code>函数打印出棋盘以及皇后的位置。</p>
+                        <p>最后就是用代码实现这个过程了，我们用一个<code>table</code>来存储每一行皇后放置的列，回溯的过程用递归来实现，如果<code>is_promising</code>为<code>True</code>，我们就向下递归，同时<code>row</code>加一。当<code>row = n</code>时，我们就认为已经找到了问题的解，最后我们用<code>display</code>函数打印出棋盘以及皇后的位置。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_promising</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
     <span class="c1"># 是否处于同一列</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">table</span><span class="p">[:</span> <span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">[:</span> <span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
@@ -185,15 +189,15 @@
     <span class="n">backtracking</span><span class="p">(</span><span class="n">col_tab</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">is_mul</span><span class="o">=</span><span class="n">multiple</span><span class="p">)</span>
 </pre></div>
                         <p>最后我们将 n 设为 8 来看看最后的结果：</p>
-                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">python</span> <span class="n">queen</span><span class="n">.</span><span class="n">py</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Q</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span>
-    <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">Q</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span>
-    <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">Q</span>
-    <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">Q</span> <span class="n">+</span> <span class="n">+</span>
-    <span class="n">+</span> <span class="n">+</span> <span class="n">Q</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span>
-    <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">Q</span> <span class="n">+</span>
-    <span class="n">+</span> <span class="n">Q</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span>
-    <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">Q</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span> <span class="n">+</span>
+                        <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="o">python</span> <span class="o">queen</span><span class="o">.</span><span class="o">py</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">Q</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span>
+    <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">Q</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span>
+    <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">Q</span>
+    <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">Q</span> <span class="o">+</span> <span class="o">+</span>
+    <span class="o">+</span> <span class="o">+</span> <span class="o">Q</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span>
+    <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">Q</span> <span class="o">+</span>
+    <span class="o">+</span> <span class="o">Q</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span>
+    <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">Q</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span> <span class="o">+</span>
 </pre></div>
                         <br>
                         <p>→ <a href="https://github.com/infinityglow/Algorithm-and-Complexity/tree/master/Advanced%20Algorithm/Backtracking" target="_blank" rel="noopener">本节全部代码</a> ←</p>
@@ -603,27 +607,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -646,6 +629,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -658,21 +642,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -697,43 +681,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -748,23 +703,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
