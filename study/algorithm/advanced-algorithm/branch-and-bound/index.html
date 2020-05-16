@@ -15,7 +15,7 @@
     <link href="/css/default.css" rel="stylesheet">
     <link href="/css/github.css" rel="stylesheet">
 
-    <title>*分支限界 - 算法与复杂度 | 幽默的白帽子的博客 </title>
+    <title>*分支限界 - 算法与复杂度 | 小白·菜的空间</title>
 
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -60,15 +60,19 @@
                         </li>
 
                         <li>
-                            <a href="/study" title="技术篇">技术篇</a>
+                            <a href="/category/series" title="系列">系列</a>
                         </li>
 
                         <li>
-                            <a href="/life" title="生活篇">生活篇</a>
+                            <a href="/category/tutorial" title="教程">教程</a>
                         </li>
 
                         <li>
-                            <a href="/fun" title="轻松时刻">轻松时刻</a>
+                            <a href="/category/life" title="生活">生活</a>
+                        </li>
+
+                        <li>
+                            <a href="/category/joy" title="轻松时刻">轻松时刻</a>
                         </li>
 
                         <li>
@@ -101,7 +105,7 @@
                             <img src="/static/icons&images/youtube.png" width="20" height="20"/>
                         </a>
 
-                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/262517782" target="_blank" rel="noopener">
+                        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
                             <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
                         </a>
 
@@ -126,10 +130,10 @@
 
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
-                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>前面我们学习了<a href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/">回溯</a>法，它的主要思想是不停地探索我们的状态空间，如果遇到不满足条件的解就停止探索，然后回溯到上一个状态，再探索其他的状态，直到得到问题的解。</p>
-                        <p>回溯的方法的确是一种可行的办法，但是它只能求解问题的类型却是有限的。像 n-皇后，集合问题它都是可以解决的，但对于优化问题它却束手无策了。回溯的过程只会发生在探索过程中不满足限制条件时发生，用回溯法求解的问题一般都有多个解，但对于最优问题（分配问题、背包问题等）来讲，满足限制条件的解有很多，我们要做的是从所有满足条件的解中找到最好的那一个，所以我们就有了分支限界（<strong>branch and bound</strong>）这种方式来帮助我们解决这一类问题。</p>
-                        <h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><p>在解决最优问题的时候，我们还是需要构建一棵状态空间树，只是和回溯不同的是，回溯是基于深度优先的方式来扩展空间树中的节点的，而分支限界法是基于深度优先的方式来扩展节点的，也就是说，分支界定法是每次构建出解空间树中一层的全部节点。那么具体该怎么做呢？我们要明白的是，任何一个最优问题都存在一个上界或下界，也就是说，对于求解像最低开销，最短路径这类问题时，一定存在一个下界使得最后问题的解不会低于这个下界。相反，如果问题是求解最大收益，那么一定会有一个上界来约束最终的解。</p>
-                        <p>在具体求解的过程中，每探索出一个新的节点（进入新的状态），我们就要计算当前情况下的上界或下界，然后在状态转移（探索下一层节点）的时候选择上界最大或下界最小的节点，这样我们才会更逼近最大或最小值。听起来一定挺抽象的吧，让我们来举一个具体的例子。</p>
+                        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>前面我们学习了<a href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/">回溯</a>法，它的主要思想是不停地探索状态空间，如果遇到不满足条件的解就停止探索，然后回溯到上一个状态，再探索其他的状态，直到探索到问题的解。</p>
+                        <p>回溯的方法的确是一种可行的办法，但是它只能求解像 n-皇后，集合问题这样的非优化问题，一旦涉及到优化问题它就束手无策了。因为回溯的过程只会发生在探索过程中不满足限制条件时发生，所以用回溯法求解的问题一般都有多个解，但对于最优问题（分配问题、背包问题等）来讲，满足限制条件的解有很多，我们要做的是从所有满足条件的解中找到最好的那一个，所以我们就有了分支限界（<strong>branch and bound</strong>）这种方式来帮助我们解决这一类问题。</p>
+                        <h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><p>在解决最优问题的时候，我们还是需要构建一棵状态空间树，只是和回溯不同的是，回溯是基于广度优先的方式来扩展空间树中的节点的，而分支限界法是基于深度优先的方式来扩展节点的，也就是说，分支界定法是每次构建出解空间树中一层的全部节点。那么具体该怎么做呢？我们要明白的是，任何一个最优问题都存在一个上界或下界，也就是说，对于求解像最低开销，最短路径这类问题时，一定存在一个下界使得最后问题的解不会低于这个值。相反，如果问题是求解最大收益，那么一定会有一个上界来约束最终的解。</p>
+                        <p>在具体求解的过程中，每探索出一个新的节点（进入新的状态），我们就要计算当前情况下的上界或下界，然后在状态转移（探索下一层节点）的时候选择上界最大或下界最小的节点，这样我们才会更逼近最大或最小值，这样听起来太挺抽象了，我们还是来看一个具体的例子吧。</p>
                         <h2 id="分配问题"><a href="#分配问题" class="headerlink" title="分配问题"></a>分配问题</h2><p>回顾一下我们前面所学过的内容，<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/">分配问题</a>的问题描述为将 n 件任务分配给 n 名员工，一名员工只能完成一件任务，每名员工做每个任务都有对应的时间开销，我们要优化的问题是怎样使总开销最小。</p>
                         <p>拿一个具体的实例来看，假设有 4 名员工，每名员工做每件任务的时间如下图的表格所示。</p>
                         <p><img alt="表格" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/table0.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/table0.png"></p>
@@ -145,8 +149,8 @@
                         <p><img alt="搜索树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state3.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state3.png"></p>
                         <p>这时，我们看到如果选择第二行的第二列，所对应的下界为全局的最小，因此我们便可以继续往下搜索啦，于是构建出最后一层的状态空间树。</p>
                         <p><img alt="搜索树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state4.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state4.png"></p>
-                        <p>搜索到最后一层的时候，如果发现计算出的下界还是全局的最小值，我们便可以得到该下界就为分配问题的解了。在上面的例子中，最短时间开销就为 15。</p>
-                        <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>代码的实现分为几个部分，为了实现方便，这里用到了 numpy。</p>
+                        <p>搜索到最后一层的时候，如果发现计算出的下界还是全局的最小值，我们就可以得到该下界就为分配问题的解了。在上面的例子中，最短时间开销就为 15。</p>
+                        <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>代码的实现分为几个部分，为了实现方便，这里用到了<code>numpy</code>。</p>
                         <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 </pre></div>
                         <p>对于每一个状态，我们用一个类<code>State</code>来表示。</p>
@@ -161,7 +165,7 @@
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_lower_bound</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
-                        <p>因为每次在状态转移的过程中需要从所有的状态中选择最小的下界，而构建新的节点的时候又需要添加新的状态，所以这里用堆来作为我们的数据结构就再合适不过了。</p>
+                        <p>因为每次在状态转移的过程中需要从所有的状态中选择最小的下界，而构建新的节点的时候又需要添加新的状态，所以这里用堆来作为我们的数据结构就再合适不过了。下面是调整堆结构的两个函数<code>fix_up</code>和<code>fix_down</code>。</p>b
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fix_up</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
     <span class="n">temp_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">parent_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
@@ -627,27 +631,6 @@
                                     </a>
                                 </li>
                                 <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/linear-programming/">
-                                        <span class="toc-text">
-                                            *线性规划（单纯形法）
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/maximum-flow/">
-                                        <span class="toc-text">
-                                            *最大流问题
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
-                                    <a class="toc-link" href="/study/algorithm/advanced-algorithm/hungarian-algorithm/">
-                                        <span class="toc-text">
-                                            *匈牙利算法
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="toc-item toc-level-3">
                                     <a class="toc-link" href="/study/algorithm/advanced-algorithm/p-np/">
                                         <span class="toc-text">
                                             *千禧问题：P = NP ?
@@ -670,6 +653,7 @@
 <aside class="read-next outer">
     <div class="inner">
         <div class="read-next-feed">
+
             <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
                 <header class="read-next-card-header">
                     <h3 class="read-next-card-header-title">最近更新</h3>
@@ -682,21 +666,21 @@
                 <div class="read-next-card-content">
                     <ul>
                         <li>
-                            <a href="/others/ss_v2ray/ss/">手把手教你用VPS搭建SS+bbr实现科学上网</a>
+                            <a href="/category/tutorial/github-page/">用 GitHub+Page 搭建个人博客</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/Annabel Lee/">Annabel Lee</a>
+                            <a href="/study/algorithm/advanced-algorithm/p-np/">千禧问题：P = NP ？</a>
                         </li>
 
                         <li>
-                            <a href="/hexo-theme-casper/2018/hanwentest/">TEST</a>
+                            <a href="/study/algorithm/advanced-algorithm/branch-and-bound">分支限界</a>
                         </li>
 
                     </ul>
                 </div>
                 <footer class="read-next-card-footer">
-                    <a href="/more/">  MORE  → </a>
+                    <a href="/archives/">  MORE  → </a>
                 </footer>
             </article>
 
@@ -721,43 +705,14 @@
                             <a class="category-list-link" href="/category/life/">生活</a>
                         </li>
                         <li class="category-list-item">
-                            <a class="category-list-link" href="/category/joy/">乐趣</a>
+                            <a class="category-list-link" href="/category/joy/">轻松时刻</a>
                         </li>
                     </ul>
-                </div>
-            </article>
-
-            <article class="read-next-card" style="background-image: url(https://infinityglow.github.io/static/icons&images/footer.jpeg)">
-                <header class="read-next-card-header tagcloud-card">
-                    <h3 class="read-next-card-header-title">标签</h3>
-                </header>
-                <div class="read-next-card-content-ext">
-                    <a href="/tag/data_structure/" style="font-size: 20px;">数据结构</a>
-                    <a href="/tag/recurrence/" style="font-size: 16px;">递归</a>
-                    <a href="/tag/bst" style="font-size: 18px;">二叉树</a>
-                    <a href="/tag/sorting" style="font-size: 21px;">排序</a>
-                    <a href="/tag/searching" style="font-size: 19px;">搜索</a>
-                    <a href="/tag/dp" style="font-size: 15px;">动态规划</a>
-                    <a href="/tag/gt" style="font-size: 19px;">贪心算法</a>
-                    <a href="/tag/linux" style="font-size: 16px;">Linux</a>
-                    <a href="/tag/ss" style="font-size: 17px;">科学上网</a>
-                    <a href="/tag/regression" style="font-size: 18px;">回归</a>
-                    <a href="/tag/clustering" style="font-size: 19px;">聚类</a>
-                    <a href="/tag/cnn" style="font-size: 20px;">CNN</a>
-                    <a href="/tag/rnn" style="font-size: 16px;">RNN</a>
-                    <a href="/tag/style-transfer" style="font-size: 13px;">风格迁移</a>
-                    <a href="/tag/lstm" style="font-size: 19px;">LSTM</a>
-                    <a href="/tag/gan" style="font-size: 17px;">GAN</a>
                 </div>
             </article>
         </div>
     </div>
 </aside>
-
-
-
-
-
 
 <div id="search" class="search-overlay subscribe-overlay">
     <div class="search-form">
@@ -772,23 +727,43 @@
 
 
 <footer class="site-footer outer">
-    <p style="text-align: center; margin: auto">
-        @ infinityglow.github.io All Right Reserved
+    <p>
+        <strong>
+            其他平台：
+        </strong>
     </p>
-    <p style="text-align: center; margin: auto">
+    <div class="social-links">
+
+        <a class="social-link" title="github" href="https://github.com/infinityglow/" target="_blank" rel="noopener">
+            <img src="/static/icons&images/github.jpg" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="zhihu" href="https://www.zhihu.com/people/vector-26-26/activities" target="_blank" rel="noopener">
+            <img src="/static/icons&images/zhihu.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="youtube" href="https://www.youtube.com/channel/UCMaNxyZGxMgQTGu1EZUPGdw" target="_blank" rel="noopener">
+            <img src="/static/icons&images/youtube.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="bilibili" href="https://space.bilibili.com/540053021" target="_blank" rel="noopener">
+            <img src="/static/icons&images/bilibili.png" width="20" height="20"/>
+        </a>
+
+        <a class="social-link" title="csdn" href="https://me.csdn.net/blog/infinityglow" target="_blank" rel="noopener">
+            <img src="/static/icons&images/csdn.png" width="20" height="20"/>
+        </a>
+    </div>
+    <p>
         <strong>
             Email:
         </strong>
         heartbeats1216@gmail.com
     </p>
-    <p style="text-align: center; margin: auto">
-        <strong>
-            GitHub:
-        </strong>
-        <a href="https://github.com/infinityglow"; style="text-align: center">
-            github.com/infinityglow
-        </a>
+    <p>
+        @ 2020 infinityglow.github.io All Right Reserved
     </p>
+
 </footer>
 
 
