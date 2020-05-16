@@ -131,7 +131,7 @@
                 <section class="post-full-content">
                     <div id="lightgallery" class="markdown-body">
                         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>前面我们学习了<a href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/">回溯</a>法，它的主要思想是不停地探索状态空间，如果遇到不满足条件的解就停止探索，然后回溯到上一个状态，再探索其他的状态，直到探索到问题的解。</p>
-                        <p>回溯的方法的确是一种可行的办法，但是它只能求解像 n-皇后，集合问题这样的非优化问题，一旦涉及到优化问题它就束手无策了。因为回溯的过程只会发生在探索过程中不满足限制条件时发生，所以用回溯法求解的问题一般都有多个解，但对于最优问题（分配问题、背包问题等）来讲，满足限制条件的解有很多，我们要做的是从所有满足条件的解中找到最好的那一个，所以我们就有了分支限界（<strong>branch and bound</strong>）这种方式来帮助我们解决这一类问题。</p>
+                        <p>回溯的方法的确是一种可行的办法，但是它只能求解像 n-皇后，集合问题这样的非优化问题，一旦涉及到优化问题它就束手无策了。因为回溯的过程只会发生在探索过程中不满足限制条件时发生，所以用回溯法求解的问题一般都有多个解，但对于最优问题（分配问题、背包问题等）来讲，满足限制条件的解有很多，我们要做的是从所有满足条件的解中找到最好的那一个，所以我们就有了<strong>分支限界</strong>（<strong>branch and bound</strong>）这种方式来帮助我们解决这一类问题。</p>
                         <h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><p>在解决最优问题的时候，我们还是需要构建一棵状态空间树，只是和回溯不同的是，回溯是基于广度优先的方式来扩展空间树中的节点的，而分支限界法是基于深度优先的方式来扩展节点的，也就是说，分支界定法是每次构建出解空间树中一层的全部节点。那么具体该怎么做呢？我们要明白的是，任何一个最优问题都存在一个上界或下界，也就是说，对于求解像最低开销，最短路径这类问题时，一定存在一个下界使得最后问题的解不会低于这个值。相反，如果问题是求解最大收益，那么一定会有一个上界来约束最终的解。</p>
                         <p>在具体求解的过程中，每探索出一个新的节点（进入新的状态），我们就要计算当前情况下的上界或下界，然后在状态转移（探索下一层节点）的时候选择上界最大或下界最小的节点，这样我们才会更逼近最大或最小值，这样听起来太挺抽象了，我们还是来看一个具体的例子吧。</p>
                         <h2 id="分配问题"><a href="#分配问题" class="headerlink" title="分配问题"></a>分配问题</h2><p>回顾一下我们前面所学过的内容，<a href="https://infinityglow.github.io/study/algorithm/brute-force/exhaustive-search/">分配问题</a>的问题描述为将 n 件任务分配给 n 名员工，一名员工只能完成一件任务，每名员工做每个任务都有对应的时间开销，我们要优化的问题是怎样使总开销最小。</p>
@@ -139,7 +139,7 @@
                         <p><img alt="表格" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/table0.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/table0.png"></p>
                         <p>由于我们要使总开销最小，所以一定存在一个下界，要怎样来定这个下界呢？最简单的方法就是从每一行选出一个最小值，然后将它们相加。对于上面的表格来讲，下界就为 13，表示这个问题的总开销不可能小于 13。</p>
                         <p><img alt="表格" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/table1.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/table1.png"></p>
-                        <p>于是，我们将这个状态作为我们的初始状态（initial state）。</p>
+                        <p>于是，我们将这个状态作为我们的<strong>初始状态</strong>（<strong>initial state</strong>）。</p>
                         <p><img alt="搜索树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state0.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state0.png"></p>
                         <p>接下来，我们构建出下一层状态节点，然后依次计算出该状态下的下界，在这里，我们要做的是依次选择第一行里的元素，然后把对应行和列全部划掉，然后从剩下的元素中计算下界，比如说这里如果我们选择第一行的 7，划去第一行和第三列后，从剩余的 3 × 3 的表中每一行中选择最小值，然后相加得到下界为 20（包含 7），表示如果第一名员工选择任务 3，总开销不会小于 20。于是我们将第一行的元素对应的所有下界通通用这种方式求出来，然后在状态空间树中生成相应的节点。</p>
                         <p><img alt="搜索树" class="post-img b-lazy" href="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state1.png" data-src="https://infinityglow.github.io/study/algorithm/advanced-algorithm/branch-and-bound/images/state1.png"></p>
@@ -165,7 +165,7 @@
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_lower_bound</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
-                        <p>因为每次在状态转移的过程中需要从所有的状态中选择最小的下界，而构建新的节点的时候又需要添加新的状态，所以这里用堆来作为我们的数据结构就再合适不过了。下面是调整堆结构的两个函数<code>fix_up</code>和<code>fix_down</code>。</p>b
+                        <p>因为每次在状态转移的过程中需要从所有的状态中选择最小的下界，而构建新的节点的时候又需要添加新的状态，所以这里用堆来作为我们的数据结构就再合适不过了。下面是调整堆结构的两个函数<code>fix_up</code>和<code>fix_down</code>。</p>
                         <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fix_up</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
     <span class="n">temp_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">parent_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
